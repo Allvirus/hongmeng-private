@@ -17,6 +17,5 @@ export default new Vuex.Store({
   },
   modules: {
     app: _importSync('app'),
-    hotspot: _importSync('hotspot'),
   },
 })

@@ -5,7 +5,7 @@
     .swiper 轮播图
     .logo logo
   .menu-list.jc-between
-    el-tabs(v-model='activeName', @tab-click='handleClick')
+    el-tabs(@tab-click='handleClick')
       el-tab-pane(label='首页', name='0')
       el-tab-pane(label='排行', name='1')
     .notice 公告

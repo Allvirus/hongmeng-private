@@ -1,35 +1,60 @@
 <template lang='pug'>
 .RoamProjectModel.page-content.ff-cn
-  TitleBar.flex-auto(:title='$route.meta.title' back)
-  el-form.flex-center.flex-1(label-width='100px' :model='model' :rules='rules' ref='form')
+  TitleBar.flex-auto(:title='$route.meta.title', back)
+  el-form.flex-center.flex-1(
+    label-width='100px',
+    :model='model',
+    :rules='rules',
+    ref='form'
+  )
     .left
       el-form-item(label='')
         .ai-center
           .ff-cn.ai-center
             el-upload.w150.h150(
-              action='placeholder'
-              accept='.jpg,.jpeg,.png,.bmp,.gif'
-              :fileId.sync='model.logoId'
-              :fileUrl.sync='model.logoUrl')
+              action='placeholder',
+              accept='.jpg,.jpeg,.png,.bmp,.gif',
+              :fileId.sync='model.logoId',
+              :fileUrl.sync='model.logoUrl'
+            )
             .label 项目LOGO
           .ff-cn.ai-center.mgl5
             el-upload.w150.h150(
-              action='placeholder'
-              accept='.jpg,.jpeg,.png,.bmp,.gif'
-              :fileId.sync='model.coverId'
-              :fileUrl.sync='model.coverUrl')
+              action='placeholder',
+              accept='.jpg,.jpeg,.png,.bmp,.gif',
+              :fileId.sync='model.coverId',
+              :fileUrl.sync='model.coverUrl'
+            )
             .label 项目封面
 
-      el-form-item(label='项目名称:' prop='name')
-        el-input(v-model='model.name' placeholder='请输入每次' :maxlength='20' show-word-limit clearable)
+      el-form-item(label='项目名称:', prop='name')
+        el-input(
+          v-model='model.name',
+          placeholder='请输入每次',
+          :maxlength='20',
+          show-word-limit,
+          clearable
+        )
 
       el-form-item(label='项目分类:')
-        el-select(v-model='model.mainCategory' placeholder='请选择')
-          el-option(:label='item.tagName' :value='item.tagName' v-for="item in projectTagList" :key="item.id")
+        el-select(v-model='model.mainCategory', placeholder='请选择')
+          el-option(
+            :label='item.tagName',
+            :value='item.tagName',
+            v-for='item in projectTagList',
+            :key='item.id'
+          )
 
       el-form-item(label='项目描述:')
-        el-input(v-model='model.description' :maxlength='100' show-word-limit clearable
-          type='textarea' :autosize='{minRows: 5}' placeholder='请输入描述')
+        el-input(
+          v-model='model.description',
+          :maxlength='100',
+          show-word-limit,
+          clearable,
+          type='textarea',
+          :autosize='{ minRows: 5 }',
+          placeholder='请输入描述'
+        )
 
       el-form-item(label='是否公开:')
         el-radio-group(v-model='model.isPublic')
@@ -42,22 +67,39 @@
         el-form-item.mg0
           .ff-cn.ai-center
             el-upload.w150.h150(
-              action='placeholder'
-              accept='.jpg,.jpeg,.png,.bmp,.gif'
-              :fileId.sync='model.wechatId'
-              :fileUrl.sync='model.wechatUrl')
+              action='placeholder',
+              accept='.jpg,.jpeg,.png,.bmp,.gif',
+              :fileId.sync='model.wechatId',
+              :fileUrl.sync='model.wechatUrl'
+            )
             .label 分享封面(默认为项目封面)
         .text-field.flex-auto.mgl3
           el-form-item
-            el-input(v-model='model.wechatTitle' placeholder='分享标题(默认为项目名称)' :maxlength='20' show-word-limit clearable)
+            el-input(
+              v-model='model.wechatTitle',
+              placeholder='分享标题(默认为项目名称)',
+              :maxlength='20',
+              show-word-limit,
+              clearable
+            )
           el-form-item
-            el-input(v-model='model.wechatDescription' :maxlength='100' show-word-limit clearable
-              type='textarea' :autosize='{minRows: 5}' placeholder='分享描述(默认为项目描述)')
+            el-input(
+              v-model='model.wechatDescription',
+              :maxlength='100',
+              show-word-limit,
+              clearable,
+              type='textarea',
+              :autosize='{ minRows: 5 }',
+              placeholder='分享描述(默认为项目描述)'
+            )
 
-      el-button.mgt2(@click='$refs.ModelScaleUpdate.open(model)' type='primary') 调整模型
+      el-button.mgt2(
+        @click='$refs.ModelScaleUpdate.open(model)',
+        type='primary'
+      ) 调整模型
 
       .submit(style='margin-top:175px;')
-        el-button.w150(@click='submit' type='primary') 保 存
+        el-button.w150(@click='submit', type='primary') 保 存
         el-button.w150(@click='$router.go(-1)') 取 消
 
   ModelScaleUpdate(ref='ModelScaleUpdate')
@@ -86,8 +128,8 @@ export default {
     ...mapGetters(['projectTagList']),
   },
   created () {
-    this.$store.dispatch('getProjectTagList')
-    this.getRoamProjectDetail()
+    // this.$store.dispatch('getProjectTagList')
+    // this.getRoamProjectDetail()
   },
   methods: {
     getRoamProjectDetail () {
@@ -113,5 +155,5 @@ export default {
 .RoamProjectModel
   .right-form
     .el-form-item__content
-      margin-left 0!important
+      margin-left 0 !important
 </style>
