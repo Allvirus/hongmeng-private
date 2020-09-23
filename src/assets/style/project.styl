@@ -1,0 +1,146 @@
+@import './var';
+html,body
+  height 100%
+  width 100%
+  color $fc-b2
+  font-size $fs-m
+
+// 盒子阴影
+.box-shadow
+  box-shadow $box-shadow
+  &:hover
+    box-shadow 0 0 4px 0 rgba(#c8c8c8)
+
+// 盒子内间距
+.padding-spacing
+  padding $fs-s
+// 盒子外间距
+.margin-spacing
+  margin  $fs-s
+// 盒子圆角
+.border-radius
+  border-radius 6px
+
+body
+  .flex-1
+    overflow-x hidden
+  .el-input:not([class^=el-date-range-picker] .el-input)
+    width 200px
+    max-width 100%
+  .w100p
+    width 100%!important
+  .h100p
+    height 100%!important
+  // w10...w90,  w100 - w500 ... h10...
+  for val in 1..9
+    .w{val*10}
+      width val*10px!important
+    .h{val*10}
+      height val*10px!important
+  for val in 2..20
+    .w{val*50}
+      width val*50px!important
+    .h{val*50}
+      height val*50px!important
+
+  .el-dialog
+    display flex
+    justify-content space-between
+    flex-flow column nowrap
+    @extend .border-radius
+    .el-dialog__header
+      border-bottom 1px solid $border
+      box-shadow $box-shadow
+      flex 0 0 auto
+    .el-dialog__body
+      scroll('y')
+      flex 1 1 0%
+      max-height 550px
+    &.is-fullscreen
+      .el-dialog__body
+        max-height none
+    .el-dialog__footer
+      border-top 1px solid $border
+      box-shadow $box-shadow
+      flex 0 0 auto
+      
+  .el-dialog__wrapper.pd0
+    .el-dialog__body
+      padding 0
+
+  .el-notification-cneter //Notification组件居中
+    top 50%!important
+    left 50%!important
+    right auto!important
+    bottom auto!important
+    transform translate(-50%, -50%)
+
+  .el-card
+    @extend .border-radius
+    &+.el-card
+      margin-top $fs-s
+
+  .el-scrollbar__wrap
+    max-height 204px!important
+
+  .el-form
+    .el-input-number
+      .el-input
+        width 100%
+    .el-input,
+    .el-textarea
+      width 400px
+      max-width 100%
+
+  .table-options
+    .el-input,.el-textarea, .el-select .el-input
+      width 150px
+    .el-cascader
+      .el-input
+        width 300px
+
+  .el-table__row:nth-child(2n)
+    background-color #FAFAFA
+  .el-table
+    .avatar
+      width 40px
+      height @width
+      border-radius 50%
+  .el-loading-mask
+    z-index 100000!important
+  .el-message
+    z-index 100001!important
+
+  .el-tooltip__popper
+    max-width 500px
+
+  .el-badge
+    z-index 1
+
+  .el-image
+    .el-icon-circle-close
+      color $danger
+  #nprogress
+    .bar
+      background $theme!important
+    .peg 
+      box-shadow: 0 0 10px $theme, 0 0 5px $theme
+  .el-tag~.el-tag
+    margin-left 6px
+  .isDetail
+    .el-form-item.is-required:not(.is-no-asterisk)>.el-form-item__label:before
+      display none
+
+  // 设计调整
+
+  .el-table 
+    border: 1px solid #EBEEF5;
+    border-bottom: none;
+    th
+      background-color #f1f1f1
+    thead
+      color #333
+
+  .el-tree
+    .el-icon-sort   
+      cursor move

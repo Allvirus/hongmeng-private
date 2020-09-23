@@ -1,0 +1,29 @@
+import Vue from 'vue'
+// Vue.component('CountUp', () => import('./base/CountUp'))
+// Vue.component('Sort', () => import('./base/Sort'))
+// Vue.component('Box', () => import('./base/Box'))
+// Vue.component('BoxTitle', () => import('./base/BoxTitle'))
+// Vue.component('BGWrap', () => import('./base/BGWrap'))
+// Vue.component('Null', () => import('./base/Null'))
+// Vue.component('FooterBar', () => import('./base/FooterBar'))
+// Vue.component('VAudio', () => import('./base/VAudio'))
+// Vue.component('ListCardItem', () => import('./base/ListCardItem'))
+Vue.component('TitleBar', () => import('./base/TitleBar'))
+
+// Vue.component('CardWrap', () => import('./base/card/CardWrap'))
+// Vue.component('CardIcon', () => import('./base/card/CardIcon'))
+// Vue.component('CardIconGroup', () => import('./base/card/CardIconGroup'))
+
+// Vue.component('CountUpItem', () => import('./count-up-item/'))
+// Vue.component('CommonDatePicker', () => import('./common-date-picker/'))
+// Vue.component('CommonTimePicker', () => import('./common-time-picker/'))
+// Vue.component('CommonAreaSelector', () => import('./common-area-selector/'))
+// Vue.component('CommonSmsVcodeInput', () => import('./common-sms-vcode-input/'))
+// Vue.component('DragList', () => import('./drag-list/'))
+
+// ElementUI
+Vue.component('ElUpload', () => import('./element-ui/ElUpload.vue'))
+Vue.component('ElPagination', () => import('./element-ui/ElPagination.vue'))
+Vue.component('ElRate', () => import('./element-ui/ElRate.vue'))
+Vue.component('ElImage', () => import('./element-ui/ElImage.vue'))
+Vue.component('ElDialog', () => import('./element-ui/ElDialog.vue'))
