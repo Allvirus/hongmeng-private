@@ -66,14 +66,6 @@ export default {
 }
 </script>
 <style lang="stylus">
-// actciveShow()
-// content ''
-// width 0
-// height 100%
-// position absolute
-// left 0
-// top 0
-// border-left 3px solid $theme
 $width = 180px
 $avatarSize = 60
 .sub-menu
@@ -93,24 +85,4 @@ $avatarSize = 60
 
   .router-link-active
     color #0487FF
-  // a
-  // color #fff
-  // .sub-menu-scroll
-  // width $width + 20px
-  // .el-menu-vertical
-  // width $width
-  // overflow hidden
-  // border-right 0px solid #000
-  // .el-submenu__icon-arrow
-  // color #fff
-  // .el-menu-item.is-active
-  // background-color rgba(#fff, 0.2) !important
-  // .group
-  // width $width
-  // .group-title
-  // padding-left 15px
-  // .menu-item
-  // padding 10px 10px 10px 6px
-  // margin 2px 0
-  // cursor pointer
 </style>

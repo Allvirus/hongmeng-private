@@ -86,3 +86,7 @@ const jobs = {
 Vue.filter('formatJob', (job) => {
   return jobs[job]
 })
+
+Vue.filter('formatData', (val) => {
+  return parseFloat(val).toLocaleString()
+})
