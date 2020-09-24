@@ -6,9 +6,12 @@
     transition(name='fade-scale', mode='out-in')
       router-view.sub-view
   .sub-layout-right
-    .tab.jc-between
-      .tab-item.active 我的游戏
-      .tab-item 通讯录
+    .tab.jc-between.fs-b
+      .tab-item.hand(:class="{ 'active': tag === 'mygame' }" @click="switchTab('mygame')") 我的游戏
+      .tab-item.hand(:class="{ 'active': tag === 'contacts' }" @click="switchTab('contacts')") 通讯录
+    .content
+      my-games(v-show="tag === 'mygame'")
+      my-contacts(v-show="tag === 'contacts'")
 </template>
 
 <script>
@@ -16,6 +19,18 @@ export default {
   name: 'SubPage',
   components: {
     SubMenu: () => import('./SubMenu.vue'),
+    MyGames: () => import('@/views/pages/Home/comps/MyGames'),
+    MyContacts: () => import('@/views/pages/Home/comps/MyContacts'),
+  },
+  data () {
+    return {
+      tag: 'mygame',
+    }
+  },
+  methods: {
+    switchTab (tag) {
+      this.tag = tag
+    },
   },
 }
 </script>
