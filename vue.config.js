@@ -10,10 +10,10 @@ module.exports = {
   devServer: {
     open: true,
     host: '0.0.0.0',
-    port: 9121,
+    port: 9131,
     openPage: isTestServer
-      ? '283823055044608'
-      : '284011062624256',
+      ? '/'
+      : '/',
     // https: false,
     // hotOnly: false,
     // proxy: null, // 设置代理
