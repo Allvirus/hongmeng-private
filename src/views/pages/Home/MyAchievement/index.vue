@@ -74,7 +74,7 @@ import fetchListMixin from '@/mixins/fetchListMixin'
 export default {
   name: 'MyAchievement',
   components: {
-    Share: _ => import('../../../components/share'),
+    Share: _ => import('@/components/share'),
     OfflineList: _ => import('./comps/OfflineList'),
   },
   mixins: [fetchListMixin],

@@ -28,6 +28,7 @@ export default {
     padding 0 20px
   .sub-layout-right
     width 275px
+    height calc(100vh - 200px)
     border 1px solid rgba(#ccc, 0.1)
     background-color #fff
     .tab-item

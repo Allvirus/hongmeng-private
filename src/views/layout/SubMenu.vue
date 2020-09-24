@@ -1,32 +1,19 @@
 <template lang="pug">
 .sub-menu.ff-cn.select-none
-  .sub-menu
-    div 头像
-    div 菜单列表
-      //- el-menu.el-menu-vertical.flex-auto(
-    //-   :default-active='$route.name'
-    //-   background-color='#171b1f'
-    //-   text-color='#fff'
-    //-   active-text-color='#fff')
-    //-   el-submenu(v-for="(group, gidx) in getMenu" :index='String(gidx)' :key="gidx")
-    //-     template(slot='title')
-    //-       i(:class='group[0].meta.groupIcon')
-    //-       span {{group[0].meta.group}}
-    //-     router-link(tag="div" v-for="(item, idx) in group"
-    //-       :to="{name: item.name}" :key="item.name"
-    //-       :class='{ "router-link-active": $route.meta.activeName === item.name }')
-    //-       el-menu-item(:index='item.name') {{item.meta.title}}
-
-    //- //- .group(v-for="(group, gidx) in getMenu" :key="gidx")
-    //- //-   .group-title.fs-b.pd2.ai-center.fc-w2 {{group[0].meta.group}}
-    //- //-   .group-menu.ff-cn.pdb1
-    //- //-     router-link.menu-item.pr.pdl4(
-    //- //-       :to="{name: item.name}"
-    //- //-       :class='{ "router-link-active": $route.meta.activeName === item.name }'
-    //- //-       v-for="item in group"
-    //- //-       :key="item.path")
-    //- //-       //- i.mgr1(:class='item.meta.icon')
-    //- //-       span {{item.meta.title}}
+  .userInfo
+    el-image.avatar(:src="userInfo.avtarUrl")
+  .menu-list
+    el-menu.el-menu-vertical.flex-auto(
+    :default-active='$route.name'
+    background-color='#fff'
+    text-color='#222222'
+    :router="true"
+    active-text-color='#fff')
+      .el-menu-item(v-for="(item,index) in getMenu[0]" :key="index")
+        router-link(:to="{name:item.name}"
+          :class='{ "router-link-active": $route.name === item.name }')
+          i.ai-center(:class="item.meta.icon")
+          span.mgl2 {{item.meta.title}}
 </template>
 <script>
 import routes from '@/router/routes'
@@ -36,6 +23,7 @@ export default {
   data () {
     return {
       activeName: '',
+      userInfo: {},
     }
   },
   computed: {
@@ -49,14 +37,29 @@ export default {
         groupObj[item.meta.group] = groupObj[item.meta.group] || []
         groupObj[item.meta.group].push(item)
       })
+      console.log('getMenu', Object.values(groupObj))
       return Object.values(groupObj)
     },
+  },
+  created: function () {
+    this.createTestData()
   },
   methods: {
     handleGetGroup (item) {
       // 子账号没有子账号模块
       if (item.name === 'SubuserManage') {
         return this.userInfo.primary_id // id > 0 为子账号
+      }
+    },
+    createTestData () {
+      this.userInfo = {
+        avtarUrl: 'https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=180920816,2890274133&fm=26&gp=0.jpg',
+        username: '唐文斌',
+        realName: null,
+        phoneNumber: '15677097705',
+        job: 0,
+        level: 0,
+        experiences: 599,
       }
     },
   },
@@ -72,11 +75,24 @@ export default {
 // top 0
 // border-left 3px solid $theme
 $width = 180px
-
+$avatarSize = 60
 .sub-menu
   width $width
+  height calc(100vh - 200px)
   overflow hidden
   background-color #fff
+  .userInfo
+    width $width
+    height $width
+    .avatar
+      width $avatarSize
+      height $avatarSize
+  .menu-list
+    i
+      font-size 20px
+
+  .router-link-active
+    color #0487FF
   // a
   // color #fff
   // .sub-menu-scroll
