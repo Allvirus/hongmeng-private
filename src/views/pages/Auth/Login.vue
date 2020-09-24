@@ -1,12 +1,31 @@
 <template lang='pug'>
-el-form(label-width='0px' :model='model' :rules='rules' ref='form' @keyup.enter.native="submit")
+el-form(
+  label-width='0px',
+  :model='model',
+  :rules='rules',
+  ref='form',
+  @keyup.enter.native='submit'
+)
   el-form-item(prop='username')
-    el-input.w100p(v-model="model.username" placeholder="请输入用户名" size='large' prefix-icon="el-icon-user" )
+    el-input.w100p(
+      v-model='model.username',
+      placeholder='请输入用户名',
+      size='large',
+      prefix-icon='el-icon-user'
+    )
   el-form-item(prop='password')
-    el-input.w100p(v-model="model.password" type='password' placeholder="请输入密码" size='large' prefix-icon="el-icon-lock" )
-  el-form-item()
-    router-link.theme.mgb2(:to="$route.name === 'Login' ? 'Register' : 'Login'" ) 没有账号? 立即注册→
-    el-button.w100p.mgt1(@click='submit' type='primary' size='large') 登 录
+    el-input.w100p(
+      v-model='model.password',
+      type='password',
+      placeholder='请输入密码',
+      size='large',
+      prefix-icon='el-icon-lock'
+    )
+  el-form-item
+    router-link.theme.mgb2(
+      :to='$route.name === "Login" ? "Register" : "Login"'
+    ) 没有账号? 立即注册→
+    el-button.w100p.mgt1(@click='submit', type='primary', size='large') 登 录
 
   //- .input-wrap
   //-   img.icon.vertical-center(src='/content/images/phone.png')
