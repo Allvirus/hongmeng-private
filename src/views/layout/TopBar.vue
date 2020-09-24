@@ -1,14 +1,33 @@
 <template lang="pug">
 .top-bar
   .banner.jc-between
-    .user-info 头像 名称 等级
-    .swiper 轮播图
-    .logo logo
+    .user-info.ff-rn.ai-center.pdl2
+      el-image.avatar.mg3(:src="userInfo.avtarUrl")
+      .ff-cn.mgl2.strong
+        .ff-rn.ai-center.fs-l
+          span {{userInfo.username}}
+          el-image.mgl2.flex-center(:src="require('@/assets/img/badge.png')" fit="contain")
+          span.mgl1 {{userInfo.level | formatLevel}}
+
+        .ff-rn.ai-center.mgt2.fs-b
+          el-image(:src="require('@/assets/img/ic_job.png')" fit="contain")
+          span.mgl1 {{userInfo.job | formatJob}}
+          span.mgl1.info 经验 {{userInfo.experiences}}/1000
+
+    .swiper.fs-l.ai-center.strong
+      el-image.mgl2.flex-center(:src="require('@/assets/img/ic_notice.png')" fit="contain")
+      span 恭喜全力以赴站队黄子韬在03:08 22:18:15玩家单笔消费
+      span.danger {{1000}}
+      span 元
+    .logo.mgr3.ai-center
+      el-image.mgr3(:src="require('@/assets/img/logo_zl.png')")
   .menu-list.jc-between
-    el-tabs(@tab-click='(cmp) => $router.push({ name: cmp.name })')
+    el-tabs(v-model="activeTab" @tab-click='(cmp) => $router.push({ name: cmp.name })')
       el-tab-pane(label='首页', name='HomeMyAchievement')
       el-tab-pane(label='排行', name='Ranking')
-    .notice 公告
+    .notice.ai-center.strong
+      el-image.mgl2.flex-center(:src="require('@/assets/img/ic_notice.png')" fit="contain")
+      span 公告：关于业绩考核通知，需各部门严格执行。
 </template>
 <script>
 import { mapGetters } from 'vuex'
@@ -16,12 +35,28 @@ export default {
   name: 'TopBar',
   data () {
     return {
+      activeTab: 'HomeMyAchievement',
+      userInfo: {},
     }
   },
   computed: {
     ...mapGetters(['userInfo']),
   },
+  created: function () {
+    this.createTestData()
+  },
   methods: {
+    createTestData () {
+      this.userInfo = {
+        avtarUrl: 'https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=180920816,2890274133&fm=26&gp=0.jpg',
+        username: '唐文斌',
+        realName: null,
+        phoneNumber: '15677097705',
+        job: 0,
+        level: 0,
+        experiences: 599,
+      }
+    },
     exit () {
       this.$utils.setCookie($globalconfig.COOKIE_NAME, '', { exHours: -1, domain: $globalconfig.COOKIE_DOMAIN })
       $globalconfig.LOGIN()
@@ -39,9 +74,15 @@ $H = 120px
 .top-bar
   .banner
     height $H
-    background-color #c90
+    background-image url('../../assets/img/topbar-bg.jpg')
+    .avatar
+      width 60px
+      height 60px
+      border-radius 50%
   .menu-list
     height 50px
     padding 0 70px
     background-color #fff
+    .el-tabs__item
+      font-size 18px
 </style>

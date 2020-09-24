@@ -63,3 +63,26 @@ Vue.filter('weekFormat', val => {
   }
   return arr.join(', ')
 })
+
+// 账号等级
+const levels = {
+  0: '青铜五',
+  1: '青铜四',
+  2: '青铜三',
+  3: '青铜二',
+  4: '青铜一',
+}
+Vue.filter('formatLevel', (lev) => {
+  return levels[lev]
+})
+
+// 岗位类型
+const jobs = {
+  0: 'A岗',
+  1: 'B岗',
+  2: 'C岗',
+  3: '管理',
+}
+Vue.filter('formatJob', (job) => {
+  return jobs[job]
+})
