@@ -9,11 +9,12 @@
     text-color='#222222'
     :router="true"
     active-text-color='#fff')
-      .el-menu-item(v-for="(item,index) in getMenu[0]" :key="index")
+      .item(v-for="(item,index) in getMenu[0]" :key="index")
         router-link(:to="{name:item.name}"
           :class='{ "router-link-active": $route.name === item.name }')
-          i.ai-center(:class="item.meta.icon")
-          span.mgl2 {{item.meta.title}}
+          .el-menu-item()
+              i.ai-center(:class="item.meta.icon")
+              span.mgl2 {{item.meta.title}}
 </template>
 <script>
 import routes from '@/router/routes'
