@@ -1,6 +1,6 @@
 import router from '@/router'
-const { $globalconfig } = window
-$globalconfig.LOGIN = () => {
+export function LOGIN () {
+  debugger
   if (router.currentRoute.name !== 'Login') {
     router.push({
       name: 'Login',
@@ -8,5 +8,5 @@ $globalconfig.LOGIN = () => {
     })
   }
 }
-$globalconfig.COOKIE_DOMAIN = document.domain.split('.').slice(-2).join('.')
-$globalconfig.COOKIE_NAME = 'ZhuLangUserAccount'
+// $globalconfig.COOKIE_DOMAIN = document.domain.split('.').slice(-2).join('.')
+// $globalconfig.COOKIE_NAME = 'ZhuLangUserAccount'

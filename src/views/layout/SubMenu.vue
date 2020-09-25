@@ -23,7 +23,6 @@ export default {
   data () {
     return {
       activeName: '',
-      userInfo: {},
     }
   },
   computed: {
@@ -52,15 +51,15 @@ export default {
       }
     },
     createTestData () {
-      this.userInfo = {
-        avtarUrl: 'https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=180920816,2890274133&fm=26&gp=0.jpg',
-        username: '唐文斌',
-        realName: null,
-        phoneNumber: '15677097705',
-        job: 0,
-        level: 0,
-        experiences: 599,
-      }
+      // this.userInfo = {
+      //   avtarUrl: 'https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=180920816,2890274133&fm=26&gp=0.jpg',
+      //   username: '唐文斌',
+      //   realName: null,
+      //   phoneNumber: '15677097705',
+      //   job: 0,
+      //   level: 0,
+      //   experiences: 599,
+      // }
     },
   },
 }

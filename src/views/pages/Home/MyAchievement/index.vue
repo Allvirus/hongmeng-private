@@ -32,7 +32,7 @@
 </template>
 
 <script>
-import fetchListMixin from '@/mixins/fetchListMixin'
+// import fetchListMixin from '@/mixins/fetchListMixin'
 export default {
   name: 'MyAchievement',
   components: {
@@ -40,7 +40,7 @@ export default {
     VHistogram: () => import('v-charts/lib/histogram.common'),
     DataBox: () => import('@/views/pages/Home/MyAchievement/comps/DataBox'),
   },
-  mixins: [fetchListMixin],
+  // mixins: [fetchListMixin],
   data () {
     return {
       timeRange: ['今日', '本周', '本月', '全年'],

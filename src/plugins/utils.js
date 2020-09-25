@@ -1,7 +1,7 @@
 import vgo from '@/plugins/bus'
 import QRCode from './lib/qrcode.min'
-
-const { COMPANY_COOKIE_NAME, COOKIE_DOMAIN, LOGIN } = $globalconfig
+import { LOGIN } from '../config/globalconfig'
+const { COOKIE_NAME, COOKIE_DOMAIN } = $globalconfig
 const utils = {
   /**
    * 设置cookie
@@ -44,8 +44,9 @@ const utils = {
    * @returns {String} token or false
    */
   getToken () {
-    const token = this.getCookie(COMPANY_COOKIE_NAME)
-    if (!token) window.location.href = LOGIN()
+    debugger
+    const token = this.getCookie(COOKIE_NAME)
+    if (!token) LOGIN()
     else return token
   },
 
@@ -55,7 +56,7 @@ const utils = {
    * @param {String} token
    */
   setToken (token) {
-    this.setCookie(COMPANY_COOKIE_NAME, token, { exHours: 99, domain: process.env.NODE_ENV === 'production' ? COOKIE_DOMAIN : '' })
+    this.setCookie(COOKIE_NAME, token, { exHours: 99, domain: process.env.NODE_ENV === 'production' ? COOKIE_DOMAIN : '' })
   },
 
   /**

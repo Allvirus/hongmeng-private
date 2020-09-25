@@ -36,26 +36,27 @@ export default {
   data () {
     return {
       activeTab: 'HomeMyAchievement',
-      userInfo: {},
+      // userInfo: {},
     }
   },
   computed: {
     ...mapGetters(['userInfo']),
   },
   created: function () {
-    this.createTestData()
+    // this.createTestData()
+    console.log('created', this.userInfo)
   },
   methods: {
     createTestData () {
-      this.userInfo = {
-        avtarUrl: 'https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=180920816,2890274133&fm=26&gp=0.jpg',
-        username: '唐文斌',
-        realName: null,
-        phoneNumber: '15677097705',
-        job: 0,
-        level: 0,
-        experiences: 599,
-      }
+      // this.userInfo = {
+      //   avtarUrl: 'https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=180920816,2890274133&fm=26&gp=0.jpg',
+      //   username: '唐文斌',
+      //   realName: null,
+      //   phoneNumber: '15677097705',
+      //   job: 0,
+      //   level: 0,
+      //   experiences: 599,
+      // }
     },
     exit () {
       this.$utils.setCookie($globalconfig.COOKIE_NAME, '', { exHours: -1, domain: $globalconfig.COOKIE_DOMAIN })

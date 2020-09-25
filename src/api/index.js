@@ -12,13 +12,7 @@ export default {
   getRegions: () => http('get', 'api/common/regions?version=1'),
 
   // 用户--获取用户信息
-  getUserInfo: async () => {
-    const data = await http('get', 'https://editor.vgoyun.com/api/user/session')
-    return {
-      avatar: data.avatar,
-      nickname: data.nickname,
-    }
-  },
+  getUserInfo: () => http('get', 'api/user/'),
 
   // 获取二维码
   getQrcodeUrl: (url, iconUrl = '') => `${API}content/qrcode?data=${encodeURIComponent(url)}&icon_url=${iconUrl}&token=${utils.getToken()}`,

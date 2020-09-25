@@ -73,11 +73,11 @@ export default [
   {
     path: '/Login',
     name: 'Login',
-    component: () => import('../views/pages/Auth/'),
+    component: () => import('@/views/pages/Auth/'),
   },
   {
     path: '/Register',
     name: 'Register',
-    component: () => import('../views/pages/Auth/'),
+    component: () => import('@/views/pages/Auth/'),
   },
 ]

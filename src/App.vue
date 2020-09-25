@@ -4,9 +4,11 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 export default {
   name: 'App',
   computed: {
+    ...mapGetters(['userInfo']),
   },
   created () {
     // 开发环境获取token
@@ -19,6 +21,7 @@ export default {
         window.location.href = url.split('?')[0]
       }
     }
+    this.$store.dispatch('getUserInfo')
     // if (window.location.href.includes('test_token=')) {
     //   const url = window.location.href
     //   const arr = url.split('?')[1].split('&')

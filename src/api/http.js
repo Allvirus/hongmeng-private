@@ -1,6 +1,7 @@
 import axios from 'axios'
 import vgo from '@/plugins/bus'
 import utils from '@/plugins/utils'
+import { LOGIN } from '../config/globalconfig'
 
 const axiosInstance = axios.create({
   baseURL: $globalconfig.API,
@@ -37,7 +38,7 @@ export const http = (method, url, config = {}) => {
   }).catch(err => {
     // 对响应错误做点什么
     const { status } = err.response
-    if (status === 401) window.$globalconfig.LOGIN()
+    if (status === 401) LOGIN()
     if (status === 403) vgo.tip('您的套餐未包含此功能模块, 请升级套餐!', 'warning')
     return Promise.reject(err.response.data)
   }).finally(() => {
