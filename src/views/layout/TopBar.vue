@@ -25,6 +25,7 @@
     el-tabs(v-model="activeTab" @tab-click='(cmp) => $router.push({ name: cmp.name })')
       el-tab-pane(label='首页', name='HomeMyAchievement')
       el-tab-pane(label='排行', name='Ranking')
+      el-tab-pane(label='部门管理', name='Department')
     .notice.ai-center.strong
       el-image.mgl2.flex-center(:src="require('@/assets/img/ic_notice.png')" fit="contain")
       span 公告：关于业绩考核通知，需各部门严格执行。

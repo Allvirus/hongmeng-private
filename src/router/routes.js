@@ -74,6 +74,12 @@ export default [
         meta: { title: '排行' },
         component: () => import('@/views/pages/Ranking/'),
       },
+      {
+        path: 'Department',
+        name: 'Department',
+        meta: { title: '部门管理' },
+        component: () => import('@/views/pages/Department/'),
+      },
     ],
   },
   {

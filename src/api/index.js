@@ -137,6 +137,22 @@ export default {
     token: false,
   }),
 
-  // 更新模型缩放大小
-  updateAllModelScale: (projectId, scale) => http('post', `api/projects/${projectId}/scenes/${scale}`),
+  // 5.获取所有部门
+  getAllDeparts: () => http('get', '/api/department'),
+
+  // 6.根据部门ID获取单个部门树形结构
+  getDepartById: (id) => http('get', `/api/department/${id}`),
+
+  // 7.创建部门
+  addDepart: (model) => http('post', '/api/department/', {
+    params: {
+      name: model.name,
+      userId: model.userId,
+      superiorDepartmentId: model.superiorDepartmentId,
+      IsAjobDepartment: model.IsAjobDepartment,
+    },
+  }),
+  // 8.获取A岗部门集合
+  getAJobs: () => http('get', '/api/department/ajob'),
+
 }
