@@ -1,6 +1,7 @@
 <template lang='pug'>
   .MyCurrency
-    p 我的货币
+    .currency.mg3.bg-white
+    .trade-detail
 </template>
 <script>
 export default {
@@ -18,4 +19,5 @@ export default {
 }
 </script>
 <style lang='stylus' scoped>
+
 </style>

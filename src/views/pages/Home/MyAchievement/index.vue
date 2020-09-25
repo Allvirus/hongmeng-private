@@ -1,7 +1,7 @@
 <template lang='pug'>
 .MyAchievement
   //- 查询条件
-  .condition.pd2
+  .condition.pd2.bg-white
     .btn-group.pdl3
       el-radio-group(v-model="time")
         el-radio-button(v-for="(item,index) in timeRange" :key="index" :label="item")
@@ -27,8 +27,8 @@
   //- 图表
   .mgt3
     .ff-rn
-      v-line.charts.flex-1.mgr2.border-radius(:data="lineChart" :settings="lineChart.option")
-      v-histogram.charts.flex-1.mgl2.border-radius(:data="histogramData")
+      v-line.charts.bg-white.flex-1.mgr2.border-radius(:data="lineChart" :settings="lineChart.option")
+      v-histogram.charts.bg-white.flex-1.mgl2.border-radius(:data="histogramData")
 </template>
 
 <script>
@@ -121,9 +121,6 @@ export default {
 $spc = 44px
 .MyAchievement
   .condition
-    background-color #fff
     .btn-group
       border-bottom 1px solid #0487FF
-  .charts
-    background-color #fff
 </style>

@@ -1,6 +1,5 @@
 import router from '@/router'
 export function LOGIN () {
-  debugger
   if (router.currentRoute.name !== 'Login') {
     router.push({
       name: 'Login',

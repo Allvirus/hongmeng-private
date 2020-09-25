@@ -44,7 +44,6 @@ const utils = {
    * @returns {String} token or false
    */
   getToken () {
-    debugger
     const token = this.getCookie(COOKIE_NAME)
     if (!token) LOGIN()
     else return token
