@@ -36,7 +36,6 @@ export default {
         groupObj[item.meta.group] = groupObj[item.meta.group] || []
         groupObj[item.meta.group].push(item)
       })
-      console.log('getMenu', Object.values(groupObj))
       return Object.values(groupObj)
     },
   },

@@ -6,14 +6,14 @@
       el-radio-group(v-model="time")
         el-radio-button(v-for="(item,index) in timeRange" :key="index" :label="item")
     .ff-rn.fs-m.ai-center.mgt2
-      label.strong 游戏名称:
-      el-select.mgl3(v-model="selGame" placeholder="请选择")
+      label 游戏名称:
+      el-select.mgl1(v-model="selGame" placeholder="请选择")
         el-option(v-for="item in gameOpts"
         :key="item.value"
         :label="item.label"
         :value="item.value")
-      label.strong.mgl3 区服名称:
-      el-select.mgl3(v-model="selServ" placeholder="请选择")
+      label.mgl3 区服名称:
+      el-select.mgl1(v-model="selServ" placeholder="请选择")
         el-option(v-for="item in servOpts"
         :key="item.value"
         :label="item.label"

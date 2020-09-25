@@ -15,7 +15,7 @@ Vue.component('TitleBar', () => import('./base/TitleBar'))
 // Vue.component('CardIconGroup', () => import('./base/card/CardIconGroup'))
 
 // Vue.component('CountUpItem', () => import('./count-up-item/'))
-// Vue.component('CommonDatePicker', () => import('./common-date-picker/'))
+Vue.component('CommonDatePicker', () => import('./common-date-picker/'))
 // Vue.component('CommonTimePicker', () => import('./common-time-picker/'))
 // Vue.component('CommonAreaSelector', () => import('./common-area-selector/'))
 // Vue.component('CommonSmsVcodeInput', () => import('./common-sms-vcode-input/'))

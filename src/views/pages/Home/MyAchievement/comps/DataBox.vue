@@ -1,7 +1,7 @@
 <template lang='pug'>
   .data-box.pd2.pr
     p {{data.title}}
-    h1.jc-end.mgy3.mgr2 {{data.value | formatData}}
+    h1.jc-end.mgy3.mgr2 {{data.value | formatNumber}}
     p
       span.info 同比
       span.mgl2 {{data.rate}}%

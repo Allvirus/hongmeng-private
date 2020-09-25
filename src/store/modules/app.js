@@ -20,9 +20,7 @@ export default {
     },
     // 用户信息
     getUserInfo ({ commit, state }) {
-      console.log('getSUer', '....')
       return api.getUserInfo().then(data => {
-        console.log('getUserInfo', data)
         commit('userInfo', data)
       })
     },
