@@ -10,10 +10,9 @@
     :router="true"
     active-text-color='#fff')
       .item(v-for="(item,index) in getMenu[0]" :key="index")
-        router-link(:to="{name:item.name}"
-          :class='{ "router-link-active": $route.name === item.name }')
-          .el-menu-item()
-              i.ai-center(:class="item.meta.icon")
+        router-link(:to="{name:item.name}")
+          .el-menu-item(:class='{"router-link-active": $route.name === item.name}')
+              i.ai-center(:class="[{'router-link-active':$route.name === item.name},item.meta.icon]")
               span.mgl2 {{item.meta.title}}
 </template>
 <script>
