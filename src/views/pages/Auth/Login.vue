@@ -67,7 +67,7 @@ export default {
               redirect_uri += redirect_uri.includes('?') ? '&' : '?' + 'access_token=' + data.token
               location.replace(redirect_uri)
             } else {
-              this.$router.replace({ name: 'RoamProjectManage' })
+              this.$router.replace({ name: 'Home' })
             }
           }).catch(({ data }) => {
             this.$vgo.tip(data.errorMsg, 'error')

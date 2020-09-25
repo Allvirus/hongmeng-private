@@ -56,7 +56,7 @@ const utils = {
    * @param {String} token
    */
   setToken (token) {
-    this.setCookie(COOKIE_NAME, token, { exHours: 99, domain: process.env.NODE_ENV === 'production' ? COOKIE_DOMAIN : '' })
+    this.setCookie(COOKIE_NAME, 'Bearer ' + token, { exHours: 99, domain: process.env.NODE_ENV === 'production' ? COOKIE_DOMAIN : '' })
   },
 
   /**
