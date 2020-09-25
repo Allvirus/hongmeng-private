@@ -26,7 +26,11 @@
                   el-table-column(prop="remark" label="交易对象")
                   el-table-column(prop="balance" label="交易类型")
                   el-table-column(prop="balance" label="交易状态")
-
+      el-pagination.margin-spacing(
+        :total="listMixin.count"
+        :page-size.sync='model.pageSize'
+        :current-page.sync='model.page'
+        @current-change="getListMixin")
 </template>
 <script>
 import fetchListMixin from '@/mixins/fetchListMixin'
@@ -36,6 +40,10 @@ export default {
   data () {
     return {
       listApiForMixin: '',
+      model: {
+        page: 1,
+        pageSize: 10,
+      },
       money: 499999,
       minCashOut: 100,
       tdTyp: '',
