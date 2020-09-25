@@ -115,6 +115,22 @@ const utils = {
   },
 
   /**
+   * 获取查询参数 xx=123&aa=789 => {xx:123,aa:789}
+   *
+   * @param {*} url
+   * @returns {key: val}
+   */
+  getURLQuery (url = location.href) {
+    const obj = {}
+    const reg = /([^?&=]+)=([^?&=]+)/g
+    let res = reg.exec(url)
+    while (res) {
+      obj[res[1]] = res[2]
+      res = reg.exec(url)
+    }
+    return obj
+  },
+  /**
    * 获取设备/平台类型
    *
    * @param {String} device device/platform name lowercase
