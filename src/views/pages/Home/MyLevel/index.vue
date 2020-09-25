@@ -53,7 +53,7 @@
 </template>
 <script>
 export default {
-  name: '',
+  name: 'MyLevel',
   data () {
     return {
       rightsInfo: [],

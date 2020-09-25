@@ -60,6 +60,12 @@ export default [
             meta: { title: '订单明细', icon: 'el-icon-data-analysis' },
             component: () => import('@/views/pages/Home/MyOrders'),
           },
+          {
+            path: 'RechargePlayer',
+            name: 'HomeRechargePlayer',
+            meta: { title: '充值玩家', icon: 'el-icon-data-analysis' },
+            component: () => import('@/views/pages/Home/RechargePlayer'),
+          },
         ],
       },
       {
