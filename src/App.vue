@@ -12,22 +12,13 @@ export default {
   },
   created () {
     // 开发环境获取token
+    const query = this.$utils.getURLQuery()
     if (process.env.NODE_ENV !== 'production') {
-      const url = window.location.href
-      if (url.includes('access_token')) {
-        const arrTemp = url.split('?')
-        // const arr = arrTemp[arrTemp.length - 1].split('&')
-        this.$utils.setCookie($globalconfig.COOKIE_NAME, arrTemp[1], { exHours: 2 })
-        window.location.href = url.split('?')[0]
+      if (query.access_token) {
+        this.$utils.setToken(query.access_token)
       }
     }
     this.$store.dispatch('getUserInfo')
-    // if (window.location.href.includes('test_token=')) {
-    //   const url = window.location.href
-    //   const arr = url.split('?')[1].split('&')
-    //   this.$utils.setCookie(this.GLOBALCONFIG.COOKIE_NAME, arr[0].split('=')[1], { exHours: 1111 })
-    // }
-    // this.$store.dispatch('getOfficialAccountBindInfo')
   },
 }
 </script>
