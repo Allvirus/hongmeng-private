@@ -197,8 +197,8 @@ export default {
   delBizCfg: (bizId) => http('delete', `/api/bizconfig/${bizId}`),
 
   // 13.根据业务配置Id和实体全更新
-  updateCfgByIf: (model) => http('put', `/api/bizconfig/${model.bizId}`, {
-    params: {
+  updateCfgByIf: (model) => http('put', `/api/bizconfig/${model.id}`, {
+    data: {
       id: model.id,
       startTime: model.startTime,
       endTime: model.endTime,

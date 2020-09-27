@@ -17,20 +17,13 @@
         template(slot-scope="{ row }")
           .ff-rn
             el-button.mgl3(icon="el-icon-edit-outline" type="text" @click="showEditDlg(true,row)") 编辑
-            el-button.mgl3.danger(icon="el-icon-delete" type="text" @click="showDelDlg(row)") 删除
+            el-button.mgl3.danger(icon="el-icon-delete" type="text" @click="deleteCfg(row)") 删除
 
     el-pagination.margin-spacing(
       :total="listMixin.count"
       :page-size.sync='model.pageSize'
       :current-page.sync='model.page'
       @current-change="getListMixin")
-
-    //- 删除提示对话框
-    el-dialog(title="提示" :visible.sync="delDlgVisiable" width="30%")
-      span.pdy2.fs-l 确认删除?
-      span.dialog-footer(slot="footer")
-        el-button.mgl3(type="warning" @click="delDlgVisiable =  false") 取消
-        el-button.mgl3(type="primary" @click="deleteCfg") 确认
 
     //- 编辑、新增对话框
     el-dialog(:title="cfgInfo.isEdit?'编辑':'新增'"
@@ -94,7 +87,6 @@ export default {
         isEdit: false,
         title: '',
         row: {
-          datatime: '',
           startTime: '',
           endTime: '',
           departmentId: '',
@@ -141,21 +133,17 @@ export default {
     showEditDlg (isEdit, row) {
       this.cfgInfo.isEdit = isEdit
       if (isEdit) {
-        this.cfgInfo.row = row
-        console.log('showEditDlg', row)
+        this.cfgInfo.row = JSON.parse(JSON.stringify(row))
+        console.log('showEditDlg', this.cfgInfo.row)
       }
       this.editDlgVisiable = true
     },
-    showDelDlg (row) {
-      this.delDlgVisiable = true
-      this.delId = row.id
-    },
-    deleteCfg () {
-      this.$api.delBizCfg(this.delId).then(res => {
-        this.$vgo.tip('已删除', 'success')
-        this.delId = null
-        this.delDlgVisiable = false
-        this.getListMixin()
+    deleteCfg (row) {
+      this.$vgo.open(() => {
+        this.$api.delBizCfg(row.id).then(res => {
+          this.afterModifyGetListMixin(1, 1)
+          this.getListMixin()
+        })
       })
     },
     cancelEdit () {
@@ -222,11 +210,22 @@ export default {
         return
       }
 
-      this.$api.addBizCfg(params).then(res => {
-        this.$vgo.tip('提交成功', 'success')
-        this.cancelEdit()
-        this.getListMixin()
-      })
+      if (this.editDlgVisiable) {
+        // 更新
+        params.id = this.cfgInfo.row.id
+        this.$api.updateCfgByIf(params).then(res => {
+          this.$vgo.tip('更新成功', 'success')
+          this.cancelEdit()
+          this.getListMixin()
+        })
+      } else {
+        // 新增
+        this.$api.addBizCfg(params).then(res => {
+          this.$vgo.tip('提交成功', 'success')
+          this.cancelEdit()
+          this.getListMixin()
+        })
+      }
     },
   },
 }
