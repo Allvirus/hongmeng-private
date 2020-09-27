@@ -1,9 +1,9 @@
 <template lang='pug'>
   .Depart
     .ff-rn
-      .org-tree
-        el-tree(:data="model.departsList" :props="props" @node-click="handleNodeClick")
-      .user-list.mgl2
+      .org-tree.bg-white
+        el-tree(:data="model.departsList" node_key="id" :default-expanded-keys="[1,2]" :props="props" @node-click="handleNodeClick")
+      .user-list.mgl2.bg-white.pd2
         el-button.mgl3(icon="el-icon-plus" type="primary" @click="showAddDepDlg") 新增部门
         el-table.mgt2(:data='model.userList')
             el-table-column(prop="created" label="姓名")
@@ -123,7 +123,7 @@ export default {
   .org-tree
     width 20%
     >>>.el-tree-node__label
-      font-size 18px !important
+      font-size 14px !important
 
   .user-list
     width 80%

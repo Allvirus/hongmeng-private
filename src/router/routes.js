@@ -66,6 +66,18 @@ export default [
             meta: { title: '充值玩家', icon: 'el-icon-data-analysis' },
             component: () => import('@/views/pages/Home/RechargePlayer'),
           },
+          {
+            path: 'BizConfig',
+            name: 'HomeBizConfig',
+            meta: { title: '业务配置', icon: 'el-icon-data-analysis' },
+            component: () => import('@/views/pages/Home/BizConfig'),
+          },
+          {
+            path: 'Department',
+            name: 'HomeDepartment',
+            meta: { title: '部门人员管理', icon: 'el-icon-data-analysis' },
+            component: () => import('@/views/pages/Department'),
+          },
         ],
       },
       {

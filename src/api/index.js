@@ -140,6 +140,12 @@ export default {
   // 4.5获取所有用户信息
   getAllUser: () => http('get', 'api/user/all'),
 
+  // 4.6 获取B岗用户信息
+  getBJobs: () => http('get', 'api/user/b'),
+
+  // 4.7 获取C岗用户信息
+  getCJobs: () => http('get', 'api/user/c'),
+
   // 5.获取所有部门
   getAllDeparts: () => http('get', '/api/department'),
 
@@ -161,15 +167,13 @@ export default {
 
   // 9.获取业务配置分页信息
   getBizConfig: (model) => http('get', '/api/bizconfig', {
-    data: {
-      startTime: model.startTime,
-      endTime: model.endTime,
-      departmentId: model.departmentId,
-      bUserId: model.bUserId,
-      cUserId: model.cUserId,
-      page: model.page,
-      pageSize: model.pageSize,
-    },
+    params: (() => {
+      if (model.startTime === '' || model.endTime === '') {
+        delete model.startTime
+        delete model.endTime
+      }
+      return model
+    })(),
   }),
 
   // 10.通过业务配置Id查询单个业务配置
@@ -181,12 +185,10 @@ export default {
       startTime: model.startTime,
       endTime: model.endTime,
       departmentId: model.departmentId,
-      bUserId: model.bUserId,
-      cUserId: model.cUserId,
-      page: model.page,
-      pageSize: model.pageSize,
       departmentName: model.departmentName,
+      bUserId: model.bUserId,
       bUserName: model.bUserName,
+      cUserId: model.cUserId,
       cUserName: model.cUserName,
     },
   }),
