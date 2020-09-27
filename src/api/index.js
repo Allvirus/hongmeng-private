@@ -137,6 +137,9 @@ export default {
     token: false,
   }),
 
+  // 4.5获取所有用户信息
+  getAllUser: () => http('get', 'api/user/all'),
+
   // 5.获取所有部门
   getAllDeparts: () => http('get', '/api/department'),
 
@@ -145,14 +148,102 @@ export default {
 
   // 7.创建部门
   addDepart: (model) => http('post', '/api/department/', {
-    params: {
+    data: {
       name: model.name,
       userId: model.userId,
       superiorDepartmentId: model.superiorDepartmentId,
       IsAjobDepartment: model.IsAjobDepartment,
     },
   }),
+
   // 8.获取A岗部门集合
   getAJobs: () => http('get', '/api/department/ajob'),
 
+  // 9.获取业务配置分页信息
+  getBizConfig: (model) => http('get', '/api/bizconfig', {
+    data: {
+      startTime: model.startTime,
+      endTime: model.endTime,
+      departmentId: model.departmentId,
+      bUserId: model.bUserId,
+      cUserId: model.cUserId,
+      page: model.page,
+      pageSize: model.pageSize,
+    },
+  }),
+
+  // 10.通过业务配置Id查询单个业务配置
+  getBizCfgById: (bizId) => http('get', `/api/bizconfig/${bizId}`),
+
+  // 11.创建业务配置
+  addBizCfg: (model) => http('post', '/api/bizconfig/', {
+    data: {
+      startTime: model.startTime,
+      endTime: model.endTime,
+      departmentId: model.departmentId,
+      bUserId: model.bUserId,
+      cUserId: model.cUserId,
+      page: model.page,
+      pageSize: model.pageSize,
+      departmentName: model.departmentName,
+      bUserName: model.bUserName,
+      cUserName: model.cUserName,
+    },
+  }),
+
+  // 12.根据业务配置Id删除业务配置
+  delBizCfg: (bizId) => http('delete', `/api/bizconfig/${bizId}`),
+
+  // 13.根据业务配置Id和实体全更新
+  updateCfgByIf: (model) => http('put', `/api/bizconfig/${model.bizId}`, {
+    params: {
+      id: model.id,
+      startTime: model.startTime,
+      endTime: model.endTime,
+      departmentId: model.departmentId,
+      departmentName: model.departmentName,
+      bUserId: model.bUserId,
+      bUserName: model.bUserName,
+      cUserId: model.cUserId,
+      cUserName: model.cUserName,
+    },
+  }),
+  // 14.查询所有等级（不分页）
+  getLevel: () => http('get', '/api/level/'),
+
+  // 15.查询单个等级
+  getLevelById: (levId) => http('get', `/api/level/${levId}`),
+
+  // 16.创建等级
+  addLevel: (model) => http('post', '/api/level/', {
+    data: {
+      levelIcon: model.levelIcon,
+      level: model.level,
+      experience: model.experience,
+      basicSalary: model.basicSalary,
+      commission: model.commission,
+      ajobAndroidExp: model.ajobAndroidExp,
+      ajobIOSExp: model.ajobIOSExp,
+      bjobAndroidExp: model.bjobAndroidExp,
+      bjobIOSExp: model.bjobIOSExp,
+    },
+  }),
+
+  // 17.根据ID删除等级
+  delLevelById: (levId) => http('delete', `/api/level/${levId}`),
+
+  // 18.根据ID和实体更新等级
+  updateLevById: (model) => http('put', `/api/level/${model.levelId}`, {
+    params: {
+      levelIcon: model.levelIcon,
+      level: model.level,
+      experience: model.experience,
+      basicSalary: model.basicSalary,
+      commission: model.commission,
+      ajobAndroidExp: model.ajobAndroidExp,
+      ajobIOSExp: model.ajobIOSExp,
+      bjobAndroidExp: model.bjobAndroidExp,
+      bjobIOSExp: model.bjobIOSExp,
+    },
+  }),
 }

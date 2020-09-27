@@ -51,7 +51,7 @@ export default {
       $globalconfig.LOGIN()
     },
     handleClick (e) {
-      console.log(e)
+      console.log('handleClick')
     },
   },
 }
