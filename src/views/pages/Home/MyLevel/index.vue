@@ -2,16 +2,18 @@
   .MyLevel.pd3
     h3 我的等级
     .info
-      .ff-rn.pd2.bg-white.mgt2
-        span 青铜五
-        //- el-progress(:text-inside="true" :stroke-width="26" :percentage="70")
-        span 青铜四
+      .bg-white.pd2.ff-rn
+        span {{levelInfo[0].levelName}}
+        .pr
+          el-progress.mgx2.w200(:text-inside="true" :show-text="false" :stroke-width="20" :percentage="expPercent")
+          p.flex-center.pac(:style="{ color: '#000000' }") {{userInfo.experiences}}/{{levelInfo[1].experience}}
+        span {{levelInfo[1].levelName}}
       .ff-rn.mgt2
         .exp-box.bg-white.pd3
           .jc-between
             span 累计经验值
             a.hand 经验值明细
-          h2.mgt3.jc-center.warning 88888
+          h2.mgt3.jc-center.warning {{userInfo.experiences}}
         .exp-box.bg-white.pd3.mgl2
           .jc-between
             span 今日经验值
@@ -52,6 +54,7 @@
           el-table-column(prop="accompany" label="陪玩岗")
 </template>
 <script>
+import { mapGetters } from 'vuex'
 export default {
   name: 'MyLevel',
   data () {
@@ -72,8 +75,20 @@ export default {
           accompany: '0.7',
         },
       ],
-      levelInfo: [],
+      levelInfo: [
+        {
+          levelName: '',
+        },
+        {
+          levelName: '',
+          experience: '',
+        },
+      ],
+      expPercent: 0,
     }
+  },
+  computed: {
+    ...mapGetters(['userInfo']),
   },
   created: function () {
     this.getMyLevel()
@@ -81,9 +96,15 @@ export default {
   methods: {
     getMyLevel () {
       this.$api.getMyLevel().then(res => {
-        console.log('getMyLevel', res)
         this.levelInfo = res
+        this.calcPercent()
       })
+    },
+    calcPercent () {
+      const curExp = this.userInfo.experiences
+      const curLevMaxExp = this.levelInfo[0].experience
+      const nexLevMaxExp = this.levelInfo[1].experience
+      this.expPercent = ((curExp - curLevMaxExp) / (nexLevMaxExp - curLevMaxExp)) * 100
     },
   },
 }

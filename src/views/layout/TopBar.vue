@@ -12,7 +12,7 @@
         .ff-rn.ai-center.mgt2.fs-b
           el-image(:src="require('@/assets/img/ic_job.png')" fit="contain")
           span.mgl1 {{userInfo.job | formatJob}}
-          span.mgl1.info 经验 {{userInfo.experiences}}/1000
+          span.mgl1.info 经验 {{userInfo.experiences}}
 
     .swiper.fs-l.ai-center.strong
       el-image.mgl2.flex-center(:src="require('@/assets/img/ic_notice.png')" fit="contain")

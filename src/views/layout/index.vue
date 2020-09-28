@@ -1,5 +1,5 @@
 <template lang="pug">
-.layout.ff-cn.flex-1
+.layout.ff-cn.flex-1(v-if='userInfo.id')
   TopBar
   .layout-bottom.flex-1
     transition(name='fade-scale', mode='out-in')
