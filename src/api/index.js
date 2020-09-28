@@ -248,4 +248,62 @@ export default {
       bjobIOSExp: model.bjobIOSExp,
     },
   }),
+  // 19.获取游戏注册分页信息
+  getPlayerList: (model) => http('get', '/api/player/info', {
+    params: (() => {
+      const p = {
+        startTime: model.startTime,
+        endTime: model.endTime,
+        UserAccount: model.UserAccount,
+        Account: model.Account,
+        UserCode: model.UserCode,
+        OSType: model.OSType,
+        Page: model.page,
+        PageSize: model.pageSize,
+      }
+      for (const key in p) {
+        if (p[key] === '') {
+          delete p[key]
+        }
+      }
+      return p
+    })(),
+  }),
+
+  // 20.获取游戏订单分页信息
+  getGameOrders: (model) => http('get', '/api/player/order', {
+    params: {
+      startTime: model.startTime,
+      endTime: model.endTime,
+      UserAccount: model.UserAccount,
+      GameOrderID: model.startTGameOrderIDime,
+      Account: model.Account,
+      UserCode: model.UserCode,
+      GameName: model.GameName,
+      RoleName: model.RoleName,
+      RoleCode: model.RoleCode,
+      AreaName: model.AreaName,
+      AreaCode: model.AreaCode,
+      TotalPrice: model.TotalPrice,
+      OSType: model.OSType,
+      Page: model.Page,
+      PageSize: model.PageSize,
+    },
+  }),
+
+  // 21.获取游戏角色分页信息
+  getRoleInfos: (model) => http('get', '/api/player/order', {
+    params: {
+      startTime: model.startTime,
+      endTime: model.endTime,
+      UserAccount: model.UserAccount,
+      Account: model.Account,
+      UserCode: model.UserCode,
+      GameName: model.GameName,
+      RoleName: model.RoleName,
+      Page: model.Page,
+      PageSize: model.PageSize,
+
+    },
+  }),
 }
