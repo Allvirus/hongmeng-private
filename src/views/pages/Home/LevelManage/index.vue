@@ -1,12 +1,10 @@
 <template lang='pug'>
   .LevelManage
-    .ff-rn.fs-m.ai-center.mgt2
+    .ff-rn.fs-m.ai-center.mgt2.bg-white.pdy2
       el-form.ff-rn(label-width="100px")
           el-button.mgl3(icon="el-icon-plus" type="primary" @click="showEditDlg(false,null)") 新增等级
-          el-button.mgl3(icon="el-icon-search" type="primary" @click="search") 搜索
-          el-button.mgl2(icon="el-icon-refresh-right" type="primary" @click="reset") 重置
 
-    el-table.mgy2(:data='levelList')
+    el-table.mgy2.bg-white.pd2(:data='levelList')
       el-table-column(prop="level" label="等级名称")
         template(slot-scope='{ row }') {{row.level | formatLevel}}
       el-table-column(prop="experience" label="经验值")
@@ -104,12 +102,6 @@ export default {
     this.getLevelList()
   },
   methods: {
-    search () {
-      this.getLevelList()
-    },
-    reset () {
-      this.getLevelList()
-    },
     getLevelList () {
       this.$api.getAllLevel().then(res => {
         console.log('getLevel', res)

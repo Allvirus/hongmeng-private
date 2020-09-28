@@ -1,6 +1,6 @@
 <template lang='pug'>
   .MyRegister.pd3
-    el-form.ff-rn(label-width="100px")
+    el-form.ff-rn.bg-white.pd2(label-width="100px")
       el-form-item(label="玩家账号:")
         el-input.w200(v-model="model.userAccount")
       el-form-item(label="玩家代码:")
@@ -10,7 +10,7 @@
         el-button.mgl3(icon="el-icon-search" type="primary" @click="search") 搜索
         el-button.mgl2(icon="el-icon-refresh-right" type="primary" @click="reset") 重置
 
-    el-table.mgy2(:data='listMixin.list')
+    el-table.mgy2.bg-white.pd2(:data='listMixin.list')
       el-table-column(prop="userAccount" label="玩家账号")
       el-table-column(prop="userCode" label="玩家代码")
       el-table-column(prop="deviceNo" label="设备号")

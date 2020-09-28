@@ -1,6 +1,6 @@
 <template lang='pug'>
   .MyRoles.pd3
-    .ff-rn.fs-m.ai-center.mgt2
+    .ff-rn.fs-m.ai-center.mgt2.bg-white.pd2
       el-form.ff-rn(label-width="100px")
         el-form-item(label="玩家账号:")
           el-input.w150(v-model="model.UserAccount")
@@ -13,7 +13,7 @@
           el-button.mgl3(icon="el-icon-search" type="primary" @click="search") 搜索
           el-button.mgl2(icon="el-icon-refresh-right" type="primary" @click="reset") 重置
 
-    el-table.mgy2(:data='listMixin.list')
+    el-table.mgy2.bg-white.pd2(:data='listMixin.list')
       el-table-column(prop="userAccount" label="玩家账号")
       el-table-column(prop="userCode" label="玩家代码")
       el-table-column(prop="gameName" label="游戏名称")

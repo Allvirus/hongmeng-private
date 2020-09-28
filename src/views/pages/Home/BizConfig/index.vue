@@ -1,11 +1,11 @@
 <template lang='pug'>
   .BizConfig.pd3
-    .ff-rn.fs-m.ai-center.mgt2
+    .ff-rn.fs-m.ai-center.mgt2.bg-white.pdy2
       el-button.mgl3(icon="el-icon-plus" type="primary" @click="showEditDlg(false,null)") 新增配置
       el-button.mgl3(icon="el-icon-search" type="primary" @click="search") 搜索
       el-button.mgl2(icon="el-icon-refresh-right" type="primary" @click="reset") 重置
 
-    el-table.mgy2(:data='listMixin.list' :row-class-name="({ row }) => row.is_payout ? 'danger' : ''")
+    el-table.mgy2.bg-white.pd2(:data='listMixin.list' :row-class-name="({ row }) => row.is_payout ? 'danger' : ''")
       el-table-column(prop="departmentName" label="部门")
       el-table-column(prop="bUserName" label="B岗")
       el-table-column(prop="cUserName" label="C岗")
