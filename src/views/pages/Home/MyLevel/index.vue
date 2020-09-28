@@ -28,11 +28,11 @@
 
       .level-rights
         h3.mgt3 提成起点
-        el-table.mgy2(:data='rightsInfo')
-                  el-table-column(prop="created" label="岗位")
-                  el-table-column(prop="amount" label="岗位客流")
-                  el-table-column(prop="type_text" label="引导岗")
-                  el-table-column(prop="remark" label="陪玩岗")
+        el-table.mgy2(:data='commission')
+                  el-table-column(prop="job" label="岗位")
+                  el-table-column(prop="custom" label="客流岗")
+                  el-table-column(prop="guide" label="引导岗")
+                  el-table-column(prop="accompany" label="陪玩岗")
 
       .level-rights
         h3.mgt3 换包经验值获取
@@ -45,19 +45,44 @@
 
       .level-rights
         h3.mgt3 流水经验值获取
-        el-table.mgy2(:data='rightsInfo')
-                  el-table-column(prop="created" label="岗位")
-                  el-table-column(prop="amount" label="岗位客流")
-                  el-table-column(prop="type_text" label="引导岗")
-                  el-table-column(prop="remark" label="陪玩岗")
+        el-table.mgy2(:data='experience')
+                  el-table-column(prop="job" label="岗位")
+                  el-table-column(prop="custom" label="客流岗")
+                  el-table-column(prop="guide" label="引导岗")
+                  el-table-column(prop="accompany" label="陪玩岗")
 </template>
 <script>
 export default {
   name: 'MyLevel',
   data () {
     return {
-      rightsInfo: [],
+      commission: [
+        {
+          job: '提成起点',
+          custom: '当月总流水≥20000',
+          guide: '当月总流水≥50000',
+          accompany: '当月总流水≥40000',
+        },
+      ],
+      experience: [
+        {
+          job: '流水经验值折算系数',
+          custom: '1',
+          guide: '0.5',
+          accompany: '0.7',
+        },
+      ],
     }
+  },
+  created: function () {
+    this.getAllLevel()
+  },
+  methods: {
+    getAllLevel () {
+      this.$api.getAllLevel().then(res => {
+        console.log('getAllLevel', res)
+      })
+    },
   },
 }
 </script>

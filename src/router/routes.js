@@ -73,6 +73,12 @@ export default [
             component: () => import('@/views/pages/Home/BizConfig'),
           },
           {
+            path: 'LevelManage',
+            name: 'HomeLevelManage',
+            meta: { title: '等级管理', icon: 'el-icon-data-analysis' },
+            component: () => import('@/views/pages/Home/LevelManage'),
+          },
+          {
             path: 'Department',
             name: 'HomeDepartment',
             meta: { title: '部门人员管理', icon: 'el-icon-data-analysis' },

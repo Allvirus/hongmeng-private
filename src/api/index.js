@@ -211,7 +211,7 @@ export default {
     },
   }),
   // 14.查询所有等级（不分页）
-  getLevel: () => http('get', '/api/level/'),
+  getAllLevel: () => http('get', '/api/level/'),
 
   // 15.查询单个等级
   getLevelById: (levId) => http('get', `/api/level/${levId}`),
