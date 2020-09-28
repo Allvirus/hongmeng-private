@@ -4,7 +4,7 @@
     .info
       .ff-rn.pd2.bg-white.mgt2
         span 青铜五
-        el-progress(:text-inside="true" :stroke-width="26" :percentage="70")
+        //- el-progress(:text-inside="true" :stroke-width="26" :percentage="70")
         span 青铜四
       .ff-rn.mgt2
         .exp-box.bg-white.pd3
@@ -20,36 +20,36 @@
     .tables
       .level-rights
         h3.mgt3 等级权益说明
-        el-table.mgy2(:data='rightsInfo')
-                  el-table-column(prop="created" label="等级")
-                  el-table-column(prop="amount" label="所需经验")
-                  el-table-column(prop="type_text" label="提成")
-                  el-table-column(prop="remark" label="等级工资")
+        el-table.mgy2(:data='levelInfo')
+          el-table-column(prop="levelName" label="等级名称")
+          el-table-column(prop="experience" label="经验")
+          el-table-column(prop="commission" label="提成")
+          el-table-column(prop="remabasicSalaryrk" label="等级工资")
 
       .level-rights
         h3.mgt3 提成起点
         el-table.mgy2(:data='commission')
-                  el-table-column(prop="job" label="岗位")
-                  el-table-column(prop="custom" label="客流岗")
-                  el-table-column(prop="guide" label="引导岗")
-                  el-table-column(prop="accompany" label="陪玩岗")
+          el-table-column(prop="job" label="岗位")
+          el-table-column(prop="custom" label="客流岗")
+          el-table-column(prop="guide" label="引导岗")
+          el-table-column(prop="accompany" label="陪玩岗")
 
       .level-rights
         h3.mgt3 换包经验值获取
-        el-table.mgy2(:data='rightsInfo')
-                  el-table-column(prop="created" label="等级")
-                  el-table-column(prop="amount" label="A岗Android换包经验")
-                  el-table-column(prop="type_text" label="A岗iOS换包经验")
-                  el-table-column(prop="remark" label="B岗Android换包经验")
-                  el-table-column(prop="type_text" label="B岗iOS换包经验")
+        el-table.mgy2(:data='levelInfo')
+          el-table-column(prop="levelName" label="等级名称")
+          el-table-column(prop="ajobAndroidExp" label="A岗Android换包经验")
+          el-table-column(prop="ajobIOSExp" label="A岗iOS换包经验")
+          el-table-column(prop="bjobAndroidExp" label="B岗Android换包经验")
+          el-table-column(prop="bjobIOSExp" label="B岗iOS换包经验")
 
       .level-rights
         h3.mgt3 流水经验值获取
         el-table.mgy2(:data='experience')
-                  el-table-column(prop="job" label="岗位")
-                  el-table-column(prop="custom" label="客流岗")
-                  el-table-column(prop="guide" label="引导岗")
-                  el-table-column(prop="accompany" label="陪玩岗")
+          el-table-column(prop="job" label="岗位")
+          el-table-column(prop="custom" label="客流岗")
+          el-table-column(prop="guide" label="引导岗")
+          el-table-column(prop="accompany" label="陪玩岗")
 </template>
 <script>
 export default {
@@ -72,15 +72,17 @@ export default {
           accompany: '0.7',
         },
       ],
+      levelInfo: [],
     }
   },
   created: function () {
-    this.getAllLevel()
+    this.getMyLevel()
   },
   methods: {
-    getAllLevel () {
-      this.$api.getAllLevel().then(res => {
-        console.log('getAllLevel', res)
+    getMyLevel () {
+      this.$api.getMyLevel().then(res => {
+        console.log('getMyLevel', res)
+        this.levelInfo = res
       })
     },
   },
