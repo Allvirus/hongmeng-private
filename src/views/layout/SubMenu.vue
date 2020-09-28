@@ -9,7 +9,7 @@
       span {{userInfo.username}}
       el-image.mgl2.flex-center(:src="require('@/assets/img/badge.png')" fit="contain")
       span.mgl1 {{userInfo.level | formatLevel}}
-    .ff-rn.jc-center.mgb3
+    .ff-rn.jc-center.mgb3.mgt2
       el-image(:src="require('@/assets/img/ic_job.png')" fit="contain")
       span.mgl1 {{userInfo.job | formatJob}}
 
