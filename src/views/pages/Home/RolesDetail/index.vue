@@ -1,36 +1,29 @@
 <template lang='pug'>
   .MyRoles.pd3
     .ff-rn.fs-m.ai-center.mgt2
-      //- label 玩家代码 :
-      //- el-select.mgl1(v-model="tdTyp" placeholder="请选择")
-      //-   el-option(v-for="item in tdTypLst"
-      //-   :key="item.value"
-      //-   :label="item.label"
-      //-   :value="item.value")
-      //- label.mgl2 员工 :
-      //- el-select.mgl1(v-model="tdTyp" placeholder="请选择")
-      //-   el-option(v-for="item in tdTypLst"
-      //-   :key="item.value"
-      //-   :label="item.label"
-      //-   :value="item.value")
-      label.mgl3 注册时间:
-      CommonDatePicker.mgl1(:start.sync='model.startTime' :end.sync='model.endTime' )
-      el-button.mgl3(icon="el-icon-search" type="primary" @click="search") 搜索
-      el-button.mgl2(icon="el-icon-refresh-right" type="primary" @click="reset") 重置
+      el-form.ff-rn(label-width="100px")
+        el-form-item(label="玩家账号:")
+          el-input.w150(v-model="model.UserAccount")
+        el-form-item(label="游戏名称:")
+          el-input.w150(v-model="model.GameName")
+        el-form-item(label="游戏角色:")
+          el-input.w150(v-model="model.RoleName")
+        el-form-item(label="注册时间:")
+          CommonDatePicker.w200.mgl1(:start.sync='model.startTime' :end.sync='model.endTime' )
+          el-button.mgl3(icon="el-icon-search" type="primary" @click="search") 搜索
+          el-button.mgl2(icon="el-icon-refresh-right" type="primary" @click="reset") 重置
 
     el-table.mgy2(:data='listMixin.list')
-                el-table-column(prop="userAccount" label="玩家账号")
-                el-table-column(prop="userCode" label="玩家代码")
-                el-table-column(prop="type_text" label="游戏名称")
-                el-table-column(prop="gameName" label="游戏平台")
-                el-table-column(prop="areaName" label="区服")
-                el-table-column(prop="roleName" label="游戏角色")
-                el-table-column(prop="createDate" label="等级")
-                el-table-column(prop="createDate" label="创建时间")
-                el-table-column(prop="createDate" label="最近上线时间")
-                el-table-column(prop="ajob" label="A岗")
-                el-table-column(prop="bjob" label="B岗")
-                el-table-column(prop="cjob" label="C岗")
+      el-table-column(prop="userAccount" label="玩家账号")
+      el-table-column(prop="userCode" label="玩家代码")
+      el-table-column(prop="gameName" label="游戏名称")
+      el-table-column(prop="areaName" label="区服")
+      el-table-column(prop="roleName" label="游戏角色")
+      el-table-column(prop="createDate" label="创建时间")
+        template(slot-scope="{ row }") {{row.createDate | dateFormat}}
+      el-table-column(prop="ajob" label="A岗")
+      el-table-column(prop="bjob" label="B岗")
+      el-table-column(prop="cjob" label="C岗")
     el-pagination.margin-spacing(
       :total="listMixin.count"
       :page-size.sync='model.pageSize'
@@ -60,14 +53,21 @@ export default {
   },
   methods: {
     search () {
-      this.$vgo.tip('开始搜索 ', 'success')
+      this.getListMixin()
     },
     reset () {
-      this.tdTyp = ''
-      this.startdate = ''
-      this.enddate = ''
-      this.$vgo.tip('已重置', 'success')
-      this.search()
+      this.model = {
+        startTime: '',
+        endTime: '',
+        UserAccount: '',
+        Account: '',
+        UserCode: '',
+        GameName: '',
+        RoleName: '',
+        page: 1,
+        pageSize: 10,
+      }
+      this.getListMixin()
     },
   },
 }

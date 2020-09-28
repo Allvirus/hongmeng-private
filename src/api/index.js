@@ -261,14 +261,11 @@ export default {
         page: model.page,
         pageSize: model.pageSize,
       }
-      console.log('getPlayerInfo before', model)
       for (const key in p) {
         if (p[key] === '') {
-          console.log('tag', 'remove ' + key)
           delete p[key]
         }
       }
-      console.log('getPlayerInfo', p)
       return p
     })(),
   }),

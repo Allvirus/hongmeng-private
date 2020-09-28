@@ -11,18 +11,18 @@
         el-button.mgl2(icon="el-icon-refresh-right" type="primary" @click="reset") 重置
 
     el-table.mgy2(:data='listMixin.list')
-                el-table-column(prop="userAccount" label="玩家账号")
-                el-table-column(prop="userCode" label="玩家代码")
-                el-table-column(prop="deviceNo" label="设备号")
-                el-table-column(prop="createDate" label="注册时间")
-                  template(slot-scope="{ row }") {{row.createDate | dateFormat}}
-                el-table-column(prop="createIp" label="注册IP")
-                el-table-column(prop="ajob" label="A岗")
-                el-table-column(prop="bjob" label="B岗")
-                el-table-column(prop="cjob" label="C岗")
-                el-table-column(prop="" label="操作")
-                  template(slot-scope="{ row }")
-                    el-button(type="text" @click="showRole(row)") 查看角色
+      el-table-column(prop="userAccount" label="玩家账号")
+      el-table-column(prop="userCode" label="玩家代码")
+      el-table-column(prop="deviceNo" label="设备号")
+      el-table-column(prop="createDate" label="注册时间")
+        template(slot-scope="{ row }") {{row.createDate | dateFormat}}
+      el-table-column(prop="createIp" label="注册IP")
+      el-table-column(prop="ajob" label="A岗")
+      el-table-column(prop="bjob" label="B岗")
+      el-table-column(prop="cjob" label="C岗")
+      el-table-column(prop="" label="操作")
+        template(slot-scope="{ row }")
+          el-button(type="text" @click="showRole(row)") 查看角色
 
     el-pagination.margin-spacing(
       :total="listMixin.count"
