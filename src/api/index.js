@@ -336,10 +336,12 @@ export default {
   getPlRchgRecord: (model) => http('get', `/api/player/recharge/${model.userAccount}`, {
     params: {
       userAccount: model.userAccount,
-      startTime: model.startTime,
-      endTime: model.endTime,
       page: model.page,
       pageSize: model.pageSize,
+      gameName: model.gameName,
+      areaName: model.areaName,
+      startTime: model.startTime,
+      endTime: model.endTime,
     },
   }),
 }
