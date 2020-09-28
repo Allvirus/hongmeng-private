@@ -1,7 +1,18 @@
 <template lang="pug">
-.sub-menu.ff-cn.select-none
-  .userInfo
-    el-image.avatar(:src="userInfo.avtarUrl")
+.sub-menu.ff-cn
+  .userInfo.pr
+    .avatar-bg.pa
+      el-image(:src="userInfo.avtarUrl")
+    .jc-center.mgt3
+      el-image.avatar.mgt1(:src="userInfo.avtarUrl")
+    .ff-rn.fs-l.jc-center.mgt2
+      span {{userInfo.username}}
+      el-image.mgl2.flex-center(:src="require('@/assets/img/badge.png')" fit="contain")
+      span.mgl1 {{userInfo.level | formatLevel}}
+    .ff-rn.jc-center.mgt2
+      el-image(:src="require('@/assets/img/ic_job.png')" fit="contain")
+      span.mgl1 {{userInfo.job | formatJob}}
+
   .menu-list
     el-menu.el-menu-vertical.flex-auto(
     :default-active='$route.name'
@@ -40,7 +51,7 @@ export default {
     },
   },
   created: function () {
-    this.createTestData()
+    console.log('Submenu', this.userInfo)
   },
   methods: {
     handleGetGroup (item) {
@@ -49,23 +60,12 @@ export default {
         return this.userInfo.primary_id // id > 0 为子账号
       }
     },
-    createTestData () {
-      // this.userInfo = {
-      //   avtarUrl: 'https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=180920816,2890274133&fm=26&gp=0.jpg',
-      //   username: '唐文斌',
-      //   realName: null,
-      //   phoneNumber: '15677097705',
-      //   job: 0,
-      //   level: 0,
-      //   experiences: 599,
-      // }
-    },
   },
 }
 </script>
 <style lang="stylus">
 $width = 180px
-$avatarSize = 60
+$avatarSize = 60px
 .sub-menu
   width $width
   height calc(100vh - 200px)
@@ -74,9 +74,17 @@ $avatarSize = 60
   .userInfo
     width $width
     height $width
+    .avatar-bg
+      width $width
+      height $width
+      filter blur(30px)
     .avatar
       width $avatarSize
       height $avatarSize
+      border-radius 50%
+
+  span
+    z-index 100
   .menu-list
     i
       font-size 20px

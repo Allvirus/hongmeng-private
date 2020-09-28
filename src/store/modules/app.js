@@ -36,6 +36,7 @@ export default {
   },
   mutations: {
     userInfo (state, data) {
+      data.avtarUrl = 'https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=1783209632,1526904456&fm=26&gp=0.jpg'
       state.userInfo = data
     },
     projectTagList (state, data) {
