@@ -1,5 +1,5 @@
 <template lang='pug'>
-  .MyRoles.pd3
+  .MyRoles
     .ff-rn.fs-m.ai-center.mgt2.bg-white.pd2
       el-form.ff-rn(label-width="100px")
         el-form-item(label="玩家账号:")

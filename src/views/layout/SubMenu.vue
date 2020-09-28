@@ -5,11 +5,11 @@
       el-image(:src="userInfo.avtarUrl")
     .jc-center.mgt3
       el-image.avatar.mgt1(:src="userInfo.avtarUrl")
-    .ff-rn.fs-l.jc-center.mgt2
+    .ff-rn.jc-center.mgt3
       span {{userInfo.username}}
       el-image.mgl2.flex-center(:src="require('@/assets/img/badge.png')" fit="contain")
       span.mgl1 {{userInfo.level | formatLevel}}
-    .ff-rn.jc-center.mgt2
+    .ff-rn.jc-center.mgb3
       el-image(:src="require('@/assets/img/ic_job.png')" fit="contain")
       span.mgl1 {{userInfo.job | formatJob}}
 
@@ -51,7 +51,6 @@ export default {
     },
   },
   created: function () {
-    console.log('Submenu', this.userInfo)
   },
   methods: {
     handleGetGroup (item) {
@@ -68,7 +67,6 @@ $width = 180px
 $avatarSize = 60px
 .sub-menu
   width $width
-  height calc(100vh - 200px)
   overflow hidden
   background-color #fff
   .userInfo

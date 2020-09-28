@@ -21,7 +21,7 @@
       span 元
     .logo.mgr3.ai-center
       el-image.mgr3(:src="require('@/assets/img/logo_zl.png')")
-  .menu-list.jc-between
+  .menu-list.jc-between.bg-white
     el-tabs(v-model="activeTab" @tab-click='(cmp) => $router.push({ name: cmp.name })')
       el-tab-pane(label='首页', name='HomeMyAchievement')
       el-tab-pane(label='排行', name='Ranking')
@@ -73,7 +73,6 @@ $H = 120px
   .menu-list
     height 50px
     padding 0 70px
-    background-color #fff
     .el-tabs__item
       font-size 18px
 </style>

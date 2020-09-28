@@ -1,7 +1,7 @@
 <template lang='pug'>
-  .MyLevel.pd3
+  .MyLevel
     h3 我的等级
-    .info
+    .info.mgt2
       .bg-white.pd2.ff-rn
         span {{levelInfo[0].levelName}}
         .pr

@@ -1,6 +1,6 @@
 <template lang='pug'>
-  .MyOrders.pd3
-    .ff-rn.fs-m.ai-center.mgt2.bg-white.pd2
+  .MyOrders
+    .ff-rn.fs-m.ai-center.bg-white.pd2
       el-form.ff-rn(label-width="100px")
         el-form-item(label="玩家账号:")
           el-input.w150(v-model="model.UserAccount")

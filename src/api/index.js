@@ -324,4 +324,22 @@ export default {
       return p
     })(),
   }),
+  // 22.获取充值玩家信息和订单统计分页数据
+  getRechPlayer: (model) => http('get', '/api/player/recharge', {
+    params: {
+      userAccount: model.userAccount,
+      page: model.page,
+      pageSize: model.pageSize,
+    },
+  }),
+  // 23.获取充值玩家信息充值记录分页
+  getPlRchgRecord: (model) => http('get', `/api/player/recharge/${model.userAccount}`, {
+    params: {
+      userAccount: model.userAccount,
+      startTime: model.startTime,
+      endTime: model.endTime,
+      page: model.page,
+      pageSize: model.pageSize,
+    },
+  }),
 }

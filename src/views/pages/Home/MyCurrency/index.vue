@@ -1,5 +1,5 @@
 <template lang='pug'>
-  .MyCurrency.pd3
+  .MyCurrency
     .currency.bg-white.pd3.pr
       h2 我的货币
       h1.danger.mg3.pd2 {{money | formatNumber}}元

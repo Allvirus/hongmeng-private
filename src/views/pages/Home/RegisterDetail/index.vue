@@ -1,5 +1,5 @@
 <template lang='pug'>
-  .MyRegister.pd3
+  .MyRegister
     el-form.ff-rn.bg-white.pd2(label-width="100px")
       el-form-item(label="玩家账号:")
         el-input.w200(v-model="model.userAccount")

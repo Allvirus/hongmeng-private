@@ -1,6 +1,6 @@
 <template lang='pug'>
   .LevelManage
-    .ff-rn.fs-m.ai-center.mgt2.bg-white.pdy2
+    .ff-rn.fs-m.ai-center.bg-white.pd2
       el-form.ff-rn(label-width="100px")
           el-button.mgl3(icon="el-icon-plus" type="primary" @click="showEditDlg(false,null)") 新增等级
 
@@ -16,8 +16,8 @@
       el-table-column(prop="operate" label="操作")
         template(slot-scope="{ row }")
           .ff-rn
-            el-button.mgl3(icon="el-icon-edit-outline" type="text" @click="showEditDlg(true,row)") 编辑
-            el-button.mgl3.danger(icon="el-icon-delete" type="text" @click="deleteLevel(row)") 删除
+            el-button(icon="el-icon-edit-outline" type="text" @click="showEditDlg(true,row)") 编辑
+            el-button.danger(icon="el-icon-delete" type="text" @click="deleteLevel(row)") 删除
 
     //- 编辑、新增对话框
     el-dialog(:title="model.isEdit?'编辑':'新增'"
