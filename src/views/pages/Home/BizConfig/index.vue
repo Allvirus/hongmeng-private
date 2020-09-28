@@ -131,11 +131,10 @@ export default {
       console.log('editeItem', row)
     },
     showEditDlg (isEdit, row) {
-      this.cfgInfo.isEdit = isEdit
       if (isEdit) {
         this.cfgInfo.row = JSON.parse(JSON.stringify(row))
-        console.log('showEditDlg', this.cfgInfo.row)
       }
+      this.cfgInfo.isEdit = isEdit
       this.editDlgVisiable = true
     },
     deleteCfg (row) {

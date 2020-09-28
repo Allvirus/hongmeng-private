@@ -235,8 +235,8 @@ export default {
   delLevelById: (levId) => http('delete', `/api/level/${levId}`),
 
   // 18.根据ID和实体更新等级
-  updateLevById: (model) => http('put', `/api/level/${model.levelId}`, {
-    params: {
+  updateLevById: (model) => http('put', `/api/level/${model.id}`, {
+    data: {
       levelIcon: model.levelIcon,
       level: model.level,
       experience: model.experience,
