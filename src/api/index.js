@@ -254,9 +254,41 @@ export default {
       const p = {
         startTime: model.startTime,
         endTime: model.endTime,
+        userAccount: model.userAccount,
+        account: model.account,
+        userCode: model.userCode,
+        OSType: model.OSType,
+        page: model.page,
+        pageSize: model.pageSize,
+      }
+      console.log('getPlayerInfo before', model)
+      for (const key in p) {
+        if (p[key] === '') {
+          console.log('tag', 'remove ' + key)
+          delete p[key]
+        }
+      }
+      console.log('getPlayerInfo', p)
+      return p
+    })(),
+  }),
+
+  // 20.获取游戏订单分页信息
+  getGameOrders: (model) => http('get', '/api/player/order', {
+    params: (() => {
+      const p = {
+        startTime: model.startTime,
+        endTime: model.endTime,
         UserAccount: model.UserAccount,
+        GameOrderID: model.startTGameOrderIDime,
         Account: model.Account,
         UserCode: model.UserCode,
+        GameName: model.GameName,
+        RoleName: model.RoleName,
+        RoleCode: model.RoleCode,
+        AreaName: model.AreaName,
+        AreaCode: model.AreaCode,
+        TotalPrice: model.TotalPrice,
         OSType: model.OSType,
         Page: model.page,
         PageSize: model.pageSize,
@@ -270,40 +302,26 @@ export default {
     })(),
   }),
 
-  // 20.获取游戏订单分页信息
-  getGameOrders: (model) => http('get', '/api/player/order', {
-    params: {
-      startTime: model.startTime,
-      endTime: model.endTime,
-      UserAccount: model.UserAccount,
-      GameOrderID: model.startTGameOrderIDime,
-      Account: model.Account,
-      UserCode: model.UserCode,
-      GameName: model.GameName,
-      RoleName: model.RoleName,
-      RoleCode: model.RoleCode,
-      AreaName: model.AreaName,
-      AreaCode: model.AreaCode,
-      TotalPrice: model.TotalPrice,
-      OSType: model.OSType,
-      Page: model.Page,
-      PageSize: model.PageSize,
-    },
-  }),
-
   // 21.获取游戏角色分页信息
-  getRoleInfos: (model) => http('get', '/api/player/order', {
-    params: {
-      startTime: model.startTime,
-      endTime: model.endTime,
-      UserAccount: model.UserAccount,
-      Account: model.Account,
-      UserCode: model.UserCode,
-      GameName: model.GameName,
-      RoleName: model.RoleName,
-      Page: model.Page,
-      PageSize: model.PageSize,
-
-    },
+  getRoleInfos: (model) => http('get', '/api/player/role', {
+    params: (() => {
+      const p = {
+        startTime: model.startTime,
+        endTime: model.endTime,
+        UserAccount: model.UserAccount,
+        Account: model.Account,
+        UserCode: model.UserCode,
+        GameName: model.GameName,
+        RoleName: model.RoleName,
+        Page: model.page,
+        PageSize: model.pageSize,
+      }
+      for (const key in p) {
+        if (p[key] === '') {
+          delete p[key]
+        }
+      }
+      return p
+    })(),
   }),
 }
