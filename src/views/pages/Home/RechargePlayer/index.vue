@@ -85,11 +85,7 @@ export default {
         return
       }
       const params = JSON.parse(JSON.stringify(this.rechargParam))
-      for (const key in params) {
-        if (params[key] === '') {
-          delete params[key]
-        }
-      }
+      this.$vgo.filterNull(params)
       this.$api.getPlRchgRecord(params).then(res => {
         console.log(res)
         this.rechargRecord = res

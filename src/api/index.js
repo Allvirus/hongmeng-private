@@ -1,5 +1,6 @@
 import { http, uploadApi } from './http'
 import utils from '@/plugins/utils'
+import bus from '@/plugins/bus'
 const {
   // CLOUD_APP_API,
   API,
@@ -264,11 +265,7 @@ export default {
         page: model.page,
         pageSize: model.pageSize,
       }
-      for (const key in p) {
-        if (p[key] === '') {
-          delete p[key]
-        }
-      }
+      bus.filterNull(p)
       return p
     })(),
   }),
@@ -293,11 +290,7 @@ export default {
         Page: model.page,
         PageSize: model.pageSize,
       }
-      for (const key in p) {
-        if (p[key] === '') {
-          delete p[key]
-        }
-      }
+      bus.filterNull(p)
       return p
     })(),
   }),
@@ -316,11 +309,7 @@ export default {
         Page: model.page,
         PageSize: model.pageSize,
       }
-      for (const key in p) {
-        if (p[key] === '') {
-          delete p[key]
-        }
-      }
+      bus.filterNull(p)
       return p
     })(),
   }),
