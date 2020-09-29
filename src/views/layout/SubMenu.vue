@@ -2,29 +2,37 @@
 .sub-menu.ff-cn
   .userInfo.pr
     .avatar-bg.pa
-      el-image(:src="userInfo.avtarUrl")
+      img(:src='userInfo.avtarUrl')
     .jc-center.mgt3
-      el-image.avatar.mgt1(:src="userInfo.avtarUrl")
+      el-image.avatar.mgt1(:src='userInfo.avtarUrl')
     .ff-rn.jc-center.mgt3
-      span {{userInfo.username}}
-      el-image.mgl2.flex-center(:src="userInfo.level | formatBadge" fit="contain")
-      span.mgl1 {{userInfo.level | formatLevel}}
+      span {{ userInfo.username }}
+      img.mgl2.flex-center(
+        :src='userInfo.level | formatBadge',
+        fit='contain'
+      )
+      span.mgl1 {{ userInfo.level | formatLevel }}
     .ff-rn.jc-center.mgb3.mgt2
-      el-image(:src="require('@/assets/img/ic_job.png')" fit="contain")
-      span.mgl1 {{userInfo.job | formatJob}}
+      img.fit-contain(:src='require("@/assets/img/ic_job.png")', fit='contain')
+      span.mgl1 {{ userInfo.job | formatJob }}
 
   .menu-list
     el-menu.el-menu-vertical.flex-auto(
-    :default-active='$route.name'
-    background-color='#fff'
-    text-color='#222222'
-    :router="true"
-    active-text-color='#fff')
-      .item(v-for="(item,index) in getMenu[0]" :key="index")
-        router-link(:to="{name:item.name}")
-          .el-menu-item.ff-rn(:class='{"router-link-active": $route.name === item.name}')
-              el-image(:src="$route.name === item.name?item.meta.icsel:item.meta.icdef" fit="contain")
-              span.mgl2 {{item.meta.title}}
+      :default-active='$route.name',
+      background-color='#fff',
+      text-color='#222222',
+      :router='true',
+      active-text-color='#fff'
+    )
+      .item(v-for='(item, index) in getMenu[0]', :key='index')
+        router-link(:to='{ name: item.name }')
+          .el-menu-item.ff-rn.ai-center(
+            :class='{ "router-link-active": $route.name === item.name }'
+          )
+            img.fit-contain.w20.h20(
+              :src='$route.name === item.name ? item.meta.icsel : item.meta.icdef',
+            )
+            span.mgl2 {{ item.meta.title }}
 </template>
 <script>
 import routes from '@/router/routes'
@@ -34,7 +42,6 @@ export default {
   data () {
     return {
       activeName: '',
-      icUrl: require('@/assets/img/ic_my_ach.png'),
     }
   },
   computed: {
@@ -66,6 +73,7 @@ export default {
 <style lang="stylus">
 $width = 180px
 $avatarSize = 60px
+
 .sub-menu
   width $width
   overflow hidden
@@ -81,7 +89,6 @@ $avatarSize = 60px
       width $avatarSize
       height $avatarSize
       border-radius 50%
-
   span
     z-index 100
   .menu-list

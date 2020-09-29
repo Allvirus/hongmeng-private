@@ -6,27 +6,27 @@
       .ff-cn.mgl2.strong
         .ff-rn.ai-center.fs-l
           span {{userInfo.username}}
-          el-image.mgl2.flex-center(:src="userInfo.level | formatBadge" fit="contain")
+          img.mgl2.flex-center(:src="userInfo.level | formatBadge" fit="contain")
           span.mgl1 {{userInfo.level | formatLevel}}
 
         .ff-rn.ai-center.mgt2.fs-b
-          el-image(:src="require('@/assets/img/ic_job.png')" fit="contain")
+          img(:src="require('@/assets/img/ic_job.png')" fit="contain")
           span.mgl1 {{userInfo.job | formatJob}}
           span.mgl1.info 经验 {{userInfo.experiences}}
 
     .swiper.fs-l.ai-center.strong
-      el-image.mgl2.flex-center(:src="require('@/assets/img/ic_notice.png')" fit="contain")
+      img.mgl2.flex-center(:src="require('@/assets/img/ic_notice.png')" fit="contain")
       span 恭喜全力以赴站队黄子韬在03:08 22:18:15玩家单笔消费
       span.danger {{1000}}
       span 元
     .logo.mgr3.ai-center
-      el-image.mgr3(:src="require('@/assets/img/logo_zl.png')")
+      img.mgr3(:src="require('@/assets/img/logo_zl.png')")
   .menu-list.jc-between.bg-white
     el-tabs(v-model="activeTab" @tab-click='(cmp) => $router.push({ name: cmp.name })')
       el-tab-pane(label='首页', name='HomeMyAchievement')
       el-tab-pane(label='排行', name='Ranking')
     .notice.ai-center.strong
-      el-image.mgl2.flex-center(:src="require('@/assets/img/ic_notice.png')" fit="contain")
+      img.mgl2.flex-center(:src="require('@/assets/img/ic_notice.png')" fit="contain")
       span 公告：关于业绩考核通知，需各部门严格执行。
 </template>
 <script>

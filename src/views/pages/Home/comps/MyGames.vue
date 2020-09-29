@@ -1,11 +1,11 @@
 <template lang='pug'>
   .MyGames.pd3
     .item.ff-rn.mgt3.ai-center(v-for="(item,idx) in gameList" :key="idx")
-      el-image.game-icon(:src="item.icon")
+      img.game-icon(:src="item.icon")
       .name.mgl2.ai-center.ff-cn
         p {{item.gameName}}
         .ff-rn.ai-center
-          el-image.mgt1.mgr1(:src="require('@/assets/img/ic_user.png')" fit="contain")
+          img.mgt1.mgr1(:src="require('@/assets/img/ic_user.png')" fit="contain")
           span.mtl1 {{item.name}}
       el-button.flex-center.mgl4(type="primary" round @click="copyLink") 复制链接
 </template>

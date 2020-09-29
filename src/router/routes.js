@@ -29,8 +29,8 @@ export default [
             name: 'HomeMyAchievement',
             meta: {
               title: '我的业绩',
-              icsel: require('@/assets/img/ic_my_ach.png'),
-              icdef: require('@/assets/img/ic_my_ach_def.png'),
+              icsel: require('@/assets/img/ic_my_achiv_sel.png'),
+              icdef: require('@/assets/img/ic_my_achiv_def.png'),
             },
             component: () => import('@/views/pages/Home/MyAchievement'),
           },
@@ -45,7 +45,7 @@ export default [
             name: 'HomeMyLevel',
             meta: {
               title: '我的等级',
-              icsel: require('@/assets/img/ic_my_ach.png'),
+              icsel: require('@/assets/img/ic_level_sel.png'),
               icdef: require('@/assets/img/ic_level_def.png'),
             },
             component: () => import('@/views/pages/Home/MyLevel'),
@@ -55,7 +55,7 @@ export default [
             name: 'HomeRegisterDetail',
             meta: {
               title: '注册明细',
-              icsel: require('@/assets/img/ic_my_ach.png'),
+              icsel: require('@/assets/img/ic_reg_sel.png'),
               icdef: require('@/assets/img/ic_reg_def.png'),
             },
             component: () => import('@/views/pages/Home/RegisterDetail'),
@@ -65,7 +65,7 @@ export default [
             name: 'HomeRolesDetail',
             meta: {
               title: '角色明细',
-              icsel: require('@/assets/img/ic_my_ach.png'),
+              icsel: require('@/assets/img/ic_role_sel.png'),
               icdef: require('@/assets/img/ic_role_def.png'),
             },
             component: () => import('@/views/pages/Home/RolesDetail'),
@@ -75,7 +75,7 @@ export default [
             name: 'HomeOrdersDetail',
             meta: {
               title: '订单明细',
-              icsel: require('@/assets/img/ic_my_ach.png'),
+              icsel: require('@/assets/img/ic_order_sel.png'),
               icdef: require('@/assets/img/ic_order_def.png'),
             },
             component: () => import('@/views/pages/Home/OrdersDetail'),
@@ -85,7 +85,7 @@ export default [
             name: 'HomeRechargePlayer',
             meta: {
               title: '充值玩家',
-              icsel: require('@/assets/img/ic_my_ach.png'),
+              icsel: require('@/assets/img/ic_rech_sel.png'),
               icdef: require('@/assets/img/ic_rech_def.png'),
             },
             component: () => import('@/views/pages/Home/RechargePlayer'),
@@ -95,8 +95,8 @@ export default [
             name: 'HomeBizConfig',
             meta: {
               title: '业务配置',
-              icsel: require('@/assets/img/ic_my_ach.png'),
-              icdef: require('@/assets/img/ic_my_ach_def.png'),
+              icsel: require('@/assets/img/ic_setting_sel.png'),
+              icdef: require('@/assets/img/ic_setting_def.png'),
             },
             component: () => import('@/views/pages/Home/BizConfig'),
           },
@@ -105,8 +105,8 @@ export default [
             name: 'HomeLevelManage',
             meta: {
               title: '等级管理',
-              icsel: require('@/assets/img/ic_my_ach.png'),
-              icdef: require('@/assets/img/ic_my_ach_def.png'),
+              icsel: require('@/assets/img/ic_lev_manage_sel.png'),
+              icdef: require('@/assets/img/ic_lev_manage_def.png'),
             },
             component: () => import('@/views/pages/Home/LevelManage'),
           },
@@ -115,8 +115,8 @@ export default [
             name: 'HomeDepartment',
             meta: {
               title: '部门人员管理',
-              icsel: require('@/assets/img/ic_my_ach.png'),
-              icdef: require('@/assets/img/ic_my_ach_def.png'),
+              icsel: require('@/assets/img/ic_depart_sel.png'),
+              icdef: require('@/assets/img/ic_depart_def.png'),
             },
             component: () => import('@/views/pages/Department'),
           },

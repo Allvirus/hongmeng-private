@@ -5,15 +5,15 @@
       el-button.mgl1.flex-center(type="primary" @click="search") 搜索
     .ff-cn.mgt2
       .item.ff-rn.ai-center(v-for="(item,idx) in searchRet" :key="idx")
-        el-image.avatar.mg1.border-radius(:src="item.avtarUrl")
+        img.avatar.mg1.border-radius(:src="item.avtarUrl")
         .ff-cn
           .ff-rn.ai-center
             span {{item.name}}
-            el-image.mgl2.flex-center(:src="require('@/assets/img/badge_bronze.png')" fit="contain")
+            img.mgl2.flex-center(:src="require('@/assets/img/badge_bronze.png')" fit="contain")
             span.mgl1 {{item.level | formatLevel}}
 
           .ff-rn.ai-center.mgt2
-            el-image(:src="require('@/assets/img/ic_job.png')" fit="contain")
+            img(:src="require('@/assets/img/ic_job.png')" fit="contain")
             span.mgl1 {{item.job | formatJob}}
 </template>
 <script>
