@@ -115,14 +115,11 @@ export default new Vue({
       }
     },
     filterNull (p) {
-      console.log('before', p)
       for (const key in p) {
         if (p[key] === '') {
-          console.log('formatNullParams', 'delete' + key)
           delete p[key]
         }
       }
-      console.log('after', p)
       return p
     },
   },

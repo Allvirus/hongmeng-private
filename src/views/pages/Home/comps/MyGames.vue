@@ -1,5 +1,5 @@
 <template lang='pug'>
-  .MyGames.pd3
+  .MyGames.pdx2.pdb2
     .item.ff-rn.mgt3.ai-center(v-for="(item,idx) in gameList" :key="idx")
       img.game-icon(:src="item.icon")
       .name.mgl2.ai-center.ff-cn

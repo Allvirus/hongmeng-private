@@ -1,5 +1,5 @@
 <template lang='pug'>
-  .MyContacts.pd3
+  .MyContacts.pd2
     .search.ff-rn
       el-input(suffix-icon="el-icon-search" placeholder="请输入内容" v-model="keyword")
       el-button.mgl1.flex-center(type="primary" @click="search") 搜索

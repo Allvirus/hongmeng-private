@@ -192,4 +192,10 @@ $spc = 44px
   .condition
     .btn-group
       border-bottom 1px solid #0487FF
+  >>>.el-radio-button:first-child .el-radio-button__inner,
+  >>>.el-radio-button:last-child .el-radio-button__inner
+    border none !important
+    border-radius 0px
+  >>>.el-radio-button__inner
+    border none !important
 </style>
