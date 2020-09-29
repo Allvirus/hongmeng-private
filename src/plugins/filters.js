@@ -86,6 +86,17 @@ Vue.filter('formatLevel', (lev) => {
   return levels[lev]
 })
 
+Vue.filter('formatBadge', (lev) => {
+  console.log('formatBadge', lev)
+  if (lev >= 10) {
+    return require('@/assets/img/badge_gold.png')
+  } else if (lev >= 5 && lev < 10) {
+    return require('@/assets/img/badge_silver.png')
+  } else {
+    return require('@/assets/img/badge_bronze.png')
+  }
+})
+
 // 岗位类型
 const jobs = {
   0: 'A岗',

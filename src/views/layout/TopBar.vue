@@ -6,7 +6,7 @@
       .ff-cn.mgl2.strong
         .ff-rn.ai-center.fs-l
           span {{userInfo.username}}
-          el-image.mgl2.flex-center(:src="require('@/assets/img/badge.png')" fit="contain")
+          el-image.mgl2.flex-center(:src="userInfo.level | formatBadge" fit="contain")
           span.mgl1 {{userInfo.level | formatLevel}}
 
         .ff-rn.ai-center.mgt2.fs-b

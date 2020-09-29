@@ -9,7 +9,7 @@
         .ff-cn
           .ff-rn.ai-center
             span {{item.name}}
-            el-image.mgl2.flex-center(:src="require('@/assets/img/badge.png')" fit="contain")
+            el-image.mgl2.flex-center(:src="require('@/assets/img/badge_bronze.png')" fit="contain")
             span.mgl1 {{item.level | formatLevel}}
 
           .ff-rn.ai-center.mgt2
