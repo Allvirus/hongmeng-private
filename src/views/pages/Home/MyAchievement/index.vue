@@ -3,32 +3,54 @@
   //- 查询条件
   .condition.pd2.bg-white
     .btn-group.pdl3
-      el-radio-group(v-model="time")
-        el-radio-button(v-for="(item,index) in timeRange" :key="index" :label="item")
+      el-radio-group(v-model='selTimeRange', @change='onRadioChange')
+        el-radio-button(
+          v-for='(item, index) in timeRange',
+          :key='index',
+          :label='item'
+        )
     .ff-rn.fs-m.ai-center.mgt2
       label 游戏名称:
-      el-select.mgl1(v-model="selGame" placeholder="请选择")
-        el-option(v-for="item in gameOpts"
-        :key="item.value"
-        :label="item.label"
-        :value="item.value")
+      el-select.mgl1(v-model='selGame', placeholder='请选择')
+        el-option(
+          v-for='item in gameOpts',
+          :key='item.value',
+          :label='item.label',
+          :value='item.value'
+        )
       label.mgl3 区服名称:
-      el-select.mgl1(v-model="selServ" placeholder="请选择")
-        el-option(v-for="item in servOpts"
-        :key="item.value"
-        :label="item.label"
-        :value="item.value")
-      el-button.mgl3(icon="el-icon-search" type="primary" @click="search") 搜索
-      el-button(icon="el-icon-refresh-right" type="primary" @click="reset") 重置
+      el-select.mgl1(v-model='selServ', placeholder='请选择')
+        el-option(
+          v-for='item in servOpts',
+          :key='item.value',
+          :label='item.label',
+          :value='item.value'
+        )
+      el-button.mgl3(icon='el-icon-search', type='primary', @click='search') 搜索
+      el-button(icon='el-icon-refresh-right', type='primary', @click='reset') 重置
 
   //- 创角指数
   .data-panel.mgt2.ff-rn
-    data-box.mgl2(:data="item" :colIdx="idx" v-for="(item,idx) in dbList" :key="idx")
+    data-box.mgl2(
+      :data='item',
+      :colIdx='idx',
+      v-for='(item, idx) in dbList',
+      :key='idx'
+    )
   //- 图表
   .mgt3
-    .ff-rn
-      v-line.charts.bg-white.flex-1.mgr2.border-radius(:data="lineChart" :settings="lineChart.option")
-      v-histogram.charts.bg-white.flex-1.mgl2.border-radius(:data="histogramData")
+    .chart(
+      :class='halfLayout ? "ff-rn" : "ff-cn"',
+      :key='halfLayout ? "half" : "full"'
+    )
+      v-histogram.charts.bg-white.flex-1.border-radius(
+        :data='newRoleData',
+        :class='halfLayout ? "mgr2" : ""'
+      )
+      v-line.charts.bg-white.flex-1.border-radius(
+        :data='rechData',
+        :class='halfLayout ? "" : "mgt2"'
+      )
 </template>
 
 <script>
@@ -44,9 +66,9 @@ export default {
   data () {
     return {
       timeRange: ['今日', '本周', '本月', '全年'],
-      time: '今日',
+      selTimeRange: '今日',
       selGame: '',
-      histogramData: {
+      rechData: {
         columns: ['日期', '充值总额'],
         rows: [
           { 日期: '1/1', 充值总额: 1393 },
@@ -56,7 +78,7 @@ export default {
           { 日期: '1/5', 充值总额: 3792 },
         ],
       },
-      lineChart: {
+      newRoleData: {
         columns: ['日期', '新创角设备', '旧创角设备'],
         rows: [
           { 日期: '1/1', 新创角设备: 1393, 旧创角设备: 1093 },
@@ -65,6 +87,7 @@ export default {
           { 日期: '1/4', 新创角设备: 1723, 旧创角设备: 1423 },
           { 日期: '1/5', 新创角设备: 3792, 旧创角设备: 3492 },
           { 日期: '1/6', 新创角设备: 4593, 旧创角设备: 4293 },
+          { 日期: '1/1', 新创角设备: 1393, 旧创角设备: 1093 },
         ],
       },
       gameOpts: [
@@ -104,6 +127,11 @@ export default {
       ],
     }
   },
+  computed: {
+    halfLayout () {
+      return this.selTimeRange === '本周'
+    },
+  },
   created () {
   },
   methods: {
@@ -113,12 +141,16 @@ export default {
     reset () {
       this.$vgo.tip('已重置', 'success')
     },
+    onRadioChange (val) {
+      console.log('onRaidoChange', val, this.selTimeRange)
+    },
   },
 }
 </script>
 
 <style lang="stylus" scoped>
 $spc = 44px
+
 .MyAchievement
   .condition
     .btn-group
