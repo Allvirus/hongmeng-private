@@ -22,8 +22,8 @@
     active-text-color='#fff')
       .item(v-for="(item,index) in getMenu[0]" :key="index")
         router-link(:to="{name:item.name}")
-          .el-menu-item(:class='{"router-link-active": $route.name === item.name}')
-              i.ai-center(:class="[{'router-link-active':$route.name === item.name},item.meta.icon]")
+          .el-menu-item.ff-rn(:class='{"router-link-active": $route.name === item.name}')
+              el-image(:src="$route.name === item.name?item.meta.icsel:item.meta.icdef" fit="contain")
               span.mgl2 {{item.meta.title}}
 </template>
 <script>
@@ -34,6 +34,7 @@ export default {
   data () {
     return {
       activeName: '',
+      icUrl: require('@/assets/img/ic_my_ach.png'),
     }
   },
   computed: {
@@ -86,7 +87,6 @@ $avatarSize = 60px
   .menu-list
     i
       font-size 20px
-
   .router-link-active
     color #0487FF
 </style>

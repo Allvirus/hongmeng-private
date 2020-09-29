@@ -27,7 +27,11 @@ export default [
           {
             path: 'MyAchievement',
             name: 'HomeMyAchievement',
-            meta: { title: '我的业绩', icon: 'el-icon-data-analysis' },
+            meta: {
+              title: '我的业绩',
+              icsel: require('@/assets/img/ic_my_ach.png'),
+              icdef: require('@/assets/img/ic_my_ach_def.png'),
+            },
             component: () => import('@/views/pages/Home/MyAchievement'),
           },
           // {
@@ -39,49 +43,81 @@ export default [
           {
             path: 'MyLevel',
             name: 'HomeMyLevel',
-            meta: { title: '我的等级', icon: 'el-icon-data-analysis' },
+            meta: {
+              title: '我的等级',
+              icsel: require('@/assets/img/ic_my_ach.png'),
+              icdef: require('@/assets/img/ic_level_def.png'),
+            },
             component: () => import('@/views/pages/Home/MyLevel'),
           },
           {
             path: 'RegisterDetail',
             name: 'HomeRegisterDetail',
-            meta: { title: '注册明细', icon: 'el-icon-data-analysis' },
+            meta: {
+              title: '注册明细',
+              icsel: require('@/assets/img/ic_my_ach.png'),
+              icdef: require('@/assets/img/ic_reg_def.png'),
+            },
             component: () => import('@/views/pages/Home/RegisterDetail'),
           },
           {
             path: 'RolesDetail',
             name: 'HomeRolesDetail',
-            meta: { title: '角色明细', icon: 'el-icon-data-analysis' },
+            meta: {
+              title: '角色明细',
+              icsel: require('@/assets/img/ic_my_ach.png'),
+              icdef: require('@/assets/img/ic_role_def.png'),
+            },
             component: () => import('@/views/pages/Home/RolesDetail'),
           },
           {
             path: 'OrdersDetail',
             name: 'HomeOrdersDetail',
-            meta: { title: '订单明细', icon: 'el-icon-data-analysis' },
+            meta: {
+              title: '订单明细',
+              icsel: require('@/assets/img/ic_my_ach.png'),
+              icdef: require('@/assets/img/ic_order_def.png'),
+            },
             component: () => import('@/views/pages/Home/OrdersDetail'),
           },
           {
             path: 'RechargePlayer',
             name: 'HomeRechargePlayer',
-            meta: { title: '充值玩家', icon: 'el-icon-data-analysis' },
+            meta: {
+              title: '充值玩家',
+              icsel: require('@/assets/img/ic_my_ach.png'),
+              icdef: require('@/assets/img/ic_rech_def.png'),
+            },
             component: () => import('@/views/pages/Home/RechargePlayer'),
           },
           {
             path: 'BizConfig',
             name: 'HomeBizConfig',
-            meta: { title: '业务配置', icon: 'el-icon-data-analysis' },
+            meta: {
+              title: '业务配置',
+              icsel: require('@/assets/img/ic_my_ach.png'),
+              icdef: require('@/assets/img/ic_my_ach_def.png'),
+            },
             component: () => import('@/views/pages/Home/BizConfig'),
           },
           {
             path: 'LevelManage',
             name: 'HomeLevelManage',
-            meta: { title: '等级管理', icon: 'el-icon-data-analysis' },
+            meta: {
+              title: '等级管理',
+              icsel: require('@/assets/img/ic_my_ach.png'),
+              icdef: require('@/assets/img/ic_my_ach_def.png'),
+            },
             component: () => import('@/views/pages/Home/LevelManage'),
           },
           {
             path: 'Department',
             name: 'HomeDepartment',
-            meta: { title: '部门人员管理', icon: 'el-icon-data-analysis' },
+            meta: {
+              title: '部门人员管理',
+              icsel: require('@/assets/img/ic_my_ach.png'),
+              icdef: require('@/assets/img/ic_my_ach_def.png'),
+            },
             component: () => import('@/views/pages/Department'),
           },
         ],
