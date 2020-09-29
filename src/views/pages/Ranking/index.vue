@@ -1,11 +1,14 @@
 <template lang='pug'>
   .Ranking
-    h1 功能待实现...
-
+    ranking-list
 </template>
 <script>
+import RankingList from './comps/RankingList'
 export default {
   name: '',
+  components: {
+    RankingList,
+  },
   data () {
     return {
     }
