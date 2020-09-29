@@ -114,13 +114,5 @@ export default new Vue({
         this.loading = null
       }
     },
-    filterNull (p) {
-      for (const key in p) {
-        if (p[key] === '') {
-          delete p[key]
-        }
-      }
-      return p
-    },
   },
 })

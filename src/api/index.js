@@ -1,6 +1,5 @@
 import { http, uploadApi } from './http'
 import utils from '@/plugins/utils'
-import bus from '@/plugins/bus'
 const {
   // CLOUD_APP_API,
   API,
@@ -265,7 +264,7 @@ export default {
         page: model.page,
         pageSize: model.pageSize,
       }
-      bus.filterNull(p)
+      utils.filterNull(p)
       return p
     })(),
   }),
@@ -290,7 +289,7 @@ export default {
         Page: model.page,
         PageSize: model.pageSize,
       }
-      bus.filterNull(p)
+      utils.filterNull(p)
       return p
     })(),
   }),
@@ -309,7 +308,7 @@ export default {
         Page: model.page,
         PageSize: model.pageSize,
       }
-      bus.filterNull(p)
+      utils.filterNull(p)
       return p
     })(),
   }),

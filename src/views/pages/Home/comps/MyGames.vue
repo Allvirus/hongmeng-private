@@ -37,17 +37,7 @@ export default {
       }
     },
     copyLink () {
-      this.copy('xinglong')
-    },
-    copy (data) {
-      const url = data
-      const oInput = document.createElement('input')
-      oInput.value = url
-      document.body.appendChild(oInput)
-      oInput.select() // 选择对象
-      document.execCommand('Copy') // 执行浏览器复制命令
-      this.$vgo.tip('复制链接成功', 'success')
-      oInput.remove()
+      this.$utils.copyText('www.vgo.com')
     },
   },
 }

@@ -220,7 +220,14 @@ const utils = {
       reader.readAsArrayBuffer(JpgFile)
     })
   },
-
+  filterNull (p) {
+    for (const key in p) {
+      if (p[key] === '') {
+        delete p[key]
+      }
+    }
+    return p
+  },
 }
 export default utils
 
