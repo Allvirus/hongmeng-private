@@ -25,7 +25,7 @@ export default {
   },
   methods: {
     createTestData () {
-      let count = 10
+      let count = 20
       while (count-- > 0) {
         const item = {
           name: '何元生',

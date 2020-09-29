@@ -7,11 +7,19 @@
       router-view.sub-view
   .sub-layout-right
     .tab.jc-between.fs-b
-      .tab-item.hand(:class="{ 'active': tag === 'mygame' }" @click="switchTab('mygame')") 我的游戏
-      .tab-item.hand(:class="{ 'active': tag === 'contacts' }" @click="switchTab('contacts')") 通讯录
+      .tab-item.hand(
+        :class='{ active: tag === "mygame" }',
+        @click='switchTab("mygame")',
+        key='mygame'
+      ) 我的游戏
+      .tab-item.hand(
+        :class='{ active: tag === "contacts" }',
+        @click='switchTab("contacts")',
+        key='contacts'
+      ) 通讯录
     .content
-      my-games(v-show="tag === 'mygame'")
-      my-contacts(v-show="tag === 'contacts'")
+      my-games(v-show='tag === "mygame"')
+      my-contacts(v-show='tag === "contacts"')
 </template>
 
 <script>
@@ -38,12 +46,10 @@ export default {
 @import '~@/assets/style/var'
 
 .sub-layout.jc-between
-  // .sub-layout-left
   .sub-layout-center
     padding 0 20px
   .sub-layout-right
     width 275px
-    height calc(100vh - 200px)
     border 1px solid rgba(#ccc, 0.1)
     background-color #fff
     .tab-item

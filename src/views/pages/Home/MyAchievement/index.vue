@@ -43,18 +43,35 @@
       :class='halfLayout ? "ff-rn" : "ff-cn"',
       :key='halfLayout ? "half" : "full"'
     )
-      v-histogram.charts.bg-white.flex-1.border-radius(
-        :data='newRoleData',
-        :class='halfLayout ? "mgr2" : ""'
-      )
-      v-line.charts.bg-white.flex-1.border-radius(
-        :data='rechData',
-        :class='halfLayout ? "" : "mgt2"'
-      )
+      .ff-cn.flex-1(:class='halfLayout ? "mgr2" : ""')
+        h2 推广数据
+        v-histogram.charts.bg-white.border-radius.flex-1.mgt2(
+          :settings='newRoleData.option',
+          :data='newRoleData'
+        )
+      .ff-cn.flex-1(:class='halfLayout ? "" : "mgt2"')
+        h2 充值总额
+        v-line.charts.bg-white.border-radius.flex-1.mgt2(:data='rechData')
+
+  el-table.mgy2.bg-white.pd2(:data='listMixin.list')
+    el-table-column(prop="userAccount" label="用户账号")
+    el-table-column(prop="userCode" label="玩家代码")
+    el-table-column(prop="gameName" label="游戏名称")
+    el-table-column(prop="areaName" label="区服")
+    el-table-column(prop="roleName" label="游戏角色")
+    el-table-column(prop="payDate" label="支付时间")
+      template(slot-scope="{ row }") {{row.payDate | dateFormat}}
+    el-table-column(prop="totalPrice" label="充值总额")
+  el-pagination.margin-spacing(
+    :total="listMixin.count"
+    :page-size.sync='model.pageSize'
+    :current-page.sync='model.page'
+    @current-change="getListMixin")
+
 </template>
 
 <script>
-// import fetchListMixin from '@/mixins/fetchListMixin'
+import fetchListMixin from '@/mixins/fetchListMixin'
 export default {
   name: 'MyAchievement',
   components: {
@@ -62,9 +79,14 @@ export default {
     VHistogram: () => import('v-charts/lib/histogram.common'),
     DataBox: () => import('@/views/pages/Home/MyAchievement/comps/DataBox'),
   },
-  // mixins: [fetchListMixin],
+  mixins: [fetchListMixin],
   data () {
     return {
+      listApiForMixin: 'getAchiData',
+      model: {
+        page: 1,
+        pageSize: 10,
+      },
       timeRange: ['今日', '本周', '本月', '全年'],
       selTimeRange: '今日',
       selGame: '',
@@ -79,15 +101,30 @@ export default {
         ],
       },
       newRoleData: {
-        columns: ['日期', '新创角设备', '旧创角设备'],
+        option: {
+          title: {
+            text: 'Main Title',
+            subtext: 'Sub Title',
+            left: 'center',
+            top: 'center',
+            textStyle: {
+              fontSize: 30,
+            },
+            subtextStyle: {
+              fontSize: 20,
+            },
+            show: true,
+          },
+        },
+        columns: ['日期', '创角数', '创角用户'],
         rows: [
-          { 日期: '1/1', 新创角设备: 1393, 旧创角设备: 1093 },
-          { 日期: '1/2', 新创角设备: 3530, 旧创角设备: 3230 },
-          { 日期: '1/3', 新创角设备: 2923, 旧创角设备: 2623 },
-          { 日期: '1/4', 新创角设备: 1723, 旧创角设备: 1423 },
-          { 日期: '1/5', 新创角设备: 3792, 旧创角设备: 3492 },
-          { 日期: '1/6', 新创角设备: 4593, 旧创角设备: 4293 },
-          { 日期: '1/1', 新创角设备: 1393, 旧创角设备: 1093 },
+          { 日期: '1/1', 创角数: 1393, 创角用户: 1093 },
+          { 日期: '1/2', 创角数: 3530, 创角用户: 3230 },
+          { 日期: '1/3', 创角数: 2923, 创角用户: 2623 },
+          { 日期: '1/4', 创角数: 1723, 创角用户: 1423 },
+          { 日期: '1/5', 创角数: 3792, 创角用户: 3492 },
+          { 日期: '1/6', 创角数: 4593, 创角用户: 4293 },
+          { 日期: '1/1', 创角数: 1393, 创角用户: 1093 },
         ],
       },
       gameOpts: [

@@ -82,10 +82,12 @@ const levels = {
   13: '黄金二',
   14: '黄金一',
 }
+// 等级转换成青铜、白银等文本
 Vue.filter('formatLevel', (lev) => {
   return levels[lev]
 })
 
+// 等级转换成徽章
 Vue.filter('formatBadge', (lev) => {
   if (lev >= 10) {
     return require('@/assets/img/badge_gold.png')
@@ -107,6 +109,7 @@ Vue.filter('formatJob', (job) => {
   return jobs[job]
 })
 
+// 货币格式例如: 6535874元 转换成6,535,874元
 Vue.filter('formatNumber', (val) => {
   return parseFloat(val).toLocaleString()
 })
