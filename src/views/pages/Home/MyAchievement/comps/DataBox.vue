@@ -46,7 +46,6 @@ export default {
       const styl = {
         'border-top': '28px solid' + color,
       }
-      console.log('labelColor', styl)
       return styl
     },
   },

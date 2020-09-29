@@ -87,7 +87,6 @@ Vue.filter('formatLevel', (lev) => {
 })
 
 Vue.filter('formatBadge', (lev) => {
-  console.log('formatBadge', lev)
   if (lev >= 10) {
     return require('@/assets/img/badge_gold.png')
   } else if (lev >= 5 && lev < 10) {

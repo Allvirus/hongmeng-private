@@ -41,7 +41,6 @@ export default {
     getListMixin (page, opts = {}) {
       const { loading = true } = opts
       page && (this.model.page = page)
-      console.log(this.model)
       return this.$api[this.listApiForMixin || this.customExeListApiForMixin](this.model, loading).then(data => {
         this.listMixin.list = data.list
         this.listMixin.count = data.count

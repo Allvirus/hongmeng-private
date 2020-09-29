@@ -6,7 +6,7 @@
       .ff-cn.mgl2.strong
         .ff-rn.ai-center.fs-l
           span {{userInfo.username}}
-          img.mgl2.flex-center(:src="userInfo.level | formatBadge" fit="contain")
+          img.mgl2.fit-contain.flex-center(:src="userInfo.level | formatBadge")
           span.mgl1 {{userInfo.level | formatLevel}}
 
         .ff-rn.ai-center.mgt2.fs-b

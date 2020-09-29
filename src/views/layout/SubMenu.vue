@@ -2,19 +2,16 @@
 .sub-menu.ff-cn
   .userInfo.pr
     .avatar-bg.pa
-      img(:src='userInfo.avtarUrl')
+      img.fit-contain.w200.h200(:src='userInfo.avtarUrl')
     .jc-center.mgt3
       el-image.avatar.mgt1(:src='userInfo.avtarUrl')
     .ff-rn.jc-center.mgt3
-      span {{ userInfo.username }}
-      img.mgl2.flex-center(
-        :src='userInfo.level | formatBadge',
-        fit='contain'
-      )
-      span.mgl1 {{ userInfo.level | formatLevel }}
+      span.black.fs-l {{ userInfo.username }}
+      img.mgl2.fit-contain(:src="userInfo.level | formatBadge")
+      span.black.mgl1.fs-m {{ userInfo.level | formatLevel }}
     .ff-rn.jc-center.mgb3.mgt2
-      img.fit-contain(:src='require("@/assets/img/ic_job.png")', fit='contain')
-      span.mgl1 {{ userInfo.job | formatJob }}
+      img.fit-contain(:src='require("@/assets/img/ic_job.png")')
+      span.black.mgl1 {{ userInfo.job | formatJob }}
 
   .menu-list
     el-menu.el-menu-vertical.flex-auto(
@@ -30,7 +27,7 @@
             :class='{ "router-link-active": $route.name === item.name }'
           )
             img.fit-contain.w20.h20(
-              :src='$route.name === item.name ? item.meta.icsel : item.meta.icdef',
+              :src='$route.name === item.name ? item.meta.icsel : item.meta.icdef'
             )
             span.mgl2 {{ item.meta.title }}
 </template>
@@ -89,8 +86,9 @@ $avatarSize = 60px
       width $avatarSize
       height $avatarSize
       border-radius 50%
-  span
+  img, span
     z-index 100
+    object-fit contain
   .menu-list
     i
       font-size 20px
