@@ -22,7 +22,7 @@
     data-box.mgl2(
       :data='item',
       :colIdx='idx',
-      v-for='(item, idx) in dbList',
+      v-for='(item,key, idx) in panelList',
       :key='idx'
     )
   //- 图表
@@ -81,6 +81,9 @@ export default {
       },
       timeRange: ['今日', '本周', '本月', '全年'],
       selTimeRange: '今日',
+      dataSet: {
+
+      },
       rechData: {
         columns: ['日期', '充值总额'],
         rows: [
@@ -118,20 +121,38 @@ export default {
           { 日期: '1/1', 创角数: 1393, 创角用户: 1093 },
         ],
       },
-      dbList: [
-        {
+      panelList: {
+        newRoles: {
           title: '创角数',
-          value: 12600,
-          increase: false,
-          rate: 35,
-        },
-        {
-          title: '收益',
-          value: 65550,
+          value: 0,
           increase: true,
-          rate: 48,
+          rate: 0,
         },
-      ],
+        newUsers: {
+          title: '创角用户',
+          value: 0,
+          increase: false,
+          rate: 0,
+        },
+        rechgUsers: {
+          title: '充值人数',
+          value: 0,
+          increase: false,
+          rate: 0,
+        },
+        rechgOrders: {
+          title: '充值订单数',
+          value: 0,
+          increase: false,
+          rate: 0,
+        },
+        rechgTotal: {
+          title: '充值总额(元)',
+          value: 0,
+          increase: true,
+          rate: 0,
+        },
+      },
     }
   },
   computed: {
@@ -142,9 +163,99 @@ export default {
   created () {
     this.$api.getAchiByDay().then(res => {
       console.log('getAchiByDay', res)
+      this.dataFactory(res)
     })
   },
   methods: {
+    dataFactory (data) {
+      switch (this.selTimeRange) {
+        case '今日':
+          this.formatToday(data)
+          break
+        case '本周':
+          this.formatWeek(data)
+          break
+        case '本月':
+          break
+        case '全年':
+          break
+        default:
+          break
+      }
+    },
+    formatToday (data) {
+      // 统计总数
+      this.calcNewUsers(data.createUserCount)
+      this.calcNewRoles(data.createUserRoleCount)
+      this.calcRechgUsers(data.rechageUserCount)
+      this.calcRechgOrders(data.rechageUserOrderCount)
+
+      // 数据组合
+    },
+    formatWeek (data) {
+
+    },
+    // 创建数据结构模板
+    genDataTmpl () {
+      const tmpl = {
+        timeKey: '', // 时间段
+        userCount: 0, // 创角用户
+        userRoleCount: 0, // 创角数
+        rechargeCount: 0, // 充值订单数
+        rechargeUserCount: 0, // 充值用户数量
+        sum: 0, // 充值总额
+      }
+      switch (this.selTimeRange) {
+        case '今日':
+          tmpl.hourKey = 0
+          break
+        case '本周':
+          break
+        case '本月':
+          break
+        case '全年':
+          break
+        default:
+          break
+      }
+      return tmpl
+    },
+    calcNewUsers (arr) {
+      const newUsers = this.panelList.newUsers
+      newUsers.value = 0
+      for (const item of arr) {
+        newUsers.value += Number(item.userCount)
+      }
+    },
+    calcNewRoles (arr) {
+      const newRoles = this.panelList.newRoles
+      newRoles.value = 0
+      for (const item of arr) {
+        newRoles.value += Number(item.userRoleCount)
+      }
+    },
+    calcRechgUsers (arr) {
+      const rechgUsers = this.panelList.rechgUsers
+      rechgUsers.value = 0
+      for (const item of arr) {
+        rechgUsers.value += Number(item.rechargeUserCount)
+      }
+    },
+    calcRechgOrders (arr) {
+      // 充值订单数量
+      const rechgOrders = this.panelList.rechgOrders
+      rechgOrders.value = 0
+      for (const item of arr) {
+        rechgOrders.value += Number(item.rechargeCount)
+      }
+
+      // 充值订单总额
+      const rechgTotal = this.panelList.rechgTotal
+      rechgTotal.value = 0
+      for (const item of arr) {
+        rechgTotal.value += Number(item.sum)
+      }
+    },
     search () {
       this.getListMixin()
     },
