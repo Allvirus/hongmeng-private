@@ -22,7 +22,7 @@
     .logo.mgr3.ai-center
       img.mgr3(:src="require('@/assets/img/logo_zl.png')")
   .menu-list.jc-between.bg-white
-    el-tabs(v-model="activeTab" @tab-click='(cmp) => $router.push({ name: cmp.name })')
+    el-tabs(v-model="activeTab" @tab-click='(cmp) => $router.replace({ name: cmp.name })')
       el-tab-pane(label='首页', name='HomeMyAchievement')
       el-tab-pane(label='排行', name='Ranking')
     .notice.ai-center.strong

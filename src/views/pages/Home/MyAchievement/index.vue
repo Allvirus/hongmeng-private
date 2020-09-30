@@ -11,9 +11,9 @@
         )
     .ff-rn.fs-m.ai-center.mgt2
       label 游戏名称:
-      el-input.w200(v-model="model.gameName")
+      el-input.mgl2.w200(v-model="model.gameName")
       label.mgl3 区服名称:
-      el-input.w200(v-model="model.areaName")
+      el-input.mgl2.w200(v-model="model.areaName")
       el-button.mgl3(icon='el-icon-search', type='primary', @click='search') 搜索
       el-button(icon='el-icon-refresh-right', type='primary', @click='reset') 重置
 
@@ -31,15 +31,15 @@
       :class='halfLayout ? "ff-rn" : "ff-cn"',
       :key='halfLayout ? "half" : "full"'
     )
-      .ff-cn.flex-1(:class='halfLayout ? "mgr2" : ""')
-        h2 推广数据
-        v-histogram.charts.bg-white.border-radius.flex-1.mgt2(
+      .ff-cn.flex-1.bg-white.border-radius(:class='halfLayout ? "mgr2" : ""')
+        h3.mg2 推广数据
+        v-histogram.charts.flex-1.mgt2(
           :settings='newRoleData.option',
           :data='newRoleData'
         )
-      .ff-cn.flex-1(:class='halfLayout ? "" : "mgt2"')
-        h2 充值总额
-        v-line.charts.bg-white.border-radius.flex-1.mgt2(:data='rechData')
+      .ff-cn.flex-1.bg-white.border-radius(:class='halfLayout ? "" : "mgt2"')
+        h3.mg2 充值总额
+        v-line.charts.flex-1.mgt2(:data='rechData')
 
   el-table.mgy2.bg-white.pd2(:data='listMixin.list')
     el-table-column(prop="userAccount" label="用户账号")

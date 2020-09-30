@@ -17,9 +17,9 @@
     .ff-cn.mgl2.flex-1
       .ff-rn.fs-m.ai-center.bg-white.pd2
         label 游戏名称:
-        el-input.w150(v-model="rechargParam.gameName")
+        el-input.mgl2.w150(v-model="rechargParam.gameName")
         label.mgl2 区服:
-        el-input.w150(v-model="rechargParam.areaName")
+        el-input.mgl2.w150(v-model="rechargParam.areaName")
         label.mgl2 时间:
         CommonDatePicker.mgl1.w300(:start.sync='rechargParam.startTime'
          :end.sync='rechargParam.endTime' @change='search()')

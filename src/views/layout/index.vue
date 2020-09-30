@@ -4,8 +4,7 @@
   .layout-bottom.flex-1
     transition(name='fade-scale', mode='out-in')
       router-view
-    .copyright.lh3.flex-center(
-      v-if='$route.matched.length < 3',
+    .copyright.lh3.jc-center.mgt3(
       v-html='$WD.$globalconfig.COPYRIGHT'
     )
 </template>
@@ -15,14 +14,12 @@ import { mapGetters } from 'vuex'
 export default {
   name: 'Layout',
   components: {
-    // SideBar: () => import('./SideBar.vue'),
     TopBar: () => import('./TopBar.vue'),
   },
   computed: {
     ...mapGetters(['userInfo']),
   },
   created () {
-    // this.$store.dispatch('getUserInfo')
   },
 }
 </script>

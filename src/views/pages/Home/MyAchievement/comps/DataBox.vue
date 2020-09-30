@@ -1,10 +1,10 @@
 <template lang='pug'>
   .data-box.pd2.pr
-    p {{data.title}}
-    h1.jc-end.mgy3.mgr2 {{data.value | formatNumber}}
+    h3 {{data.title}}
+    h1.jc-end.mgy3.mgr2.warning {{data.value | formatNumber}}
     p
       span.info 同比
-      span.mgl2 {{data.rate}}%
+      span.mgl2(:class="data.increase?'green':'danger'") {{data.rate}}%
       i(:class="data.increase?'el-icon-top':'el-icon-bottom'" :style="icStyle")
     .triangle.pa(:style="labelColor")
     .tria-cover.pa
@@ -58,6 +58,8 @@ export default {
     min-width 224px
     max-width 250px
     min-height 132px
+    .green
+      color green
     .triangle
       top 0px
       right 0px
