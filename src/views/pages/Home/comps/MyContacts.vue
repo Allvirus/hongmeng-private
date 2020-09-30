@@ -48,6 +48,7 @@ export default {
 }
 </script>
 <style lang='stylus' scoped>
+
 .MyContacts
   button
     width 50px

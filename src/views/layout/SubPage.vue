@@ -44,7 +44,9 @@ export default {
 </script>
 <style lang="stylus">
 @import '~@/assets/style/var'
-
+::-webkit-scrollbar {
+  display: none; /* Chrome Safari */
+}
 .sub-layout.jc-between
   .sub-layout-center
     padding 0 20px

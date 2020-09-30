@@ -336,6 +336,8 @@ export default {
   // 24.获取我的业务的所有玩家订单分页数据（自动区分ABC岗）
   getAchiData: (model) => http('get', '/api/achievement', {
     params: {
+      gameName: model.gameName,
+      areaName: model.areaName,
       page: model.page,
       pageSize: model.pageSize,
     },

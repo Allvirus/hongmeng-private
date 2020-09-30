@@ -11,21 +11,9 @@
         )
     .ff-rn.fs-m.ai-center.mgt2
       label 游戏名称:
-      el-select.mgl1(v-model='selGame', placeholder='请选择')
-        el-option(
-          v-for='item in gameOpts',
-          :key='item.value',
-          :label='item.label',
-          :value='item.value'
-        )
+      el-input.w200(v-model="model.gameName")
       label.mgl3 区服名称:
-      el-select.mgl1(v-model='selServ', placeholder='请选择')
-        el-option(
-          v-for='item in servOpts',
-          :key='item.value',
-          :label='item.label',
-          :value='item.value'
-        )
+      el-input.w200(v-model="model.areaName")
       el-button.mgl3(icon='el-icon-search', type='primary', @click='search') 搜索
       el-button(icon='el-icon-refresh-right', type='primary', @click='reset') 重置
 
@@ -56,12 +44,14 @@
   el-table.mgy2.bg-white.pd2(:data='listMixin.list')
     el-table-column(prop="userAccount" label="用户账号")
     el-table-column(prop="userCode" label="玩家代码")
+    el-table-column(prop="gameOrderID" label="订单号")
     el-table-column(prop="gameName" label="游戏名称")
     el-table-column(prop="areaName" label="区服")
     el-table-column(prop="roleName" label="游戏角色")
     el-table-column(prop="payDate" label="支付时间")
       template(slot-scope="{ row }") {{row.payDate | dateFormat}}
-    el-table-column(prop="totalPrice" label="充值总额")
+    el-table-column(prop="totalPrice" label="充值总额(元)")
+      template(slot-scope="{ row }") {{row.totalPrice | formatNumber}}
   el-pagination.margin-spacing(
     :total="listMixin.count"
     :page-size.sync='model.pageSize'
@@ -84,12 +74,13 @@ export default {
     return {
       listApiForMixin: 'getAchiData',
       model: {
+        gameName: '',
+        areaName: '',
         page: 1,
         pageSize: 10,
       },
       timeRange: ['今日', '本周', '本月', '全年'],
       selTimeRange: '今日',
-      selGame: '',
       rechData: {
         columns: ['日期', '充值总额'],
         rows: [
@@ -127,27 +118,6 @@ export default {
           { 日期: '1/1', 创角数: 1393, 创角用户: 1093 },
         ],
       },
-      gameOpts: [
-        {
-          value: 'game1',
-          label: '王者荣耀',
-        },
-        {
-          value: 'game2',
-          label: '绝地求生',
-        },
-      ],
-      selServ: '',
-      servOpts: [
-        {
-          value: 'gx',
-          label: '广西',
-        },
-        {
-          value: 'hn',
-          label: '湖南',
-        },
-      ],
       dbList: [
         {
           title: '创角数',
@@ -173,10 +143,12 @@ export default {
   },
   methods: {
     search () {
-      this.$vgo.tip('开始搜索 ' + this.time, 'success')
+      this.getListMixin()
     },
     reset () {
-      this.$vgo.tip('已重置', 'success')
+      this.model.gameName = ''
+      this.model.areaName = ''
+      this.getListMixin()
     },
     onRadioChange (val) {
       console.log('onRaidoChange', val, this.selTimeRange)

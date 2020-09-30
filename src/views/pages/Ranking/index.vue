@@ -1,6 +1,10 @@
 <template lang='pug'>
   .Ranking
-    ranking-list
+    .ff-rn.jc-around
+      ranking-list
+      ranking-list.mgl3
+      ranking-list.mgl3
+      ranking-list.mgl3
 </template>
 <script>
 import RankingList from './comps/RankingList'
