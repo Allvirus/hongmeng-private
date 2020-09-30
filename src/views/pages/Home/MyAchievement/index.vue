@@ -140,6 +140,9 @@ export default {
     },
   },
   created () {
+    this.$api.getAchiByDay().then(res => {
+      console.log('getAchiByDay', res)
+    })
   },
   methods: {
     search () {

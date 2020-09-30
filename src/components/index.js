@@ -9,6 +9,7 @@ import Vue from 'vue'
 // Vue.component('VAudio', () => import('./base/VAudio'))
 // Vue.component('ListCardItem', () => import('./base/ListCardItem'))
 Vue.component('TitleBar', () => import('./base/TitleBar'))
+Vue.component('ScrollNotice', () => import('./notice'))
 
 // Vue.component('CardWrap', () => import('./base/card/CardWrap'))
 // Vue.component('CardIcon', () => import('./base/card/CardIcon'))

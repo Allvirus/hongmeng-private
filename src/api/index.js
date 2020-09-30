@@ -342,4 +342,7 @@ export default {
       pageSize: model.pageSize,
     },
   }),
+
+  // 25. 获取今日创角数 与 充值总额
+  getAchiByDay: () => http('get', '/api/achievement/day'),
 }

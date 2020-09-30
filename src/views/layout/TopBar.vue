@@ -1,6 +1,6 @@
 <template lang="pug">
 .top-bar
-  .banner.jc-between
+  .banner.jc-between.pr
     .user-info.ff-rn.ai-center.pdl2
       el-image.avatar.mg3(:src="userInfo.avtarUrl")
       .ff-cn.mgl2.strong
@@ -13,21 +13,16 @@
           img(:src="require('@/assets/img/ic_job.png')" fit="contain")
           span.mgl1 {{userInfo.job | formatJob}}
           span.mgl1.info 经验 {{userInfo.experiences}}
-
-    .swiper.fs-l.ai-center.strong
-      img.mgl2.flex-center(:src="require('@/assets/img/ic_notice.png')" fit="contain")
-      span 恭喜全力以赴站队黄子韬在03:08 22:18:15玩家单笔消费
-      span.danger {{1000}}
-      span 元
+    .swiper.fs-l.pa.omit
+        scroll-notice
     .logo.mgr3.ai-center
       img.mgr3(:src="require('@/assets/img/logo_zl.png')")
   .menu-list.jc-between.bg-white
     el-tabs(v-model="activeTab" @tab-click='(cmp) => $router.replace({ name: cmp.name })')
       el-tab-pane(label='首页', name='HomeMyAchievement')
       el-tab-pane(label='排行', name='Ranking')
-    .notice.ai-center.strong
-      img.mgl2.flex-center(:src="require('@/assets/img/ic_notice.png')" fit="contain")
-      span 公告：关于业绩考核通知，需各部门严格执行。
+    .notice.ai-center.omit.w400
+      //- scroll-notice
 </template>
 <script>
 import { mapGetters } from 'vuex'
@@ -70,6 +65,12 @@ $H = 120px
       width 60px
       height 60px
       border-radius 50%
+  .swiper
+    width 50%
+    height 100%
+    top 0%
+    left 50%
+    transform translateX(-30%)
   .menu-list
     height 50px
     padding 0 70px
