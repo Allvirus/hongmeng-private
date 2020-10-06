@@ -19,7 +19,7 @@
 
   //- 创角指数
   .data-panel.mgt2.ff-rn
-    data-box.mgl2(
+    data-box.mgr2(
       :data='item',
       :colIdx='idx',
       v-for='(item,key, idx) in panelList',
@@ -41,22 +41,14 @@
         h3.mg2 充值总额
         v-line.charts.flex-1.mgt2(:data='rechData')
 
-  el-table.mgy2.bg-white.pd2(:data='listMixin.list')
-    el-table-column(prop="userAccount" label="时间")
-    el-table-column(prop="userCode" label="玩家代码")
-    el-table-column(prop="gameOrderID" label="订单号")
-    el-table-column(prop="gameName" label="游戏名称")
-    el-table-column(prop="areaName" label="区服")
-    el-table-column(prop="roleName" label="游戏角色")
-    el-table-column(prop="payDate" label="支付时间")
-      template(slot-scope="{ row }") {{row.payDate | dateFormat}}
-    el-table-column(prop="totalPrice" label="充值总额(元)")
-      template(slot-scope="{ row }") {{row.totalPrice | formatNumber}}
-  el-pagination.margin-spacing(
-    :total="listMixin.count"
-    :page-size.sync='model.pageSize'
-    :current-page.sync='model.page'
-    @current-change="getListMixin")
+  el-table.mgy2.bg-white.pd2(:data='dataList')
+    el-table-column(prop="xText" label="时间")
+    el-table-column(prop="userRoleCount" label="创角数")
+    el-table-column(prop="userCount" label="创角用户")
+    el-table-column(prop="rechargeUserCount" label="充值人数")
+    el-table-column(prop="rechargeCount" label="充值订单")
+    el-table-column(prop="sum" label="充值总额(元)")
+      template(slot-scope="{ row }") {{row.sum | formatNumber}}
 
 </template>
 
@@ -141,14 +133,26 @@ export default {
   methods: {
     handleData (data, key, range, xText) {
       console.log('handleData', this.selTimeRange, data)
+      // 排序
       this.$utils.sort(data, key, false)
+
+      // 填充数据
       const fullList = this.insertData(data, key, range)
       console.log('handleData fullList=', fullList)
+
+      // 把数据转换成图表需要的格式
       this.fillVChartData(fullList, xText)
+
+      // 表格数据
+      this.dataList = data
+      for (const item of this.dataList) {
+        item.xText = this.formatXaxis(item.key)
+      }
+      console.log('dataList', this.dataList)
     },
     insertData (data, key, range) {
       const fullList = []
-      // 把dayKey作为数组的索引
+      // 把xxxKey的值作为数组的索引
       const tmpData = []
       for (const item of data) {
         tmpData[item[key]] = item
@@ -163,15 +167,26 @@ export default {
           // 后台没有数据，增加dayKey字段，插入默认数据
           item = this.genDataTmpl(key, i)
         }
-        // 生成一个统一的key字段
+        // 生成一个统一的key字段，用来生成横坐标文本
         item.key = i
         fullList.splice(i, 0, item)
       }
       return fullList
     },
+    // 创建数据结构模板
+    genDataTmpl (key, val) {
+      const tmpl = {
+        timeKey: '', // 时间段
+        userCount: 0, // 创角用户
+        userRoleCount: 0, // 创角数
+        rechargeCount: 0, // 充值订单数
+        rechargeUserCount: 0, // 充值用户数量
+        sum: 0, // 充值总额
+      }
+      tmpl[key] = val
+      return tmpl
+    },
     fillVChartData (data, xText) {
-      this.newRoleData.rows.splice(0, this.newRoleData.rows.length)
-      this.rechData.rows.splice(0, this.rechData.rows.length)
       for (const row of data) {
         // 柱状图
         const roleItem = {
@@ -190,7 +205,6 @@ export default {
         }
         this.rechData.rows.push(rechItem)
       }
-      console.log('fill', this.newRoleData)
     },
     formatXaxis (key) {
       let ret = key
@@ -226,19 +240,6 @@ export default {
       const newArr = data.createUserCount.concat(data.rechageUserCount)
       console.log('preHandle', newArr)
       return newArr
-    },
-    // 创建数据结构模板
-    genDataTmpl (key, val) {
-      const tmpl = {
-        timeKey: '', // 时间段
-        userCount: 0, // 创角用户
-        userRoleCount: 0, // 创角数
-        rechargeCount: 0, // 充值订单数
-        rechargeUserCount: 0, // 充值用户数量
-        sum: 0, // 充值总额
-      }
-      tmpl[key] = val
-      return tmpl
     },
     calcNewUsers (arr) {
       const newUsers = this.panelList.newUsers
@@ -285,6 +286,9 @@ export default {
       this.getListMixin()
     },
     onRadioChange (val) {
+      // 清除原来的数据
+      this.newRoleData.rows.splice(0, this.newRoleData.rows.length)
+      this.rechData.rows.splice(0, this.rechData.rows.length)
       switch (val) {
         case '今日':
           this.$api.getAchiByDay().then(data => {
