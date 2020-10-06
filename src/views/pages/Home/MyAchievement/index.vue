@@ -127,6 +127,8 @@ export default {
   },
   methods: {
     handleData (data, key, range) {
+      console.log('handleData', data)
+
       // 排序
       this.$utils.sort(data, key, false)
 
@@ -229,17 +231,15 @@ export default {
       return ret
     },
     sum () {
-      const newRoles = this.panelList.newRoles
-      const newUsers = this.panelList.newUsers
-      const rechgUsers = this.panelList.rechgUsers
-      const rechgOrders = this.panelList.rechgOrders
-      const rechgTotal = this.panelList.rechgTotal
+      for (const key in this.panelList) {
+        this.panelList[key].value = 0
+      }
       for (const item of this.dataList) {
-        newRoles.value += item.userRoleCount
-        newUsers.value += item.userCount
-        rechgOrders.value += item.rechargeCount
-        rechgUsers.value += item.rechargeUserCount
-        rechgTotal.value += item.sum
+        this.panelList.newRoles.value += item.userRoleCount
+        this.panelList.newUsers.value += item.userCount
+        this.panelList.rechgUsers.value += item.rechargeUserCount
+        this.panelList.rechgOrders.value += item.rechargeCount
+        this.panelList.rechgTotal.value += item.sum
       }
     },
     search () {
@@ -252,6 +252,7 @@ export default {
       // 清除原来的数据
       this.newRoleData.rows.splice(0, this.newRoleData.rows.length)
       this.rechData.rows.splice(0, this.rechData.rows.length)
+      this.dataList.splice(0, this.dataList.length)
       switch (val) {
         case '今日':
           this.$api.getAchiByDay().then(data => {
