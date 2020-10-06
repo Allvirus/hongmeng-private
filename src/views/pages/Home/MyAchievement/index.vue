@@ -42,7 +42,7 @@
         v-line.charts.flex-1.mgt2(:data='rechData')
 
   el-table.mgy2.bg-white.pd2(:data='listMixin.list')
-    el-table-column(prop="userAccount" label="用户账号")
+    el-table-column(prop="userAccount" label="时间")
     el-table-column(prop="userCode" label="玩家代码")
     el-table-column(prop="gameOrderID" label="订单号")
     el-table-column(prop="gameName" label="游戏名称")
@@ -72,6 +72,7 @@ export default {
   mixins: [fetchListMixin],
   data () {
     return {
+      chNumber: ['一', '二', '三', '四', '五', '六', '七', '八', '九', '十', '十一', '十二'],
       listApiForMixin: 'getAchiData',
       model: {
         gameName: '',
@@ -85,41 +86,12 @@ export default {
 
       },
       rechData: {
-        columns: ['日期', '充值总额'],
-        rows: [
-          { 日期: '1/1', 充值总额: 1393 },
-          { 日期: '1/2', 充值总额: 3530 },
-          { 日期: '1/3', 充值总额: 2923 },
-          { 日期: '1/4', 充值总额: 1723 },
-          { 日期: '1/5', 充值总额: 3792 },
-        ],
+        columns: ['日期', '充值总额(元)'],
+        rows: [],
       },
       newRoleData: {
-        option: {
-          title: {
-            text: 'Main Title',
-            subtext: 'Sub Title',
-            left: 'center',
-            top: 'center',
-            textStyle: {
-              fontSize: 30,
-            },
-            subtextStyle: {
-              fontSize: 20,
-            },
-            show: true,
-          },
-        },
-        columns: ['日期', '创角数', '创角用户'],
-        rows: [
-          { 日期: '1/1', 创角数: 1393, 创角用户: 1093 },
-          { 日期: '1/2', 创角数: 3530, 创角用户: 3230 },
-          { 日期: '1/3', 创角数: 2923, 创角用户: 2623 },
-          { 日期: '1/4', 创角数: 1723, 创角用户: 1423 },
-          { 日期: '1/5', 创角数: 3792, 创角用户: 3492 },
-          { 日期: '1/6', 创角数: 4593, 创角用户: 4293 },
-          { 日期: '1/1', 创角数: 1393, 创角用户: 1093 },
-        ],
+        columns: ['日期', '创角数', '创角用户', '充值人数', '充值订单数'],
+        rows: [],
       },
       panelList: {
         newRoles: {
@@ -153,6 +125,7 @@ export default {
           rate: 0,
         },
       },
+      dataList: [],
     }
   },
   computed: {
@@ -162,41 +135,100 @@ export default {
   },
   created () {
     this.$api.getAchiByDay().then(res => {
-      console.log('getAchiByDay', res)
-      this.dataFactory(res)
+      this.handleData(res)
     })
   },
   methods: {
-    dataFactory (data) {
+    handleData (data, key, range, xText) {
+      console.log('handleData', this.selTimeRange, data)
+      this.$utils.sort(data, key, false)
+      const fullList = this.insertData(data, key, range)
+      console.log('handleData fullList=', fullList)
+      this.fillVChartData(fullList, xText)
+    },
+    insertData (data, key, range) {
+      const fullList = []
+      // 把dayKey作为数组的索引
+      const tmpData = []
+      for (const item of data) {
+        tmpData[item[key]] = item
+      }
+      console.log('insertData', tmpData)
+      for (let i = 1; i < range + 1; i++) {
+        let item = {}
+        if (tmpData[i]) {
+          // 如果数据存在就插入后台获取的数据
+          item = tmpData[i]
+        } else {
+          // 后台没有数据，增加dayKey字段，插入默认数据
+          item = this.genDataTmpl(key, i)
+        }
+        // 生成一个统一的key字段
+        item.key = i
+        fullList.splice(i, 0, item)
+      }
+      return fullList
+    },
+    fillVChartData (data, xText) {
+      this.newRoleData.rows.splice(0, this.newRoleData.rows.length)
+      this.rechData.rows.splice(0, this.rechData.rows.length)
+      for (const row of data) {
+        // 柱状图
+        const roleItem = {
+          日期: this.formatXaxis(row.key),
+          创角数: row.userRoleCount,
+          创角用户: row.userCount,
+          充值人数: row.rechargeUserCount,
+          充值订单数: row.rechargeCount,
+        }
+        this.newRoleData.rows.push(roleItem)
+
+        // 折线图
+        const rechItem = {
+          日期: this.formatXaxis(row.key),
+          '充值总额(元)': row.sum,
+        }
+        this.rechData.rows.push(rechItem)
+      }
+      console.log('fill', this.newRoleData)
+    },
+    formatXaxis (key) {
+      let ret = key
       switch (this.selTimeRange) {
         case '今日':
-          this.formatToday(data)
           break
         case '本周':
-          this.formatWeek(data)
+          if (key === 7) {
+            ret = '星期日'
+          } else {
+            ret = '星期' + this.chNumber[key - 1]
+          }
           break
         case '本月':
+          ret = key + '日'
           break
         case '全年':
+          ret = key + '月'
           break
         default:
-          break
+          return key
       }
+      return ret
     },
-    formatToday (data) {
-      // 统计总数
-      this.calcNewUsers(data.createUserCount)
-      this.calcNewRoles(data.createUserRoleCount)
-      this.calcRechgUsers(data.rechageUserCount)
-      this.calcRechgOrders(data.rechageUserOrderCount)
-
-      // 数据组合
-    },
-    formatWeek (data) {
-
+    // 把创角数、创角用户数合并到一起。充值用户、充值订单合并到一起
+    preHandle (data) {
+      for (let i = 0; i < data.createUserRoleCount.length; i++) {
+        data.createUserCount[i].userRoleCount = data.createUserRoleCount[i].userRoleCount
+      }
+      for (let i = 0; i < data.rechageUserOrderCount.length; i++) {
+        data.rechageUserCount[i].rechargeCount = data.rechageUserOrderCount[i].rechargeCount
+      }
+      const newArr = data.createUserCount.concat(data.rechageUserCount)
+      console.log('preHandle', newArr)
+      return newArr
     },
     // 创建数据结构模板
-    genDataTmpl () {
+    genDataTmpl (key, val) {
       const tmpl = {
         timeKey: '', // 时间段
         userCount: 0, // 创角用户
@@ -205,19 +237,7 @@ export default {
         rechargeUserCount: 0, // 充值用户数量
         sum: 0, // 充值总额
       }
-      switch (this.selTimeRange) {
-        case '今日':
-          tmpl.hourKey = 0
-          break
-        case '本周':
-          break
-        case '本月':
-          break
-        case '全年':
-          break
-        default:
-          break
-      }
+      tmpl[key] = val
       return tmpl
     },
     calcNewUsers (arr) {
@@ -265,7 +285,27 @@ export default {
       this.getListMixin()
     },
     onRadioChange (val) {
-      console.log('onRaidoChange', val, this.selTimeRange)
+      switch (val) {
+        case '今日':
+          this.$api.getAchiByDay().then(data => {
+            this.handleData(data, '时')
+          })
+          break
+        case '本周':
+          this.$api.getAchiByWeek().then(data => {
+            this.handleData(data, 'dayKey', 7, '星期')
+          })
+          break
+        case '本月':
+          this.$api.getAchiByMonth().then(data => {
+            this.handleData(data, 'dayKey', 30, '日')
+          })
+          break
+        case '全年':
+          break
+        default:
+          break
+      }
     },
   },
 }

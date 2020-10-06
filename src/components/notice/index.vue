@@ -3,17 +3,11 @@
   .icon.flex-center
     img.w20.h20(:src='require("@/assets/img/ic_notice.png")', fit='contain')
   transition-group( name="list-complete" tag="p" mode="out-in")
-    span(
+    span.ff-cn(
     v-for="item in items"
     v-bind:key="item"
     class="list-complete-item"
     ) {{ item }}
-  //- .message.ff-cn.flex-center
-  //-   el-tag.mgl2.mgy1(
-  //-     type='warning',
-  //-     v-for='(item, idx) in msgShowList',
-  //-     :key='idx'
-  //-   ) {{ item.title }}
 </template>
 <script>
 export default {
@@ -62,7 +56,7 @@ export default {
       timerId: '',
       lastIdx: 0,
 
-      items: [1, 2, 3, 4, 5, 6, 7, 8, 9],
+      items: [1, 2, 3],
       nextNum: 10,
     }
   },
