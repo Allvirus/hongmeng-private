@@ -231,13 +231,15 @@ const utils = {
   },
   // 排序,
   sort (array, key, isDesc = false) {
-    array.sort((a, b) => {
-      if (isDesc) {
-        return (b[key] - a[key])
-      } else {
-        return (a[key] - b[key])
-      }
-    })
+    if (array) {
+      array.sort((a, b) => {
+        if (isDesc) {
+          return (b[key] - a[key])
+        } else {
+          return (a[key] - b[key])
+        }
+      })
+    }
   },
 }
 export default utils

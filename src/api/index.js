@@ -343,15 +343,15 @@ export default {
     },
   }),
 
-  // 25. 获取今日创角数 与 充值总额
+  // 25. 获取我本日的业务数据
   getAchiByDay: () => http('get', '/api/achievement/day'),
 
-  // 26.获取我的业务的本周数据
+  // 26.获取我本周的业务数据
   getAchiByWeek: () => http('get', '/api/achievement/week'),
 
-  // 27.获取我的业务的本月数据
+  // 27.获取我本月的业务数据
   getAchiByMonth: () => http('get', '/api/achievement/month'),
 
-  // 28.获取我的业务的本月数据
+  // 28.获取我全年的业务数据
   getAchiByYear: () => http('get', '/api/achievement/month'),
 }

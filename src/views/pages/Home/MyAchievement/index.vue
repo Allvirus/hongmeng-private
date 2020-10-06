@@ -72,7 +72,7 @@ export default {
         page: 1,
         pageSize: 10,
       },
-      timeRange: ['今日', '本周', '本月', '全年'],
+      timeRange: ['今日', '本周', '本月'],
       selTimeRange: '今日',
       dataSet: {
 
@@ -130,23 +130,20 @@ export default {
   },
   methods: {
     handleData (data, key, range) {
-      console.log('handleData', this.selTimeRange, data)
       // 排序
       this.$utils.sort(data, key, false)
 
       // 填充数据
       const fullList = this.insertData(data, key, range)
-      console.log('handleData fullList=', fullList)
-
+      console.log('handle', fullList)
       // 把数据转换成图表需要的格式
       this.fillVChartData(fullList)
 
       // 表格数据
       this.dataList = data
       for (const item of this.dataList) {
-        item.xText = this.formatXaxis(item.key)
+        item.xText = this.formatXaxis(item.index)
       }
-      console.log('dataList', this.dataList)
     },
     insertData (data, key, range) {
       const fullList = []
@@ -155,8 +152,8 @@ export default {
       for (const item of data) {
         tmpData[item[key]] = item
       }
-      console.log('insertData', tmpData)
-      for (let i = 1; i < range + 1; i++) {
+      range = key === 'hourKey' ? range : range + 1
+      for (let i = (key === 'hourKey' ? 0 : 1); i < range; i++) {
         let item = {}
         if (tmpData[i]) {
           // 如果数据存在就插入后台获取的数据
@@ -166,7 +163,7 @@ export default {
           item = this.genDataTmpl(key, i)
         }
         // 生成一个统一的key字段，用来生成横坐标文本
-        item.key = i
+        item.index = i
         fullList.splice(i, 0, item)
       }
       return fullList
@@ -188,7 +185,7 @@ export default {
       for (const row of data) {
         // 柱状图
         const roleItem = {
-          日期: this.formatXaxis(row.key),
+          日期: this.formatXaxis(row.index),
           创角数: row.userRoleCount,
           创角用户: row.userCount,
           充值人数: row.rechargeUserCount,
@@ -198,37 +195,37 @@ export default {
 
         // 折线图
         const rechItem = {
-          日期: this.formatXaxis(row.key),
+          日期: this.formatXaxis(row.index),
           '充值总额(元)': row.sum,
         }
         this.rechData.rows.push(rechItem)
       }
     },
-    formatXaxis (key) {
-      let ret = key
+    formatXaxis (index) {
+      let ret = index
       switch (this.selTimeRange) {
         case '今日':
-          if (key < 10) {
-            ret = '0' + key + ':00'
+          if (index < 10) {
+            ret = '0' + index + ':00'
           } else {
-            ret = key + ':00'
+            ret = index + ':00'
           }
           break
         case '本周':
-          if (key === 7) {
+          if (index === 7) {
             ret = '星期日'
           } else {
-            ret = '星期' + this.chNumber[key - 1]
+            ret = '星期' + this.chNumber[index - 1]
           }
           break
         case '本月':
-          ret = key + '日'
+          ret = index + '日'
           break
         case '全年':
-          ret = key + '月'
+          ret = index + '月'
           break
         default:
-          return key
+          return index
       }
       return ret
     },
@@ -241,7 +238,6 @@ export default {
         data.rechageUserCount[i].rechargeCount = data.rechageUserOrderCount[i].rechargeCount
       }
       const newArr = data.createUserCount.concat(data.rechageUserCount)
-      console.log('preHandle', newArr)
       return newArr
     },
     calcNewUsers (arr) {
@@ -294,8 +290,36 @@ export default {
       this.rechData.rows.splice(0, this.rechData.rows.length)
       switch (val) {
         case '今日':
-          this.$api.getAchiByMonth().then(data => {
-            this.handleData(data, 'dayKey', 24)
+          this.$api.getAchiByDay().then(data => {
+            console.log('onRadioChange', data)
+            const tmp1 = []
+            for (const item of data.createUser) {
+              tmp1[item.hourKey] = item
+            }
+
+            const tmp2 = []
+            for (const item of data.rechageUser) {
+              tmp2[item.hourKey] = item
+            }
+            const postData = []
+            for (let i = 0; i < 24; i++) {
+              if (tmp1[i] || tmp2[i]) {
+                const item = this.genDataTmpl('hourKey', i)
+                if (tmp1[i]) {
+                  item.timeKey = tmp1[i].timeKey
+                  item.userCount = tmp1[i].userCount
+                  item.userRoleCount = tmp1[i].userRoleCount
+                }
+                if (tmp2[i]) {
+                  item.rechargeCount = tmp2[i].rechargeCount
+                  item.rechargeUserCount = tmp2[i].rechargeUserCount
+                  item.sum = tmp2[i].sum
+                }
+                postData.push(item)
+              }
+            }
+            console.log('postData', postData)
+            this.handleData(postData, 'hourKey', 24)
           })
           break
         case '本周':
