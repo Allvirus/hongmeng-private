@@ -53,7 +53,6 @@
 </template>
 
 <script>
-import fetchListMixin from '@/mixins/fetchListMixin'
 export default {
   name: 'MyAchievement',
   components: {
@@ -61,11 +60,9 @@ export default {
     VHistogram: () => import('v-charts/lib/histogram.common'),
     DataBox: () => import('@/views/pages/Home/MyAchievement/comps/DataBox'),
   },
-  mixins: [fetchListMixin],
   data () {
     return {
       chNumber: ['一', '二', '三', '四', '五', '六', '七', '八', '九', '十', '十一', '十二'],
-      listApiForMixin: 'getAchiData',
       model: {
         gameName: '',
         areaName: '',
@@ -135,7 +132,6 @@ export default {
 
       // 填充数据
       const fullList = this.insertData(data, key, range)
-      console.log('handle', fullList)
       // 把数据转换成图表需要的格式
       this.fillVChartData(fullList)
 
@@ -144,6 +140,9 @@ export default {
       for (const item of this.dataList) {
         item.xText = this.formatXaxis(item.index)
       }
+
+      // 计算创角数...
+      this.sum()
     },
     insertData (data, key, range) {
       const fullList = []
@@ -229,60 +228,25 @@ export default {
       }
       return ret
     },
-    // 把创角数、创角用户数合并到一起。充值用户、充值订单合并到一起
-    preHandle (data) {
-      for (let i = 0; i < data.createUserRoleCount.length; i++) {
-        data.createUserCount[i].userRoleCount = data.createUserRoleCount[i].userRoleCount
-      }
-      for (let i = 0; i < data.rechageUserOrderCount.length; i++) {
-        data.rechageUserCount[i].rechargeCount = data.rechageUserOrderCount[i].rechargeCount
-      }
-      const newArr = data.createUserCount.concat(data.rechageUserCount)
-      return newArr
-    },
-    calcNewUsers (arr) {
-      const newUsers = this.panelList.newUsers
-      newUsers.value = 0
-      for (const item of arr) {
-        newUsers.value += Number(item.userCount)
-      }
-    },
-    calcNewRoles (arr) {
+    sum () {
       const newRoles = this.panelList.newRoles
-      newRoles.value = 0
-      for (const item of arr) {
-        newRoles.value += Number(item.userRoleCount)
-      }
-    },
-    calcRechgUsers (arr) {
+      const newUsers = this.panelList.newUsers
       const rechgUsers = this.panelList.rechgUsers
-      rechgUsers.value = 0
-      for (const item of arr) {
-        rechgUsers.value += Number(item.rechargeUserCount)
-      }
-    },
-    calcRechgOrders (arr) {
-      // 充值订单数量
       const rechgOrders = this.panelList.rechgOrders
-      rechgOrders.value = 0
-      for (const item of arr) {
-        rechgOrders.value += Number(item.rechargeCount)
-      }
-
-      // 充值订单总额
       const rechgTotal = this.panelList.rechgTotal
-      rechgTotal.value = 0
-      for (const item of arr) {
-        rechgTotal.value += Number(item.sum)
+      for (const item of this.dataList) {
+        newRoles.value += item.userRoleCount
+        newUsers.value += item.userCount
+        rechgOrders.value += item.rechargeCount
+        rechgUsers.value += item.rechargeUserCount
+        rechgTotal.value += item.sum
       }
     },
     search () {
-      this.getListMixin()
     },
     reset () {
       this.model.gameName = ''
       this.model.areaName = ''
-      this.getListMixin()
     },
     onRadioChange (val) {
       // 清除原来的数据
@@ -291,7 +255,6 @@ export default {
       switch (val) {
         case '今日':
           this.$api.getAchiByDay().then(data => {
-            console.log('onRadioChange', data)
             const tmp1 = []
             for (const item of data.createUser) {
               tmp1[item.hourKey] = item
@@ -318,7 +281,6 @@ export default {
                 postData.push(item)
               }
             }
-            console.log('postData', postData)
             this.handleData(postData, 'hourKey', 24)
           })
           break

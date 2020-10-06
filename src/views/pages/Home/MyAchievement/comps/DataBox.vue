@@ -1,11 +1,11 @@
 <template lang='pug'>
   .data-box.pd2.pr
     h3 {{data.title}}
-    h1.jc-end.mgy3.mgr2.warning {{data.value | formatNumber}}
-    p
-      span.info 同比
-      span.mgl2(:class="data.increase?'green':'danger'") {{data.rate}}%
-      i(:class="data.increase?'el-icon-top':'el-icon-bottom'" :style="icStyle")
+    h1.jc-center.mgy4.mgr2.warning {{data.value | formatNumber}}
+    //- p
+    //-   span.info 同比
+    //-   span.mgl2(:class="data.increase?'green':'danger'") {{data.rate}}%
+    //-   i(:class="data.increase?'el-icon-top':'el-icon-bottom'" :style="icStyle")
     .triangle.pa(:style="labelColor")
     .tria-cover.pa
 </template>
