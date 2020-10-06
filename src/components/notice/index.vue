@@ -2,8 +2,8 @@
 .ScrollNotice.ff-rn
   .icon.flex-center
     img.w20.h20(:src='require("@/assets/img/ic_notice.png")', fit='contain')
-  transition-group( name="list-complete" tag="p" mode="out-in")
-    span.ff-cn(
+  transition-group.ff-cn.jc-center.mgl3( name="list-complete" tag="p" mode="out-in")
+    span.hand(
     v-for="item in items"
     v-bind:key="item"
     class="list-complete-item"
@@ -90,7 +90,6 @@ export default {
     refreshShowList () {
       this.msgShowList.shift()
       this.msgShowList.push(this.msgList[this.lastIdx])
-      console.log('refreshShowList', this.msgShowList)
     },
 
     randomIndex: function () {
@@ -111,9 +110,13 @@ export default {
   display inline-block
   margin-right 10px
 
-.list-complete-enter, .list-complete-leave-to,
+.list-complete-enter
   opacity 0
-  transform translateY(30px)
+  transform translateY(-30px)
+
+.list-complete-leave-to
+  opacity 0
+  transform translateY(50px)
 
 .list-complete-leave-active
   position absolute
