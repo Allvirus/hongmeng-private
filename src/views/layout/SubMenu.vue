@@ -5,12 +5,12 @@
       img.fit-contain.w200.h200(:src='userInfo.avtarUrl')
     .jc-center.mgt3.overflow-hidden
       el-image.avatar.mgt1(:src='userInfo.avtarUrl')
-    .ff-rn.jc-center.mgt3.pd1
-      span.black.fs-l.w100.omit 136129912sdfsd
+    .jc-center.mgt3
+      span.mgx3.black.fs-l.omit {{userInfo.username}}
+    .ff-rn.jc-center.mgb3.mgt1
       img.mgl1.fit-contain(:src="userInfo.level | formatBadge")
       span.black.mgl1.fs-m {{ userInfo.level | formatLevel }}
-    .ff-rn.jc-center.mgb3.mgt1
-      img.fit-contain(:src='require("@/assets/img/ic_job.png")')
+      img.mgl1.fit-contain(:src='require("@/assets/img/ic_job.png")')
       span.black.mgl1 {{ userInfo.job | formatJob }}
 
   .menu-list

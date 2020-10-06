@@ -77,12 +77,12 @@ export default {
   },
   methods: {
     startMove () {
-      // setInterval(() => {
-      //   this.refreshShowList()
-      //   this.updateIndex()
-      //   this.add()
-      //   this.remove()
-      // }, 2500)
+      setInterval(() => {
+        this.refreshShowList()
+        this.updateIndex()
+        this.add()
+        this.remove()
+      }, 2500)
     },
     updateIndex () {
 

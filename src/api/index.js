@@ -351,4 +351,7 @@ export default {
 
   // 27.获取我的业务的本月数据
   getAchiByMonth: () => http('get', '/api/achievement/month'),
+
+  // 28.获取我的业务的本月数据
+  getAchiByYear: () => http('get', '/api/achievement/month'),
 }

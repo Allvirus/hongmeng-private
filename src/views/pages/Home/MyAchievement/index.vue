@@ -126,12 +126,10 @@ export default {
     },
   },
   created () {
-    this.$api.getAchiByDay().then(res => {
-      this.handleData(res)
-    })
+    this.onRadioChange(this.selTimeRange)
   },
   methods: {
-    handleData (data, key, range, xText) {
+    handleData (data, key, range) {
       console.log('handleData', this.selTimeRange, data)
       // 排序
       this.$utils.sort(data, key, false)
@@ -141,7 +139,7 @@ export default {
       console.log('handleData fullList=', fullList)
 
       // 把数据转换成图表需要的格式
-      this.fillVChartData(fullList, xText)
+      this.fillVChartData(fullList)
 
       // 表格数据
       this.dataList = data
@@ -186,7 +184,7 @@ export default {
       tmpl[key] = val
       return tmpl
     },
-    fillVChartData (data, xText) {
+    fillVChartData (data) {
       for (const row of data) {
         // 柱状图
         const roleItem = {
@@ -210,6 +208,11 @@ export default {
       let ret = key
       switch (this.selTimeRange) {
         case '今日':
+          if (key < 10) {
+            ret = '0' + key + ':00'
+          } else {
+            ret = key + ':00'
+          }
           break
         case '本周':
           if (key === 7) {
@@ -291,21 +294,24 @@ export default {
       this.rechData.rows.splice(0, this.rechData.rows.length)
       switch (val) {
         case '今日':
-          this.$api.getAchiByDay().then(data => {
-            this.handleData(data, '时')
+          this.$api.getAchiByMonth().then(data => {
+            this.handleData(data, 'dayKey', 24)
           })
           break
         case '本周':
           this.$api.getAchiByWeek().then(data => {
-            this.handleData(data, 'dayKey', 7, '星期')
+            this.handleData(data, 'dayKey', 7)
           })
           break
         case '本月':
           this.$api.getAchiByMonth().then(data => {
-            this.handleData(data, 'dayKey', 30, '日')
+            this.handleData(data, 'dayKey', 30)
           })
           break
         case '全年':
+          this.$api.getAchiByYear().then(data => {
+            this.handleData(data, 'dayKey', 12)
+          })
           break
         default:
           break
