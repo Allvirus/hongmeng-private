@@ -127,8 +127,6 @@ export default {
   },
   methods: {
     handleData (data, key, range) {
-      console.log('handleData', data)
-
       // 排序
       this.$utils.sort(data, key, false)
 

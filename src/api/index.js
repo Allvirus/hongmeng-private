@@ -354,4 +354,25 @@ export default {
 
   // 28.获取我全年的业务数据
   getAchiByYear: () => http('get', '/api/achievement/month'),
+
+  // 28.获取我的游戏接口
+  getGames: () => http('get', '/api/mygame/'),
+
+  // 29.根据游戏表ID获取游戏
+  getGameById: (id) => http('get', `/api/mygame/${id}`),
+
+  // 30.创建游戏表
+  addGame: (model) => http('post', '/api/mygame/', {
+    data: {
+      gameName: model.gameName, // 游戏名称
+      areaName: model.areaName, // 区服名称
+      areaCode: model.areaCode, // 区服代码
+      linkUrl: model.linkUrl, // 推广链接
+      bJobId: model.bJobId, // B岗ID
+      cJobId: model.cJobId, // C岗ID
+    },
+  }),
+
+  // 31.根据游戏ID表删除游戏表
+  delGameById: (id) => http('delete', '/api/mygame/{gameId}'),
 }

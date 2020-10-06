@@ -3,8 +3,8 @@
     .search.ff-rn
       el-input(suffix-icon="el-icon-search" placeholder="请输入内容" v-model="keyword")
       el-button.mgl1.flex-center(type="primary" @click="search") 搜索
-    .ff-cn.mgt2
-      .item.ff-rn.ai-center(v-for="(item,idx) in searchRet" :key="idx")
+    .h600.overflow-auto
+      .item.ff-rn.ai-center.mgt3(v-for="(item,idx) in searchRet" :key="idx")
         img.avatar.mg1.border-radius(:src="item.avtarUrl")
         .ff-cn
           .ff-rn.ai-center
