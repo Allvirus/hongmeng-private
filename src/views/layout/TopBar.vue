@@ -14,7 +14,7 @@
           span.mgl1 {{userInfo.job | formatJob}}
           span.mgl1.info 经验 {{userInfo.experiences}}
     .swiper.fs-l.pa.omit
-        scroll-notice
+        scroll-notice(:data="noticeList" :rows="3")
     .logo.mgr3.ai-center
       img.mgr3(:src="require('@/assets/img/logo_zl.png')")
   .menu-list.jc-between.bg-white
@@ -22,7 +22,7 @@
       el-tab-pane(label='首页', name='HomeMyAchievement')
       el-tab-pane(label='排行', name='Ranking')
     .notice.ai-center.omit.w400
-      //- scroll-notice
+      scroll-notice(:data="noticeList" :rows="1")
 </template>
 <script>
 import { mapGetters } from 'vuex'
@@ -31,6 +31,7 @@ export default {
   data () {
     return {
       activeTab: 'HomeMyAchievement',
+      noticeList: [],
     }
   },
   computed: {
@@ -42,8 +43,19 @@ export default {
     } else {
       this.activeTab = this.$route.name
     }
+    this.testNotice()
   },
   methods: {
+    testNotice () {
+      let count = 0
+      while (count++ < 5) {
+        const notice = {
+          id: count,
+          msg: '恭喜全力以赴战队黄子韬单笔消费' + count * 1000 + '元',
+        }
+        this.noticeList.push(notice)
+      }
+    },
     exit () {
       this.$utils.setCookie($globalconfig.COOKIE_NAME, '', { exHours: -1, domain: $globalconfig.COOKIE_DOMAIN })
       $globalconfig.LOGIN()
