@@ -13,7 +13,7 @@
           img(:src="require('@/assets/img/ic_job.png')" fit="contain")
           span.mgl1 {{userInfo.job | formatJob}}
           span.mgl1 经验 {{userInfo.experiences}}
-    .swiper.fs-l.pa.omit
+    .swiper.pa.omit
         scroll-notice(:data="noticeList" :rows="3")
     .logo.mgr3.ai-center
       img.mgr3(:src="require('@/assets/img/logo_zl.png')")

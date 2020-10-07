@@ -6,16 +6,12 @@
       type='primary',
       @click='dlgVisiable = true'
     ) 添加游戏
-  //- .search.ff-rn.mgb2.mgt2
-    //- el-input(suffix-icon="el-icon-search" placeholder="请输入内容" v-model="keyword")
-    //- el-button.mgl1.flex-center(type="primary" @click="search") 搜索
   .h600.overflow-auto
     .item.ff-rn.mgb3.ai-center(v-for='(item, idx) in gameList', :key='idx')
       img.game-icon(:src='item.linkUrl')
       .name.mgl2.ai-center.ff-cn
         p {{ item.gameName }}
         .ff-rn.ai-center
-          //- img.mgt1.mgr1(:src="require('@/assets/img/ic_user.png')" fit="contain")
           span.mtl1 {{ item.areaName }}
       .ff-cn.flex-1.ai-end.mgr2
         el-button.flex-center.mgl4(
@@ -29,10 +25,10 @@
           @click='delGame(item)'
         ) 删除
   el-dialog(
-    title='添加游戏\'',
+    title='添加游戏',
     @close='cancel',
     :visible.sync='dlgVisiable',
-    width='45%'
+    width='35%'
   )
     .flex-center
       el-form(label-width='150px')

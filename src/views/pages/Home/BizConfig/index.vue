@@ -1,9 +1,13 @@
 <template lang='pug'>
   .BizConfig
-    .ff-rn.fs-m.ai-center.mgt2.bg-white.pdy2
-      el-button.mgl2(icon="el-icon-plus" type="primary" @click="showEditDlg(false,null)") 新增配置
-      el-button.mgl2(icon="el-icon-search" type="primary" @click="search") 搜索
-      el-button.mgl2(icon="el-icon-refresh-right" type="primary" @click="reset") 重置
+    .ff-rn.fs-m.bg-white.pd2.opt-bar
+      el-form.ff-rn(label-width="100px")
+        el-form-item(label="注册时间:")
+          CommonDatePicker.w300.mgl1(:start.sync='model.startTime' :end.sync='model.endTime' )
+          el-button.mgl3(icon="el-icon-search" type="primary" @click="search") 搜索
+          el-button.mgl2(icon="el-icon-refresh-right" type="primary" @click="reset") 重置
+      .flex-1.jc-end
+        el-button(icon="el-icon-plus" type="primary" @click="showEditDlg(false,null)") 新增配置
 
     el-table.mgy2.bg-white.pd2(:data='listMixin.list' :row-class-name="({ row }) => row.is_payout ? 'danger' : ''")
       el-table-column(prop="departmentName" label="部门")
@@ -56,7 +60,7 @@
               :label="item.username"
               :value="item.id")
           el-form-item(label="时间:" required)
-            CommonDatePicker(:start.sync='cfgInfo.row.startTime'
+            CommonDatePicker.mgl1(:start.sync='cfgInfo.row.startTime'
               :end.sync='cfgInfo.row.endTime' type='datetimerange' future)
       span.dialog-footer(slot="footer")
         el-button.mgl3(type="warning" @click="cancelEdit") 取消
@@ -107,11 +111,12 @@ export default {
   },
   methods: {
     search () {
-      this.$vgo.tip('开始搜索 ', 'success')
+      this.getListMixin()
     },
     reset () {
-      this.$vgo.tip('已重置', 'success')
-      this.search()
+      this.model.startTime = ''
+      this.model.endTime = ''
+      this.getListMixin()
     },
     loadOptions () {
       // 获取部门列表数据
@@ -230,4 +235,7 @@ export default {
 }
 </script>
 <style lang='stylus' scoped>
+.opt-bar
+  .el-form-item
+    margin-bottom 0px
 </style>

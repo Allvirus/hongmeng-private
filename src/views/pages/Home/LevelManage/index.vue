@@ -1,8 +1,8 @@
 <template lang='pug'>
   .LevelManage
-    .ff-rn.fs-m.ai-center.bg-white.pd2
-      el-form.ff-rn(label-width="100px")
-          el-button(icon="el-icon-plus" type="primary" @click="showEditDlg(false,null)") 新增等级
+    .ff-rn.fs-m.bg-white.pd2.opt-bar
+      .flex-1.jc-end
+        el-button(icon="el-icon-plus" type="primary" @click="showEditDlg(false,null)") 新增等级
 
     el-table.mgy2.bg-white.pd2(:data='levelList')
       el-table-column(prop="level" label="等级名称")
@@ -50,9 +50,9 @@
               el-input-number(v-model="model.bjobAndroidExp")
             el-form-item(label="B岗IOS经验:" required)
               el-input-number(v-model="model.bjobIOSExp")
-          .icon
-            el-form-item(label="等级图标" required)
-              el-upload(:on-change='uploadIcon' :avatar='model.levelIcon')
+          //- .icon
+          //-   el-form-item(label="等级图标" required)
+          //-     el-upload(:on-change='uploadIcon' :avatar='model.levelIcon')
       span.dialog-footer(slot="footer")
         el-button.mgl3(type="warning" @click="cancelEdit") 取消
         el-button.mgl3(type="primary" @click="submmitEdit") 提交

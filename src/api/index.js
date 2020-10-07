@@ -137,6 +137,22 @@ export default {
     token: false,
   }),
 
+  // 3.创建用户
+  addUser: (model) => http('post', 'api/user/', {
+    data: {
+      realName: model.realName,
+      phoneNumber: model.phoneNumber,
+      account: model.account,
+      departmentId: model.departmentId,
+      job: model.job,
+      roleId: model.roleId,
+      hiredate: model.hiredate,
+      remark: model.remark,
+      jobNumber: model.jobNumber,
+      manageDepartmentId: model.manageDepartmentId,
+    },
+  }),
+
   // 4.5获取所有用户信息
   getAllUser: () => http('get', 'api/user/all'),
 
@@ -344,16 +360,36 @@ export default {
   }),
 
   // 25. 获取我本日的业务数据
-  getAchiByDay: () => http('get', '/api/achievement/day'),
+  getAchiByDay: (model) => http('get', '/api/achievement/day', {
+    params: {
+      gameName: model.gameName,
+      areaName: model.areaName,
+    },
+  }),
 
   // 26.获取我本周的业务数据
-  getAchiByWeek: () => http('get', '/api/achievement/week'),
+  getAchiByWeek: (model) => http('get', '/api/achievement/week', {
+    params: {
+      gameName: model.gameName,
+      areaName: model.areaName,
+    },
+  }),
 
   // 27.获取我本月的业务数据
-  getAchiByMonth: () => http('get', '/api/achievement/month'),
+  getAchiByMonth: (model) => http('get', '/api/achievement/month', {
+    params: {
+      gameName: model.gameName,
+      areaName: model.areaName,
+    },
+  }),
 
   // 28.获取我全年的业务数据
-  getAchiByYear: () => http('get', '/api/achievement/month'),
+  getAchiByYear: (model) => http('get', '/api/achievement/month', {
+    params: {
+      gameName: model.gameName,
+      areaName: model.areaName,
+    },
+  }),
 
   // 28.获取我的游戏接口
   getGames: () => http('get', '/api/mygame/'),

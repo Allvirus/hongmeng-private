@@ -123,7 +123,7 @@ export default {
     },
   },
   created () {
-    this.onRadioChange(this.selTimeRange)
+    this.search()
   },
   methods: {
     handleData (data, key, range) {
@@ -241,19 +241,25 @@ export default {
       }
     },
     search () {
+      this.onRadioChange(this.selTimeRange)
     },
     reset () {
       this.model.gameName = ''
       this.model.areaName = ''
+      this.onRadioChange(this.selTimeRange)
     },
     onRadioChange (val) {
       // 清除原来的数据
       this.newRoleData.rows.splice(0, this.newRoleData.rows.length)
       this.rechData.rows.splice(0, this.rechData.rows.length)
       this.dataList.splice(0, this.dataList.length)
+      const params = {
+        gameName: this.model.gameName,
+        areaName: this.model.areaName,
+      }
       switch (val) {
         case '今日':
-          this.$api.getAchiByDay().then(data => {
+          this.$api.getAchiByDay(params).then(data => {
             const tmp1 = []
             for (const item of data.createUser) {
               tmp1[item.hourKey] = item
@@ -284,17 +290,17 @@ export default {
           })
           break
         case '本周':
-          this.$api.getAchiByWeek().then(data => {
+          this.$api.getAchiByWeek(params).then(data => {
             this.handleData(data, 'dayKey', 7)
           })
           break
         case '本月':
-          this.$api.getAchiByMonth().then(data => {
+          this.$api.getAchiByMonth(params).then(data => {
             this.handleData(data, 'dayKey', 30)
           })
           break
         case '全年':
-          this.$api.getAchiByYear().then(data => {
+          this.$api.getAchiByYear(params).then(data => {
             this.handleData(data, 'dayKey', 12)
           })
           break
