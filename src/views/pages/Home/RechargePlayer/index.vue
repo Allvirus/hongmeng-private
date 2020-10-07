@@ -30,6 +30,7 @@
         el-table-column(prop="userCode" label="玩家ID")
         el-table-column(prop="gameOrderID" label="消费订单号")
         el-table-column(prop="totalPrice" label="支付金额")
+          template(slot-scope='{ row }') {{row.totalPrice | toFixed}}
         el-table-column(prop="gameName" label="游戏名称")
         el-table-column(prop="areaName" label="区服")
         el-table-column(prop="roleName" label="游戏角色")

@@ -162,6 +162,9 @@ export default {
   // 4.7 获取C岗用户信息
   getCJobs: () => http('get', 'api/user/c'),
 
+  // 4.8 根据部门ID获取用户信息
+  getDepartMembers: (departmentId) => http('get', `api/user/department/${departmentId}`),
+
   // 5.获取所有部门
   getAllDeparts: () => http('get', '/api/department'),
 

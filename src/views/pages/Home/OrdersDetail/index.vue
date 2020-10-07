@@ -15,12 +15,13 @@
 
     el-table.mgy2.bg-white.pd2(:data='listMixin.list')
       el-table-column(prop="userAccount" label="玩家账号")
-      el-table-column(prop="userCode" label="玩家代码")
-      el-table-column(prop="gameOrderID" label="消费订单号")
-      el-table-column(prop="totalPrice" label="支付金额")
+      el-table-column(prop="account" label="推广员账号")
       el-table-column(prop="gameName" label="游戏名称")
       el-table-column(prop="areaName" label="区服")
       el-table-column(prop="roleName" label="游戏角色")
+      el-table-column(prop="gameOrderID" label="消费订单号")
+      el-table-column(prop="totalPrice" label="支付金额")
+        template(slot-scope='{ row }') {{row.totalPrice | toFixed}}
       el-table-column(prop="payDate" label="支付时间")
       el-table-column(prop="ajob" label="A岗")
       el-table-column(prop="bjob" label="B岗")

@@ -3,8 +3,8 @@
     el-form.ff-rn.bg-white.pd2.ai-center(label-width="100px")
       el-form-item(label="玩家账号:")
         el-input.w200(v-model="model.userAccount")
-      el-form-item(label="玩家代码:")
-        el-input.w200(v-model="model.userCode")
+      el-form-item(label="推广员账号:")
+        el-input.w200(v-model="model.account")
       el-form-item(label="注册时间:")
         CommonDatePicker.mgl1(:start.sync='model.startTime' :end.sync='model.endTime')
         el-button.mgl3(icon="el-icon-search" type="primary" @click="search") 搜索
@@ -12,7 +12,7 @@
 
     el-table.mgy2.bg-white.pd2(:data='listMixin.list')
       el-table-column(prop="userAccount" label="玩家账号")
-      el-table-column(prop="userCode" label="玩家代码")
+      el-table-column(prop="account" label="推广员账号")
       el-table-column(prop="deviceNo" label="设备号")
       el-table-column(prop="createDate" label="注册时间")
         template(slot-scope="{ row }") {{row.createDate | dateFormat}}

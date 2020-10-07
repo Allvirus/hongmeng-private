@@ -22,6 +22,7 @@
     data-box.mgr2(
       :data='item',
       :colIdx='idx',
+      :toFixed="item.toFixed"
       v-for='(item,key, idx) in panelList',
       :key='idx'
     )
@@ -112,6 +113,7 @@ export default {
           value: 0,
           increase: true,
           rate: 0,
+          toFixed: true,
         },
       },
       dataList: [],

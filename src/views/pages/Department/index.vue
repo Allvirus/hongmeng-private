@@ -9,14 +9,15 @@
             el-button(icon="el-icon-plus" type="primary" @click="newUserDlg = true") 新增人员
             el-button(icon="el-icon-plus" type="primary" @click="showAddDepDlg") 新增部门
 
-        el-table.mgt2(:data='model.userList')
-            el-table-column(prop="created" label="姓名")
-            el-table-column(prop="amount" label="部门")
-            el-table-column(prop="type_text" label="岗位")
-            el-table-column(prop="remark" label="工龄")
-            el-table-column(prop="remark" label="手机号")
-            el-table-column(prop="balance" label="住址")
-      user-edit(:visiable="newUserDlg" @cancel="newUserDlg = false" @success="")
+        el-table.mgt2(:data='dptMbLst')
+            el-table-column(prop="realName" label="姓名")
+            el-table-column(prop="phoneNumber" label="手机号")
+            el-table-column(prop="level" label="等级")
+              template(slot-scope='{ row }') {{row.level | formatLevel}}
+            el-table-column(prop="job" label="岗位")
+              template(slot-scope='{ row }') {{row.job | formatJob}}
+            el-table-column(prop="experiences" label="经验值")
+      user-edit(:visiable="newUserDlg" @cancel="newUserDlg = false")
       .add-dlg
         el-dialog(title="新增部门" :visible.sync="newDepartDlg" width="35%")
           .flex-center
@@ -55,7 +56,6 @@ export default {
         label: 'name',
       },
       model: {
-        userList: [],
         departsList: [],
         newDepart: {
           name: '',
@@ -68,6 +68,7 @@ export default {
       },
       newDepartDlg: false,
       newUserDlg: false,
+      dptMbLst: [],
     }
   },
   computed: {
@@ -101,6 +102,12 @@ export default {
       })
     },
     handleNodeClick (data) {
+      if (data && data.departments.length === 0) {
+        this.$api.getDepartMembers(data.id).then(data => {
+          console.log('getDepartMembers', data)
+          this.dptMbLst = data
+        })
+      }
     },
     resetFormData () {
 

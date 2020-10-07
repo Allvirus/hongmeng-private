@@ -96,11 +96,30 @@ export default {
     submmit () {
       this.userInfo.roleId = 1
       this.userInfo.manageDepartmentId = 0
+
+      if (!this.checkParams()) {
+        return
+      }
       this.$api.addUser(this.userInfo).then(data => {
         this.$vgo.tip('添加成功', 'success')
         this.cancel()
-        this.$emit('success')
       })
+    },
+    checkParams () {
+      for (const key in this.userInfo) {
+        if (key !== 'remark' && this.userInfo[key] === '') {
+          this.$vgo.tip('请完善表单内容！', 'warning')
+          return false
+        }
+      }
+      console.log('checkParams', 'verifyPhone')
+      if (!this.$utils.verifyPhone(this.userInfo.phoneNumber)) {
+        console.log('checkParams verifyPhone', false)
+        this.$vgo.tip('请输入正确的手机号！', 'warning')
+        return false
+      }
+      console.log('checkParams verifyPhone', true)
+      return true
     },
   },
 }
