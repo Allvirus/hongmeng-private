@@ -150,8 +150,17 @@ export default {
       const fullList = []
       // 把xxxKey的值作为数组的索引
       const tmpData = []
-      for (const item of data) {
-        tmpData[item[key]] = item
+      if (range !== 7) {
+        for (const item of data) {
+          tmpData[item[key]] = item
+        }
+      } else {
+        // 本周数据 dayKey表示的是一个月的号数，不是星期几
+        for (const item of data) {
+          const date = new Date(item.timeKey)
+          const weekNum = date.getDay()
+          tmpData[weekNum] = item
+        }
       }
       range = key === 'hourKey' ? range : range + 1
       for (let i = (key === 'hourKey' ? 0 : 1); i < range; i++) {
@@ -162,10 +171,13 @@ export default {
         } else {
           // 后台没有数据，增加dayKey字段，插入默认数据
           item = this.genDataTmpl(key, i)
+          if (range === 7) {
+            // 需要给星期插入timeKey数据
+          }
         }
         // 生成一个统一的key字段，用来生成横坐标文本
         item.index = i
-        fullList.splice(i, 0, item)
+        fullList[i] = item
       }
       return fullList
     },
@@ -183,7 +195,8 @@ export default {
       return tmpl
     },
     fillVChartData (data) {
-      for (const row of data) {
+      for (const key in data) {
+        const row = data[key]
         // 柱状图
         const roleItem = {
           日期: this.formatXaxis(row),
@@ -214,9 +227,7 @@ export default {
           }
           break
         case '本周':
-          var date = new Date(item.timeKey)
-          console.log('format', date.getDay())
-          ret = '周' + '日一二三四五六'.charAt(date.getDay())
+          ret = '周' + '一二三四五六日'.charAt(item.index - 1)
           break
         case '本月':
           ret = index + '日'
