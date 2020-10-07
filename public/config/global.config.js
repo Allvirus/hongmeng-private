@@ -8,7 +8,7 @@
     USER_URL: 'http://manage.vgoyun.com/',
     PANO_FILE_API: 'http://122.9.89.59/api/obs/file',
     COOKIE_NAME: 'ZhuLangUserAccount',
-    COOKIE_DOMAIN: document.domain.split('.').slice(-2).join('.'),
+    COOKIE_DOMAIN: '122.9.89.59',
   }
 })()
 $globalconfig.UPLOAD_IMAGE_PREFIX = $globalconfig.CLOUD_FILE_API + 'api/images/upload'

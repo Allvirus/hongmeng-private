@@ -140,7 +140,7 @@ export default {
       // 表格数据
       this.dataList = data
       for (const item of this.dataList) {
-        item.xText = this.formatXaxis(item.index)
+        item.xText = this.formatXaxis(item)
       }
 
       // 计算创角数...
@@ -186,7 +186,7 @@ export default {
       for (const row of data) {
         // 柱状图
         const roleItem = {
-          日期: this.formatXaxis(row.index),
+          日期: this.formatXaxis(row),
           创角数: row.userRoleCount,
           创角用户: row.userCount,
           充值人数: row.rechargeUserCount,
@@ -196,14 +196,15 @@ export default {
 
         // 折线图
         const rechItem = {
-          日期: this.formatXaxis(row.index),
+          日期: this.formatXaxis(row),
           '充值总额(元)': row.sum,
         }
         this.rechData.rows.push(rechItem)
       }
     },
-    formatXaxis (index) {
-      let ret = index
+    formatXaxis (item) {
+      const index = item.index
+      let ret = ''
       switch (this.selTimeRange) {
         case '今日':
           if (index < 10) {
@@ -213,11 +214,9 @@ export default {
           }
           break
         case '本周':
-          if (index === 7) {
-            ret = '星期日'
-          } else {
-            ret = '星期' + this.chNumber[index - 1]
-          }
+          var date = new Date(item.timeKey)
+          console.log('format', date.getDay())
+          ret = '星期' + this.chNumber[date.getDay()]
           break
         case '本月':
           ret = index + '日'

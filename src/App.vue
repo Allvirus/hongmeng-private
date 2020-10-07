@@ -18,7 +18,6 @@ export default {
         this.$utils.setToken(query.access_token)
       }
     }
-    this.$store.dispatch('getUserInfo')
   },
 }
 </script>

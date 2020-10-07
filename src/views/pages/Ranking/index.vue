@@ -15,13 +15,20 @@ export default {
   },
   data () {
     return {
+      rankList: [],
     }
   },
   computed: {
   },
   created: function () {
+    this.getRank()
   },
   methods: {
+    getRank () {
+      this.$api.getRankMonth().then(data => {
+        console.log('getRank', data)
+      })
+    },
   },
 }
 </script>

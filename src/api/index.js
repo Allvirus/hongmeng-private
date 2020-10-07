@@ -414,4 +414,22 @@ export default {
 
   // 31.根据游戏ID表删除游戏表
   delGameById: (id) => http('delete', `/api/mygame/${id}`),
+
+  // 32.获取今天排行接口
+  getRankToday: () => http('get', '/api/rank/today'),
+
+  // 33.获取昨天排行接口
+  getRankYesterday: () => http('get', '/api/rank/yesterday'),
+
+  // 33.获取本周排行接口
+  getRankWeek: () => http('get', '/api/rank/week'),
+
+  // 34.获取上周排行接口
+  getRankLastweek: () => http('get', '/api/rank/lastweek'),
+
+  // 35.获取本月排行接口
+  getRankMonth: () => http('get', '/api/rank/month'),
+
+  // 36.获取上月排行接口
+  getRankLastMonth: () => http('get', '/api/rank/lastmonth'),
 }
