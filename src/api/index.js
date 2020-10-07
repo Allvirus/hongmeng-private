@@ -374,5 +374,5 @@ export default {
   }),
 
   // 31.根据游戏ID表删除游戏表
-  delGameById: (id) => http('delete', '/api/mygame/{gameId}'),
+  delGameById: (id) => http('delete', `/api/mygame/${id}`),
 }

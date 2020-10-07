@@ -70,26 +70,10 @@ export default {
       },
     }
   },
-  computed: {
-
-  },
   created: function () {
-    // this.createTestData()
     this.getGames()
   },
   methods: {
-    createTestData () {
-      let count = 20
-      while (count-- > 0) {
-        const item = {
-          name: '何元生',
-          gameName: '龙骑传说',
-          url: 'www.baidu.com',
-          icon: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1601013394289&di=2617de609a98a57aa9565b97769b66f4&imgtype=0&src=http%3A%2F%2Fhbimg.b0.upaiyun.com%2F019da535b4d6dd883943935329cef2c6c4c8c8c2d648-s6hdda_fw658',
-        }
-        this.gameList.push(item)
-      }
-    },
     getGames () {
       this.$api.getGames().then(data => {
         console.log('getGame', data)
@@ -104,12 +88,30 @@ export default {
     },
     submmit () {
       // 必填参数校验
+      if (!this.checkParams()) {
+        return
+      }
 
       this.$api.addGame(this.gameInfo).then(data => {
         this.cancel()
         this.$vgo.tip('添加成功!', 'success')
         this.getGames()
       })
+    },
+    checkParams () {
+      for (const key in this.gameInfo) {
+        if (key === 'bJobId' || key === 'cJobId') {
+          const reg = /\D/
+          if (reg.test(this.gameInfo.bJobId) || reg.test(this.gameInfo.cJobId)) {
+            this.$vgo.tip('B/C岗ID只能包含数字', 'warning')
+            return false
+          }
+        } else if (this.gameInfo[key] === '') {
+          this.$vgo.tip('请完善表单信息', 'warning')
+          return false
+        }
+      }
+      return true
     },
     cancel () {
       this.dlgVisiable = false
