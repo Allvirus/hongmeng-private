@@ -2,7 +2,7 @@
   .LevelManage
     .ff-rn.fs-m.ai-center.bg-white.pd2
       el-form.ff-rn(label-width="100px")
-          el-button.mgl3(icon="el-icon-plus" type="primary" @click="showEditDlg(false,null)") 新增等级
+          el-button(icon="el-icon-plus" type="primary" @click="showEditDlg(false,null)") 新增等级
 
     el-table.mgy2.bg-white.pd2(:data='levelList')
       el-table-column(prop="level" label="等级名称")

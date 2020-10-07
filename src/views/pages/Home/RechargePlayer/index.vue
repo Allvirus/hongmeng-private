@@ -7,7 +7,7 @@
       el-table.mgy2(:data='listMixin.list' @row-click="onRowClick"
         :row-class-name="({ row }) => row.key===rechargParam.userAccount ? 'bg-select' : ''")
         el-table-column(prop="key" label="玩家名称")
-      el-pagination.margin-spacing(
+      el-pagination(
         base
         :pager-count="5"
         :total="listMixin.count"

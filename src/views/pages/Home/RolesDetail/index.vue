@@ -73,4 +73,6 @@ export default {
 }
 </script>
 <style lang='stylus' scoped>
+.el-form-item
+  margin-bottom 0px
 </style>

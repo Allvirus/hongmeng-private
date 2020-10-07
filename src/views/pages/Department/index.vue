@@ -1,10 +1,12 @@
 <template lang='pug'>
   .Depart
     .ff-rn
-      .org-tree.bg-white
+      .org-tree.bg-white.pd3
         el-tree(:data="model.departsList" node_key="id" :default-expanded-keys="[1,2]" :props="props" @node-click="handleNodeClick")
-      .user-list.mgl2.bg-white.pd2
-        el-button.mgl3(icon="el-icon-plus" type="primary" @click="showAddDepDlg") 新增部门
+      .user-list.mgl2.pd2
+        .ff-rn.fs-m.ai-center.bg-white.pd2
+          el-form.ff-rn(label-width="100px")
+            el-button.bg-white(icon="el-icon-plus" type="primary" @click="showAddDepDlg") 新增部门
         el-table.mgt2(:data='model.userList')
             el-table-column(prop="created" label="姓名")
             el-table-column(prop="amount" label="部门")

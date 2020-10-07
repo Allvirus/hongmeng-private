@@ -1,6 +1,6 @@
 <template lang='pug'>
   .MyRegister
-    el-form.ff-rn.bg-white.pd2(label-width="100px")
+    el-form.ff-rn.bg-white.pd2.ai-center(label-width="100px")
       el-form-item(label="玩家账号:")
         el-input.w200(v-model="model.userAccount")
       el-form-item(label="玩家代码:")
@@ -74,4 +74,6 @@ export default {
 }
 </script>
 <style lang='stylus' scoped>
+.el-form-item
+  margin-bottom 0px
 </style>
