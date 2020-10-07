@@ -2,52 +2,36 @@
   .Depart
     .ff-rn
       .org-tree.bg-white.pd3
-        el-tree(:data="model.departsList" node_key="id" default-expand-all :props="props" @node-click="handleNodeClick")
+        el-tree(:data="departTree" node_key="id" default-expand-all :props="props" @node-click="handleNodeClick")
       .user-list.mgl2.pd2
         .ff-rn.fs-m.bg-white.pd2.opt-bar
           .flex-1.jc-end
-            el-button(icon="el-icon-plus" type="primary" @click="newUserDlg = true") 新增人员
-            el-button(icon="el-icon-plus" type="primary" @click="showAddDepDlg") 新增部门
+            el-button(icon="el-icon-plus" type="primary" @click="showMbEditDlg(null,false)") 新增人员
+            el-button(icon="el-icon-plus" type="primary" @click="newDepartDlg = true") 新增部门
 
         el-table.mgt2(:data='dptMbLst')
-            el-table-column(prop="realName" label="姓名")
-            el-table-column(prop="phoneNumber" label="手机号")
-            el-table-column(prop="level" label="等级")
-              template(slot-scope='{ row }') {{row.level | formatLevel}}
-            el-table-column(prop="job" label="岗位")
-              template(slot-scope='{ row }') {{row.job | formatJob}}
-            el-table-column(prop="experiences" label="经验值")
-      user-edit(:show="newUserDlg" @cancel="newUserDlg = false")
-      .add-dlg
-        el-dialog(title="新增部门" :visible.sync="newDepartDlg" width="35%")
-          .flex-center
-            el-form(label-width="100px")
-              el-form-item(label="部门名称:" required)
-                el-input(v-model="model.newDepart.name" placeholder='请输入部门名称' :maxlength='20' show-word-limit)
-              el-form-item(label="负责人:" required)
-                el-select.mgl1(v-model="model.newDepart.userId" placeholder="请选择")
-                  el-option(v-for="item in model.newDepart.userList"
-                  :key="item.id"
-                  :label="item.realName"
-                  :value="item.id")
-              el-form-item(label="上级部门:" required)
-                el-select.mgl1(v-model="model.newDepart.superiorDepartmentId" placeholder="请选择")
-                  el-option(v-for="item in model.newDepart.departList"
-                  :key="item.id"
-                  :label="item.name"
-                  :value="item.id")
-              el-form-item.omit(label="是否A岗部门:" required)
-                el-switch( v-model="model.newDepart.IsAjobDepartment" active-text="是" inactive-text="否")
-          span.dialog-footer(slot="footer")
-            el-button.mgl3(type="warning" @click="cancelAdd") 取消
-            el-button.mgl3(type="primary" @click="submmitAddDepart") 提交
+          el-table-column(prop="realName" label="姓名")
+          el-table-column(prop="phoneNumber" label="手机号")
+          el-table-column(prop="level" label="等级")
+            template(slot-scope='{ row }') {{row.level | formatLevel}}
+          el-table-column(prop="job" label="岗位")
+            template(slot-scope='{ row }') {{row.job | formatJob}}
+          el-table-column(prop="experiences" label="经验值")
+          el-table-column(prop="jobStatus" label="在职状态")
+          el-table-column(prop="timeRange" label="在职时间")
+          el-table-column(prop="operate" label="操作")
+            template(slot-scope="{ row }")
+              el-button(icon="el-icon-edit-outline" type="text" @click="showMbEditDlg(row,true)") 编辑
 
+      user-edit(:data="editMbInfo" :show="newUserDlg" @cancel="cancelMbEdit" )
+      depart-edit(:show="newDepartDlg" @cancel="newDepartDlg = false")
 </template>
 <script>
 export default {
   name: '',
   components: {
     UserEdit: () => import('@/views/pages/Department/comps/UserEdit'),
+    DepartEdit: () => import('@/views/pages/Department/comps/DepartEdit'),
   },
   data () {
     return {
@@ -55,81 +39,45 @@ export default {
         children: 'departments',
         label: 'name',
       },
-      model: {
-        departsList: [],
-        newDepart: {
-          name: '',
-          userId: '',
-          userList: [],
-          superiorDepartmentId: '',
-          departList: [],
-          IsAjobDepartment: true,
-        },
-      },
-      newDepartDlg: false,
-      newUserDlg: false,
-      dptMbLst: [],
+      newDepartDlg: false, // 部门编辑对话框是否可见
+      newUserDlg: false, // 人员编辑对话框是否可见
+      departTree: [], // 部门树
+      dptMbLst: [], // 部门人员列表
+      editMbInfo: null, // 编辑的人员信息
+      editDptInfo: null, // 编辑部门信息
     }
   },
-  computed: {
-  },
   created: function () {
-    this.initData()
+    this.getDepartTree()
   },
   methods: {
-    initData () {
-      this.getDepartTree()
-    },
-    showAddDepDlg () {
-      this.newDepartDlg = true
-      this.$api.getAllUser().then(res => {
-        console.log('getAllUser', res)
-        this.model.newDepart.userList = res
-      })
-
-      this.$api.getAllDeparts().then(res => {
-        console.log('getAllDepart', res)
-        this.model.newDepart.departList = res
-      })
-    },
     getDepartTree () {
-      const dpList = this.model.departsList
+      const dpList = this.departTree
       dpList.splice(0, dpList.length)
       const id = 1
       this.$api.getDepartById(id).then(res => {
         console.log('getAllDeparts', res)
-        this.model.departsList.push(res)
+        this.departTree.push(res)
       })
     },
     handleNodeClick (data) {
       if (data && data.departments.length === 0) {
         this.$api.getDepartMembers(data.id).then(data => {
-          console.log('getDepartMembers', data)
+          console.log('handleNodeClick', data)
           this.dptMbLst = data
         })
       }
     },
-    resetFormData () {
-
+    cancelMbEdit () {
+      this.newUserDlg = false
+      this.editMbInfo = null
     },
-    cancelAdd () {
-      this.newDepartDlg = false
-      this.resetFormData()
-    },
-    submmitAddDepart () {
-      const params = {
-        name: this.model.newDepart.name,
-        userId: this.model.newDepart.userId,
-        superiorDepartmentId: this.model.newDepart.superiorDepartmentId,
-        IsAjobDepartment: this.model.newDepart.IsAjobDepartment,
+    showMbEditDlg (row, isEdit) {
+      this.newUserDlg = true
+      this.editMbInfo = null
+      if (isEdit) {
+        this.editMbInfo = row
       }
-      this.$api.addDepart(params).then(res => {
-        console.log('addDepart', res)
-        this.$vgo.tip('提交成功', 'success')
-        this.newDepartDlg = false
-        this.resetFormData()
-        this.getDepartTree()
-      })
     },
   },
 }

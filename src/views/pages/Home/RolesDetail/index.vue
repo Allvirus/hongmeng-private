@@ -3,13 +3,13 @@
     .ff-rn.fs-m.ai-center.mgt2.bg-white.pd2
       el-form.ff-rw(label-width="100px")
         el-form-item(label="玩家账号:")
-          el-input.w200(v-model="model.UserAccount")
+          el-input.winput(v-model="model.UserAccount")
         el-form-item(label="游戏名称:")
-          el-input.w200(v-model="model.GameName")
+          el-input.winput(v-model="model.GameName")
         el-form-item(label="游戏角色:")
-          el-input.w200(v-model="model.RoleName")
+          el-input.winput(v-model="model.RoleName")
         el-form-item(label="区服:")
-          el-input.w200(v-model="model.AreaName")
+          el-input.winput(v-model="model.AreaName")
         el-form-item(label="创建时间:")
           CommonDatePicker.w300.mgl1(:start.sync='model.startTime' :end.sync='model.endTime' )
           el-button.mgl3(icon="el-icon-search" type="primary" @click="search") 搜索

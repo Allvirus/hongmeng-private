@@ -11,9 +11,9 @@
         )
     .ff-rn.fs-m.ai-center.mgt2
       label 游戏名称:
-      el-input.mgl2.w200(v-model="model.gameName")
+      el-input.mgl2.winput(v-model="model.gameName")
       label.mgl3 区服名称:
-      el-input.mgl2.w200(v-model="model.areaName")
+      el-input.mgl2.winput(v-model="model.areaName")
       el-button.mgl3(icon='el-icon-search', type='primary', @click='search') 搜索
       el-button(icon='el-icon-refresh-right', type='primary', @click='reset') 重置
 

@@ -61,6 +61,10 @@ export default {
       type: Boolean,
       default: false,
     },
+    data: {
+      type: Object,
+      default: null,
+    },
   },
   data () {
     return {
@@ -84,6 +88,15 @@ export default {
   watch: {
     show (newValue, oldValue) {
       this.isShow = newValue
+    },
+    data (newValue, oldValue) {
+      console.log('member info change', newValue, oldValue)
+      if (newValue !== null) {
+        this.userInfo.phoneNumber = newValue.phoneNumber
+        this.userInfo.realName = newValue.realName
+        this.userInfo.phoneNumber = newValue.phoneNumber
+        this.userInfo.phoneNumber = newValue.phoneNumber
+      }
     },
     immediate: true,
   },

@@ -2,13 +2,13 @@
   .MyRegister
     el-form.ff-rw.bg-white.pd2.ai-center(label-width="100px")
       el-form-item(label="玩家账号:")
-        el-input.w200(v-model="model.userAccount")
+        el-input.winput(v-model="model.userAccount")
       el-form-item(label="设备号:")
-        el-input.w200(v-model="model.account")
+        el-input.winput(v-model="model.account")
       el-form-item(label="推广员账户:")
-        el-input.w200(v-model="model.account")
+        el-input.winput(v-model="model.account")
       el-form-item(label="注册IP:")
-        el-input.w200(v-model="model.account")
+        el-input.winput(v-model="model.account")
       el-form-item(label="注册时间:")
         CommonDatePicker.w300(:start.sync='model.startTime' :end.sync='model.endTime')
         el-button.mgl3(icon="el-icon-search" type="primary" @click="search") 搜索
