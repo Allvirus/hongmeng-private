@@ -5,7 +5,7 @@
       .bg-white.pd2.ff-rn
         span {{levelInfo[0].levelName}}
         .pr
-          el-progress.mgx2.w200(:text-inside="true" :show-text="false" :stroke-width="20" :percentage="expPercent")
+          el-progress.mgx2.w300(:text-inside="true" :show-text="false" :stroke-width="20" :percentage="expPercent")
           p.flex-center.pac(:style="{ color: '#000000' }") {{userInfo.experiences}}/{{levelInfo[1].experience}}
         span {{levelInfo[1].levelName}}
       .ff-rn.mgt2

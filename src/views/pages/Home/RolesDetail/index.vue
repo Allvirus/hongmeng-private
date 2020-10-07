@@ -1,21 +1,23 @@
 <template lang='pug'>
   .MyRoles
     .ff-rn.fs-m.ai-center.mgt2.bg-white.pd2
-      el-form.ff-rn(label-width="100px")
+      el-form.ff-rw(label-width="100px")
         el-form-item(label="玩家账号:")
-          el-input.w150(v-model="model.UserAccount")
+          el-input.w200(v-model="model.UserAccount")
         el-form-item(label="游戏名称:")
-          el-input.w150(v-model="model.GameName")
+          el-input.w200(v-model="model.GameName")
         el-form-item(label="游戏角色:")
-          el-input.w150(v-model="model.RoleName")
-        el-form-item(label="注册时间:")
-          CommonDatePicker.w200.mgl1(:start.sync='model.startTime' :end.sync='model.endTime' )
+          el-input.w200(v-model="model.RoleName")
+        el-form-item(label="区服:")
+          el-input.w200(v-model="model.AreaName")
+        el-form-item(label="创建时间:")
+          CommonDatePicker.w300.mgl1(:start.sync='model.startTime' :end.sync='model.endTime' )
           el-button.mgl3(icon="el-icon-search" type="primary" @click="search") 搜索
           el-button.mgl2(icon="el-icon-refresh-right" type="primary" @click="reset") 重置
 
     el-table.mgy2.bg-white.pd2(:data='listMixin.list')
       el-table-column(prop="userAccount" label="玩家账号")
-      el-table-column(prop="account" label="推广员账号")
+      el-table-column(prop="account" label="推广员账户")
       el-table-column(prop="gameName" label="游戏名称")
       el-table-column(prop="areaName" label="区服")
       el-table-column(prop="roleName" label="游戏角色")
@@ -46,6 +48,7 @@ export default {
         UserCode: '',
         GameName: '',
         RoleName: '',
+        AreaName: '',
         page: 1,
         pageSize: 10,
       },
@@ -74,5 +77,5 @@ export default {
 </script>
 <style lang='stylus' scoped>
 .el-form-item
-  margin-bottom 0px
+  margin-bottom 10px
 </style>

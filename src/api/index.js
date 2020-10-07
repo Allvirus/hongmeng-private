@@ -295,7 +295,7 @@ export default {
         startTime: model.startTime,
         endTime: model.endTime,
         UserAccount: model.UserAccount,
-        GameOrderID: model.startTGameOrderIDime,
+        GameOrderID: model.GameOrderID,
         Account: model.Account,
         UserCode: model.UserCode,
         GameName: model.GameName,
@@ -324,6 +324,7 @@ export default {
         UserCode: model.UserCode,
         GameName: model.GameName,
         RoleName: model.RoleName,
+        AreaName: model.AreaName,
         Page: model.page,
         PageSize: model.pageSize,
       }

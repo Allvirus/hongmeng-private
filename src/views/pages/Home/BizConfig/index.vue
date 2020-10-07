@@ -125,6 +125,7 @@ export default {
       })
 
       this.$api.getBJobs().then(res => {
+        console.log('getBJobs', res)
         this.cfgInfo.BUserList = res
       })
 

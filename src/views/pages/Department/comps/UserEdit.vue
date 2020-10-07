@@ -2,7 +2,7 @@
 .user-edit
   el-dialog(
     title='新增人员',
-    :visible.sync='visiable',
+    :visible.sync='isShow',
     width='35%',
     @close='cancel'
   )
@@ -15,9 +15,9 @@
             :maxlength='20',
             show-word-limit
           )
-        el-form-item(label='工号:', required)
+        el-form-item(label='工号:')
           el-input(v-model='userInfo.jobNumber', placeholder='请输入工号')
-        el-form-item(label='手机号:', required)
+        el-form-item(label='手机号:')
           el-input(
             v-model='userInfo.phoneNumber',
             placeholder='请输入手机号',
@@ -57,7 +57,7 @@
 export default {
   name: '',
   props: {
-    visiable: {
+    show: {
       type: Boolean,
       default: false,
     },
@@ -78,7 +78,14 @@ export default {
       },
       jobs: ['A岗', 'B岗', 'C岗', '管理'],
       departList: [],
+      isShow: false,
     }
+  },
+  watch: {
+    show (newValue, oldValue) {
+      this.isShow = newValue
+    },
+    immediate: true,
   },
   created: function () {
     // 获取部门列表数据
@@ -107,18 +114,14 @@ export default {
     },
     checkParams () {
       for (const key in this.userInfo) {
-        if (key !== 'remark' && this.userInfo[key] === '') {
+        if (key !== 'remark' &&
+            key !== 'phoneNumber' &&
+            key !== 'jobNumber' &&
+            this.userInfo[key] === '') {
           this.$vgo.tip('请完善表单内容！', 'warning')
           return false
         }
       }
-      console.log('checkParams', 'verifyPhone')
-      if (!this.$utils.verifyPhone(this.userInfo.phoneNumber)) {
-        console.log('checkParams verifyPhone', false)
-        this.$vgo.tip('请输入正确的手机号！', 'warning')
-        return false
-      }
-      console.log('checkParams verifyPhone', true)
       return true
     },
   },

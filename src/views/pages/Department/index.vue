@@ -17,7 +17,7 @@
             el-table-column(prop="job" label="岗位")
               template(slot-scope='{ row }') {{row.job | formatJob}}
             el-table-column(prop="experiences" label="经验值")
-      user-edit(:visiable="newUserDlg" @cancel="newUserDlg = false")
+      user-edit(:show="newUserDlg" @cancel="newUserDlg = false")
       .add-dlg
         el-dialog(title="新增部门" :visible.sync="newDepartDlg" width="35%")
           .flex-center
@@ -28,7 +28,7 @@
                 el-select.mgl1(v-model="model.newDepart.userId" placeholder="请选择")
                   el-option(v-for="item in model.newDepart.userList"
                   :key="item.id"
-                  :label="item.username"
+                  :label="item.realName"
                   :value="item.id")
               el-form-item(label="上级部门:" required)
                 el-select.mgl1(v-model="model.newDepart.superiorDepartmentId" placeholder="请选择")
