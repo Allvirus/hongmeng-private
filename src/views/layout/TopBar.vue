@@ -2,14 +2,14 @@
 .top-bar
   .banner.jc-between.pr
     .user-info.ff-rn.ai-center.pdl2
-      el-image.avatar.mg3(:src="userInfo.avtarUrl")
-      .ff-cn.mgl2.strong
-        .ff-rn.ai-center.fs-l
+      img.avatar.mg3(:src="userInfo.avtarUrl")
+      .ff-cn.mgl2
+        .ff-rn.ai-center.fs-b
           span {{userInfo.username}}
           img.mgl2.fit-contain.flex-center(:src="userInfo.level | formatBadge")
           span.mgl1 {{userInfo.level | formatLevel}}
 
-        .ff-rn.ai-center.mgt2.fs-b
+        .ff-rn.ai-center.mgt2.fs-m
           img(:src="require('@/assets/img/ic_job.png')" fit="contain")
           span.mgl1 {{userInfo.job | formatJob}}
           span.mgl1 经验 {{userInfo.experiences}}

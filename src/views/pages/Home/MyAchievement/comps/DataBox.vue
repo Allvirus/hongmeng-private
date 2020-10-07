@@ -1,5 +1,5 @@
 <template lang='pug'>
-  .data-box.pd2.pr
+  .data-box.pd2.pr.flex-1
     h3 {{data.title}}
     h1.jc-center.mgy4.mgr2.warning
       span(v-if="toFixed") {{data.value| toFixed}}
@@ -61,8 +61,7 @@ export default {
   .data-box
     background-color #fff
     border-radius 10px
-    min-width 224px
-    max-width 250px
+    min-width 250px
     min-height 132px
     .green
       color green

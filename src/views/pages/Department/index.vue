@@ -2,7 +2,7 @@
   .Depart
     .ff-rn
       .org-tree.bg-white.pd3
-        el-tree(:data="model.departsList" node_key="id" :default-expanded-keys="[1,2]" :props="props" @node-click="handleNodeClick")
+        el-tree(:data="model.departsList" node_key="id" default-expand-all :props="props" @node-click="handleNodeClick")
       .user-list.mgl2.pd2
         .ff-rn.fs-m.bg-white.pd2.opt-bar
           .flex-1.jc-end

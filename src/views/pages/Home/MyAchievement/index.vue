@@ -19,12 +19,12 @@
 
   //- 创角指数
   .data-panel.mgt2.ff-rn
-    data-box.mgr2(
-      :data='item',
-      :colIdx='idx',
-      :toFixed="item.toFixed"
-      v-for='(item,key, idx) in panelList',
-      :key='idx'
+    .pd1.flex-1(v-for='(item,key, idx) in panelList',)
+      data-box(
+        :data='item',
+        :colIdx='idx',
+        :toFixed="item.toFixed"
+        :key='idx'
     )
   //- 图表
   .mgt3
@@ -63,7 +63,6 @@ export default {
   },
   data () {
     return {
-      chNumber: ['一', '二', '三', '四', '五', '六', '七', '八', '九', '十', '十一', '十二'],
       model: {
         gameName: '',
         areaName: '',
@@ -121,7 +120,8 @@ export default {
   },
   computed: {
     halfLayout () {
-      return this.selTimeRange === '本周'
+      // return this.selTimeRange === '本周'
+      return true
     },
   },
   created () {
@@ -132,7 +132,7 @@ export default {
       // 排序
       this.$utils.sort(data, key, false)
 
-      // 填充数据
+      // 插入数据
       const fullList = this.insertData(data, key, range)
       // 把数据转换成图表需要的格式
       this.fillVChartData(fullList)
@@ -216,7 +216,7 @@ export default {
         case '本周':
           var date = new Date(item.timeKey)
           console.log('format', date.getDay())
-          ret = '星期' + this.chNumber[date.getDay()]
+          ret = '周' + '日一二三四五六'.charAt(date.getDay())
           break
         case '本月':
           ret = index + '日'

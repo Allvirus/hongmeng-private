@@ -4,9 +4,9 @@
     .avatar-bg.pa
       img.fit-contain.w200.h200(:src='userInfo.avtarUrl')
     .jc-center.mgt3.overflow-hidden
-      el-image.avatar.mgt1(:src='userInfo.avtarUrl')
+      img.avatar.mgt1(:src='userInfo.avtarUrl')
     .jc-center.mgt3
-      span.mgx3.black.fs-l.omit {{userInfo.username}}
+      span.mgx3.black.fs-b.omit {{userInfo.username}}
     .ff-rn.jc-center.mgb3.mgt1
       img.mgl1.fit-contain(:src="userInfo.level | formatBadge")
       span.black.mgl1.fs-m {{ userInfo.level | formatLevel }}
