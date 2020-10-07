@@ -6,6 +6,7 @@
       .user-list.mgl2.pd2
         .ff-rn.fs-m.bg-white.pd2.opt-bar
           .flex-1.jc-end
+            el-button(icon="el-icon-plus" type="primary" @click="newUserDlg = true") 新增人员
             el-button(icon="el-icon-plus" type="primary" @click="showAddDepDlg") 新增部门
 
         el-table.mgt2(:data='model.userList')
@@ -15,8 +16,9 @@
             el-table-column(prop="remark" label="工龄")
             el-table-column(prop="remark" label="手机号")
             el-table-column(prop="balance" label="住址")
+      user-edit(:visiable="newUserDlg" @cancel="newUserDlg = false" @success="")
       .add-dlg
-        el-dialog(title="新增部门" :visible.sync="addDlgVisiable" width="35%")
+        el-dialog(title="新增部门" :visible.sync="newDepartDlg" width="35%")
           .flex-center
             el-form(label-width="100px")
               el-form-item(label="部门名称:" required)
@@ -43,6 +45,9 @@
 <script>
 export default {
   name: '',
+  components: {
+    UserEdit: () => import('@/views/pages/Department/comps/UserEdit'),
+  },
   data () {
     return {
       props: {
@@ -61,7 +66,8 @@ export default {
           IsAjobDepartment: true,
         },
       },
-      addDlgVisiable: false,
+      newDepartDlg: false,
+      newUserDlg: false,
     }
   },
   computed: {
@@ -74,7 +80,7 @@ export default {
       this.getDepartTree()
     },
     showAddDepDlg () {
-      this.addDlgVisiable = true
+      this.newDepartDlg = true
       this.$api.getAllUser().then(res => {
         console.log('getAllUser', res)
         this.model.newDepart.userList = res
@@ -100,7 +106,7 @@ export default {
 
     },
     cancelAdd () {
-      this.addDlgVisiable = false
+      this.newDepartDlg = false
       this.resetFormData()
     },
     submmitAddDepart () {
@@ -113,7 +119,7 @@ export default {
       this.$api.addDepart(params).then(res => {
         console.log('addDepart', res)
         this.$vgo.tip('提交成功', 'success')
-        this.addDlgVisiable = false
+        this.newDepartDlg = false
         this.resetFormData()
         this.getDepartTree()
       })

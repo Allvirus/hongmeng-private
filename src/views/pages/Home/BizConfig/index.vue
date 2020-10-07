@@ -43,7 +43,7 @@
               :key="item.id"
               :label="item.name"
               :value="item.id")
-          el-form-item(label="B岗测试:" required)
+          el-form-item(label="B岗:" required)
             el-select.mgl1(v-model="cfgInfo.row.bUserId"
               @change="onBJobChange"
               placeholder="请选择")
@@ -51,7 +51,7 @@
               :key="item.id"
               :label="item.username"
               :value="item.id")
-          el-form-item(label="C岗测试:" required)
+          el-form-item(label="C岗:" required)
             el-select.mgl1(v-model="cfgInfo.row.cUserId"
               @change="onCJobChange"
               placeholder="请选择")

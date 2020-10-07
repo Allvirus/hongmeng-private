@@ -20,9 +20,9 @@
       el-table-column(prop="ajob" label="A岗")
       el-table-column(prop="bjob" label="B岗")
       el-table-column(prop="cjob" label="C岗")
-      el-table-column(prop="" label="操作")
-        template(slot-scope="{ row }")
-          el-button(type="text" @click="showRole(row)") 查看角色
+      //- el-table-column(prop="" label="操作")
+      //-   template(slot-scope="{ row }")
+      //-     el-button(type="text" @click="showRole(row)") 查看角色
 
     el-pagination.margin-spacing(
       :total="listMixin.count"
