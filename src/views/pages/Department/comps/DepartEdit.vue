@@ -31,7 +31,7 @@
             )
         el-form-item.omit(label='是否A岗部门:', required)
           el-switch(
-            v-model='departInfo.IsAjobDepartment',
+            v-model='departInfo.isAjobDepartment',
             active-text='是',
             inactive-text='否'
           )
@@ -57,7 +57,7 @@ export default {
         name: '',
         userId: '',
         superiorDepartmentId: '',
-        IsAjobDepartment: true,
+        isAjobDepartment: true,
       },
     }
   },
@@ -93,7 +93,7 @@ export default {
         name: this.departInfo.name,
         userId: this.departInfo.userId,
         superiorDepartmentId: this.departInfo.superiorDepartmentId,
-        IsAjobDepartment: this.departInfo.IsAjobDepartment,
+        isAjobDepartment: this.departInfo.isAjobDepartment,
       }
       this.$api.addDepart(params).then(res => {
         this.$vgo.tip('创建成功', 'success')

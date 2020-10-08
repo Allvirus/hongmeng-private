@@ -177,9 +177,21 @@ export default {
       name: model.name,
       userId: model.userId,
       superiorDepartmentId: model.superiorDepartmentId,
-      IsAjobDepartment: model.IsAjobDepartment,
+      isAjobDepartment: model.isAjobDepartment,
     },
   }),
+  // 7.1.修改部门
+  updateDepart: (model) => http('put', `/api/department/${model.id}`, {
+    data: {
+      name: model.name,
+      userId: model.userId,
+      isAjobDepartment: model.isAjobDepartment,
+      superiorDepartmentId: model.superiorDepartmentId,
+    },
+  }),
+
+  // 7.2.删除部门
+  delDepart: (id) => http('delete', `/api/department/${id}`),
 
   // 8.获取A岗部门集合
   getAJobs: () => http('get', '/api/department/ajob'),
