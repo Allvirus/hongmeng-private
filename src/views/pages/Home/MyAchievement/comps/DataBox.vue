@@ -1,9 +1,9 @@
 <template lang='pug'>
   .data-box.pd2.pr.flex-1
     h3 {{data.title}}
-    h1.jc-center.mgy4.mgr2.warning
-      span(v-if="toFixed") {{data.value| toFixed}}
-      span(v-else) {{data.value|formatNumber}}
+    .flex-center.warning.mgt3
+      h1(v-if="toFixed") {{data.value| toFixed}}
+      h1(v-else) {{data.value|formatNumber}}
     //- p
     //-   span.info 同比
     //-   span.mgl2(:class="data.increase?'green':'danger'") {{data.rate}}%
@@ -61,7 +61,6 @@ export default {
   .data-box
     background-color #fff
     border-radius 10px
-    min-width 250px
     min-height 132px
     .green
       color green

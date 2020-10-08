@@ -1,11 +1,6 @@
 <template lang='pug'>
 .user-edit
-  el-dialog(
-    title='新增人员',
-    :visible.sync='isShow',
-    width='35%',
-    @close='cancel'
-  )
+  el-dialog(title='新增人员', :visible.sync='isShow', width='35%', @close='cancel')
     .flex-center
       el-form(label-width='100px')
         el-form-item(label='姓名:', required)
@@ -24,15 +19,14 @@
             type='tel'
           )
         el-form-item(label='部门:', required)
-          el-select.mgl1(v-model='userInfo.departmentId', placeholder='请选择')
-            el-option(
-              v-for='(item, index) in departList',
-              :key='item.id',
-              :label='item.name',
-              :value='item.id'
-            )
+          tree-selector(
+            :data='departTree',
+            :defProps='defProps',
+            nodeKey='id',
+            @change="onDepartChange"
+          )
         el-form-item(label='岗位:', required)
-          el-select.mgl1(v-model='userInfo.job', placeholder='请选择')
+          el-select(v-model='userInfo.job', placeholder='请选择')
             el-option(
               v-for='(item, index) in jobs',
               :key='index',
@@ -81,8 +75,13 @@ export default {
         manageDepartmentId: '',
       },
       jobs: ['A岗', 'B岗', 'C岗', '管理'],
-      departList: [],
       isShow: false,
+      departTree: [],
+      defProps: {
+        children: 'departments',
+        label: 'name',
+        valKey: 'id',
+      },
     }
   },
   watch: {
@@ -101,12 +100,20 @@ export default {
     immediate: true,
   },
   created: function () {
-    // 获取部门列表数据
-    this.$api.getAllDeparts().then(res => {
-      this.departList = res
-    })
+    // 获取部门树
+    this.getDepartTree()
   },
   methods: {
+    getDepartTree () {
+      this.departTree.splice(0, this.departTree.length)
+      const id = 1
+      this.$api.getDepartById(id).then(res => {
+        this.departTree.push(res)
+      })
+    },
+    onDepartChange (newVal) {
+      this.userInfo.departmentId = newVal
+    },
     cancel () {
       for (const key in this.userInfo) {
         this.userInfo[key] = ''

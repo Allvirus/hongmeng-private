@@ -12,11 +12,11 @@
         @click='switchTab("mygame")',
         key='mygame'
       ) 我的游戏
-      .tab-item.hand(
-        :class='{ active: tag === "contacts" }',
-        @click='switchTab("contacts")',
-        key='contacts'
-      ) 通讯录
+      //- .tab-item.hand(
+      //-   :class='{ active: tag === "contacts" }',
+      //-   @click='switchTab("contacts")',
+      //-   key='contacts'
+      //- ) 通讯录
     .content.overflow-hidden
       my-games(v-show='tag === "mygame"')
       my-contacts(v-show='tag === "contacts"')

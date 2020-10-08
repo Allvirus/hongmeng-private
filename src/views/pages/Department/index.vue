@@ -52,8 +52,7 @@ export default {
   },
   methods: {
     getDepartTree () {
-      const dpList = this.departTree
-      dpList.splice(0, dpList.length)
+      this.departTree.splice(0, this.departTree.length)
       const id = 1
       this.$api.getDepartById(id).then(res => {
         console.log('getAllDeparts', res)

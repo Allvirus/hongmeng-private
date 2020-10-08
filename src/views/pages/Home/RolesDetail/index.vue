@@ -11,7 +11,7 @@
         el-form-item(label="区服:")
           el-input.winput(v-model="model.AreaName")
         el-form-item(label="创建时间:")
-          CommonDatePicker.w300.mgl1(:start.sync='model.startTime' :end.sync='model.endTime' )
+          CommonDatePicker.w300(:start.sync='model.startTime' :end.sync='model.endTime' )
           el-button.mgl3(icon="el-icon-search" type="primary" @click="search") 搜索
           el-button.mgl2(icon="el-icon-refresh-right" type="primary" @click="reset") 重置
 
