@@ -1,6 +1,6 @@
 <template lang='pug'>
 .add-dlg
-  el-dialog(title='新增部门', :visible.sync='isShow', width='35%')
+  el-dialog(:title='isEdit?"编辑":"新增"', :visible.sync='isShow', width='35%')
     .flex-center
       el-form(label-width='100px')
         el-form-item(label='部门名称:', required)
@@ -10,7 +10,7 @@
             :maxlength='20',
             show-word-limit
           )
-        el-form-item(label='负责人:', required)
+        el-form-item(label='负责人:')
           el-select.mgl1(v-model='departInfo.userId', placeholder='请选择')
             el-option(
               v-for='item in userList',
@@ -77,6 +77,9 @@ export default {
       this.isEdit = newValue !== null
       if (newValue !== null) {
         this.departInfo = newValue
+        if (this.departInfo.userId === 0) {
+          this.departInfo.userId = ''
+        }
       }
     },
     immediate: true,
@@ -104,13 +107,18 @@ export default {
         userId: this.departInfo.userId,
         superiorDepartmentId: this.departInfo.superiorDepartmentId,
         isAjobDepartment: this.departInfo.isAjobDepartment,
-        departmentId: this.departInfo.id,
+      }
+      if (this.isEdit) {
+        params.departmentId = this.departInfo.id
       }
       for (const key in params) {
-        if (params[key] === '') {
-          this.$vgo.tip('请完善表单数据!', 'warning')
+        if (key !== 'userId' && params[key] === '') {
+          this.$vgo.tip('请完善表单数据!' + key, 'warning')
           return
         }
+      }
+      if (params.userId === '') {
+        params.userId = 0
       }
       if (this.isEdit) {
         this.$api.updateDepart(params).then(data => {

@@ -153,6 +153,9 @@ export default {
     },
   }),
 
+  // 4.获取单个用户信息
+  getUserInfoById: (id) => http('get', `api/user/${id}`),
+
   // 4.5获取所有用户信息
   getAllUser: () => http('get', 'api/user/all'),
 

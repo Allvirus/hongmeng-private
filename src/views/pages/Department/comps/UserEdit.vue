@@ -1,6 +1,6 @@
 <template lang='pug'>
 .user-edit
-  el-dialog(title='新增人员', :visible.sync='isShow', width='35%', @close='cancel')
+  el-dialog(:title='userId !== 0?"编辑":"新增"', :visible.sync='isShow', width='35%', @close='cancel')
     .flex-center
       el-form(label-width='100px')
         el-form-item(label='姓名:', required)
@@ -52,13 +52,17 @@
 export default {
   name: '',
   props: {
+    title: {
+      type: String,
+      default: '',
+    },
     show: {
       type: Boolean,
       default: false,
     },
-    data: {
-      type: Object,
-      default: null,
+    userId: {
+      type: Number,
+      default: 0,
     },
   },
   data () {
@@ -83,7 +87,6 @@ export default {
         label: 'name',
         valKey: 'id',
       },
-      isEdit: false,
     }
   },
   watch: {
@@ -91,12 +94,11 @@ export default {
       this.isShow = newValue
       // 获取部门树
       this.getDepartTree()
-    },
-    data (newValue, oldValue) {
-      console.log('member info change', newValue, oldValue)
-      this.isEdit = newValue !== null
-      if (newValue !== null) {
-        this.userInfo = newValue
+      if (this.userId !== 0) {
+        this.$api.getUserInfoById(this.userId).then(data => {
+          this.userInfo = data
+          this.userInfo.id = this.userId
+        })
       }
     },
     immediate: true,
@@ -126,7 +128,7 @@ export default {
       if (!this.checkParams()) {
         return
       }
-      if (this.isEdit) {
+      if (this.userId !== 0) {
         this.$api.updateUser(this.userInfo).then(data => {
           this.$vgo.tip('更新成功', 'success')
           this.cancel()
