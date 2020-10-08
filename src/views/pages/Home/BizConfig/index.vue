@@ -49,7 +49,7 @@
               placeholder="请选择")
               el-option(v-for="item in cfgInfo.BUserList"
               :key="item.id"
-              :label="item.username"
+              :label="item.realName"
               :value="item.id")
           el-form-item(label="C岗:" required)
             el-select.mgl1(v-model="cfgInfo.row.cUserId"
@@ -57,7 +57,7 @@
               placeholder="请选择")
               el-option(v-for="item in cfgInfo.CUserList"
               :key="item.id"
-              :label="item.username"
+              :label="item.realName"
               :value="item.id")
           el-form-item(label="时间:" required)
             CommonDatePicker(:start.sync='cfgInfo.row.startTime'
@@ -174,14 +174,14 @@ export default {
     onBJobChange (value) {
       for (const item of this.cfgInfo.BUserList) {
         if (item.id === value) {
-          this.cfgInfo.row.bUserName = item.username
+          this.cfgInfo.row.bUserName = item.realName
         }
       }
     },
     onCJobChange (value) {
       for (const item of this.cfgInfo.CUserList) {
         if (item.id === value) {
-          this.cfgInfo.row.cUserName = item.username
+          this.cfgInfo.row.cUserName = item.realName
         }
       }
     },
@@ -215,7 +215,7 @@ export default {
         return
       }
 
-      if (this.editDlgVisiable) {
+      if (this.cfgInfo.isEdit) {
         // 更新
         params.id = this.cfgInfo.row.id
         this.$api.updateCfgByIf(params).then(res => {

@@ -118,7 +118,7 @@ export default {
       for (const key in this.userInfo) {
         this.userInfo[key] = ''
       }
-      this.$refs.treesel.reset()
+      // this.$refs.treesel.reset()
       this.$emit('cancel')
     },
     submmit () {
