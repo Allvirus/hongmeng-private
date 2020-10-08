@@ -87,6 +87,8 @@ export default {
   watch: {
     show (newValue, oldValue) {
       this.isShow = newValue
+      // 获取部门树
+      this.getDepartTree()
     },
     data (newValue, oldValue) {
       console.log('member info change', newValue, oldValue)
@@ -98,10 +100,6 @@ export default {
       }
     },
     immediate: true,
-  },
-  created: function () {
-    // 获取部门树
-    this.getDepartTree()
   },
   methods: {
     getDepartTree () {

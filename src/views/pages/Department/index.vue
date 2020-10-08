@@ -24,7 +24,7 @@
               el-button(icon="el-icon-edit-outline" type="text" @click="showMbEditDlg(row,true)") 编辑
 
       user-edit(:data="editMbInfo" :show="newUserDlg" @cancel="cancelMbEdit" )
-      depart-edit(:show="newDepartDlg" @cancel="newDepartDlg = false")
+      depart-edit(:show="newDepartDlg" @cancel="newDepartDlg = false" @success="newDptSuccess")
 </template>
 <script>
 export default {
@@ -77,6 +77,10 @@ export default {
       if (isEdit) {
         this.editMbInfo = row
       }
+    },
+    newDptSuccess () {
+      this.newDepartDlg = false
+      this.getDepartTree()
     },
   },
 }

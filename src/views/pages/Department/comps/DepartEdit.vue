@@ -13,7 +13,7 @@
         el-form-item(label='负责人:', required)
           el-select.mgl1(v-model='departInfo.userId', placeholder='请选择')
             el-option(
-              v-for='item in departInfo.userList',
+              v-for='item in userList',
               :key='item.id',
               :label='item.realName',
               :value='item.id'
@@ -24,7 +24,7 @@
             placeholder='请选择'
           )
             el-option(
-              v-for='item in departInfo.departList',
+              v-for='item in departList',
               :key='item.id',
               :label='item.name',
               :value='item.id'
@@ -64,11 +64,11 @@ export default {
   watch: {
     show (newValue, oldValue) {
       this.isShow = newValue
+      if (this.isShow) {
+        this.getSelectorList()
+      }
     },
     immediate: true,
-  },
-  created: function () {
-    this.getSelectorList()
   },
   methods: {
     getSelectorList () {
@@ -96,11 +96,9 @@ export default {
         IsAjobDepartment: this.departInfo.IsAjobDepartment,
       }
       this.$api.addDepart(params).then(res => {
-        console.log('addDepart', res)
-        this.$vgo.tip('提交成功', 'success')
-        this.newDepartDlg = false
-        this.resetFormData()
-        this.getDepartTree()
+        this.$vgo.tip('创建成功', 'success')
+        this.$emit('success')
+        this.cancel()
       })
     },
   },
