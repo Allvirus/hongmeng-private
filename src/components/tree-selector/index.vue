@@ -40,6 +40,10 @@ export default {
     }
   },
   methods: {
+    reset () {
+      this.value = ''
+      this.label = ' '
+    },
     handleNodeClick (item) {
       if (item[this.defProps.children].length === 0) {
         this.value = item[this.defProps.valKey]

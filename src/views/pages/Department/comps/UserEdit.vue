@@ -20,6 +20,7 @@
           )
         el-form-item(label='部门:', required)
           tree-selector(
+            ref="treesel"
             :data='departTree',
             :defProps='defProps',
             nodeKey='id',
@@ -82,6 +83,7 @@ export default {
         label: 'name',
         valKey: 'id',
       },
+      isEdit: false,
     }
   },
   watch: {
@@ -92,11 +94,9 @@ export default {
     },
     data (newValue, oldValue) {
       console.log('member info change', newValue, oldValue)
+      this.isEdit = newValue !== null
       if (newValue !== null) {
-        this.userInfo.phoneNumber = newValue.phoneNumber
-        this.userInfo.realName = newValue.realName
-        this.userInfo.phoneNumber = newValue.phoneNumber
-        this.userInfo.phoneNumber = newValue.phoneNumber
+        this.userInfo = newValue
       }
     },
     immediate: true,
@@ -116,6 +116,7 @@ export default {
       for (const key in this.userInfo) {
         this.userInfo[key] = ''
       }
+      this.$refs.treesel.reset()
       this.$emit('cancel')
     },
     submmit () {
@@ -125,10 +126,18 @@ export default {
       if (!this.checkParams()) {
         return
       }
-      this.$api.addUser(this.userInfo).then(data => {
-        this.$vgo.tip('添加成功', 'success')
-        this.cancel()
-      })
+      if (this.isEdit) {
+        this.$api.updateUser(this.userInfo).then(data => {
+          this.$vgo.tip('更新成功', 'success')
+          this.cancel()
+          this.$emit('editchange')
+        })
+      } else {
+        this.$api.addUser(this.userInfo).then(data => {
+          this.$vgo.tip('添加成功', 'success')
+          this.cancel()
+        })
+      }
     },
     checkParams () {
       for (const key in this.userInfo) {

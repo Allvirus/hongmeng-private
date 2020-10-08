@@ -12,7 +12,7 @@
       )
     #perTreeMenu.tree_menu(v-if='ctxMnuShow', :style='{ ...rightMenu }')
       ul.border-radius
-        li.hand(@click='showEditDepart') 编辑
+        li.hand(@click='showDptEditDlg(true)') 编辑
         li.hand(@click='showDelDepart') 删除
 
     .user-list.mgl2.pd2
@@ -26,7 +26,7 @@
           el-button(
             icon='el-icon-plus',
             type='primary',
-            @click='newDepartDlg = true'
+            @click='showDptEditDlg(false)'
           ) 新增部门
 
       el-table.mgt2(:data='dptMbLst')
@@ -47,8 +47,14 @@
               @click='showMbEditDlg(row, true)'
             ) 编辑
 
-    user-edit(:data='editMbInfo', :show='newUserDlg', @cancel='cancelMbEdit')
+    user-edit(
+      :data='editMbInfo',
+      :show='newUserDlg',
+      @cancel='cancelMbEdit',
+      @editchange='handleNodeClick(curDepart)'
+    )
     depart-edit(
+      :data='editDptInfo',
       :show='newDepartDlg',
       @cancel='newDepartDlg = false',
       @success='newDptSuccess'
@@ -75,7 +81,7 @@ export default {
       editDptInfo: null, // 编辑部门信息
       rightMenu: '',
       ctxMnuShow: false,
-      optDepartData: {},
+      curDepart: null, // 当前选择显示的部门人员
     }
   },
   created: function () {
@@ -91,52 +97,58 @@ export default {
       })
     },
     handleNodeClick (data) {
+      this.curDepart = data
       if (data && data.departments.length === 0) {
         this.$api.getDepartMembers(data.id).then(data => {
-          console.log('handleNodeClick', data)
           this.dptMbLst = data
         })
       }
     },
+    // 取消人员编辑框
     cancelMbEdit () {
       this.newUserDlg = false
       this.editMbInfo = null
     },
+    // 显示编辑人员对话框
     showMbEditDlg (row, isEdit) {
+      console.log('showMbEditDlg', row, isEdit)
       this.newUserDlg = true
-      this.editMbInfo = null
-      if (isEdit) {
-        this.editMbInfo = row
-      }
+      this.editMbInfo = isEdit ? JSON.parse(JSON.stringify(row)) : null
     },
+    // 编辑部门
+    showDptEditDlg (isEdit) {
+      this.editDptInfo = isEdit ? this.editDptInfo : null
+      console.log('showDptEditDlg', this.editDptInfo)
+      this.newDepartDlg = true
+    },
+    // 创建部门成功
     newDptSuccess () {
       this.newDepartDlg = false
       this.getDepartTree()
     },
-    showEditDepart () {
-      this.$vgo.tip('编辑部门!', 'success')
-    },
+    // 删除部门
     showDelDepart () {
-      if (!this.optDepartData.id) {
+      if (!this.editDptInfo.id) {
         return
       }
       let tipMsg = ''
-      if (this.optDepartData.departments.length > 0) {
-        tipMsg = '您确定要删除"' + this.optDepartData.name + '"以及所有子部门?'
+      if (this.editDptInfo.departments.length > 0) {
+        tipMsg = '您确定要删除"' + this.editDptInfo.name + '"以及所有子部门?'
       } else {
-        tipMsg = '您确定要删除"' + this.optDepartData.name + '"?'
+        tipMsg = '您确定要删除"' + this.editDptInfo.name + '"?'
       }
 
       this.$vgo.open(() => {
-        this.$api.delDepart(this.optDepartData.id).then(data => {
+        this.$api.delDepart(this.editDptInfo.id).then(data => {
           this.$vgo.tip('已删除!', 'success')
           this.getDepartTree()
         })
       }, tipMsg)
     },
+    // 右击公司部门树
     rightClick (e, data, node, comp) {
-      console.log('rigclick', data)
-      this.optDepartData = data
+      console.log('rightClick', data)
+      this.editDptInfo = JSON.parse(JSON.stringify(data))
       this.rightMenu = { top: e.pageY + 'px', left: e.pageX + 'px' }
       this.ctxMnuShow = true
       document.onclick = (ev) => {

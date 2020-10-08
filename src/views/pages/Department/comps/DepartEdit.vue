@@ -47,6 +47,10 @@ export default {
       type: Boolean,
       default: false,
     },
+    data: {
+      type: Object,
+      default: null,
+    },
   },
   data () {
     return {
@@ -59,6 +63,7 @@ export default {
         superiorDepartmentId: '',
         isAjobDepartment: true,
       },
+      isEdit: false,
     }
   },
   watch: {
@@ -68,17 +73,21 @@ export default {
         this.getSelectorList()
       }
     },
+    data (newValue, oldValue) {
+      this.isEdit = newValue !== null
+      if (newValue !== null) {
+        this.departInfo = newValue
+      }
+    },
     immediate: true,
   },
   methods: {
     getSelectorList () {
       this.$api.getAllUser().then(res => {
-        console.log('getAllUser', res)
         this.userList = res
       })
 
       this.$api.getAllDeparts().then(res => {
-        console.log('getAllDepart', res)
         this.departList = res
       })
     },
@@ -86,6 +95,7 @@ export default {
       for (const key in this.departInfo) {
         this.departInfo[key] = ''
       }
+      this.departInfo.isAjobDepartment = true
       this.$emit('cancel')
     },
     submmit () {
@@ -94,12 +104,27 @@ export default {
         userId: this.departInfo.userId,
         superiorDepartmentId: this.departInfo.superiorDepartmentId,
         isAjobDepartment: this.departInfo.isAjobDepartment,
+        departmentId: this.departInfo.id,
       }
-      this.$api.addDepart(params).then(res => {
-        this.$vgo.tip('创建成功', 'success')
-        this.$emit('success')
-        this.cancel()
-      })
+      for (const key in params) {
+        if (params[key] === '') {
+          this.$vgo.tip('请完善表单数据!', 'warning')
+          return
+        }
+      }
+      if (this.isEdit) {
+        this.$api.updateDepart(params).then(data => {
+          this.$vgo.tip('更新成功', 'success')
+          this.$emit('success')
+          this.cancel()
+        })
+      } else {
+        this.$api.addDepart(params).then(res => {
+          this.$vgo.tip('创建成功', 'success')
+          this.$emit('success')
+          this.cancel()
+        })
+      }
     },
   },
 }

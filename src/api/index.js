@@ -165,6 +165,28 @@ export default {
   // 4.8 根据部门ID获取用户信息
   getDepartMembers: (departmentId) => http('get', `api/user/department/${departmentId}`),
 
+  // 4.9 根据用户ID修改用户信息
+  updateUser: (model) => http('put', `api/user/${model.id}`, {
+    data: {
+      realName: model.realName,
+      phoneNumber: model.phoneNumber,
+      account: model.account,
+      departmentId: model.departmentId,
+      job: model.job,
+      roleId: model.roleId,
+      hiredate: model.hiredate,
+      remark: model.remark,
+      jobNumber: model.jobNumber,
+      manageDepartmentId: model.manageDepartmentId,
+    },
+  }),
+
+  // 4.10 根据用户ID锁定用户
+  lockUser: (userId) => http('put', `api/user/${userId}/lock`),
+
+  // 4.11 获取所有角色
+  getRoles: () => http('get', 'api/role'),
+
   // 5.获取所有部门
   getAllDeparts: () => http('get', '/api/department'),
 
@@ -181,7 +203,7 @@ export default {
     },
   }),
   // 7.1.修改部门
-  updateDepart: (model) => http('put', `/api/department/${model.id}`, {
+  updateDepart: (model) => http('put', `/api/department/${model.departmentId}`, {
     data: {
       name: model.name,
       userId: model.userId,
