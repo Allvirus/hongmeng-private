@@ -17,14 +17,6 @@
           )
         el-form-item(label='入职日期:', required)
           CommonDatePicker(type='date', v-model='userInfo.hiredate' all)
-        el-form-item(label='工号:')
-          el-input(v-model='userInfo.jobNumber', placeholder='请输入工号')
-        el-form-item(label='手机号:')
-          el-input(
-            v-model='userInfo.phoneNumber',
-            placeholder='请输入手机号',
-            type='tel'
-          )
         el-form-item(label='部门:', required)
           tree-selector(
             ref='treesel',
@@ -42,8 +34,6 @@
               :label='item',
               :value='index'
             )
-        el-form-item(label='推广员账户:', required)
-          el-input(v-model='userInfo.account', placeholder='请输入推广员账户')
         el-form-item(label='角色:', required)
           el-select(v-model='userInfo.roleId', placeholder='请选择')
             el-option(
@@ -52,6 +42,16 @@
               :label='item.name',
               :value='item.id'
             )
+        el-form-item(label='推广员账户:', required)
+          el-input(v-model='userInfo.account', placeholder='请输入推广员账户')
+        el-form-item(label='工号:')
+          el-input(v-model='userInfo.jobNumber', placeholder='请输入工号')
+        el-form-item(label='手机号:')
+          el-input(
+            v-model='userInfo.phoneNumber',
+            placeholder='请输入手机号',
+            type='tel'
+          )
         el-form-item(label='备注:')
           el-input(v-model='userInfo.remark')
         //- el-form-item(label='manageDepartmentId:', required)

@@ -42,7 +42,7 @@
         el-table-column(prop='experiences', label='经验值')
         el-table-column(prop='userStatus', label='用户状态')
           template(slot-scope='{ row }')
-            .ff-rn.danger(v-if='row.isLock')
+            .ff-rn.danger(v-if='!row.lockoutEnabled')
               span 已锁定
             .ff-rn(v-else)
               span 正常
@@ -51,13 +51,13 @@
               el-button(
                 icon='el-icon-edit-outline',
                 type='text',
-                :disabled="row.isLock"
+                :disabled="!row.lockoutEnabled"
                 @click='showMbEditDlg(row, true)'
               ) 编辑
               el-button(
                 icon='el-icon-lock',
                 type='text',
-                :disabled="row.isLock"
+                :disabled="!row.lockoutEnabled"
                 @click='delUser(row)'
               ) 锁定
 
@@ -177,6 +177,7 @@ export default {
     delUser (row) {
       this.$vgo.open(() => {
         this.$api.lockUser(row.id).then(data => {
+          this.getDepartTree()
           this.$vgo.tip('锁定成功!', 'success')
         })
       }, '您确定要锁定该用户吗?')
