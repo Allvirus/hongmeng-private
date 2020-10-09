@@ -15,6 +15,8 @@
             :maxlength='20',
             show-word-limit
           )
+        el-form-item(label='入职日期:', required)
+          CommonDatePicker(type='date', v-model='userInfo.hiredate')
         el-form-item(label='工号:')
           el-input(v-model='userInfo.jobNumber', placeholder='请输入工号')
         el-form-item(label='手机号:')
@@ -42,10 +44,14 @@
             )
         el-form-item(label='推广员账户:', required)
           el-input(v-model='userInfo.account', placeholder='请输入推广员账户')
-        //- el-form-item(label='角色:', required)
-        //-   el-input(v-model='userInfo.roleId', placeholder='请输入账户')
-        el-form-item(label='入职日期:', required)
-          CommonDatePicker(type='date', v-model='userInfo.hiredate')
+        el-form-item(label='角色:', required)
+          el-select(v-model='userInfo.roleId', placeholder='请选择')
+            el-option(
+              v-for='item in roles',
+              :key='item.id',
+              :label='item.name',
+              :value='item.id'
+            )
         el-form-item(label='备注:')
           el-input(v-model='userInfo.remark')
         //- el-form-item(label='manageDepartmentId:', required)
@@ -93,6 +99,7 @@ export default {
         dptName: '',
       },
       jobs: ['A岗', 'B岗', 'C岗', '管理'],
+      roles: [],
       isShow: false,
       defProps: {
         children: 'departments',
@@ -108,6 +115,7 @@ export default {
       if (this.userId !== 0) {
         // 编辑
         this.$api.getUserInfoById(this.userId).then(data => {
+          console.log('edituser', data)
           this.userInfo = data
           this.userInfo.id = this.userId
           this.userInfo.dptName = this.findDptName(this.userInfo.departmentId, this.treeData)
@@ -119,7 +127,15 @@ export default {
     },
     immediate: true,
   },
+  created () {
+    this.getRoles()
+  },
   methods: {
+    getRoles () {
+      this.$api.getRoles().then(data => {
+        this.roles = data
+      })
+    },
     findDptName (id, data) {
       for (const key in data) {
         if (data[key].departments.length > 0) {
@@ -145,7 +161,6 @@ export default {
       this.$emit('cancel')
     },
     submmit () {
-      this.userInfo.roleId = 1
       this.userInfo.manageDepartmentId = 0
 
       if (!this.checkParams()) {
@@ -172,6 +187,7 @@ export default {
           params.departmentId === '' ||
           params.job === '' ||
           params.hiredate === '' ||
+          params.roleId === '' ||
           params.account === '') {
         isOK = false
         this.$vgo.tip('请完善表单数据!', 'warning')
