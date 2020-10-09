@@ -48,6 +48,7 @@
             ) 编辑
 
     user-edit(
+      :treeData="Tree.departTree"
       :userId='User.userId',
       :show='User.newUserDlg',
       @cancel='cancelMbEdit',
@@ -98,7 +99,6 @@ export default {
       this.Tree.departTree.splice(0, this.Tree.departTree.length)
       const id = 1
       this.$api.getDepartById(id).then(res => {
-        console.log('getAllDeparts', res)
         this.Tree.departTree.push(res)
       })
     },
@@ -151,7 +151,6 @@ export default {
     },
     // 右击公司部门树
     rightClick (e, data, node, comp) {
-      console.log('rightClick', data)
       this.Dpt.curClickDpt = JSON.parse(JSON.stringify(data))
       this.Tree.rightMenu = { top: e.pageY + 'px', left: e.pageX + 'px' }
       this.Tree.ctxMnuShow = true

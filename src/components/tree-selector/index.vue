@@ -1,6 +1,6 @@
 <template lang='pug'>
 .tree-selector
-  el-select(:value='label', placeholder='请选择')
+  el-select(v-model="value", placeholder='请选择')
     el-option(
       :label='label',
       :value='value',
@@ -10,6 +10,7 @@
       el-tree(
         :data='data',
         :props='defProps',
+        default-expand-all,
         @node-click='handleNodeClick',
         :node-key='nodeKey'
       )
@@ -32,6 +33,10 @@ export default {
       type: String,
       default: '',
     },
+    deflabel: {
+      type: String,
+      delault: '',
+    },
   },
   data () {
     return {
@@ -39,10 +44,22 @@ export default {
       label: '',
     }
   },
+  watch: {
+    deflabel (newValue, oldValue) {
+      if (newValue === '') {
+        this.label = ''
+        this.value = ''
+      } else {
+        this.value = ''
+        this.label = newValue
+      }
+    },
+    immediate: true,
+  },
   methods: {
     reset () {
+      this.label = ''
       this.value = ''
-      this.label = ' '
     },
     handleNodeClick (item) {
       if (item[this.defProps.children].length === 0) {
@@ -54,4 +71,7 @@ export default {
   },
 }
 </script>
-<style lang='stylus' scoped></style>
+<style lang='stylus' scoped>
+>>>.el-tree-node__label
+  font-weight normal !important
+</style>

@@ -72,7 +72,6 @@ export default {
   },
   methods: {
     onRowClick (row) {
-      console.log('onRowClick', row)
       this.clearQueryParams()
       this.rechargParam.userAccount = row.key
       this.getPlRchgRecord()
@@ -88,7 +87,6 @@ export default {
       const params = JSON.parse(JSON.stringify(this.rechargParam))
       this.$utils.filterNull(params)
       this.$api.getPlRchgRecord(params).then(res => {
-        console.log(res)
         this.rechargRecord = res
       })
     },

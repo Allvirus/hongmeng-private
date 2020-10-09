@@ -26,7 +26,6 @@ export default {
   methods: {
     getRank () {
       this.$api.getRankMonth().then(data => {
-        console.log('getRank', data)
       })
     },
   },

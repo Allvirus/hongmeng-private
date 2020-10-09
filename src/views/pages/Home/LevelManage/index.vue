@@ -104,15 +104,12 @@ export default {
   methods: {
     getLevelList () {
       this.$api.getAllLevel().then(res => {
-        console.log('getLevel', res)
         this.levelList = res
       })
     },
     deleteLevel (row) {
       this.$vgo.open(() => {
-        console.log('deleteLevel', 'startDel' + row.id)
         this.$api.delLevelById(row.id).then(res => {
-          console.log('deleteLevel', 'success')
           this.getLevelList()
         })
       })
@@ -139,7 +136,6 @@ export default {
           this.getLevelList()
         })
       } else {
-        console.log('submmit', this.model)
         if (this.model.level === '') {
           this.$vgo.tip('请选择等级名称', 'warning')
           return

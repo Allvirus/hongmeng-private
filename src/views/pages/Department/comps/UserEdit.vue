@@ -1,6 +1,11 @@
 <template lang='pug'>
 .user-edit
-  el-dialog(:title='userId !== 0?"编辑":"新增"', :visible.sync='isShow', width='35%', @close='cancel')
+  el-dialog(
+    :title='userId !== 0 ? "编辑" : "新增"',
+    :visible.sync='isShow',
+    width='35%',
+    @close='cancel'
+  )
     .flex-center
       el-form(label-width='100px')
         el-form-item(label='姓名:', required)
@@ -20,11 +25,12 @@
           )
         el-form-item(label='部门:', required)
           tree-selector(
-            ref="treesel"
-            :data='departTree',
+            ref='treesel',
+            :data='treeData',
             :defProps='defProps',
             nodeKey='id',
-            @change="onDepartChange"
+            :deflabel='userInfo.dptName',
+            @change='onDepartChange'
           )
         el-form-item(label='岗位:', required)
           el-select(v-model='userInfo.job', placeholder='请选择')
@@ -64,6 +70,12 @@ export default {
       type: Number,
       default: 0,
     },
+    treeData: {
+      type: Array,
+      default: () => {
+        return []
+      },
+    },
   },
   data () {
     return {
@@ -78,10 +90,10 @@ export default {
         remark: '',
         jobNumber: '',
         manageDepartmentId: '',
+        dptName: '',
       },
       jobs: ['A岗', 'B岗', 'C岗', '管理'],
       isShow: false,
-      departTree: [],
       defProps: {
         children: 'departments',
         label: 'name',
@@ -93,23 +105,34 @@ export default {
     show (newValue, oldValue) {
       this.isShow = newValue
       // 获取部门树
-      this.getDepartTree()
       if (this.userId !== 0) {
+        // 编辑
         this.$api.getUserInfoById(this.userId).then(data => {
           this.userInfo = data
           this.userInfo.id = this.userId
+          this.userInfo.dptName = this.findDptName(this.userInfo.departmentId, this.treeData)
         })
+      } else {
+        // 新建
+        this.userInfo.dptName = ''
       }
     },
     immediate: true,
   },
   methods: {
-    getDepartTree () {
-      this.departTree.splice(0, this.departTree.length)
-      const id = 1
-      this.$api.getDepartById(id).then(res => {
-        this.departTree.push(res)
-      })
+    findDptName (id, data) {
+      for (const key in data) {
+        if (data[key].departments.length > 0) {
+          const dptName = this.findDptName(id, data[key].departments)
+          if (dptName !== '') {
+            return dptName
+          }
+        }
+        if (id === data[key].id) {
+          return data[key].name
+        }
+      }
+      return ''
     },
     onDepartChange (newVal) {
       this.userInfo.departmentId = newVal
@@ -118,7 +141,7 @@ export default {
       for (const key in this.userInfo) {
         this.userInfo[key] = ''
       }
-      // this.$refs.treesel.reset()
+      this.$refs.treesel.reset()
       this.$emit('cancel')
     },
     submmit () {
@@ -128,6 +151,7 @@ export default {
       if (!this.checkParams()) {
         return
       }
+
       if (this.userId !== 0) {
         this.$api.updateUser(this.userInfo).then(data => {
           this.$vgo.tip('更新成功', 'success')
@@ -142,16 +166,17 @@ export default {
       }
     },
     checkParams () {
-      for (const key in this.userInfo) {
-        if (key !== 'remark' &&
-            key !== 'phoneNumber' &&
-            key !== 'jobNumber' &&
-            this.userInfo[key] === '') {
-          this.$vgo.tip('请完善表单内容！', 'warning')
-          return false
-        }
+      let isOK = true
+      const params = this.userInfo
+      if (params.realName === '' ||
+          params.departmentId === '' ||
+          params.job === '' ||
+          params.hiredate === '' ||
+          params.account === '') {
+        isOK = false
+        this.$vgo.tip('请完善表单数据!', 'warning')
       }
-      return true
+      return isOK
     },
   },
 }

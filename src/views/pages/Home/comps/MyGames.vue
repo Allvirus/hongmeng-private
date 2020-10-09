@@ -72,7 +72,6 @@ export default {
   methods: {
     getGames () {
       this.$api.getGames().then(data => {
-        console.log('getGame', data)
         this.gameList = data
       })
     },
@@ -116,7 +115,6 @@ export default {
       }
     },
     delGame (item) {
-      console.log('delGame', item.id)
       this.$vgo.open(() => {
         this.$api.delGameById(item.id).then(data => {
           this.$vgo.tip('删除成功！', 'success')

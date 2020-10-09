@@ -125,7 +125,6 @@ export default {
       })
 
       this.$api.getBJobs().then(res => {
-        console.log('getBJobs', res)
         this.cfgInfo.BUserList = res
       })
 
@@ -134,7 +133,6 @@ export default {
       })
     },
     editItem (row) {
-      console.log('editeItem', row)
     },
     showEditDlg (isEdit, row) {
       if (isEdit) {
