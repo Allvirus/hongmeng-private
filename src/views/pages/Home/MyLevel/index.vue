@@ -2,23 +2,16 @@
   .MyLevel
     h3 我的等级
     .info.mgt2
-      .bg-white.pd2.ff-rn
-        span {{levelInfo[0].levelName}}
-        .pr
-          el-progress.mgx2.w300(:text-inside="true" :show-text="false" :stroke-width="20" :percentage="expPercent")
-          p.flex-center.pac(:style="{ color: '#000000' }") {{userInfo.experiences}}/{{levelInfo[1].experience}}
-        span {{levelInfo[1].levelName}}
-      .ff-rn.mgt2
-        .exp-box.bg-white.pd3
-          .jc-between
-            span 累计经验值
-            a.hand 经验值明细
-          h2.mgt3.jc-center.warning {{userInfo.experiences}}
-        .exp-box.bg-white.pd3.mgl2
-          .jc-between
-            span 今日经验值
-            span 较昨日89
-          h2.mgt3.jc-center.warning 360
+      .bg-white.pd2
+        .ff-rn.ai-center
+          span 累计经验值 {{userInfo.experiences}}
+          el-button.mgl3.fs-m(type="text" @click="showDetailExp") 经验值明细
+        .ff-rn.mgt2
+          span {{levelInfo[0].levelName}}
+          .pr
+            el-progress.mgx2.w300(:text-inside="true" :show-text="false" :stroke-width="20" :percentage="expPercent")
+            p.flex-center.pac(:style="{ color: '#000000' }") {{userInfo.experiences}}/{{levelInfo[1].experience}}
+          span {{levelInfo[1].levelName}}
     .tables
       .level-rights
         h3.mgt3 等级权益说明
@@ -92,6 +85,7 @@ export default {
   },
   created: function () {
     this.getMyLevel()
+    console.log('create', this.userInfo)
   },
   methods: {
     getMyLevel () {
@@ -105,6 +99,9 @@ export default {
       const curLevMaxExp = this.levelInfo[0].experience
       const nexLevMaxExp = this.levelInfo[1].experience
       this.expPercent = ((curExp - curLevMaxExp) / (nexLevMaxExp - curLevMaxExp)) * 100
+    },
+    showDetailExp () {
+      this.$vgo.tip('待实现!', 'success')
     },
   },
 }

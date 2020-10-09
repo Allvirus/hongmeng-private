@@ -1,6 +1,11 @@
 <template lang='pug'>
 .add-dlg
-  el-dialog(:title='isEdit?"编辑":"新增"', :visible.sync='isShow', width='35%')
+  el-dialog(
+    :title='isEdit ? "编辑" : "新增"',
+    :visible.sync='isShow',
+    width='35%',
+    @close='cancel'
+  )
     .flex-center
       el-form(label-width='100px')
         el-form-item(label='部门名称:', required)
