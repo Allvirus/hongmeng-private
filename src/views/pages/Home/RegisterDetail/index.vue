@@ -56,6 +56,7 @@ export default {
   },
   methods: {
     search () {
+      this.$utils.autoFillDateTime(this.model)
       this.getListMixin()
     },
     reset () {

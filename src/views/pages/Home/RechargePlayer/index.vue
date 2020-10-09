@@ -84,6 +84,7 @@ export default {
         this.$vgo.tip('请选择玩家', 'warning')
         return
       }
+      this.$utils.autoFillDateTime(this.rechargParam)
       const params = JSON.parse(JSON.stringify(this.rechargParam))
       this.$utils.filterNull(params)
       this.$api.getPlRchgRecord(params).then(res => {

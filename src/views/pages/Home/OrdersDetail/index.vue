@@ -18,7 +18,6 @@
         CommonDatePicker.w400(
           :start.sync='model.startTime',
           :end.sync='model.endTime',
-          type='datetimerange',
           all
         )
         el-button.mgl3(icon='el-icon-search', type='primary', @click='search') 搜索
@@ -78,6 +77,7 @@ export default {
   },
   methods: {
     search () {
+      this.$utils.autoFillDateTime(this.model)
       this.getListMixin()
     },
     reset () {

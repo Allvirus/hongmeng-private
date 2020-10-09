@@ -111,6 +111,8 @@ export default {
   },
   methods: {
     search () {
+      console.log('search', this.model.startTime)
+      this.$utils.autoFillDateTime(this.model)
       this.getListMixin()
     },
     reset () {

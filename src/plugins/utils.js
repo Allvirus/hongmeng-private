@@ -241,6 +241,18 @@ const utils = {
       })
     }
   },
+  autoFillDateTime (model) {
+    if (model.startTime &&
+      model.endTime &&
+      model.startTime !== '' &&
+      model.endTime !== '' &&
+      model.startTime.length < '20xx-xx-xx xx:xx:xx'.length &&
+      model.endTime.length < '20xx-xx-xx xx:xx:xx'.length
+    ) {
+      model.startTime += ' 00:00:00'
+      model.endTime += ' 23:59:59'
+    }
+  },
 }
 export default utils
 
