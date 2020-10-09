@@ -116,7 +116,6 @@ export default {
         if (this.userId !== 0) {
           // 编辑
           this.$api.getUserInfoById(this.userId).then(data => {
-            console.log('edituser', data)
             this.userInfo = data
             this.userInfo.id = this.userId
             this.userInfo.dptName = this.findDptName(this.userInfo.departmentId, this.treeData)
@@ -166,7 +165,6 @@ export default {
       if (!this.checkParams()) {
         return
       }
-      console.log('submmit', this.userInfo)
       if (this.userId !== 0) {
         this.$api.updateUser(this.userInfo).then(data => {
           this.$vgo.tip('更新成功', 'success')

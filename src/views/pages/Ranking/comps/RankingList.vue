@@ -1,46 +1,76 @@
 <template lang='pug'>
-  .ranking-list.w400.pd2
-    .title
-      h2.fc-w3 云梦总公司
-      h2 客流岗业绩排行榜
-    .sub-title.jc-center.mgt3
-      h3.fc-w3 客流岗678人
-    .my-ranking.ff-cn.h70.mgt3
-      .ff-rn.jc-between.pdx3.title
-        p.pd1.flex-center.border-radius.pd2 我的排名
-        p.pd1.flex-center.border-radius.pd2 累计充值金额(元)
-      .ff-rn.ai-center.pr
-        h3.fs-l.mgl4 236
-        p.fs-l.mgl2 何元生
-        h3.fs-m.pa.warning(:style="{ right: '40px' }") 688.00
-    .ranking.mgt3.overflow-auto.ff-cn.pr
-      .item.ff-rn(v-for="(item,idx) in dataList" :key="idx")
-        .ai-center
-          h3.fs-l.mgl4.w30.warning {{idx + 1}}
-          p.fs-l.mgl2 {{item.name}}
-          h3.fs-m.pa.warning(:style="{ right: '40px' }") {{item.totalPrice | formatNumber}}
+  .rank.h650.ff-cn
+    .top-bg.pr
+      img.pa.tbimg(:src="themeList[theme].tpbg")
+      h1.pa.fc-w3 {{mainTitle}}
+    .content.mgx2.flex-1.bg-white
+      .mgt2
+        .ff-rn.ai-center.pd1.pr(v-for="(item,index) in data" :key="index")
+          img.badge(v-if="index<3" :src="require(`@/assets/img/ic_rank${index+1}.png`)" alt="altText")
+          span.badge.flex-center(v-else) {{index + 1}}
+          img.avatar.mgl2(:src="testUrl", alt="alt")
+          span.mgl1 {{item['account']}}
+          span.flex-1.jc-end.mgr3 {{item['count']}}
+    .footer.h50(:style="{ backgroundColor: themeList[theme].btbg }")
+      p.fc-w3 我的排行
 </template>
 <script>
 export default {
   name: '',
   props: {
+    data: {
+      type: Array,
+      default: () => {
+        return []
+      },
+    },
+    mainTitle: {
+      type: String,
+      default: '排行榜',
+    },
+    subTitle: {
+      type: String,
+      default: '',
+    },
+    defProp: {
+      type: Object,
+      default: () => {
+        return {
+          name: '',
+          value: '',
+        }
+      },
+    },
+    theme: {
+      type: String,
+      default: 'darkblue',
+    },
   },
   data () {
     return {
+      themeList: {
+        darkblue: {
+          btbg: '#00479D',
+          tpbg: require('@/assets/img/rank_bg1.png'),
+        },
+        green: {
+          btbg: '#22AC38',
+          tpbg: require('@/assets/img/rank_bg2.png'),
+        },
+        blue: {
+          btbg: '#00A0E9',
+          tpbg: require('@/assets/img/rank_bg3.png'),
+        },
+        orange: {
+          btbg: '#F39800',
+          tpbg: require('@/assets/img/rank_bg4.png'),
+        },
+      },
       dataList: [],
+      testUrl: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1602244834651&di=8a64567985c8b88137bbf1a63b5caba6&imgtype=0&src=http%3A%2F%2F5b0988e595225.cdn.sohucs.com%2Fimages%2F20180313%2Fab29d548f2a54e2c81663261d4a11af0.jpeg',
     }
-  },
-  computed: {
   },
   created: function () {
-    const item = {
-      name: '王磊',
-      totalPrice: '666699.55',
-    }
-    let count = 20
-    while (count-- > 0) {
-      this.dataList.push(item)
-    }
   },
   methods: {
   },
@@ -50,22 +80,29 @@ export default {
 ::-webkit-scrollbar {
   display: none; /* Chrome Safari */
 }
-.ranking-list
-  background-color gold
-  border-radius 14px
-  .my-ranking
-    background-color #f0f0f0
-    border-radius 14px
-    .title p
-      height 25px
-      background-color orange
-      color white
-      border-radius 16px
-      transform translateY(-@height/2)
-  .ranking
-    height 400px
-    background-color #FDF5E6
-    border-radius 14px
-    .item
+
+.rank
+  width 380px
+  background-color #eeeeee
+  .top-bg
+    .tbimg
+      left 0px
+      top 0px
+    h1
+      top 30px
+      left 50%
+      transform translateX(-50%)
+  .content
+    z-index 100
+    margin-top 100px
+    border-top-left-radius 10px
+    border-top-right-radius 10px
+    .avatar
+      width 40px
       height 40px
+      border-radius 50%
+    .badge
+      width 30px
+      height 30px
+  // .footer
 </style>
