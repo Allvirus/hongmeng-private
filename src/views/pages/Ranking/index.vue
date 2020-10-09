@@ -1,14 +1,15 @@
 <template lang='pug'>
 .Ranking
-  .condition.pd2
-    .btn-group
-      el-radio-group(v-model='selLabel', @change='getRank')
-        el-radio-button(
-          v-for='(item, index) in timeRange',
-          :key='index',
-          :value='index',
-          :label='item.label'
-        )
+  .condition
+    .bg-white.pd2
+      .btn-group
+        el-radio-group(v-model='selLabel', @change='getRank')
+          el-radio-button(
+            v-for='(item, index) in timeRange',
+            :key='index',
+            :value='index',
+            :label='item.label'
+          )
     .ff-rn.jc-around.mgt3
       ranking-list(
         :data='rankList.downloadRank',
@@ -28,6 +29,7 @@
         subTitle='充值金额(元)'
         theme="orange"
       )
+
 </template>
 <script>
 import RankingList from './comps/RankingList'

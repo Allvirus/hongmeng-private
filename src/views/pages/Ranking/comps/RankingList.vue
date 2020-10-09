@@ -1,17 +1,20 @@
 <template lang='pug'>
-  .rank.h650.ff-cn
+  .rank.h650.ff-cn.pr
     .top-bg.pr
       img.pa.tbimg(:src="themeList[theme].tpbg")
       h1.pa.fc-w3 {{mainTitle}}
-    .content.mgx2.flex-1.bg-white
-      .mgt2
-        .ff-rn.ai-center.pd1.pr(v-for="(item,index) in data" :key="index")
-          img.badge(v-if="index<3" :src="require(`@/assets/img/ic_rank${index+1}.png`)" alt="altText")
-          span.badge.flex-center(v-else) {{index + 1}}
-          img.avatar.mgl2(:src="testUrl", alt="alt")
-          span.mgl1 {{item['account']}}
-          span.flex-1.jc-end.mgr3 {{item['count']}}
-    .footer.h50(:style="{ backgroundColor: themeList[theme].btbg }")
+      .sub-title.pa.fs-s
+        span {{subTitle}}
+    .content.bg-white.pa.full.overflow-auto.pr
+      .ff-rn.ai-center.pd1.pr(v-for="(item,index) in data" :key="index")
+        img.badge(v-if="index<3" :src="require(`@/assets/img/ic_rank${index+1}.png`)" alt="altText")
+        span.badge.flex-center(v-else) {{index + 1}}
+        img.avatar.mgl2(:src="testUrl", alt="alt")
+        span.mgl1 {{item['account']}}
+        span.flex-1.jc-end.mgr3 {{item['count']}}
+      .flex-center(v-if="data.length === 0")
+        span 暂无数据
+    .footer.h50.full.pa(:style="{ backgroundColor: themeList[theme].btbg }")
       p.fc-w3 我的排行
 </template>
 <script>
@@ -94,9 +97,13 @@ export default {
       transform translateX(-50%)
   .content
     z-index 100
-    margin-top 100px
+    width calc(100% - 20px)
+    height calc(100% - 150px)
     border-top-left-radius 10px
     border-top-right-radius 10px
+    bottom 50px
+    left 10px
+    padding 30px 0px
     .avatar
       width 40px
       height 40px
@@ -104,5 +111,14 @@ export default {
     .badge
       width 30px
       height 30px
-  // .footer
+  .sub-title
+    right 25px
+    top 100px
+    padding 3px 5px
+    border-radius 10px
+    background-color #FFAA00
+    transform translateY(-50%)
+    z-index 200
+  .footer
+    bottom 0px
 </style>
