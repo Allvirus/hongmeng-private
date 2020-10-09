@@ -7,6 +7,7 @@
         @node-contextmenu='rightClick',
         node_key='id',
         default-expand-all,
+        :highlight-current="true"
         :props='props',
         @node-click='handleNodeClick'
       )
@@ -48,25 +49,25 @@
               span 正常
         el-table-column(prop='operate', label='操作')
           template(slot-scope='{ row }')
-              el-button(
-                icon='el-icon-edit-outline',
-                type='text',
-                :disabled="!row.lockoutEnabled"
-                @click='showMbEditDlg(row, true)'
-              ) 编辑
-              el-button(
-                icon='el-icon-lock',
-                type='text',
-                :disabled="!row.lockoutEnabled"
-                @click='delUser(row)'
-              ) 锁定
+            el-button(
+              icon='el-icon-edit-outline',
+              type='text',
+              :disabled="!row.lockoutEnabled"
+              @click='showMbEditDlg(row, true)'
+            ) 编辑
+            el-button(
+              icon='el-icon-lock',
+              type='text',
+              :disabled="!row.lockoutEnabled"
+              @click='delUser(row)'
+            ) 锁定
 
     user-edit(
       :treeData='Tree.departTree',
       :userId='User.userId',
       :show='User.newUserDlg',
       @cancel='cancelMbEdit',
-      @editchange='handleNodeClick(Dpt.curClickDpt)'
+      @editchange='handleNodeClick(Tree.curTreeNode)'
     )
     depart-edit(
       :data='Dpt.editDptInfo',
@@ -96,12 +97,13 @@ export default {
       Dpt: {
         newDepartDlg: false, // 部门编辑对话框是否可见
         editDptInfo: null, // 编辑部门信息
-        curClickDpt: null, // 当前选择显示的部门人员
       },
       Tree: {
         departTree: [], // 部门树
         rightMenu: '',
         ctxMnuShow: false,
+        curNode: {},
+        curTreeNode: null, // 当前选择显示的部门人员
       },
     }
   },
@@ -117,7 +119,7 @@ export default {
       })
     },
     handleNodeClick (data) {
-      this.Dpt.curClickDpt = data
+      this.Tree.curTreeNode = data
       if (data && data.departments.length === 0) {
         this.$api.getDepartMembers(data.id).then(data => {
           this.User.userList = data
@@ -136,7 +138,7 @@ export default {
     },
     // 编辑部门
     showDptEditDlg (isEdit) {
-      this.Dpt.editDptInfo = isEdit ? this.Dpt.curClickDpt : null
+      this.Dpt.editDptInfo = isEdit ? this.Tree.curTreeNode : null
       this.Dpt.newDepartDlg = true
     },
     // 创建部门成功
@@ -146,18 +148,18 @@ export default {
     },
     // 删除部门
     showDelDepart () {
-      if (!this.Dpt.curClickDpt.id) {
+      if (!this.Tree.curTreeNode.id) {
         return
       }
       let tipMsg = ''
-      if (this.Dpt.curClickDpt.departments.length > 0) {
-        tipMsg = '您确定要删除"' + this.Dpt.curClickDpt.name + '"以及所有子部门?'
+      if (this.Tree.curTreeNode.departments.length > 0) {
+        tipMsg = '您确定要删除"' + this.Tree.curTreeNode.name + '"以及所有子部门?'
       } else {
-        tipMsg = '您确定要删除"' + this.Dpt.curClickDpt.name + '"?'
+        tipMsg = '您确定要删除"' + this.Tree.curTreeNode.name + '"?'
       }
 
       this.$vgo.open(() => {
-        this.$api.delDepart(this.Dpt.curClickDpt.id).then(data => {
+        this.$api.delDepart(this.Tree.curTreeNode.id).then(data => {
           this.$vgo.tip('已删除!', 'success')
           this.getDepartTree()
         })
@@ -165,7 +167,7 @@ export default {
     },
     // 右击公司部门树
     rightClick (e, data, node, comp) {
-      this.Dpt.curClickDpt = JSON.parse(JSON.stringify(data))
+      this.Tree.curTreeNode = JSON.parse(JSON.stringify(data))
       this.Tree.rightMenu = { top: e.pageY + 'px', left: e.pageX + 'px' }
       this.Tree.ctxMnuShow = true
       document.onclick = (ev) => {

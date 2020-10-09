@@ -35,12 +35,12 @@
               :value='index'
             )
         el-form-item(label='角色:', required)
-          el-select(v-model='userInfo.roleId', placeholder='请选择')
+          el-select(v-model='userInfo.userRoles', placeholder='请选择' :multiple="true")
             el-option(
               v-for='item in roles',
               :key='item.id',
               :label='item.name',
-              :value='item.id'
+              :value='item.name'
             )
         el-form-item(label='推广员账户:', required)
           el-input(v-model='userInfo.account', placeholder='请输入推广员账户')
@@ -91,7 +91,7 @@ export default {
         account: '',
         departmentId: '',
         job: '',
-        roleId: '',
+        userRoles: '',
         hiredate: '',
         remark: '',
         jobNumber: '',
@@ -111,24 +111,24 @@ export default {
   watch: {
     show (newValue, oldValue) {
       this.isShow = newValue
-      // 获取部门树
-      if (this.userId !== 0) {
-        // 编辑
-        this.$api.getUserInfoById(this.userId).then(data => {
-          console.log('edituser', data)
-          this.userInfo = data
-          this.userInfo.id = this.userId
-          this.userInfo.dptName = this.findDptName(this.userInfo.departmentId, this.treeData)
-        })
-      } else {
-        // 新建
-        this.userInfo.dptName = ''
+      if (this.isShow) {
+        // 获取部门树
+        if (this.userId !== 0) {
+          // 编辑
+          this.$api.getUserInfoById(this.userId).then(data => {
+            console.log('edituser', data)
+            this.userInfo = data
+            this.userInfo.id = this.userId
+            this.userInfo.dptName = this.findDptName(this.userInfo.departmentId, this.treeData)
+          })
+        } else {
+          // 新建
+          this.userInfo.dptName = ''
+        }
+        this.getRoles()
       }
     },
     immediate: true,
-  },
-  created () {
-    this.getRoles()
   },
   methods: {
     getRoles () {
@@ -166,7 +166,7 @@ export default {
       if (!this.checkParams()) {
         return
       }
-
+      console.log('submmit', this.userInfo)
       if (this.userId !== 0) {
         this.$api.updateUser(this.userInfo).then(data => {
           this.$vgo.tip('更新成功', 'success')
@@ -187,7 +187,7 @@ export default {
           params.departmentId === '' ||
           params.job === '' ||
           params.hiredate === '' ||
-          params.roleId === '' ||
+          params.userRoles.length === 0 ||
           params.account === '') {
         isOK = false
         this.$vgo.tip('请完善表单数据!', 'warning')

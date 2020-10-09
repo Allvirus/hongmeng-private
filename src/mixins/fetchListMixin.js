@@ -42,6 +42,7 @@ export default {
       const { loading = true } = opts
       page && (this.model.page = page)
       return this.$api[this.listApiForMixin || this.customExeListApiForMixin](this.model, loading).then(data => {
+        console.log('getListMixin', data)
         this.listMixin.list = data.list
         this.listMixin.count = data.count
         if (data.list.length <= 0 && this.model.page > 1) this.getListMixin(this.model.page - 1)

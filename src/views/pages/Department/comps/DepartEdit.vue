@@ -16,7 +16,7 @@
             show-word-limit
           )
         el-form-item(label='负责人:')
-          el-select.mgl1(v-model='departInfo.userId', placeholder='请选择')
+          el-select(v-model='departInfo.userId', placeholder='请选择')
             el-option(
               v-for='item in userList',
               :key='item.id',
@@ -24,7 +24,7 @@
               :value='item.id'
             )
         el-form-item(label='上级部门:', required)
-          el-select.mgl1(
+          el-select(
             v-model='departInfo.superiorDepartmentId',
             placeholder='请选择'
           )

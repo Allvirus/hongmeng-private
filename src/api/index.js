@@ -145,7 +145,7 @@ export default {
       account: model.account,
       departmentId: model.departmentId,
       job: model.job,
-      roleId: model.roleId,
+      userRoles: model.userRoles,
       hiredate: model.hiredate,
       remark: model.remark,
       jobNumber: model.jobNumber,
@@ -176,7 +176,7 @@ export default {
       account: model.account,
       departmentId: model.departmentId,
       job: model.job,
-      roleId: model.roleId,
+      userRoles: model.userRoles,
       hiredate: model.hiredate,
       remark: model.remark,
       jobNumber: model.jobNumber,
@@ -474,4 +474,7 @@ export default {
 
   // 36.获取上月排行接口
   getRankLastMonth: () => http('get', '/api/rank/lastmonth'),
+
+  // 37.获取前10大于100订单接口
+  getTop10: () => http('get', 'api/player/top10'),
 }
