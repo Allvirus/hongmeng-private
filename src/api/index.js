@@ -185,7 +185,11 @@ export default {
   }),
 
   // 4.10 根据用户ID锁定用户
-  lockUser: (userId) => http('put', `api/user/${userId}/lock`),
+  lockUser: (id) => http('post', `api/user/${id}/lock`, {
+    params: {
+      userId: id,
+    },
+  }),
 
   // 4.11 获取所有角色
   getRoles: () => http('get', 'api/role'),

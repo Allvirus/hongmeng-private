@@ -3,7 +3,7 @@
     .ff-rn.fs-m.bg-white.pd2.opt-bar
       el-form.ff-rn(label-width="100px")
         el-form-item(label="注册时间:")
-          CommonDatePicker.w300(:start.sync='model.startTime' :end.sync='model.endTime' )
+          CommonDatePicker.w300(:start.sync='model.startTime' :end.sync='model.endTime' all)
           el-button.mgl3(icon="el-icon-search" type="primary" @click="search") 搜索
           el-button.mgl2(icon="el-icon-refresh-right" type="primary" @click="reset") 重置
       .flex-1.jc-end
@@ -61,7 +61,7 @@
               :value="item.id")
           el-form-item(label="时间:" required)
             CommonDatePicker(:start.sync='cfgInfo.row.startTime'
-              :end.sync='cfgInfo.row.endTime' type='datetimerange' future)
+              :end.sync='cfgInfo.row.endTime' type='datetimerange' all)
       span.dialog-footer(slot="footer")
         el-button.mgl3(type="warning" @click="cancelEdit") 取消
         el-button.mgl3(type="primary" @click="submmitEdit") 提交

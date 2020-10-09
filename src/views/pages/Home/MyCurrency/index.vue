@@ -15,7 +15,7 @@
           :label="item.label"
           :value="item.value")
         label.mgl3 交易时间:
-        CommonDatePicker.mgl1(:start.sync='startdate' :end.sync='enddate' @change='search()')
+        CommonDatePicker.mgl1(:start.sync='startdate' :end.sync='enddate' @change='search()' all)
         el-button.mgl3(icon="el-icon-search" type="primary" @click="search") 搜索
         el-button.mgl2(icon="el-icon-refresh-right" type="primary" @click="reset") 重置
 

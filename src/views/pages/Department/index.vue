@@ -10,7 +10,10 @@
         :props='props',
         @node-click='handleNodeClick'
       )
-    #perTreeMenu.tree_menu(v-if='Tree.ctxMnuShow', :style='{ ...Tree.rightMenu }')
+    #perTreeMenu.tree_menu(
+      v-if='Tree.ctxMnuShow',
+      :style='{ ...Tree.rightMenu }'
+    )
       ul.border-radius
         li.hand(@click='showDptEditDlg(true)') 编辑
         li.hand(@click='showDelDepart') 删除
@@ -37,18 +40,29 @@
         el-table-column(prop='job', label='岗位')
           template(slot-scope='{ row }') {{ row.job | formatJob }}
         el-table-column(prop='experiences', label='经验值')
-        el-table-column(prop='jobStatus', label='在职状态')
-        el-table-column(prop='timeRange', label='在职时间')
+        el-table-column(prop='userStatus', label='用户状态')
+          template(slot-scope='{ row }')
+            .ff-rn.danger(v-if='row.isLock')
+              span 已锁定
+            .ff-rn(v-else)
+              span 正常
         el-table-column(prop='operate', label='操作')
           template(slot-scope='{ row }')
-            el-button(
-              icon='el-icon-edit-outline',
-              type='text',
-              @click='showMbEditDlg(row, true)'
-            ) 编辑
+              el-button(
+                icon='el-icon-edit-outline',
+                type='text',
+                :disabled="row.isLock"
+                @click='showMbEditDlg(row, true)'
+              ) 编辑
+              el-button(
+                icon='el-icon-lock',
+                type='text',
+                :disabled="row.isLock"
+                @click='delUser(row)'
+              ) 锁定
 
     user-edit(
-      :treeData="Tree.departTree"
+      :treeData='Tree.departTree',
       :userId='User.userId',
       :show='User.newUserDlg',
       @cancel='cancelMbEdit',
@@ -159,6 +173,13 @@ export default {
           this.Tree.ctxMnuShow = false
         }
       }
+    },
+    delUser (row) {
+      this.$vgo.open(() => {
+        this.$api.lockUser(row.id).then(data => {
+          this.$vgo.tip('锁定成功!', 'success')
+        })
+      }, '您确定要锁定该用户吗?')
     },
   },
 }

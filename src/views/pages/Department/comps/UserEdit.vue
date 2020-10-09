@@ -16,7 +16,7 @@
             show-word-limit
           )
         el-form-item(label='入职日期:', required)
-          CommonDatePicker(type='date', v-model='userInfo.hiredate')
+          CommonDatePicker(type='date', v-model='userInfo.hiredate' all)
         el-form-item(label='工号:')
           el-input(v-model='userInfo.jobNumber', placeholder='请输入工号')
         el-form-item(label='手机号:')

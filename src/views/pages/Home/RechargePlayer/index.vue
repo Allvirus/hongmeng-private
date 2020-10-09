@@ -22,7 +22,7 @@
         el-input.mgl2.winput(v-model="rechargParam.areaName")
         label.mgl2 时间:
         CommonDatePicker.mgl1.winput(:start.sync='rechargParam.startTime'
-         :end.sync='rechargParam.endTime' @change='search()')
+         :end.sync='rechargParam.endTime' @change='search()' all)
         el-button.mgl3(icon="el-icon-search" type="primary" @click="getPlRchgRecord") 搜索
         el-button.mgl2(icon="el-icon-refresh-right" type="primary" @click="reset") 重置
 
