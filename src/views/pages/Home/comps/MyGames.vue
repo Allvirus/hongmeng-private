@@ -7,6 +7,7 @@
         icon='el-icon-plus',
         type='primary',
         @click='dlgVisiable = true'
+        v-if="userInfo.menu.myGameAuthority"
       ) 添加
   .dtp-tree.jc-center
     tree-selector(
@@ -59,6 +60,7 @@
       el-button.mgl3(type='primary', @click='submmit') 提交
 </template>
 <script>
+import { mapGetters } from 'vuex'
 export default {
   name: '',
   data () {
@@ -81,6 +83,9 @@ export default {
       testUrl: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1602309261114&di=6e41eb4ab394ea295a409ca4ff8232df&imgtype=0&src=http%3A%2F%2Fimg.zcool.cn%2Fcommunity%2F01b6ae59e81e18a801216a4b0ef72c.png%403000w_1l_2o_100sh.png',
     }
   },
+  computed: {
+    ...mapGetters(['userInfo']),
+  },
   created: function () {
     this.getMyGames()
     this.getDepartTree()
@@ -90,7 +95,6 @@ export default {
     getAllUser () {
       this.$api.getAllUser().then(res => {
         this.userList = res
-        console.log('all user', res)
       })
     },
     getDepartTree () {
@@ -157,7 +161,6 @@ export default {
         this.getMyGames()
       } else {
         this.$api.getGameByDptId(dptId).then(data => {
-          console.log('dtp Games', data)
           this.gameList = data
         })
       }

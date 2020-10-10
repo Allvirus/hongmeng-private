@@ -47,8 +47,12 @@ export default {
       const secRoutes = routes[0].children.filter(item => item.name === this.$route.matched[1].name)[0]
       const groupObj = {}
       secRoutes.children.map(item => {
-        // if (this.handleGetGroup(item)) return
         if (item.meta.hideMenu) return
+        if ((item.name === 'HomeBizConfig' && !this.userInfo.menu.bizConfigAuthority) ||
+            (item.name === 'HomeLevelManage' && !this.userInfo.menu.levelAuthority) ||
+            (item.name === 'HomeDepartment' && !this.userInfo.menu.departmentAuthority)) {
+          return
+        }
         groupObj[item.meta.group] = groupObj[item.meta.group] || []
         groupObj[item.meta.group].push(item)
       })
@@ -56,6 +60,7 @@ export default {
     },
   },
   created: function () {
+    console.log('create', this.userInfo)
   },
   methods: {
     handleGetGroup (item) {
