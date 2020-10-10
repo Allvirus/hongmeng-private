@@ -39,7 +39,7 @@ export const http = (method, url, config = {}) => {
     // 对响应错误做点什么
     const { status } = err.response
     if (status === 401) LOGIN()
-    if (status === 403) vgo.tip('您的套餐未包含此功能模块, 请升级套餐!', 'warning')
+    if (status === 403) vgo.tip('您没有操作权限!', 'warning')
     return Promise.reject(err.response.data)
   }).finally(() => {
     // 最后处理关闭loading

@@ -33,6 +33,7 @@
         el-button.flex-center.mgl4.mgt1(
           type='danger',
           round,
+          v-if="userInfo.menu.myGameAuthority"
           @click='delGame(item)'
         ) 删除
     span.jc-center.mgt2(v-if="gameList.length === 0") 暂无游戏
