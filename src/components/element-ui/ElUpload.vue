@@ -136,6 +136,7 @@ export default {
           this.$emit('update:fileUrl', data[0].file_url)
           this.fileUrls.push(data[0].file_url)
           this.$emit('update:thumbUrl', data[0].thumb_url)
+          this.$emit('avatarUrl', data[0].fileName)
           this.$vgo.tip('上传成功!', 'success')
         })
       }

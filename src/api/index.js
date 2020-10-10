@@ -194,6 +194,11 @@ export default {
   // 4.11 获取所有角色
   getRoles: () => http('get', 'api/role'),
 
+  // 4.12 修改当前用户头像
+  updateAvatar: (url) => http('post', 'api/user/photo?photoUrl=' + url),
+
+  // 4.13 修改当前用户密码
+
   // 5.获取所有部门
   getAllDeparts: () => http('get', '/api/department'),
 
@@ -354,6 +359,10 @@ export default {
     })(),
   }),
 
+  // 20.1 获取游戏区服信息
+
+  // 20.2 获取游戏名称信息
+
   // 21.获取游戏角色分页信息
   getRoleInfos: (model) => http('get', '/api/player/role', {
     params: (() => {
@@ -477,4 +486,6 @@ export default {
 
   // 37.获取前10大于100订单接口
   getTop10: () => http('get', 'api/player/top10'),
+
+  // 38. 图片上传通用接口（不启用权限认证）
 }

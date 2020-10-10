@@ -6,7 +6,7 @@
     API: 'http://122.9.89.59/',
     '3DVIEW_URL': 'http://3d.vgoyun.com/',
     USER_URL: 'http://manage.vgoyun.com/',
-    PANO_FILE_API: 'http://122.9.89.59/api/obs/file',
+    PANO_FILE_API: 'http://122.9.89.59/api/common/file',
     COOKIE_NAME: 'ZhuLangUserAccount',
     COOKIE_DOMAIN: '122.9.89.59',
   }

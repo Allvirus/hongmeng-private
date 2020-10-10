@@ -2,9 +2,9 @@
 .sub-menu.ff-cn
   .userInfo.pr
     .avatar-bg.pa
-      img.fit-contain.w200.h200(:src='userInfo.avtarUrl')
+      img.fit-contain.w200.h200(:src='userInfo.photo')
     .jc-center.mgt3.overflow-hidden
-      img.avatar.mgt1(:src='userInfo.avtarUrl')
+      img.avatar.mgt1(:src='userInfo.photo')
     .jc-center.mgt3
       span.mgx3.black.fs-b.omit {{userInfo.username}}
     .ff-rn.jc-center.mgb3.mgt1
