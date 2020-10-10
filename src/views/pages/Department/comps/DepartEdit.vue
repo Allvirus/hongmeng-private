@@ -118,7 +118,7 @@ export default {
       }
       for (const key in params) {
         if (key !== 'userId' && params[key] === '') {
-          this.$vgo.tip('请完善表单数据!' + key, 'warning')
+          this.$vgo.tip('请完善表单数据!', 'warning')
           return
         }
       }

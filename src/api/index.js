@@ -437,7 +437,10 @@ export default {
   }),
 
   // 28.获取我的游戏接口
-  getGames: () => http('get', '/api/mygame/'),
+  getMyGames: () => http('get', '/api/mygame/'),
+
+  // 28.1.根据部门id获取游戏接口
+  getGameByDptId: (id) => http('get', `/api/mygame/department/${id}`),
 
   // 29.根据游戏表ID获取游戏
   getGameById: (id) => http('get', `/api/mygame/${id}`),

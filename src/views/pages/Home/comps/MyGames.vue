@@ -1,14 +1,25 @@
 <template lang='pug'>
-.MyGames.pd2
-  .jc-end
-    el-button.mgb2(
-      icon='el-icon-plus',
-      type='primary',
-      @click='dlgVisiable = true'
-    ) 添加游戏
-  .h600.overflow-auto
+.MyGames
+  .jc-between.ai-center.h50
+    p.fs-l.mgl4.flex-1 我的游戏
+    .mgr3
+      el-button(
+        icon='el-icon-plus',
+        type='primary',
+        @click='dlgVisiable = true'
+      ) 添加
+  .dtp-tree.jc-center
+    tree-selector(
+      ref='treesel',
+      :data='treeData',
+      :defProps='defProps',
+      nodeKey='id',
+      clearable
+      @change='onDepartChange'
+    )
+  .h600.overflow-auto.mgt2
     .item.ff-rn.mgb3.ai-center(v-for='(item, idx) in gameList', :key='idx')
-      img.game-icon(:src='item.linkUrl')
+      img.game-icon.mgl2(:src='item.linkUrl')
       .name.mgl2.ai-center.ff-cn
         p {{ item.gameName }}
         .ff-rn.ai-center
@@ -24,6 +35,7 @@
           round,
           @click='delGame(item)'
         ) 删除
+    span.jc-center.mgt2(v-if="gameList.length === 0") 暂无游戏
   el-dialog(
     title='添加游戏',
     @close='cancel',
@@ -64,14 +76,28 @@ export default {
         bJobId: '', // B岗ID
         cJobId: '', // C岗ID
       },
+      treeData: [],
+      defProps: {
+        children: 'departments',
+        label: 'name',
+        valKey: 'id',
+      },
     }
   },
   created: function () {
-    this.getGames()
+    this.getMyGames()
+    this.getDepartTree()
   },
   methods: {
-    getGames () {
-      this.$api.getGames().then(data => {
+    getDepartTree () {
+      this.treeData.splice(0, this.treeData.length)
+      const id = 1
+      this.$api.getDepartById(id).then(res => {
+        this.treeData.push(res)
+      })
+    },
+    getMyGames () {
+      this.$api.getMyGames().then(data => {
         this.gameList = data
       })
     },
@@ -90,7 +116,7 @@ export default {
       this.$api.addGame(this.gameInfo).then(data => {
         this.cancel()
         this.$vgo.tip('添加成功!', 'success')
-        this.getGames()
+        this.getMyGames()
       })
     },
     checkParams () {
@@ -118,9 +144,19 @@ export default {
       this.$vgo.open(() => {
         this.$api.delGameById(item.id).then(data => {
           this.$vgo.tip('删除成功！', 'success')
-          this.getGames()
+          this.getMyGames()
         })
       })
+    },
+    onDepartChange (dptId) {
+      if (dptId === '') {
+        this.getMyGames()
+      } else {
+        this.$api.getGameByDptId(dptId).then(data => {
+          console.log('dtp Games', data)
+          this.gameList = data
+        })
+      }
     },
   },
 }

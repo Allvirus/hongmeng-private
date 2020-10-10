@@ -12,6 +12,8 @@
           el-input.winput(v-model="model.AreaName")
         el-form-item(label="创建时间:")
           CommonDatePicker.w300(:start.sync='model.startTime' :end.sync='model.endTime' all)
+        el-form-item(label="远程搜索:")
+          el-autocomplete.winput(v-model="model.AreaName")
           el-button.mgl3(icon="el-icon-search" type="primary" @click="search") 搜索
           el-button.mgl2(icon="el-icon-refresh-right" type="primary" @click="reset") 重置
 
