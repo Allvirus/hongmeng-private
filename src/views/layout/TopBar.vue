@@ -102,7 +102,8 @@ export default {
       this.$vgo.tip('修改密码!', 'success')
     },
     logout () {
-      this.$vgo.tip('退出登录!', 'success')
+      this.$utils.clearCookie()
+      this.$router.replace({ name: 'Login' })
     },
   },
 }

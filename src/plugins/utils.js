@@ -58,6 +58,13 @@ const utils = {
     this.setCookie(COOKIE_NAME, 'Bearer ' + token, { exHours: 99, domain: process.env.NODE_ENV === 'production' ? COOKIE_DOMAIN : '' })
   },
 
+  // 退出登录
+  clearCookie () {
+    this.setCookie(COOKIE_NAME, '', {
+      exHours: -1,
+    })
+  },
+
   /**
    * 复制传入的文本到剪贴板
    *
