@@ -1,6 +1,12 @@
 <template lang='pug'>
 .tree-selector
-  el-select(v-model="value", placeholder='请选择' v-bind="$attrs" @clear="onClear")
+  el-select(
+    ref='selector',
+    v-model='value',
+    placeholder='请选择',
+    v-bind='$attrs',
+    @clear='onClear'
+  )
     el-option(
       :label='label',
       :value='value',
@@ -66,6 +72,7 @@ export default {
         this.value = item[this.defProps.valKey]
         this.label = item[this.defProps.label]
         this.$emit('change', this.value)
+        this.$refs.selector.blur()
       }
     },
     onClear () {

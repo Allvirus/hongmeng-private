@@ -16,18 +16,21 @@
         mainTitle='下载排行榜',
         subTitle='下载量'
         theme="blue"
+        rankingKey="count"
       )
       ranking-list(
         :data='rankList.registerRank',
         mainTitle='注册排行榜',
         subTitle='注册数量'
         theme="green"
+        rankingKey="count"
       )
       ranking-list(
         :data='rankList.moneyRank',
         mainTitle='充值排行榜',
         subTitle='充值金额(元)'
         theme="orange"
+        rankingKey="totlaMoney"
       )
 
 </template>

@@ -449,11 +449,8 @@ export default {
   addGame: (model) => http('post', '/api/mygame/', {
     data: {
       gameName: model.gameName, // 游戏名称
-      areaName: model.areaName, // 区服名称
-      areaCode: model.areaCode, // 区服代码
+      userId: model.userId, // 推广人员
       linkUrl: model.linkUrl, // 推广链接
-      bJobId: model.bJobId, // B岗ID
-      cJobId: model.cJobId, // C岗ID
     },
   }),
 
