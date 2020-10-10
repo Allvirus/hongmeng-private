@@ -112,7 +112,6 @@ export default {
       left 50%
       transform translateX(-50%)
   .content
-    z-index 100
     width calc(100% - 20px)
     height calc(100% - 150px)
     border-top-left-radius 10px
@@ -130,7 +129,7 @@ export default {
     border-radius 10px
     background-color #FFAA00
     transform translateY(-50%)
-    z-index 200
+    z-index 1
   .footer
     bottom 0px
     padding-left 10px

@@ -198,7 +198,12 @@ export default {
   updateAvatar: (url) => http('post', 'api/user/photo?photoUrl=' + url),
 
   // 4.13 修改当前用户密码
-
+  updatePswd: (model) => http('post', 'api/auth/changepwd', {
+    data: {
+      oldpassword: model.oldpswd,
+      newpassword: model.newpswd,
+    },
+  }),
   // 5.获取所有部门
   getAllDeparts: () => http('get', '/api/department'),
 
@@ -457,7 +462,7 @@ export default {
   // 30.创建游戏表
   addGame: (model) => http('post', '/api/mygame/', {
     data: {
-      gameName: model.gameName, // 游戏名称
+      gameContentId: model.gameContentId, // 游戏名称
       userId: model.userId, // 推广人员
       linkUrl: model.linkUrl, // 推广链接
     },
@@ -465,6 +470,9 @@ export default {
 
   // 31.根据游戏ID表删除游戏表
   delGameById: (id) => http('delete', `/api/mygame/${id}`),
+
+  // 31.5.获取游戏目录表
+  getGameCtx: () => http('get', '/api/mygame/gamecontext'),
 
   // 32.获取今天排行接口
   getRankToday: () => http('get', '/api/rank/today'),

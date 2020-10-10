@@ -19,10 +19,10 @@
       @change='onDepartChange'
     )
   .h600.overflow-auto.mgt2
-    .item.ff-rn.mgb3.ai-center(v-for='(item, idx) in gameList', :key='idx')
-      img.game-icon.mgl2(:src='testUrl')
+    .item.ff-rn.mgb3.ai-center(v-for='(item, idx) in myGameList', :key='idx')
+      img.game-icon.mgl2(:src='conbineUrl(item)')
       .name.mgl2.ff-cn
-        p.mgb1 {{ item.gameName }}
+        p.mgb1 {{ item.gameContent.name }}
         span {{ item.userName }}
       .ff-cn.flex-1.ai-end.mgr2
         el-button.flex-center.mgl4(
@@ -36,7 +36,7 @@
           v-if="userInfo.menu.myGameAuthority"
           @click='delGame(item)'
         ) 删除
-    span.jc-center.mgt2(v-if="gameList.length === 0") 暂无游戏
+    span.jc-center.mgt2(v-if="myGameList.length === 0") 暂无游戏
   el-dialog(
     title='添加游戏',
     @close='cancel',
@@ -46,7 +46,12 @@
     .flex-center
       el-form(label-width='100px')
         el-form-item(label='游戏名称:', required)
-          el-input(v-model='gameInfo.gameName')
+          el-select(v-model="gameInfo.gameContentId"
+            placeholder="请选择")
+            el-option(v-for="item in gameCtxList"
+            :key="item.id"
+            :label="item.name"
+            :value="item.id")
         el-form-item(label='推广人员:', required)
           el-select(v-model="gameInfo.userId"
             placeholder="请选择")
@@ -66,11 +71,11 @@ export default {
   name: '',
   data () {
     return {
-      gameList: [],
+      myGameList: [],
       keyword: '',
       dlgVisiable: false,
       gameInfo: {
-        gameName: '', // 游戏名称
+        gameContentId: '', // 游戏名称
         userId: '', // 推广人员ID
         linkUrl: '', // 推广链接
       },
@@ -81,7 +86,7 @@ export default {
         valKey: 'id',
       },
       userList: [],
-      testUrl: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1602309261114&di=6e41eb4ab394ea295a409ca4ff8232df&imgtype=0&src=http%3A%2F%2Fimg.zcool.cn%2Fcommunity%2F01b6ae59e81e18a801216a4b0ef72c.png%403000w_1l_2o_100sh.png',
+      gameCtxList: [],
     }
   },
   computed: {
@@ -91,8 +96,14 @@ export default {
     this.getMyGames()
     this.getDepartTree()
     this.getAllUser()
+    this.getGameCtxList()
   },
   methods: {
+    getGameCtxList () {
+      this.$api.getGameCtx().then(data => {
+        this.gameCtxList = data
+      })
+    },
     getAllUser () {
       this.$api.getAllUser().then(res => {
         this.userList = res
@@ -107,7 +118,7 @@ export default {
     },
     getMyGames () {
       this.$api.getMyGames().then(data => {
-        this.gameList = data
+        this.myGameList = data
       })
     },
     copyLink (item) {
@@ -121,7 +132,6 @@ export default {
       if (!this.checkParams()) {
         return
       }
-
       this.$api.addGame(this.gameInfo).then(data => {
         this.cancel()
         this.$vgo.tip('添加成功!', 'success')
@@ -162,9 +172,12 @@ export default {
         this.getMyGames()
       } else {
         this.$api.getGameByDptId(dptId).then(data => {
-          this.gameList = data
+          this.myGameList = data
         })
       }
+    },
+    conbineUrl (item) {
+      return $globalconfig.API + item.gameContent.gameImg
     },
   },
 }

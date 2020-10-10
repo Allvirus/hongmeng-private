@@ -5,7 +5,7 @@
       .bg-white.pd2
         .ff-rn.ai-center
           span 累计经验值 {{userInfo.experiences}}
-          el-button.mgl3.fs-m(type="text" @click="showDetailExp") 经验值明细
+          //- el-button.mgl3.fs-m(type="text" @click="showDetailExp") 经验值明细
         .ff-rn.mgt2
           span {{levelInfo[0].levelName}}
           .pr

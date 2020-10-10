@@ -20,12 +20,12 @@
               displayType='button',
               action='true',
               accept='.jpg,.jpeg,.png,.bmp,.gif',
-              :crop='true'
-              @avatarUrl="onUploaded"
+              :crop='true',
+              @avatarUrl='onUploaded'
             )
               i.el-icon-user
               span.mgl1 修改头像
-          li.hand(@click='changePsd')
+          li.hand(@click='')
             i.el-icon-key
             span.mgl1 修改密码
           li.hand.warning(@click='logout')
@@ -44,6 +44,24 @@
       el-tab-pane(label='排行', name='Ranking')
     .notice.ai-center.omit.w400
       scroll-notice(:data='noticeList', :rows='1')
+  .edit-pswd
+    el-dialog(
+      title='修改密码',
+      :visible.sync='editPswdDlg',
+      width='35%',
+      @close='cancelPswdEdit'
+    )
+      .flex-center
+        el-form(label-width='100px')
+          el-form-item(label='旧密码:', required)
+            el-input(v-model='pswd.old', placeholder='请输入旧密码')
+          el-form-item(label='新密码:', required)
+            el-input(v-model='pswd.new', placeholder='请输入新密码')
+          el-form-item(label='确认新密码:', required)
+            el-input(v-model='pswd.new2', placeholder='请再次输入新密码')
+      span.dialog-footer(slot='footer')
+        el-button.mgl3(type='warning', @click='cancelPswdEdit') 取消
+        el-button.mgl3(type='primary', @click='changePsd') 提交
 </template>
 <script>
 import { mapGetters } from 'vuex'
@@ -55,6 +73,12 @@ export default {
       noticeList: [],
       ctxMnuShow: false,
       rightMenu: '',
+      editPswdDlg: false,
+      pswd: {
+        old: '',
+        new: '',
+        new2: '',
+      },
     }
   },
   computed: {
@@ -99,11 +123,13 @@ export default {
       })
     },
     changePsd () {
-      this.$vgo.tip('修改密码!', 'success')
     },
     logout () {
       this.$utils.clearCookie()
       this.$router.replace({ name: 'Login' })
+    },
+    cancelPswdEdit () {
+      this.editPswdDlg = false
     },
   },
 }
@@ -124,7 +150,7 @@ $H = 120px
       #ctxMenu
         position fixed
         display block
-        z-index 20000
+        z-index 3
         background-color #fff
         transform translateX(15px)
         box-shadow 0 2px 12px 0 rgba(0, 0, 0, 0.1)

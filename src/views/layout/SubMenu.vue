@@ -92,7 +92,7 @@ $avatarSize = 60px
       height $avatarSize
       border-radius 50%
   img, span
-    z-index 100
+    z-index 0
     object-fit contain
   .menu-list
     i
