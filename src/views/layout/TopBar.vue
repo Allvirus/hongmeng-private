@@ -25,7 +25,7 @@
             )
               i.el-icon-user
               span.mgl1 修改头像
-          li.hand(@click='')
+          li.hand(@click='changePsd')
             i.el-icon-key
             span.mgl1 修改密码
           li.hand.warning(@click='logout')
@@ -123,6 +123,7 @@ export default {
       })
     },
     changePsd () {
+      this.$vgo.tip('待实现!', 'success')
     },
     logout () {
       this.$utils.clearCookie()
