@@ -1,46 +1,68 @@
 <template lang='pug'>
-  .RechargePlayer.ff-rn
-    .player-list.w300
-      .ff-rn.bg-white.pd2
-        el-input(v-model="model.userAccount" placeholder='请输入搜索内容')
-        el-button.mgl1(icon="el-icon-search" type="primary" @click="searchPlayer") 搜索
-      el-table.mgy2(:data='listMixin.list' @row-click="onRowClick"
-        :row-class-name="({ row }) => row.key===rechargParam.userAccount ? 'bg-select' : ''")
-        el-table-column(prop="key" label="玩家名称")
-      el-pagination(
-        base
-        :pager-count="5"
-        :total="listMixin.count"
-        :page-size.sync='model.pageSize'
-        :current-page.sync='model.page'
-        @current-change="getListMixin")
-    .ff-cn.mgl2.flex-1
-      .ff-rn.fs-m.ai-center.bg-white.pd2
-        label 游戏名称:
-        auto-complete.mgl1(v-model="rechargParam.gameName" :data='gameList')
-        label.mgl2 区服:
-        auto-complete.mgl1(v-model="rechargParam.areaName" :data='areaList')
-        label.mgl2 时间:
-        CommonDatePicker.mgl1.winput(:start.sync='rechargParam.startTime'
-         :end.sync='rechargParam.endTime' @change='search()' all)
-        el-button.mgl3(icon="el-icon-search" type="primary" @click="getPlRchgRecord") 搜索
-        el-button.mgl2(icon="el-icon-refresh-right" type="primary" @click="reset") 重置
+.RechargePlayer.ff-rn
+  .player-list.w300
+    .ff-rn.bg-white.pd2
+      el-input(v-model='model.userAccount', placeholder='请输入搜索内容')
+      el-button.mgl1(
+        icon='el-icon-search',
+        type='primary',
+        @click='searchPlayer'
+      ) 搜索
+    el-table.mgy2(
+      :data='listMixin.list',
+      @row-click='onRowClick',
+      :row-class-name='({ row }) => (row.key === rechargParam.userAccount ? "bg-select" : "")'
+    )
+      el-table-column(prop='key', label='玩家名称')
+    el-pagination(
+      base,
+      :pager-count='5',
+      :total='listMixin.count',
+      :page-size.sync='model.pageSize',
+      :current-page.sync='model.page',
+      @current-change='getListMixin'
+    )
+  .ff-cn.mgl2.flex-1
+    .ff-rn.fs-m.ai-center.bg-white.pd2
+      el-form.ff-rw.mgt2.ai-center(label-width='100px')
+        el-form-item(label='游戏名称:')
+          auto-complete(v-model='model.gameName', :data='gameList')
+        el-form-item(label='区服:')
+          auto-complete(v-model='model.areaName', :data='areaList')
+        el-form-item(label='时间:')
+          CommonDatePicker.winput(
+            :start.sync='rechargParam.startTime',
+            :end.sync='rechargParam.endTime',
+            @change='search()',
+            all
+          )
+        el-button.mgl3(
+          icon='el-icon-search',
+          type='primary',
+          @click='getPlRchgRecord'
+        ) 搜索
+        el-button.mgl2(
+          icon='el-icon-refresh-right',
+          type='primary',
+          @click='reset'
+        ) 重置
 
-      el-table.mgy2.bg-white(:data='rechargRecord.list')
-        el-table-column(prop="userCode" label="玩家ID")
-        el-table-column(prop="gameOrderID" label="消费订单号")
-        el-table-column(prop="totalPrice" label="支付金额(元)")
-          template(slot-scope='{ row }') {{row.totalPrice | toFixed}}
-        el-table-column(prop="gameName" label="游戏名称")
-        el-table-column(prop="areaName" label="区服")
-        el-table-column(prop="roleName" label="游戏角色")
-        el-table-column(prop="payDate" label="支付时间")
-          template(slot-scope="{ row }") {{row.payDate | dateFormat}}
-      el-pagination.margin-spacing(
-        :total="rechargRecord.count"
-        :page-size.sync='rechargParam.pageSize'
-        :current-page.sync='rechargParam.page'
-        @current-change="getPlRchgRecord")
+    el-table.mgy2.bg-white(:data='rechargRecord.list')
+      el-table-column(prop='userCode', label='玩家ID')
+      el-table-column(prop='gameOrderID', label='消费订单号')
+      el-table-column(prop='totalPrice', label='支付金额(元)')
+        template(slot-scope='{ row }') {{ row.totalPrice | toFixed }}
+      el-table-column(prop='gameName', label='游戏名称')
+      el-table-column(prop='areaName', label='区服')
+      el-table-column(prop='roleName', label='游戏角色')
+      el-table-column(prop='payDate', label='支付时间')
+        template(slot-scope='{ row }') {{ row.payDate | dateFormat }}
+    el-pagination.margin-spacing(
+      :total='rechargRecord.count',
+      :page-size.sync='rechargParam.pageSize',
+      :current-page.sync='rechargParam.page',
+      @current-change='getPlRchgRecord'
+    )
 </template>
 <script>
 import { mapGetters } from 'vuex'
@@ -112,4 +134,6 @@ export default {
 }
 </script>
 <style lang='stylus' scoped>
+.el-form-item
+  margin-bottom 0px
 </style>

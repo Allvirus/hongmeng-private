@@ -9,6 +9,7 @@
         default-expand-all,
         :highlight-current="true"
         :props='props',
+        ref="tree"
         @node-click='handleNodeClick'
       )
     #perTreeMenu.tree_menu(
@@ -52,15 +53,20 @@
             el-button(
               icon='el-icon-edit-outline',
               type='text',
-              :disabled="!row.lockoutEnabled"
               @click='showMbEditDlg(row, true)'
             ) 编辑
             el-button(
               icon='el-icon-lock',
               type='text',
-              :disabled="!row.lockoutEnabled"
-              @click='delUser(row)'
+              v-if="row.lockoutEnabled"
+              @click='lockUser(row)'
             ) 锁定
+            el-button(
+              icon='el-icon-unlock',
+              type='text',
+              v-else
+              @click='unlockUser(row)'
+            ) 解锁
 
     user-edit(
       :treeData='Tree.departTree',
@@ -118,13 +124,14 @@ export default {
         this.Tree.departTree.push(res)
       })
     },
+    setCurrentNode (id) {
+      this.$refs.tree.setCurrentKey(id)
+    },
     handleNodeClick (data) {
       this.Tree.curTreeNode = data
-      if (data && data.departments.length === 0) {
-        this.$api.getDepartMembers(data.id).then(data => {
-          this.User.userList = data
-        })
-      }
+      this.$api.getDepartMembers(data.id).then(data => {
+        this.User.userList = data
+      })
     },
     // 取消人员编辑框
     cancelMbEdit () {
@@ -176,13 +183,21 @@ export default {
         }
       }
     },
-    delUser (row) {
+    lockUser (row) {
       this.$vgo.open(() => {
         this.$api.lockUser(row.id).then(data => {
           this.getDepartTree()
           this.$vgo.tip('锁定成功!', 'success')
         })
       }, '您确定要锁定该用户吗?')
+    },
+    unlockUser (row) {
+      this.$vgo.open(() => {
+        this.$api.unlockUser(row.id).then(data => {
+          this.getDepartTree()
+          this.$vgo.tip('解锁成功!', 'success')
+        })
+      }, '您确定要解锁该用户吗?')
     },
   },
 }

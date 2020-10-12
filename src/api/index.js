@@ -191,6 +191,12 @@ export default {
     },
   }),
 
+  // 4.10.1 根据用户ID解锁用户
+  unlockUser: (id) => http('post', `api/user/${id}/unlock`, {
+    params: {
+      userId: id,
+    },
+  }),
   // 4.11 获取所有角色
   getRoles: () => http('get', 'api/role'),
 

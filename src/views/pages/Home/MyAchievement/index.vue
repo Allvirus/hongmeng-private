@@ -9,13 +9,15 @@
           :key='index',
           :label='item'
         )
-    .ff-rn.fs-m.ai-center.mgt2
-      label 游戏名称:
-      auto-complete.mgl1(v-model="model.gameName" :data='gameList')
-      label.mgl3 区服名称:
-      auto-complete.mgl1(v-model="model.areaName" :data='areaList')
-      el-button.mgl3(icon='el-icon-search', type='primary', @click='search') 搜索
-      el-button(icon='el-icon-refresh-right', type='primary', @click='reset') 重置
+    .opt-bar
+      el-form.ff-rw.mgt2.ai-center(label-width='100px')
+        el-form-item(label='游戏名称:')
+          auto-complete.mgl1(v-model="model.gameName" :data='gameList')
+        el-form-item(label='区服:')
+          auto-complete.mgl1(v-model="model.areaName" :data='areaList')
+        el-form-item.search-btn
+          el-button(icon='el-icon-search', type='primary', @click='search') 搜索
+          el-button(icon='el-icon-refresh-right', type='primary', @click='reset') 重置
 
   //- 创角指数
   .data-panel.mgt2.ff-rn
@@ -339,4 +341,9 @@ $spc = 44px
     border-radius 0px
   >>>.el-radio-button__inner
     border none !important
+  .opt-bar
+    .el-form-item
+      margin-bottom 0px
+    >>>.search-btn .el-form-item__content
+      margin-left 10px !important
 </style>
