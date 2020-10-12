@@ -34,6 +34,4 @@ export default {
   .layout-bottom
     height 0
     padding 20px 30px
-  .top-bar
-    z-index 2
 </style>

@@ -2,13 +2,17 @@
 .sub-menu.ff-cn
   .userInfo.pr
     .avatar-bg.pa
-      img.fit-contain.w200.h200(:src='userInfo.photo')
+      img.fit-contain.w200.h200(
+        :src='userInfo.photo !== null ? userInfo.photo : require("@/assets/img/ic_def_avatar.png")'
+      )
     .jc-center.mgt3.overflow-hidden
-      img.avatar.mgt1(:src='userInfo.photo')
+      img.avatar.mgt1(
+        :src='userInfo.photo !== null ? userInfo.photo : require("@/assets/img/ic_def_avatar.png")'
+      )
     .jc-center.mgt3
-      span.mgx3.black.fs-b.omit {{userInfo.username}}
+      span.mgx3.black.fs-b.omit {{ userInfo.username }}
     .ff-rn.jc-center.mgb3.mgt1
-      img.mgl1.fit-contain(:src="userInfo.level | formatBadge")
+      img.mgl1.fit-contain(:src='userInfo.level | formatBadge')
       span.black.mgl1.fs-m {{ userInfo.level | formatLevel }}
       img.mgl1.fit-contain(:src='require("@/assets/img/ic_job.png")')
       span.black.mgl1 {{ userInfo.job | formatJob }}

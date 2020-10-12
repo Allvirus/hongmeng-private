@@ -38,8 +38,13 @@ export const http = (method, url, config = {}) => {
   }).catch(err => {
     // 对响应错误做点什么
     const { status } = err.response
+    console.log('http error', err.response)
     if (status === 401) LOGIN()
     if (status === 403) vgo.tip('您没有操作权限!', 'warning')
+    const res = err.response
+    if (res.data && res.data.code === 400 && res.data.data[0].description) {
+      vgo.tip('旧' + res.data.data[0].description, 'error')
+    }
     return Promise.reject(err.response.data)
   }).finally(() => {
     // 最后处理关闭loading

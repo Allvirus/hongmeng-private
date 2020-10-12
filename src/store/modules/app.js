@@ -36,8 +36,10 @@ export default {
   },
   mutations: {
     userInfo (state, data) {
-      data.photo = data.photo.slice(1, data.photo.length)
-      data.photo = $globalconfig.API + data.photo
+      if (data.photo) {
+        data.photo = data.photo.slice(1, data.photo.length)
+        data.photo = $globalconfig.API + data.photo
+      }
       state.userInfo = data
     },
     projectTagList (state, data) {

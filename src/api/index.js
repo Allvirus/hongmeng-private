@@ -201,7 +201,7 @@ export default {
   updatePswd: (model) => http('post', 'api/auth/changepwd', {
     data: {
       oldpassword: model.oldpswd,
-      newpassword: model.newpswd,
+      newpassword: model.passwordre,
     },
   }),
   // 5.获取所有部门

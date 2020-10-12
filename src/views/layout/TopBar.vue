@@ -2,7 +2,10 @@
 .top-bar
   .banner.jc-between.pr
     .user-info.ff-rn.ai-center.pdl2
-      img.avatar.mg3(:src='userInfo.photo', @click='onCtxMenu')
+      img.avatar.mg3(
+        :src='userInfo.photo !== null ? userInfo.photo : require("@/assets/img/ic_def_avatar.png")',
+        @click='onCtxMenu'
+      )
       .ff-cn.mgl2
         .ff-rn.ai-center.fs-b
           span {{ userInfo.username }}
@@ -52,39 +55,65 @@
       @close='cancelPswdEdit'
     )
       .flex-center
-        el-form(label-width='100px')
-          el-form-item(label='旧密码:', required)
-            el-input(v-model='pswd.old', placeholder='请输入旧密码')
-          el-form-item(label='新密码:', required)
-            el-input(v-model='pswd.new', placeholder='请输入新密码')
-          el-form-item(label='确认新密码:', required)
-            el-input(v-model='pswd.new2', placeholder='请再次输入新密码')
+        el-form(label-width='100px', ref='form' :rules='rules', :model='pswd')
+          el-form-item(prop='oldpswd', label='旧密码:')
+            el-input(
+              v-model='pswd.oldpswd',
+              type='password',
+              placeholder='请输入旧密码'
+            )
+          el-form-item(prop='password', label='新密码:')
+            el-input(
+              v-model='pswd.password',
+              type='password',
+              placeholder='请输入新密码'
+            )
+          el-form-item(prop='passwordre', label='确认新密码:')
+            el-input(
+              v-model='pswd.passwordre',
+              type='password',
+              placeholder='请再次输入新密码'
+            )
       span.dialog-footer(slot='footer')
         el-button.mgl3(type='warning', @click='cancelPswdEdit') 取消
         el-button.mgl3(type='primary', @click='submitPswd') 提交
 </template>
 <script>
 import { mapGetters } from 'vuex'
+import { EUIRule } from '@/plugins/utils'
 export default {
   name: 'TopBar',
   data () {
     return {
+      rules: {
+        oldpswd: [EUIRule('required', '旧密码'), { min: 6, max: 18, message: '长度在 6 到 18 个字符', trigger: 'blur' }],
+        password: [EUIRule('required', '密码'), { min: 6, max: 18, message: '长度在 6 到 18 个字符', trigger: 'blur' }],
+        passwordre: [EUIRule('required', '密码'), { min: 6, max: 18, message: '长度在 6 到 18 个字符', trigger: 'blur' },
+          {
+            validator: (rule, val, cb) => {
+              this.pswd.password && this.pswd.password !== this.pswd.passwordre
+                ? cb(new Error('两次输入密码不一致!'))
+                : cb()
+            },
+            trigger: 'blur',
+          }],
+      },
       activeTab: 'HomeMyAchievement',
       noticeList: [],
       ctxMnuShow: false,
       rightMenu: '',
       editPswdDlg: false,
       pswd: {
-        old: '',
-        new: '',
-        new2: '',
+        oldpswd: '',
+        password: '',
+        passwordre: '',
       },
     }
   },
   computed: {
     ...mapGetters(['userInfo']),
   },
-  created: function () {
+  created () {
     if (this.$route.name.slice(0, 4) === 'Home') {
       this.activeTab = 'HomeMyAchievement'
     } else {
@@ -123,7 +152,14 @@ export default {
       })
     },
     submitPswd () {
-      this.$vgo.tip('待实现!', 'success')
+      this.$refs.form.validate((valid) => {
+        if (valid) {
+          this.$api.updatePswd(this.pswd).then(data => {
+            this.$vgo.tip('密码修改成功!', 'success')
+            this.cancelPswdEdit()
+          })
+        }
+      })
     },
     logout () {
       this.$utils.clearCookie()
@@ -131,6 +167,9 @@ export default {
     },
     cancelPswdEdit () {
       this.editPswdDlg = false
+      for (const key in this.pswd) {
+        this.pswd[key] = ''
+      }
     },
   },
 }
