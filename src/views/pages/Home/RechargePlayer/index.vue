@@ -17,9 +17,9 @@
     .ff-cn.mgl2.flex-1
       .ff-rn.fs-m.ai-center.bg-white.pd2
         label 游戏名称:
-        auto-complete(v-model="rechargParam.gameName" :data='gameList')
+        auto-complete.mgl1(v-model="rechargParam.gameName" :data='gameList')
         label.mgl2 区服:
-        auto-complete(v-model="rechargParam.areaName" :data='areaList')
+        auto-complete.mgl1(v-model="rechargParam.areaName" :data='areaList')
         label.mgl2 时间:
         CommonDatePicker.mgl1.winput(:start.sync='rechargParam.startTime'
          :end.sync='rechargParam.endTime' @change='search()' all)

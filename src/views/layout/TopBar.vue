@@ -25,7 +25,7 @@
             )
               i.el-icon-user
               span.mgl1 修改头像
-          li.hand(@click='changePsd')
+          li.hand(@click='editPswdDlg = true')
             i.el-icon-key
             span.mgl1 修改密码
           li.hand.warning(@click='logout')
@@ -61,7 +61,7 @@
             el-input(v-model='pswd.new2', placeholder='请再次输入新密码')
       span.dialog-footer(slot='footer')
         el-button.mgl3(type='warning', @click='cancelPswdEdit') 取消
-        el-button.mgl3(type='primary', @click='changePsd') 提交
+        el-button.mgl3(type='primary', @click='submitPswd') 提交
 </template>
 <script>
 import { mapGetters } from 'vuex'
@@ -122,7 +122,7 @@ export default {
         this.$store.dispatch('getUserInfo')
       })
     },
-    changePsd () {
+    submitPswd () {
       this.$vgo.tip('待实现!', 'success')
     },
     logout () {

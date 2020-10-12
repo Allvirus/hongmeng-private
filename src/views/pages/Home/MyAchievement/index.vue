@@ -11,9 +11,9 @@
         )
     .ff-rn.fs-m.ai-center.mgt2
       label 游戏名称:
-      el-input.mgl2.winput(v-model="model.gameName")
+      auto-complete.mgl1(v-model="model.gameName" :data='gameList')
       label.mgl3 区服名称:
-      el-input.mgl2.winput(v-model="model.areaName")
+      auto-complete.mgl1(v-model="model.areaName" :data='areaList')
       el-button.mgl3(icon='el-icon-search', type='primary', @click='search') 搜索
       el-button(icon='el-icon-refresh-right', type='primary', @click='reset') 重置
 
@@ -54,6 +54,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 export default {
   name: 'MyAchievement',
   components: {
@@ -123,6 +124,7 @@ export default {
       // return this.selTimeRange === '本周'
       return true
     },
+    ...mapGetters(['areaList', 'gameList']),
   },
   created () {
     this.search()
