@@ -70,7 +70,9 @@ export default {
               this.$router.replace({ name: 'Home' })
             }
           }).catch(({ data }) => {
-            this.$vgo.tip(data.errorMsg, 'error')
+            if (data && data.errorMsg) {
+              // this.$vgo.tip(data.errorMsg, 'error')
+            }
           })
         }
       })
