@@ -5,7 +5,7 @@
       el-form-item(label='玩家账号:')
         el-input.winput(v-model='model.UserAccount')
       el-form-item(label='游戏名称:')
-        el-input.winput(v-model='model.GameName')
+        auto-complete(v-model="model.GameName" :data='gameList')
       el-form-item(label='游戏角色:')
         el-input.winput(v-model='model.RoleName')
       el-form-item(label='订单号:')
@@ -13,7 +13,7 @@
       el-form-item(label='推广员账户:')
         el-input.winput(v-model='model.Account')
       el-form-item(label='区服:')
-        el-input.winput(v-model='model.AreaName')
+        auto-complete(v-model="model.AreaName" :data='areaList')
       el-form-item(label='支付时间:')
         CommonDatePicker.w400(
           :start.sync='model.startTime',
@@ -34,7 +34,7 @@
     el-table-column(prop='areaName', label='区服')
     el-table-column(prop='roleName', label='游戏角色')
     el-table-column(prop='gameOrderID', label='消费订单号', width='160px')
-    el-table-column(prop='totalPrice', label='支付金额')
+    el-table-column(prop='totalPrice', label='支付金额(元)')
       template(slot-scope='{ row }') {{ row.totalPrice | toFixed }}
     el-table-column(prop='payDate', label='支付时间', width='150px')
       template(slot-scope='{ row }') {{ row.payDate | dateFormat }}
@@ -49,6 +49,7 @@
   )
 </template>
 <script>
+import { mapGetters } from 'vuex'
 import fetchListMixin from '@/mixins/fetchListMixin'
 export default {
   name: 'MyOrders',
@@ -74,6 +75,9 @@ export default {
         pageSize: 10,
       },
     }
+  },
+  computed: {
+    ...mapGetters(['areaList', 'gameList']),
   },
   methods: {
     search () {

@@ -21,6 +21,8 @@ export default {
   },
   created () {
     this.$store.dispatch('getUserInfo')
+    this.$store.dispatch('getAreaList')
+    this.$store.dispatch('getGameList')
   },
 }
 </script>

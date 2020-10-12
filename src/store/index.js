@@ -17,5 +17,6 @@ export default new Vuex.Store({
   },
   modules: {
     app: _importSync('app'),
+    gameinfo: _importSync('gameinfo'),
   },
 })

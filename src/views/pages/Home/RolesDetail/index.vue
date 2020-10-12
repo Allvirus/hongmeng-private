@@ -5,15 +5,11 @@
       el-form-item(label='玩家账号:')
         el-input.winput(v-model='model.UserAccount')
       el-form-item(label='游戏名称:')
-        el-input.winput(v-model='model.GameName')
+        auto-complete(v-model="model.GameName" :data='gameList')
       el-form-item(label='游戏角色:')
         el-input.winput(v-model='model.RoleName')
       el-form-item(label='区服:')
-        el-autocomplete.winput(
-          v-model='model.AreaName',
-          :clearable="true"
-          :fetch-suggestions='querySearchAsync',
-        )
+        auto-complete(v-model="model.AreaName" :data='areaList')
       el-form-item(label='创建时间:')
         CommonDatePicker.w300(
           :start.sync='model.startTime',
@@ -46,6 +42,7 @@
   )
 </template>
 <script>
+import { mapGetters } from 'vuex'
 import fetchListMixin from '@/mixins/fetchListMixin'
 export default {
   name: 'MyRoles',
@@ -65,19 +62,12 @@ export default {
         page: 1,
         pageSize: 10,
       },
-      restaurants: [],
-      timeout: null,
     }
   },
+  computed: {
+    ...mapGetters(['areaList', 'gameList']),
+  },
   created: function () {
-    this.$api.getAreaName('').then(data => {
-      for (const areaName of data) {
-        const item = {
-          value: areaName,
-        }
-        this.restaurants.push(item)
-      }
-    })
   },
   methods: {
     search () {
@@ -97,20 +87,6 @@ export default {
         pageSize: 10,
       }
       this.getListMixin()
-    },
-    querySearchAsync (queryString, cb) {
-      var restaurants = this.restaurants
-      var results = queryString ? restaurants.filter(this.createStateFilter(queryString)) : restaurants
-      console.log('query', results)
-      clearTimeout(this.timeout)
-      this.timeout = setTimeout(() => {
-        cb(results)
-      }, 1000)
-    },
-    createStateFilter (queryString) {
-      return (state) => {
-        return (state.value.indexOf(queryString) === 0)
-      }
     },
   },
 }

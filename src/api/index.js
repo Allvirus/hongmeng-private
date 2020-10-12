@@ -371,9 +371,9 @@ export default {
     },
   }),
   // 20.2 获取游戏名称信息
-  getGameName: (model) => http('get', '/api/player/gameName', {
+  getGameName: (gameName) => http('get', '/api/player/gameName', {
     params: {
-      gameName: model.gameName,
+      gameName: gameName,
     },
   }),
 

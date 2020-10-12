@@ -17,9 +17,9 @@
     .ff-cn.mgl2.flex-1
       .ff-rn.fs-m.ai-center.bg-white.pd2
         label 游戏名称:
-        el-input.mgl2.winput(v-model="rechargParam.gameName")
+        auto-complete(v-model="rechargParam.gameName" :data='gameList')
         label.mgl2 区服:
-        el-input.mgl2.winput(v-model="rechargParam.areaName")
+        auto-complete(v-model="rechargParam.areaName" :data='areaList')
         label.mgl2 时间:
         CommonDatePicker.mgl1.winput(:start.sync='rechargParam.startTime'
          :end.sync='rechargParam.endTime' @change='search()' all)
@@ -29,7 +29,7 @@
       el-table.mgy2.bg-white(:data='rechargRecord.list')
         el-table-column(prop="userCode" label="玩家ID")
         el-table-column(prop="gameOrderID" label="消费订单号")
-        el-table-column(prop="totalPrice" label="支付金额")
+        el-table-column(prop="totalPrice" label="支付金额(元)")
           template(slot-scope='{ row }') {{row.totalPrice | toFixed}}
         el-table-column(prop="gameName" label="游戏名称")
         el-table-column(prop="areaName" label="区服")
@@ -43,6 +43,7 @@
         @current-change="getPlRchgRecord")
 </template>
 <script>
+import { mapGetters } from 'vuex'
 import fetchListMixin from '@/mixins/fetchListMixin'
 export default {
   name: 'RechargePlayer',
@@ -67,8 +68,8 @@ export default {
       },
     }
   },
-  created: function () {
-
+  computed: {
+    ...mapGetters(['areaList', 'gameList']),
   },
   methods: {
     onRowClick (row) {
