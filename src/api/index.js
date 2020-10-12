@@ -365,8 +365,17 @@ export default {
   }),
 
   // 20.1 获取游戏区服信息
-
+  getAreaName: (areaname) => http('get', '/api/player/areaname', {
+    params: {
+      areaName: areaname,
+    },
+  }),
   // 20.2 获取游戏名称信息
+  getGameName: (model) => http('get', '/api/player/gameName', {
+    params: {
+      gameName: model.gameName,
+    },
+  }),
 
   // 21.获取游戏角色分页信息
   getRoleInfos: (model) => http('get', '/api/player/role', {
