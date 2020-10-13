@@ -5,12 +5,12 @@
       el-tree(
         :data='Tree.departTree',
         @node-contextmenu='rightClick',
-        node_key='id',
+        node-key='id',
         default-expand-all,
-        :highlight-current="true"
-        :expand-on-click-node="false"
+        highlight-current,
+        :expand-on-click-node='false',
         :props='props',
-        ref="tree"
+        ref='tree',
         @node-click='handleNodeClick'
       )
     #perTreeMenu.tree_menu(
@@ -59,13 +59,13 @@
             el-button(
               icon='el-icon-lock',
               type='text',
-              v-if="row.lockoutEnabled"
+              v-if='row.lockoutEnabled',
               @click='lockUser(row)'
             ) 锁定
             el-button(
               icon='el-icon-unlock',
               type='text',
-              v-else
+              v-else,
               @click='unlockUser(row)'
             ) 解锁
 
@@ -74,7 +74,7 @@
       :userId='User.userId',
       :show='User.newUserDlg',
       @cancel='cancelMbEdit',
-      @editchange='handleNodeClick(Tree.curTreeNode)'
+      @editchange='setCurrSelecNode'
     )
     depart-edit(
       :data='Dpt.editDptInfo',
@@ -111,6 +111,7 @@ export default {
         ctxMnuShow: false,
         curNode: {},
         curTreeNode: null, // 当前选择显示的部门人员
+        curDptId: '1',
       },
     }
   },
@@ -123,16 +124,29 @@ export default {
       const id = 1
       this.$api.getDepartById(id).then(res => {
         this.Tree.departTree.push(res)
+        if (this.Tree.curDptId) {
+          this.$nextTick(function () {
+            // DOM 更新了
+            this.setCurrSelecNode(this.Tree.curDptId)
+          })
+        }
       })
     },
-    setCurrentNode (id) {
-      this.$refs.tree.setCurrentKey(id)
+    setCurrSelecNode (departMentId) {
+      console.log('setCurrSelecNode' + departMentId)
+      this.Tree.curDptId = departMentId
+      this.$refs.tree.setCurrentKey(departMentId)
+      this.$api.getDepartMembers(departMentId).then(data => {
+        this.User.userList = data
+      })
     },
     handleNodeClick (data) {
       this.Tree.curTreeNode = data
+      this.Tree.curDptId = data.id
       this.$api.getDepartMembers(data.id).then(data => {
         this.User.userList = data
       })
+      this.Tree.ctxMnuShow = false
     },
     // 取消人员编辑框
     cancelMbEdit () {
@@ -150,8 +164,9 @@ export default {
       this.Dpt.newDepartDlg = true
     },
     // 创建部门成功
-    newDptSuccess () {
+    newDptSuccess (data) {
       this.Dpt.newDepartDlg = false
+      this.Tree.curDptId = data.id
       this.getDepartTree()
     },
     // 删除部门
@@ -169,6 +184,7 @@ export default {
       this.$vgo.open(() => {
         this.$api.delDepart(this.Tree.curTreeNode.id).then(data => {
           this.$vgo.tip('已删除!', 'success')
+          this.Tree.curDptId = 1
           this.getDepartTree()
         })
       }, tipMsg)
@@ -188,7 +204,7 @@ export default {
       this.$vgo.open(() => {
         this.$api.lockUser(row.id).then(data => {
           this.$vgo.tip('锁定成功!', 'success')
-          this.handleNodeClick(this.Tree.curTreeNode)
+          this.setCurrSelecNode(this.Tree.curDptId)
         })
       }, '您确定要锁定该用户吗?')
     },
@@ -196,7 +212,7 @@ export default {
       this.$vgo.open(() => {
         this.$api.unlockUser(row.id).then(data => {
           this.$vgo.tip('解锁成功!', 'success')
-          this.handleNodeClick(this.Tree.curTreeNode)
+          this.setCurrSelecNode(this.Tree.curDptId)
         })
       }, '您确定要解锁该用户吗?')
     },

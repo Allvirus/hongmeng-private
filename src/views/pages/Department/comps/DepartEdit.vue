@@ -128,13 +128,13 @@ export default {
       if (this.isEdit) {
         this.$api.updateDepart(params).then(data => {
           this.$vgo.tip('更新成功', 'success')
-          this.$emit('success')
+          this.$emit('success', data)
           this.cancel()
         })
       } else {
-        this.$api.addDepart(params).then(res => {
+        this.$api.addDepart(params).then(data => {
           this.$vgo.tip('创建成功', 'success')
-          this.$emit('success')
+          this.$emit('success', data)
           this.cancel()
         })
       }
