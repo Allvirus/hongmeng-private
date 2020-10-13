@@ -19,7 +19,7 @@
       @change='onDepartChange'
     )
   .h600.overflow-auto.mgt2
-    .item.ff-rn.mgb3.ai-center(v-for='(item, idx) in myGameList', :key='idx')
+    .item.ff-rn.mgb1.ai-center.h70(v-for='(item, idx) in myGameList', :key='idx')
       img.game-icon.mgl2(:src='conbineUrl(item)')
       .name.mgl2.ff-cn
         p.mgb1 {{ item.gameContent.name }}
@@ -191,5 +191,5 @@ export default {
       border-radius 17px
     button
       width 60px
-      height 20px
+      height 24px
 </style>

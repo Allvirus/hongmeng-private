@@ -127,18 +127,17 @@ export default {
     } else {
       this.activeTab = this.$route.name
     }
-    this.testNotice()
+    this.getNotice()
   },
   methods: {
-    testNotice () {
-      let count = 0
-      while (count++ < 5) {
-        const notice = {
-          id: count,
-          msg: '恭喜全力以赴战队黄子韬单笔消费' + count * 1000 + '元',
+    getNotice () {
+      this.$api.getTop10().then(data => {
+        for (let i = 0; i < data.length; i++) {
+          const item = data[i]
+          item.id = i
+          this.noticeList.push(item)
         }
-        this.noticeList.push(notice)
-      }
+      })
     },
     exit () {
       this.$utils.setCookie($globalconfig.COOKIE_NAME, '', { exHours: -1, domain: $globalconfig.COOKIE_DOMAIN })

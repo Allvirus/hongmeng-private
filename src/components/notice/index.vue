@@ -8,8 +8,11 @@
       v-for="item in msgShowList"
       v-bind:key="item.id"
       class="slide-item"
-      @click='onNoticeClick(item.msg)'
-      ) {{ item.msg }}
+      @click='onNoticeClick(item)'
+      )
+        span 恭喜{{item.department}}{{item.userName}}消费
+        span.danger {{ item.totalPrice }}
+        span 元
 </template>
 <script>
 import { MessageBox } from 'element-ui'
@@ -37,6 +40,16 @@ export default {
       timerId: '',
       lastIdx: 0,
     }
+  },
+  watch: {
+    data (newValue, oldValue) {
+      console.log('newValue', newValue)
+      const lines = (this.data.length > this.rows) ? this.rows : this.data.length
+      for (let i = 0; i < lines; i++) {
+        this.msgShowList.push(this.data[i])
+        this.lastIdx = i
+      }
+    },
   },
   created: function () {
     const lines = (this.data.length > this.rows) ? this.rows : this.data.length
@@ -67,7 +80,8 @@ export default {
         }, this.duration)
       }
     },
-    onNoticeClick (msg) {
+    onNoticeClick (item) {
+      const msg = `恭喜${item.department}${item.userName}消费${item.totalPrice}元`
       MessageBox.confirm(msg, '公告', {
         confirmButtonText: '确定',
         type: 'info',
