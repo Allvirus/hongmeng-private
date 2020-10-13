@@ -8,6 +8,7 @@
         node_key='id',
         default-expand-all,
         :highlight-current="true"
+        :expand-on-click-node="false"
         :props='props',
         ref="tree"
         @node-click='handleNodeClick'
@@ -186,16 +187,16 @@ export default {
     lockUser (row) {
       this.$vgo.open(() => {
         this.$api.lockUser(row.id).then(data => {
-          this.getDepartTree()
           this.$vgo.tip('锁定成功!', 'success')
+          this.handleNodeClick(this.Tree.curTreeNode)
         })
       }, '您确定要锁定该用户吗?')
     },
     unlockUser (row) {
       this.$vgo.open(() => {
         this.$api.unlockUser(row.id).then(data => {
-          this.getDepartTree()
           this.$vgo.tip('解锁成功!', 'success')
+          this.handleNodeClick(this.Tree.curTreeNode)
         })
       }, '您确定要解锁该用户吗?')
     },

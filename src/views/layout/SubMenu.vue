@@ -10,7 +10,7 @@
         :src='userInfo.photo !== null ? userInfo.photo : require("@/assets/img/ic_def_avatar.png")'
       )
     .jc-center.mgt3
-      span.mgx3.black.fs-b.omit {{ userInfo.username }}
+      span.mgx3.black.fs-b.omit {{ userInfo.realName }}
     .ff-rn.jc-center.mgb3.mgt1
       img.mgl1.fit-contain(:src='userInfo.level | formatBadge')
       span.black.mgl1.fs-m {{ userInfo.level | formatLevel }}

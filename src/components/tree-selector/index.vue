@@ -17,6 +17,7 @@
         :data='data',
         :props='defProps',
         default-expand-all,
+        :expand-on-click-node="false"
         @node-click='handleNodeClick',
         :node-key='nodeKey'
       )
@@ -68,12 +69,10 @@ export default {
       this.value = ''
     },
     handleNodeClick (item) {
-      if (item[this.defProps.children].length === 0) {
-        this.value = item[this.defProps.valKey]
-        this.label = item[this.defProps.label]
-        this.$emit('change', this.value)
-        this.$refs.selector.blur()
-      }
+      this.value = item[this.defProps.valKey]
+      this.label = item[this.defProps.label]
+      this.$emit('change', this.value)
+      this.$refs.selector.blur()
     },
     onClear () {
       console.log('onClear')
