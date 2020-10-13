@@ -37,6 +37,7 @@
 
       el-table.mgt2(:data='User.userList')
         el-table-column(prop='realName', label='姓名')
+        el-table-column(prop='dptName', label='所属部门')
         el-table-column(prop='phoneNumber', label='手机号')
         el-table-column(prop='level', label='等级')
           template(slot-scope='{ row }') {{ row.level | formatLevel }}
@@ -104,6 +105,7 @@ export default {
       Dpt: {
         newDepartDlg: false, // 部门编辑对话框是否可见
         editDptInfo: null, // 编辑部门信息
+        dptNameList: [],
       },
       Tree: {
         departTree: [], // 部门树
@@ -117,8 +119,16 @@ export default {
   },
   created: function () {
     this.getDepartTree()
+    this.getDptNameList()
   },
   methods: {
+    getDptNameList () {
+      this.$api.getAllDeparts().then(data => {
+        for (const item of data) {
+          this.Dpt.dptNameList[item.id] = item
+        }
+      })
+    },
     getDepartTree () {
       this.Tree.departTree.splice(0, this.Tree.departTree.length)
       const id = 1
@@ -137,6 +147,11 @@ export default {
       this.Tree.curDptId = departMentId
       this.$refs.tree.setCurrentKey(departMentId)
       this.$api.getDepartMembers(departMentId).then(data => {
+        // 增加部门字段
+        for (const item of data) {
+          console.log(this.Dpt.dptNameList, item.id)
+          item.dptName = this.Dpt.dptNameList[item.departmentId].name
+        }
         this.User.userList = data
       })
     },
@@ -144,6 +159,10 @@ export default {
       this.Tree.curTreeNode = data
       this.Tree.curDptId = data.id
       this.$api.getDepartMembers(data.id).then(data => {
+        // 增加部门字段
+        for (const item of data) {
+          item.dptName = this.Dpt.dptNameList[item.departmentId].name
+        }
         this.User.userList = data
       })
       this.Tree.ctxMnuShow = false
