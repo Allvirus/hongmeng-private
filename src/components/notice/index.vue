@@ -10,7 +10,7 @@
       class="slide-item"
       @click='onNoticeClick(item)'
       )
-        span 恭喜{{item.department}}{{item.userName}}消费
+        span 恭喜{{item.department}}{{item.userName}}单笔消费
         span.danger {{ item.totalPrice }}
         span 元
 </template>
@@ -49,7 +49,9 @@ export default {
         this.msgShowList.push(this.data[i])
         this.lastIdx = i
       }
+      this.startMove()
     },
+    immediate: true,
   },
   created: function () {
     const lines = (this.data.length > this.rows) ? this.rows : this.data.length
@@ -58,16 +60,16 @@ export default {
       this.lastIdx = i
     }
   },
-  mounted () {
-    this.startMove()
-  },
   beforeDestroy: function () {
     clearInterval(this.timerId)
   },
   methods: {
     startMove () {
+      if (this.timerId) {
+        clearInterval(this.timerId)
+      }
       if (this.data.length > 0 && this.data.length > this.rows) {
-        setInterval(() => {
+        this.timerId = setInterval(() => {
           if (this.lastIdx === this.data.length - 1) {
             this.lastIdx = 0
           } else {
@@ -81,7 +83,7 @@ export default {
       }
     },
     onNoticeClick (item) {
-      const msg = `恭喜${item.department}${item.userName}消费${item.totalPrice}元`
+      const msg = `恭喜${item.department}${item.userName}单笔消费${item.totalPrice}元`
       MessageBox.confirm(msg, '公告', {
         confirmButtonText: '确定',
         type: 'info',
