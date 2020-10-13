@@ -109,6 +109,10 @@ Vue.filter('formatJob', (job) => {
   return jobs[job]
 })
 
+Vue.filter('formatOSType', (type) => {
+  return type === 1 ? 'IOS' : 'Android'
+})
+
 // 货币格式例如: 6535874元 转换成6,535,874元
 Vue.filter('formatNumber', (val) => {
   return parseFloat(val).toLocaleString()

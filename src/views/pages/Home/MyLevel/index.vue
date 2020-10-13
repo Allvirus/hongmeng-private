@@ -55,8 +55,8 @@ export default {
       commission: [
         {
           job: '提成起点',
-          custom: '当月总流水≥20000',
-          guide: '当月总流水≥50000',
+          custom: '当月总流水≥15000',
+          guide: '当月总流水≥40000',
           accompany: '当月总流水≥40000',
         },
       ],

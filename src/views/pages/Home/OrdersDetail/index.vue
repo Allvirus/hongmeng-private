@@ -41,7 +41,7 @@
     el-table-column(prop='gameName', label='游戏名称')
     el-table-column(prop='areaName', label='区服')
     el-table-column(prop='roleName', label='游戏角色')
-    el-table-column(prop='gameOrderID', label='消费订单号', width='160px')
+    el-table-column(prop='gameOrderID', label='订单号', width='160px')
     el-table-column(prop='totalPrice', label='支付金额(元)')
       template(slot-scope='{ row }') {{ row.totalPrice | toFixed }}
     el-table-column(prop='payDate', label='支付时间', width='150px')
@@ -96,8 +96,8 @@ export default {
       for (const key in this.model) {
         this.model[key] = ''
       }
-      this.page = 1
-      this.pageSize = 10
+      this.model.page = 1
+      this.model.pageSize = 10
       this.getListMixin()
     },
     onDepartChange (dtpId) {

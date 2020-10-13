@@ -10,13 +10,13 @@
         @change='onDepartChange'
       )
     el-form-item(label='玩家账号:')
-      el-input.winput(v-model='model.userAccount')
+      el-input.winput(v-model='model.UserAccount')
     el-form-item(label='设备号:')
-      el-input.winput(v-model='model.account')
+      el-input.winput(v-model='model.DeviceNo')
     el-form-item(label='推广员账户:')
-      el-input.winput(v-model='model.account')
+      el-input.winput(v-model='model.Account')
     el-form-item(label='注册IP:')
-      el-input.winput(v-model='model.account')
+      el-input.winput(v-model='model.CreateIp')
     el-form-item(label='注册时间:')
       CommonDatePicker.w300(
         :start.sync='model.startTime',
@@ -34,6 +34,8 @@
     el-table-column(prop='userAccount', label='玩家账号')
     el-table-column(prop='account', label='推广员账户')
     el-table-column(prop='deviceNo', label='设备号')
+    el-table-column(prop='osType', label='平台')
+      template(slot-scope='{ row }') {{ row.osType | formatOSType }}
     el-table-column(prop='createDate', label='注册时间')
       template(slot-scope='{ row }') {{ row.createDate | dateFormat }}
     el-table-column(prop='createIp', label='注册IP')
@@ -60,10 +62,10 @@ export default {
       model: {
         startTime: '',
         endTime: '',
-        userAccount: '',
-        account: '',
-        userCode: '',
-        OSType: '',
+        UserAccount: '',
+        Account: '',
+        CreateIp: '',
+        DeviceNo: '',
         departmentId: 0,
         page: 1,
         pageSize: 10,

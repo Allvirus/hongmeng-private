@@ -9,6 +9,7 @@
         template(slot-scope='{ row }') {{row.level | formatLevel}}
       el-table-column(prop="experience" label="经验值")
       el-table-column(prop="basicSalary" label="底薪")
+      el-table-column(prop="commission" label="提成")
       el-table-column(prop="ajobAndroidExp" label="A岗Android经验")
       el-table-column(prop="ajobIOSExp" label="A岗IOS经验")
       el-table-column(prop="bjobAndroidExp" label="B岗Android经验")

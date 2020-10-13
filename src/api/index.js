@@ -333,10 +333,10 @@ export default {
       const p = {
         startTime: model.startTime,
         endTime: model.endTime,
-        userAccount: model.userAccount,
-        account: model.account,
-        userCode: model.userCode,
-        OSType: model.OSType,
+        UserAccount: model.UserAccount,
+        Account: model.Account,
+        CreateIp: model.CreateIp,
+        DeviceNo: model.DeviceNo,
         page: model.page,
         pageSize: model.pageSize,
       }

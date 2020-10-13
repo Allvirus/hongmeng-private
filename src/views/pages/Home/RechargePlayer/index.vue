@@ -10,6 +10,8 @@
           clearable,
           @change='onDepartChange'
         )
+      el-form-item(label='充值玩家:' label-width='90px')
+        el-input.winput(v-model='model.userAccount')
       el-form-item(label='游戏角色:' label-width='90px')
         el-input.winput(v-model='model.roleName')
       el-form-item(label='游戏名称:' label-width='90px')
@@ -35,7 +37,7 @@
           @click='reset'
         ) 重置
 
-  el-table.mgy2.bg-white(:data='listMixin.list')
+  el-table.mgy2.bg-white(:data='playerList')
     el-table-column(prop='userCode', label='玩家ID')
     el-table-column(prop='gameOrderID', label='消费订单号')
     el-table-column(prop='totalPrice', label='支付金额(元)')
@@ -46,67 +48,55 @@
     el-table-column(prop='payDate', label='支付时间')
       template(slot-scope='{ row }') {{ row.payDate | dateFormat }}
   el-pagination.margin-spacing(
-    :total='listMixin.count',
+    :total='playerList.length',
     :page-size.sync='model.pageSize',
     :current-page.sync='model.page',
-    @current-change='getListMixin'
+    @current-change='getPlRchgRecord'
   )
 </template>
 <script>
 import { mapGetters } from 'vuex'
-import fetchListMixin from '@/mixins/fetchListMixin'
 export default {
   name: 'RechargePlayer',
-  mixins: [fetchListMixin],
   data () {
     return {
-      listApiForMixin: 'getGameOrders',
       model: {
         roleName: '',
         gameName: '',
         areaName: '',
         startTime: '',
         endTime: '',
+        userAccount: '',
         page: 1,
         pageSize: 10,
       },
-      rechargRecord: {},
+      playerList: [],
     }
   },
   computed: {
     ...mapGetters(['areaList', 'gameList', 'myDptList']),
   },
   methods: {
-    onRowClick (row) {
-      this.clearQueryParams()
-      this.model.userAccount = row.key
-      this.getPlRchgRecord()
-    },
     getPlRchgRecord () {
       if (this.model.userAccount === '') {
         this.$vgo.tip('请选择玩家', 'warning')
         return
       }
-      this.$utils.autoFillDateTime(this.rechargParam)
-      const params = JSON.parse(JSON.stringify(this.rechargParam))
+      this.$utils.autoFillDateTime(this.model)
+      const params = JSON.parse(JSON.stringify(this.model))
       this.$utils.filterNull(params)
       this.$api.getPlRchgRecord(params).then(res => {
-        this.rechargRecord = res
+        this.playerList = res.list
       })
     },
-    clearQueryParams () {
-      const p = {
-        gameName: '',
-        areaName: '',
-        startTime: '',
-        endTime: '',
-        page: 1,
-        pageSize: 10,
-      }
-      this.rechargParam = p
-    },
     reset () {
-      this.clearQueryParams()
+      for (const key in this.model) {
+        if (key !== 'userAccount') {
+          this.model[key] = ''
+        }
+      }
+      this.model.page = 1
+      this.model.pageSize = 10
       this.getPlRchgRecord()
     },
     onDepartChange (dtpId) {
