@@ -1,41 +1,29 @@
 <template lang='pug'>
-.RechargePlayer.ff-rn
-  .player-list.w300
-    .ff-rn.bg-white.pd2
-      el-input(v-model='model.userAccount', placeholder='请输入搜索内容')
-      el-button.mgl1(
-        icon='el-icon-search',
-        type='primary',
-        @click='searchPlayer'
-      ) 搜索
-    el-table.mgy2(
-      :data='listMixin.list',
-      @row-click='onRowClick',
-      :row-class-name='({ row }) => (row.key === rechargParam.userAccount ? "bg-select" : "")'
-    )
-      el-table-column(prop='key', label='玩家名称')
-    el-pagination(
-      base,
-      :pager-count='5',
-      :total='listMixin.count',
-      :page-size.sync='model.pageSize',
-      :current-page.sync='model.page',
-      @current-change='getListMixin'
-    )
-  .ff-cn.mgl2.flex-1
-    .ff-rn.fs-m.ai-center.bg-white.pd2
-      el-form.ff-rw.mgt2.ai-center(label-width='100px')
-        el-form-item(label='游戏名称:')
-          auto-complete(v-model='model.gameName', :data='gameList')
-        el-form-item(label='区服:')
-          auto-complete(v-model='model.areaName', :data='areaList')
-        el-form-item(label='时间:')
-          CommonDatePicker.winput(
-            :start.sync='rechargParam.startTime',
-            :end.sync='rechargParam.endTime',
-            @change='search()',
-            all
-          )
+.RechargePlayer
+  .fs-m.ai-center.bg-white.pd2
+    el-form.ff-rw.mgt2.ai-center(label-width='100px')
+      el-form-item(label='部门:' label-width='60px')
+        tree-selector.winput(
+          :data='myDptList.list',
+          :defProps='myDptList.props',
+          nodeKey='id',
+          clearable,
+          @change='onDepartChange'
+        )
+      el-form-item(label='游戏角色:' label-width='90px')
+        el-input.winput(v-model='model.roleName')
+      el-form-item(label='游戏名称:' label-width='90px')
+        auto-complete(v-model='model.gameName', :data='gameList')
+      el-form-item(label='区服:' label-width='60px')
+        auto-complete(v-model='model.areaName', :data='areaList')
+      el-form-item(label='时间:' label-width='60px')
+        CommonDatePicker.winput(
+          :start.sync='model.startTime',
+          :end.sync='model.endTime',
+          @change='search()',
+          all
+        )
+      el-form-item(label-width='0px')
         el-button.mgl3(
           icon='el-icon-search',
           type='primary',
@@ -47,22 +35,22 @@
           @click='reset'
         ) 重置
 
-    el-table.mgy2.bg-white(:data='rechargRecord.list')
-      el-table-column(prop='userCode', label='玩家ID')
-      el-table-column(prop='gameOrderID', label='消费订单号')
-      el-table-column(prop='totalPrice', label='支付金额(元)')
-        template(slot-scope='{ row }') {{ row.totalPrice | toFixed }}
-      el-table-column(prop='gameName', label='游戏名称')
-      el-table-column(prop='areaName', label='区服')
-      el-table-column(prop='roleName', label='游戏角色')
-      el-table-column(prop='payDate', label='支付时间')
-        template(slot-scope='{ row }') {{ row.payDate | dateFormat }}
-    el-pagination.margin-spacing(
-      :total='rechargRecord.count',
-      :page-size.sync='rechargParam.pageSize',
-      :current-page.sync='rechargParam.page',
-      @current-change='getPlRchgRecord'
-    )
+  el-table.mgy2.bg-white(:data='listMixin.list')
+    el-table-column(prop='userCode', label='玩家ID')
+    el-table-column(prop='gameOrderID', label='消费订单号')
+    el-table-column(prop='totalPrice', label='支付金额(元)')
+      template(slot-scope='{ row }') {{ row.totalPrice | toFixed }}
+    el-table-column(prop='gameName', label='游戏名称')
+    el-table-column(prop='areaName', label='区服')
+    el-table-column(prop='roleName', label='游戏角色')
+    el-table-column(prop='payDate', label='支付时间')
+      template(slot-scope='{ row }') {{ row.payDate | dateFormat }}
+  el-pagination.margin-spacing(
+    :total='listMixin.count',
+    :page-size.sync='model.pageSize',
+    :current-page.sync='model.page',
+    @current-change='getListMixin'
+  )
 </template>
 <script>
 import { mapGetters } from 'vuex'
@@ -72,15 +60,9 @@ export default {
   mixins: [fetchListMixin],
   data () {
     return {
-      listApiForMixin: 'getRechPlayer',
+      listApiForMixin: 'getGameOrders',
       model: {
-        page: 1,
-        pageSize: 13,
-        userAccount: '',
-      },
-      rechargRecord: {},
-      rechargParam: {
-        userAccount: '',
+        roleName: '',
         gameName: '',
         areaName: '',
         startTime: '',
@@ -88,22 +70,20 @@ export default {
         page: 1,
         pageSize: 10,
       },
+      rechargRecord: {},
     }
   },
   computed: {
-    ...mapGetters(['areaList', 'gameList']),
+    ...mapGetters(['areaList', 'gameList', 'myDptList']),
   },
   methods: {
     onRowClick (row) {
       this.clearQueryParams()
-      this.rechargParam.userAccount = row.key
+      this.model.userAccount = row.key
       this.getPlRchgRecord()
     },
-    searchPlayer () {
-      this.getListMixin()
-    },
     getPlRchgRecord () {
-      if (this.rechargParam.userAccount === '') {
+      if (this.model.userAccount === '') {
         this.$vgo.tip('请选择玩家', 'warning')
         return
       }
@@ -116,7 +96,6 @@ export default {
     },
     clearQueryParams () {
       const p = {
-        userAccount: this.rechargParam.userAccount,
         gameName: '',
         areaName: '',
         startTime: '',
@@ -130,10 +109,13 @@ export default {
       this.clearQueryParams()
       this.getPlRchgRecord()
     },
+    onDepartChange (dtpId) {
+      this.$vgo.tip('部门ID是' + dtpId, 'success')
+    },
   },
 }
 </script>
 <style lang='stylus' scoped>
 .el-form-item
-  margin-bottom 0px
+  margin-bottom 10px
 </style>

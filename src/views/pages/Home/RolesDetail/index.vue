@@ -2,14 +2,22 @@
 .MyRoles
   .ff-rn.fs-m.ai-center.mgt2.bg-white.pd2
     el-form.ff-rw(label-width='100px')
+      el-form-item(label='部门:')
+        tree-selector.winput(
+          :data='myDptList.list',
+          :defProps='myDptList.props',
+          nodeKey='id',
+          clearable,
+          @change='onDepartChange'
+        )
       el-form-item(label='玩家账号:')
         el-input.winput(v-model='model.UserAccount')
       el-form-item(label='游戏名称:')
-        auto-complete(v-model="model.GameName" :data='gameList')
+        auto-complete(v-model='model.GameName', :data='gameList')
       el-form-item(label='游戏角色:')
         el-input.winput(v-model='model.RoleName')
       el-form-item(label='区服:')
-        auto-complete(v-model="model.AreaName" :data='areaList')
+        auto-complete(v-model='model.AreaName', :data='areaList')
       el-form-item(label='创建时间:')
         CommonDatePicker.w300(
           :start.sync='model.startTime',
@@ -65,7 +73,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['areaList', 'gameList']),
+    ...mapGetters(['areaList', 'gameList', 'myDptList']),
   },
   created: function () {
   },
@@ -87,6 +95,9 @@ export default {
         pageSize: 10,
       }
       this.getListMixin()
+    },
+    onDepartChange (dtpId) {
+      this.$vgo.tip('部门ID是' + dtpId, 'success')
     },
   },
 }

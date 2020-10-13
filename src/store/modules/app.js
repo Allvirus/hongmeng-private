@@ -5,11 +5,16 @@ export default {
     regions: [],
     userInfo: {},
     projectTagList: [],
+    myDptList: {
+      list: [],
+      props: {},
+    },
   },
   getters: {
     regions: state => state.regions,
     userInfo: state => state.userInfo,
     projectTagList: state => state.projectTagList,
+    myDptList: state => state.myDptList,
   },
   actions: {
     // 获取服务器城市数据
@@ -33,6 +38,11 @@ export default {
         commit('projectTagList', data)
       })
     },
+    getMyDptList ({ commit, state }) {
+      return api.getDepartById(1).then(data => {
+        commit('myDptList', data)
+      })
+    },
   },
   mutations: {
     userInfo (state, data) {
@@ -44,6 +54,14 @@ export default {
     },
     projectTagList (state, data) {
       state.projectTagList = data
+    },
+    myDptList (state, data) {
+      state.myDptList.list.push(data)
+      state.myDptList.props = {
+        children: 'departments',
+        label: 'name',
+        valKey: 'id',
+      }
     },
   },
 }

@@ -1,6 +1,6 @@
 <template lang='pug'>
 .tree-selector
-  el-select(
+  el-select.full(
     ref='selector',
     v-model='value',
     placeholder='请选择',

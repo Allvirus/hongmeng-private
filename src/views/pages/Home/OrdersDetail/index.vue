@@ -2,6 +2,14 @@
 .MyOrders
   .fs-m.ai-center.bg-white.pd2
     el-form.ff-rw(label-width='100px')
+      el-form-item(label='部门:')
+        tree-selector.winput(
+          :data='myDptList.list',
+          :defProps='myDptList.props',
+          nodeKey='id',
+          clearable,
+          @change='onDepartChange'
+        )
       el-form-item(label='玩家账号:')
         el-input.winput(v-model='model.UserAccount')
       el-form-item(label='游戏名称:')
@@ -77,7 +85,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['areaList', 'gameList']),
+    ...mapGetters(['areaList', 'gameList', 'myDptList']),
   },
   methods: {
     search () {
@@ -85,24 +93,15 @@ export default {
       this.getListMixin()
     },
     reset () {
-      this.model = {
-        startTime: '',
-        endTime: '',
-        UserAccount: '',
-        GameOrderID: '',
-        Account: '',
-        UserCode: '',
-        GameName: '',
-        RoleName: '',
-        RoleCode: '',
-        AreaName: '',
-        AreaCode: '',
-        TotalPrice: '',
-        OSType: '',
-        page: 1,
-        pageSize: 10,
+      for (const key in this.model) {
+        this.model[key] = ''
       }
+      this.page = 1
+      this.pageSize = 10
       this.getListMixin()
+    },
+    onDepartChange (dtpId) {
+      this.$vgo.tip('部门ID是' + dtpId, 'success')
     },
   },
 }

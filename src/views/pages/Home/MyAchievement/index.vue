@@ -11,6 +11,14 @@
         )
     .opt-bar
       el-form.ff-rw.mgt2.ai-center(label-width='100px')
+        el-form-item(label='部门:' label-width='60px')
+          tree-selector.winput(
+            :data='myDptList.list',
+            :defProps='myDptList.props',
+            nodeKey='id',
+            clearable,
+            @change='onDepartChange'
+          )
         el-form-item(label='游戏名称:')
           auto-complete.mgl1(v-model="model.gameName" :data='gameList')
         el-form-item(label='区服:')
@@ -69,6 +77,7 @@ export default {
       model: {
         gameName: '',
         areaName: '',
+        departmentId: 0,
         page: 1,
         pageSize: 10,
       },
@@ -126,7 +135,7 @@ export default {
       // return this.selTimeRange === '本周'
       return true
     },
-    ...mapGetters(['areaList', 'gameList']),
+    ...mapGetters(['areaList', 'gameList', 'myDptList']),
   },
   created () {
     this.search()
@@ -272,6 +281,7 @@ export default {
       const params = {
         gameName: this.model.gameName,
         areaName: this.model.areaName,
+        departmentId: this.model.departmentId,
       }
       switch (val) {
         case '今日':
@@ -323,6 +333,9 @@ export default {
         default:
           break
       }
+    },
+    onDepartChange (dtpId) {
+      this.model.dtpId = dtpId
     },
   },
 }

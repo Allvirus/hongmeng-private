@@ -103,7 +103,7 @@ const jobs = {
   0: 'A岗',
   1: 'B岗',
   2: 'C岗',
-  3: '管理',
+  3: '后勤',
 }
 Vue.filter('formatJob', (job) => {
   return jobs[job]

@@ -438,6 +438,7 @@ export default {
     params: {
       gameName: model.gameName,
       areaName: model.areaName,
+      departmentId: model.departmentId,
     },
   }),
 
@@ -446,6 +447,7 @@ export default {
     params: {
       gameName: model.gameName,
       areaName: model.areaName,
+      departmentId: model.departmentId,
     },
   }),
 
@@ -454,6 +456,7 @@ export default {
     params: {
       gameName: model.gameName,
       areaName: model.areaName,
+      departmentId: model.departmentId,
     },
   }),
 
@@ -462,6 +465,7 @@ export default {
     params: {
       gameName: model.gameName,
       areaName: model.areaName,
+      departmentId: model.departmentId,
     },
   }),
 

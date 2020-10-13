@@ -98,7 +98,7 @@ export default {
         manageDepartmentId: '',
         dptName: '',
       },
-      jobs: ['A岗', 'B岗', 'C岗', '管理'],
+      jobs: ['A岗', 'B岗', 'C岗', '后勤'],
       roles: [],
       isShow: false,
       defProps: {
