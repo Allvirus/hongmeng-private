@@ -2,38 +2,43 @@
 .top-bar
   .banner.jc-between.pr
     .user-info.ff-rn.ai-center.pdl2
-      img.avatar.mg3(
-        :src='userInfo.photo !== null ? userInfo.photo : require("@/assets/img/ic_def_avatar.png")',
-        @click='onCtxMenu'
+      el-popover(
+        placement='top-start',
+        width='150',
+        trigger='hover',
       )
+        template(slot-scope='{ row }')
+          ul.mgl2
+            li.hand.h30.full.ai-center.hover
+              el-upload(
+                displayType='button',
+                action='true',
+                accept='.jpg,.jpeg,.png,.bmp,.gif',
+                :crop='true',
+                @avatarUrl='onUploaded'
+              )
+                i.el-icon-user.fs-l
+                span.mgl1 修改头像
+            li.hand.h30.full.ai-center.hover(@click='editPswdDlg = true')
+              i.el-icon-key.fs-l
+              span.mgl1 修改密码
+            li.hand.warning.h30.full.ai-center.hover(@click='logout')
+              i.el-icon-close.fs-l
+              span.mgl1 退出登录
+        img.avatar.mg3(
+          slot='reference',
+          :src='userInfo.photo !== null ? userInfo.photo : require("@/assets/img/ic_def_avatar.png")'
+        )
       .ff-cn.mgl2
         .ff-rn.ai-center.fs-b
           span {{ userInfo.realName }}
           img.mgl2.fit-contain.flex-center(:src='userInfo.level | formatBadge')
-          span.mgl1 {{ userInfo.level | formatLevel }}
+          span.mgl1.omit {{ userInfo.level | formatLevel }}
 
         .ff-rn.ai-center.mgt2.fs-m
           img(:src='require("@/assets/img/ic_job.png")', fit='contain')
           span.mgl1 {{ userInfo.job | formatJob }}
-          span.mgl1 经验 {{ userInfo.experiences }}
-      #ctxMenu(v-show='ctxMnuShow', :style='{ ...rightMenu }')
-        ul.border-radius
-          li.hand
-            el-upload(
-              displayType='button',
-              action='true',
-              accept='.jpg,.jpeg,.png,.bmp,.gif',
-              :crop='true',
-              @avatarUrl='onUploaded'
-            )
-              i.el-icon-user
-              span.mgl1 修改头像
-          li.hand(@click='editPswdDlg = true')
-            i.el-icon-key
-            span.mgl1 修改密码
-          li.hand.warning(@click='logout')
-            i.el-icon-close
-            span.mgl1 退出登录
+          span.mgl1 经验值 {{ userInfo.experiences }}
     .swiper.pa.omit
       scroll-notice(:data='noticeList', :rows='3')
     .logo.mgr3.ai-center
@@ -55,7 +60,12 @@
       @close='cancelPswdEdit'
     )
       .flex-center
-        el-form(label-width='100px', ref='form' :rules='rules', :model='model')
+        el-form(
+          label-width='100px',
+          ref='form',
+          :rules='rules',
+          :model='model'
+        )
           el-form-item(prop='oldpswd', label='旧密码:')
             el-input(
               v-model='model.oldpswd',
@@ -100,8 +110,6 @@ export default {
       },
       activeTab: 'HomeMyAchievement',
       noticeList: [],
-      ctxMnuShow: false,
-      rightMenu: '',
       editPswdDlg: false,
       model: {
         oldpswd: '',
@@ -135,16 +143,6 @@ export default {
     exit () {
       this.$utils.setCookie($globalconfig.COOKIE_NAME, '', { exHours: -1, domain: $globalconfig.COOKIE_DOMAIN })
       $globalconfig.LOGIN()
-    },
-    onCtxMenu (e) {
-      this.rightMenu = { top: e.pageY + 'px', left: e.pageX + 'px' }
-      this.ctxMnuShow = true
-      e.stopPropagation()
-      document.onclick = (ev) => {
-        if (ev.target !== document.getElementById('ctxMenu')) {
-          this.ctxMnuShow = false
-        }
-      }
     },
     onUploaded (fileUrl) {
       this.$api.updateAvatar(fileUrl).then(data => {
