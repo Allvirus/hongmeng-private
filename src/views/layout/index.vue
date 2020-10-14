@@ -19,11 +19,17 @@ export default {
   computed: {
     ...mapGetters(['userInfo']),
   },
+  watch: {
+    userInfo (newValue, oldValue) {
+      if (newValue.resDepartmentId) {
+        this.$store.dispatch('getMyDptList')
+      }
+    },
+  },
   created () {
     this.$store.dispatch('getUserInfo')
     this.$store.dispatch('getAreaList')
     this.$store.dispatch('getGameList')
-    this.$store.dispatch('getMyDptList')
   },
 }
 </script>

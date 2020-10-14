@@ -344,7 +344,25 @@ export default {
       return p
     })(),
   }),
-
+  // 19.5 获取管理游戏注册分页信息
+  getDptRegisterInfo: (model) => http('get', '/api/player/info/manage', {
+    params: (() => {
+      const p = {
+        startTime: model.startTime,
+        endTime: model.endTime,
+        UserAccount: model.UserAccount,
+        Account: model.Account,
+        CreateIp: model.CreateIp,
+        DeviceNo: model.DeviceNo,
+        userId: model.userId,
+        resDepId: model.resDepId,
+        page: model.page,
+        pageSize: model.pageSize,
+      }
+      utils.filterNull(p)
+      return p
+    })(),
+  }),
   // 20.获取游戏订单分页信息
   getGameOrders: (model) => http('get', '/api/player/order', {
     params: (() => {

@@ -39,7 +39,7 @@ export default {
       })
     },
     getMyDptList ({ commit, state }) {
-      return api.getDepartById(1).then(data => {
+      return api.getDepartById(state.userInfo.resDepartmentId).then(data => {
         commit('myDptList', data)
       })
     },
@@ -56,7 +56,9 @@ export default {
       state.projectTagList = data
     },
     myDptList (state, data) {
-      state.myDptList.list.push(data)
+      const list = state.myDptList.list
+      list.splice(0, list.length)
+      list.push(data)
       state.myDptList.props = {
         children: 'departments',
         label: 'name',

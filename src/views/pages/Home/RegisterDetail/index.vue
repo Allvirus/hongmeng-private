@@ -1,7 +1,7 @@
 <template lang='pug'>
 .MyRegister
   el-form.ff-rw.bg-white.pd2.ai-center(label-width='100px')
-    el-form-item(label='部门:')
+    el-form-item(label='部门:' v-if="userInfo.resDepartmentId !==0")
       tree-selector.winput(
         :data='myDptList.list',
         :defProps='myDptList.props',
@@ -9,12 +9,18 @@
         clearable,
         @change='onDepartChange'
       )
+    el-form-item(label='员工:')
+      el-select.winput(v-model='model.userId', placeholder='请选择')
+        el-option(
+          v-for='item in userList',
+          :key='item.id',
+          :label='item.realName',
+          :value='item.id'
+        )
     el-form-item(label='玩家账号:')
       el-input.winput(v-model='model.UserAccount')
     el-form-item(label='设备号:')
       el-input.winput(v-model='model.DeviceNo')
-    el-form-item(label='推广员账户:')
-      el-input.winput(v-model='model.Account')
     el-form-item(label='注册IP:')
       el-input.winput(v-model='model.CreateIp')
     el-form-item(label='注册时间:')
@@ -58,7 +64,7 @@ export default {
   mixins: [fetchListMixin],
   data () {
     return {
-      listApiForMixin: 'getPlayerList',
+      listApiForMixin: 'getDptRegisterInfo',
       model: {
         startTime: '',
         endTime: '',
@@ -66,14 +72,16 @@ export default {
         Account: '',
         CreateIp: '',
         DeviceNo: '',
-        departmentId: 0,
+        userId: '',
+        resDepId: '',
         page: 1,
         pageSize: 10,
       },
+      userList: [],
     }
   },
   computed: {
-    ...mapGetters(['myDptList']),
+    ...mapGetters(['myDptList', 'userInfo']),
   },
   methods: {
     search () {
@@ -82,14 +90,23 @@ export default {
     },
     reset () {
       for (const key in this.model) {
-        this.model[key] = ''
+        if (key !== 'resDepId') {
+          this.model[key] = ''
+        }
       }
       this.model.page = 1
       this.model.pageSize = 10
       this.getListMixin()
     },
     onDepartChange (dtpId) {
-      this.model.departmentId = dtpId
+      this.model.resDepId = dtpId
+      this.reset()
+      this.getUserList(dtpId)
+    },
+    getUserList (id) {
+      this.$api.getDepartMembers(id).then(data => {
+        this.userList = data
+      })
     },
   },
 }
