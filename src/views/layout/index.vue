@@ -1,12 +1,10 @@
 <template lang="pug">
-.layout.ff-cn.flex-1(v-if='userInfo.id')
+.layout.ff-cn.flex-1(v-if='userInfo.id && myDptList.ready')
   TopBar
   .layout-bottom.flex-1
     transition(name='fade-scale', mode='out-in')
       router-view
-    .copyright.lh3.jc-center.mgt3(
-      v-html='$WD.$globalconfig.COPYRIGHT'
-    )
+    .copyright.lh3.jc-center.mgt3(v-html='$WD.$globalconfig.COPYRIGHT')
 </template>
 
 <script>
@@ -17,13 +15,11 @@ export default {
     TopBar: () => import('./TopBar.vue'),
   },
   computed: {
-    ...mapGetters(['userInfo']),
+    ...mapGetters(['userInfo', 'myDptList']),
   },
   watch: {
     userInfo (newValue, oldValue) {
-      if (newValue.resDepartmentId) {
-        this.$store.dispatch('getMyDptList')
-      }
+      this.$store.dispatch('getMyDptList')
     },
   },
   created () {

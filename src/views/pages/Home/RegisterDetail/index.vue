@@ -1,16 +1,18 @@
 <template lang='pug'>
 .MyRegister
   el-form.ff-rw.bg-white.pd2.ai-center(label-width='100px')
-    el-form-item(label='部门:' v-if="userInfo.resDepartmentId !==0")
+    el-form-item(label='部门:', v-if='userInfo.isLeader')
       tree-selector.winput(
+        ref='dtptree',
         :data='myDptList.list',
         :defProps='myDptList.props',
         nodeKey='id',
         clearable,
+        :deflabel='myDptList.defDptName',
         @change='onDepartChange'
       )
-    el-form-item(label='员工:')
-      el-select.winput(v-model='model.userId', placeholder='请选择')
+    el-form-item(label='员工:' v-if='userInfo.isLeader')
+      el-select.winput(v-model='model.userId', placeholder='请选择', clearable)
         el-option(
           v-for='item in userList',
           :key='item.id',
@@ -64,7 +66,7 @@ export default {
   mixins: [fetchListMixin],
   data () {
     return {
-      listApiForMixin: 'getDptRegisterInfo',
+      listApiForMixin: 'getPlayerList',
       model: {
         startTime: '',
         endTime: '',
@@ -85,26 +87,28 @@ export default {
   },
   methods: {
     search () {
+      this.listApiForMixin =
+        (this.model.resDepId !== '' && this.userInfo.isLeader)
+          ? 'getDptRegisterInfo' : 'getPlayerList'
+      console.log('search', this.listApiForMixin)
       this.$utils.autoFillDateTime(this.model)
       this.getListMixin()
     },
     reset () {
       for (const key in this.model) {
-        if (key !== 'resDepId') {
-          this.model[key] = ''
-        }
+        this.model[key] = ''
       }
+      this.userList.splice(0, this.userList.length)
+      this.$refs.dtptree.reset()
+      this.listApiForMixin = 'getPlayerList'
       this.model.page = 1
       this.model.pageSize = 10
       this.getListMixin()
     },
     onDepartChange (dtpId) {
       this.model.resDepId = dtpId
-      this.reset()
-      this.getUserList(dtpId)
-    },
-    getUserList (id) {
-      this.$api.getDepartMembers(id).then(data => {
+      this.model.userId = ''
+      this.$api.getDepartMembers(dtpId).then(data => {
         this.userList = data
       })
     },

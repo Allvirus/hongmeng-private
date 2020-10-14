@@ -7,7 +7,12 @@ export default {
     projectTagList: [],
     myDptList: {
       list: [],
-      props: {},
+      props: {
+        children: 'departments',
+        label: 'name',
+        valKey: 'id',
+      },
+      ready: false,
     },
   },
   getters: {
@@ -51,6 +56,9 @@ export default {
         data.photo = $globalconfig.API + data.photo
       }
       state.userInfo = data
+      if (data.resDepartmentId) {
+        state.userInfo.isLeader = data.resDepartmentId !== 0
+      }
     },
     projectTagList (state, data) {
       state.projectTagList = data
@@ -59,11 +67,10 @@ export default {
       const list = state.myDptList.list
       list.splice(0, list.length)
       list.push(data)
-      state.myDptList.props = {
-        children: 'departments',
-        label: 'name',
-        valKey: 'id',
+      if (data.name) {
+        state.myDptList.defDptName = data.name
       }
+      state.myDptList.ready = true
     },
   },
 }
