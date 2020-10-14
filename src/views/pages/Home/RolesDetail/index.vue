@@ -90,10 +90,6 @@ export default {
   computed: {
     ...mapGetters(['areaList', 'gameList', 'myDptList', 'userInfo']),
   },
-  created: function () {
-  },
-  methods: {
-  },
 }
 </script>
 <style lang='stylus' scoped>

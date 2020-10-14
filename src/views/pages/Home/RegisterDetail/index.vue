@@ -85,8 +85,6 @@ export default {
   computed: {
     ...mapGetters(['myDptList', 'userInfo']),
   },
-  methods: {
-  },
 }
 </script>
 <style lang='stylus' scoped>

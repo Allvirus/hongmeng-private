@@ -100,7 +100,6 @@ export default {
       this.getPlRchgRecord()
     },
     onDepartChange (dtpId) {
-      this.$vgo.tip('部门ID是' + dtpId, 'success')
     },
   },
 }

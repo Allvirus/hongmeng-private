@@ -100,8 +100,6 @@ export default {
   computed: {
     ...mapGetters(['areaList', 'gameList', 'myDptList', 'userInfo']),
   },
-  methods: {
-  },
 }
 </script>
 <style lang='stylus' scoped>

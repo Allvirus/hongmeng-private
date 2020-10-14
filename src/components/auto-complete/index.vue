@@ -34,10 +34,7 @@ export default {
     querySearchAsync (queryString, cb) {
       var restaurants = this.data
       var results = queryString ? restaurants.filter(this.createStateFilter(queryString)) : restaurants
-      clearTimeout(this.timeout)
-      this.timeout = setTimeout(() => {
-        cb(results)
-      }, 1000)
+      cb(results)
     },
     createStateFilter (queryString) {
       return (state) => {
