@@ -37,6 +37,8 @@
     el-table-column(prop='gameName', label='游戏名称')
     el-table-column(prop='areaName', label='区服')
     el-table-column(prop='roleName', label='游戏角色')
+    el-table-column(prop='osType', label='平台')
+      template(slot-scope='{ row }') {{ row.osType | formatOSType }}
     el-table-column(prop='createDate', label='创建时间')
       template(slot-scope='{ row }') {{ row.createDate | dateFormat }}
     el-table-column(prop='ajob', label='A岗')

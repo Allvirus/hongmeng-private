@@ -59,7 +59,7 @@
     el-table-column(prop="rechargeUserCount" label="充值人数")
     el-table-column(prop="rechargeCount" label="充值订单")
     el-table-column(prop="sum" label="充值总额(元)")
-      template(slot-scope="{ row }") {{row.sum | formatNumber}}
+      template(slot-scope="{ row }") {{row.sum | toFixed}}
 
 </template>
 

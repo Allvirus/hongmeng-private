@@ -43,7 +43,6 @@ export default {
   },
   watch: {
     data (newValue, oldValue) {
-      console.log('newValue', newValue)
       const lines = (this.data.length > this.rows) ? this.rows : this.data.length
       for (let i = 0; i < lines; i++) {
         this.msgShowList.push(this.data[i])

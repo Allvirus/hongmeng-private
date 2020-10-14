@@ -1,6 +1,6 @@
 <template lang='pug'>
-.MyOrders
-  .fs-m.ai-center.bg-white.pd2
+.MyExp
+  .ff-rn.fs-m.ai-center.mgt2.bg-white.pd2
     el-form.ff-rw(label-width='100px')
       el-form-item(label='部门:')
         tree-selector.winput(
@@ -13,17 +13,13 @@
       el-form-item(label='玩家账号:')
         el-input.winput(v-model='model.UserAccount')
       el-form-item(label='游戏名称:')
-        auto-complete(v-model="model.GameName" :data='gameList')
+        auto-complete(v-model='model.GameName', :data='gameList')
       el-form-item(label='游戏角色:')
         el-input.winput(v-model='model.RoleName')
-      el-form-item(label='订单号:')
-        el-input.winput(v-model='model.GameOrderID')
-      el-form-item(label='推广员账户:')
-        el-input.winput(v-model='model.Account')
       el-form-item(label='区服:')
-        auto-complete(v-model="model.AreaName" :data='areaList')
-      el-form-item(label='支付时间:')
-        CommonDatePicker.w400(
+        auto-complete(v-model='model.AreaName', :data='areaList')
+      el-form-item(label='创建时间:')
+        CommonDatePicker.w300(
           :start.sync='model.startTime',
           :end.sync='model.endTime',
           all
@@ -37,17 +33,14 @@
 
   el-table.mgy2.bg-white.pd2(:data='listMixin.list')
     el-table-column(prop='userAccount', label='玩家账号')
-    el-table-column(prop='account', label='推广员账号')
+    el-table-column(prop='account', label='推广员账户')
     el-table-column(prop='gameName', label='游戏名称')
     el-table-column(prop='areaName', label='区服')
     el-table-column(prop='roleName', label='游戏角色')
     el-table-column(prop='osType', label='平台')
       template(slot-scope='{ row }') {{ row.osType | formatOSType }}
-    el-table-column(prop='gameOrderID', label='订单号', width='160px')
-    el-table-column(prop='totalPrice', label='支付金额(元)')
-      template(slot-scope='{ row }') {{ row.totalPrice | toFixed }}
-    el-table-column(prop='payDate', label='支付时间', width='150px')
-      template(slot-scope='{ row }') {{ row.payDate | dateFormat }}
+    el-table-column(prop='createDate', label='创建时间')
+      template(slot-scope='{ row }') {{ row.createDate | dateFormat }}
     el-table-column(prop='ajob', label='A岗')
     el-table-column(prop='bjob', label='B岗')
     el-table-column(prop='cjob', label='C岗')
@@ -62,25 +55,20 @@
 import { mapGetters } from 'vuex'
 import fetchListMixin from '@/mixins/fetchListMixin'
 export default {
-  name: 'MyOrders',
+  name: 'MyRoles',
   mixins: [fetchListMixin],
   data () {
     return {
-      listApiForMixin: 'getGameOrders',
+      listApiForMixin: '',
       model: {
         startTime: '',
         endTime: '',
         UserAccount: '',
-        GameOrderID: '',
         Account: '',
         UserCode: '',
         GameName: '',
         RoleName: '',
-        RoleCode: '',
         AreaName: '',
-        AreaCode: '',
-        TotalPrice: '',
-        OSType: '',
         page: 1,
         pageSize: 10,
       },
@@ -89,17 +77,25 @@ export default {
   computed: {
     ...mapGetters(['areaList', 'gameList', 'myDptList']),
   },
+  created: function () {
+  },
   methods: {
     search () {
       this.$utils.autoFillDateTime(this.model)
       this.getListMixin()
     },
     reset () {
-      for (const key in this.model) {
-        this.model[key] = ''
+      this.model = {
+        startTime: '',
+        endTime: '',
+        UserAccount: '',
+        Account: '',
+        UserCode: '',
+        GameName: '',
+        RoleName: '',
+        page: 1,
+        pageSize: 10,
       }
-      this.model.page = 1
-      this.model.pageSize = 10
       this.getListMixin()
     },
     onDepartChange (dtpId) {

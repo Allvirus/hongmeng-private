@@ -168,7 +168,6 @@ export default {
       if (this.userId !== 0) {
         this.$api.updateUser(this.userInfo).then(data => {
           this.$vgo.tip('更新成功', 'success')
-          console.log('editchange dptId = ' + this.userInfo.departmentId)
           this.$emit('editchange', this.userInfo.departmentId)
           this.cancel()
         })

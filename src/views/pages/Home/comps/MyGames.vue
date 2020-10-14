@@ -192,4 +192,5 @@ export default {
     button
       width 60px
       height 24px
+      padding 2px 6px !important
 </style>

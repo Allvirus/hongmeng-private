@@ -75,7 +75,6 @@ export default {
       this.$refs.selector.blur()
     },
     onClear () {
-      console.log('onClear')
       this.label = ''
       this.value = ''
       this.$emit('change', this.value)

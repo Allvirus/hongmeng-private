@@ -81,6 +81,16 @@ export default [
             component: () => import('@/views/pages/Home/OrdersDetail'),
           },
           {
+            path: 'ExpDetail',
+            name: 'HomeExpDetail',
+            meta: {
+              title: '经验值明细',
+              icsel: require('@/assets/img/ic_order_sel.png'),
+              icdef: require('@/assets/img/ic_order_def.png'),
+            },
+            component: () => import('@/views/pages/Home/ExpDetail'),
+          },
+          {
             path: 'RechargePlayer',
             name: 'HomeRechargePlayer',
             meta: {

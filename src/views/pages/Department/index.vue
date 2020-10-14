@@ -105,7 +105,7 @@ export default {
       Dpt: {
         newDepartDlg: false, // 部门编辑对话框是否可见
         editDptInfo: null, // 编辑部门信息
-        dptNameList: [],
+        dptNameList: [], // 部门名称信息，用来显示人员所属部门
       },
       Tree: {
         departTree: [], // 部门树
@@ -143,13 +143,11 @@ export default {
       })
     },
     setCurrSelecNode (departMentId) {
-      console.log('setCurrSelecNode' + departMentId)
       this.Tree.curDptId = departMentId
       this.$refs.tree.setCurrentKey(departMentId)
       this.$api.getDepartMembers(departMentId).then(data => {
         // 增加部门字段
         for (const item of data) {
-          console.log(this.Dpt.dptNameList, item.id)
           item.dptName = this.Dpt.dptNameList[item.departmentId].name
         }
         this.User.userList = data
@@ -234,6 +232,14 @@ export default {
           this.setCurrSelecNode(this.Tree.curDptId)
         })
       }, '您确定要解锁该用户吗?')
+    },
+    checkRole (row) {
+      const item = this.Dpt.dptNameList[row.id]
+      if (item && item.userName) {
+        return `${item.userName}(${item.name}负责人)`
+      } else {
+        return row.realName
+      }
     },
   },
 }

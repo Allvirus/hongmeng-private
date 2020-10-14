@@ -81,9 +81,7 @@ export default {
   methods: {
     getRank () {
       this.$api[this.timeRange[this.selLabel].method]().then(data => {
-        console.log(this.timeRange[this.selLabel].method, data)
         this.rankList = data
-        // this.fillFakeData()
       })
     },
     fillFakeData () {
