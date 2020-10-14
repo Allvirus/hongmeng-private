@@ -1,15 +1,24 @@
 <template lang='pug'>
 .MyRoles
   .ff-rn.fs-m.ai-center.mgt2.bg-white.pd2
-    el-form.ff-rw(label-width='100px')
-      el-form-item(label='部门:')
+    el-form.ff-rw.bg-white.pd2.ai-center(label-width='100px')
+      el-form-item(label='部门:', v-if='userInfo.isLeader')
         tree-selector.winput(
+          ref='dtptree',
           :data='myDptList.list',
           :defProps='myDptList.props',
           nodeKey='id',
           clearable,
           @change='onDepartChange'
         )
+      el-form-item(label='员工:' v-if='userInfo.isLeader')
+        el-select.winput(v-model='model.userId', placeholder='请选择', clearable)
+          el-option(
+            v-for='item in userList',
+            :key='item.id',
+            :label='item.realName',
+            :value='item.id'
+          )
       el-form-item(label='玩家账号:')
         el-input.winput(v-model='model.UserAccount')
       el-form-item(label='游戏名称:')
@@ -28,7 +37,7 @@
         el-button.mgl2(
           icon='el-icon-refresh-right',
           type='primary',
-          @click='reset'
+          @click='resetPageMixin'
         ) 重置
 
   el-table.mgy2.bg-white.pd2(:data='listMixin.list')
@@ -60,6 +69,8 @@ export default {
   data () {
     return {
       listApiForMixin: 'getRoleInfos',
+      dtpApi: 'getDptRoleInfos',
+      myApi: 'getRoleInfos',
       model: {
         startTime: '',
         endTime: '',
@@ -69,38 +80,19 @@ export default {
         GameName: '',
         RoleName: '',
         AreaName: '',
+        userId: '',
+        resDepId: '',
         page: 1,
         pageSize: 10,
       },
     }
   },
   computed: {
-    ...mapGetters(['areaList', 'gameList', 'myDptList']),
+    ...mapGetters(['areaList', 'gameList', 'myDptList', 'userInfo']),
   },
   created: function () {
   },
   methods: {
-    search () {
-      this.$utils.autoFillDateTime(this.model)
-      this.getListMixin()
-    },
-    reset () {
-      this.model = {
-        startTime: '',
-        endTime: '',
-        UserAccount: '',
-        Account: '',
-        UserCode: '',
-        GameName: '',
-        RoleName: '',
-        page: 1,
-        pageSize: 10,
-      }
-      this.getListMixin()
-    },
-    onDepartChange (dtpId) {
-      this.$vgo.tip('部门ID是' + dtpId, 'success')
-    },
   },
 }
 </script>

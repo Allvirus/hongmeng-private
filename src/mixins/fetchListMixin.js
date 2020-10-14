@@ -18,6 +18,7 @@ export default {
   data () {
     return {
       listMixin: { list: [], count: 0 },
+      userList: [], // 如果是领导，自己部门的员工
     }
   },
   async created () {
@@ -61,6 +62,11 @@ export default {
     },
     // 条件筛选后 初始页面方法
     resetPageMixin () {
+      if (this.userInfo.isLeader) {
+        this.userList.splice(0, this.userList.length)
+        this.$refs.dtptree.reset()
+      }
+      this.listApiForMixin = this.myApi
       this.model = JSON.parse(JSON.stringify(this.modelCopyMixin))
       this.getListMixin()
     },
@@ -70,6 +76,22 @@ export default {
       else if (row.order === 'ascending') this.model.orderBy = row.prop + '_ASC'
       else this.model.orderBy = ''
       this.getListMixin(1)
+    },
+    // 搜索列表
+    search () {
+      this.listApiForMixin =
+      (this.model.resDepId !== '' && this.userInfo.isLeader)
+        ? this.dtpApi : this.myApi
+      this.$utils.autoFillDateTime(this.model)
+      this.getListMixin()
+    },
+    // 部门改变
+    onDepartChange (dtpId) {
+      this.model.resDepId = dtpId
+      this.model.userId = ''
+      this.$api.getDepartMembers(dtpId).then(data => {
+        this.userList = data
+      })
     },
   },
 }

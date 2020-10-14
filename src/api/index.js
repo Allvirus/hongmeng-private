@@ -401,6 +401,30 @@ export default {
     },
   }),
 
+  // 20.5 获取游戏订单分页信息
+  getDptGameOrders: (model) => http('get', '/api/player/order/manage', {
+    params: (() => {
+      const p = {
+        startTime: model.startTime,
+        endTime: model.endTime,
+        UserAccount: model.UserAccount,
+        GameOrderID: model.GameOrderID,
+        Account: model.Account,
+        GameName: model.GameName,
+        RoleName: model.RoleName,
+        AreaName: model.AreaName,
+        AreaCode: model.AreaCode,
+        userId: model.userId,
+        resDepId: model.resDepId,
+        TotalPrice: model.TotalPrice,
+        OSType: model.OSType,
+        Page: model.page,
+        PageSize: model.pageSize,
+      }
+      utils.filterNull(p)
+      return p
+    })(),
+  }),
   // 21.获取游戏角色分页信息
   getRoleInfos: (model) => http('get', '/api/player/role', {
     params: (() => {
@@ -413,6 +437,27 @@ export default {
         GameName: model.GameName,
         RoleName: model.RoleName,
         AreaName: model.AreaName,
+        Page: model.page,
+        PageSize: model.pageSize,
+      }
+      utils.filterNull(p)
+      return p
+    })(),
+  }),
+  // 21.5 获取游戏角色分页信息
+  getDptRoleInfos: (model) => http('get', '/api/player/role/manage', {
+    params: (() => {
+      const p = {
+        startTime: model.startTime,
+        endTime: model.endTime,
+        UserAccount: model.UserAccount,
+        Account: model.Account,
+        UserCode: model.UserCode,
+        GameName: model.GameName,
+        RoleName: model.RoleName,
+        AreaName: model.AreaName,
+        userId: model.userId,
+        resDepId: model.resDepId,
         Page: model.page,
         PageSize: model.pageSize,
       }

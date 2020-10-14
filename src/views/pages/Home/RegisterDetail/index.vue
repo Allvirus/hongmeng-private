@@ -8,7 +8,6 @@
         :defProps='myDptList.props',
         nodeKey='id',
         clearable,
-        :deflabel='myDptList.defDptName',
         @change='onDepartChange'
       )
     el-form-item(label='员工:' v-if='userInfo.isLeader')
@@ -35,7 +34,7 @@
       el-button.mgl2(
         icon='el-icon-refresh-right',
         type='primary',
-        @click='reset'
+        @click='resetPageMixin'
       ) 重置
 
   el-table.mgy2.bg-white.pd2(:data='listMixin.list')
@@ -67,6 +66,8 @@ export default {
   data () {
     return {
       listApiForMixin: 'getPlayerList',
+      dtpApi: 'getDptRegisterInfo',
+      myApi: 'getPlayerList',
       model: {
         startTime: '',
         endTime: '',
@@ -79,39 +80,12 @@ export default {
         page: 1,
         pageSize: 10,
       },
-      userList: [],
     }
   },
   computed: {
     ...mapGetters(['myDptList', 'userInfo']),
   },
   methods: {
-    search () {
-      this.listApiForMixin =
-        (this.model.resDepId !== '' && this.userInfo.isLeader)
-          ? 'getDptRegisterInfo' : 'getPlayerList'
-      console.log('search', this.listApiForMixin)
-      this.$utils.autoFillDateTime(this.model)
-      this.getListMixin()
-    },
-    reset () {
-      for (const key in this.model) {
-        this.model[key] = ''
-      }
-      this.userList.splice(0, this.userList.length)
-      this.$refs.dtptree.reset()
-      this.listApiForMixin = 'getPlayerList'
-      this.model.page = 1
-      this.model.pageSize = 10
-      this.getListMixin()
-    },
-    onDepartChange (dtpId) {
-      this.model.resDepId = dtpId
-      this.model.userId = ''
-      this.$api.getDepartMembers(dtpId).then(data => {
-        this.userList = data
-      })
-    },
   },
 }
 </script>

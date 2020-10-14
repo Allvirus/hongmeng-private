@@ -11,31 +11,37 @@
         )
     .opt-bar
       el-form.ff-rw.mgt2.ai-center(label-width='100px')
-        el-form-item(label='部门:' label-width='60px')
+        el-form-item(label='部门:', v-if='userInfo.isLeader' label-width='60px')
           tree-selector.winput(
+            ref='dtptree',
             :data='myDptList.list',
             :defProps='myDptList.props',
             nodeKey='id',
             clearable,
+            :deflabel='myDptList.defDptName',
             @change='onDepartChange'
           )
         el-form-item(label='游戏名称:')
-          auto-complete.mgl1(v-model="model.gameName" :data='gameList')
-        el-form-item(label='区服:')
-          auto-complete.mgl1(v-model="model.areaName" :data='areaList')
+          auto-complete.mgl1(v-model='model.gameName', :data='gameList')
+        el-form-item(label='区服:' label-width='60px')
+          auto-complete.mgl1(v-model='model.areaName', :data='areaList')
         el-form-item.search-btn
           el-button(icon='el-icon-search', type='primary', @click='search') 搜索
-          el-button(icon='el-icon-refresh-right', type='primary', @click='reset') 重置
+          el-button(
+            icon='el-icon-refresh-right',
+            type='primary',
+            @click='reset'
+          ) 重置
 
   //- 创角指数
   .data-panel.mgt2.ff-rn
-    .pd1.flex-1(v-for='(item,key, idx) in panelList',)
+    .pd1.flex-1(v-for='(item, key, idx) in panelList')
       data-box(
         :data='item',
         :colIdx='idx',
-        :toFixed="item.toFixed"
+        :toFixed='item.toFixed',
         :key='idx'
-    )
+      )
   //- 图表
   .mgt3
     .chart(
@@ -53,14 +59,13 @@
         v-line.charts.flex-1.mgt2(:data='rechData')
 
   el-table.mgy2.bg-white.pd2(:data='dataList')
-    el-table-column(prop="xText" label="时间")
-    el-table-column(prop="userRoleCount" label="创角数")
-    el-table-column(prop="userCount" label="创角用户")
-    el-table-column(prop="rechargeUserCount" label="充值人数")
-    el-table-column(prop="rechargeCount" label="充值订单")
-    el-table-column(prop="sum" label="充值总额(元)")
-      template(slot-scope="{ row }") {{row.sum | toFixed}}
-
+    el-table-column(prop='xText', label='时间')
+    el-table-column(prop='userRoleCount', label='创角数')
+    el-table-column(prop='userCount', label='创角用户')
+    el-table-column(prop='rechargeUserCount', label='充值人数')
+    el-table-column(prop='rechargeCount', label='充值订单')
+    el-table-column(prop='sum', label='充值总额(元)')
+      template(slot-scope='{ row }') {{ row.sum | toFixed }}
 </template>
 
 <script>
@@ -135,7 +140,7 @@ export default {
       // return this.selTimeRange === '本周'
       return true
     },
-    ...mapGetters(['areaList', 'gameList', 'myDptList']),
+    ...mapGetters(['areaList', 'gameList', 'myDptList', 'userInfo']),
   },
   created () {
     this.search()
@@ -348,8 +353,7 @@ $spc = 44px
   .condition
     .btn-group
       border-bottom 1px solid #0487FF
-  >>>.el-radio-button:first-child .el-radio-button__inner,
-  >>>.el-radio-button:last-child .el-radio-button__inner
+  >>>.el-radio-button:first-child .el-radio-button__inner, >>>.el-radio-button:last-child .el-radio-button__inner
     border none !important
     border-radius 0px
   >>>.el-radio-button__inner
