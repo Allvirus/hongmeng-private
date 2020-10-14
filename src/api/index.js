@@ -501,34 +501,54 @@ export default {
     params: {
       gameName: model.gameName,
       areaName: model.areaName,
-      departmentId: model.departmentId,
     },
   }),
 
+  // 25.5 获取部门我的业务的当天数据
+  getDptAchiByDay: (model) => http('get', '/api/achievement/day/manage', {
+    params: {
+      gameName: model.gameName,
+      areaName: model.areaName,
+      ResDepId: model.dtpId,
+    },
+  }),
   // 26.获取我本周的业务数据
   getAchiByWeek: (model) => http('get', '/api/achievement/week', {
     params: {
       gameName: model.gameName,
       areaName: model.areaName,
-      departmentId: model.departmentId,
     },
   }),
 
+  // 26.5 获取我的业务的本周数据
+  getDptAchiByWeek: (model) => http('get', '/api/achievement/week/manage', {
+    params: {
+      gameName: model.gameName,
+      areaName: model.areaName,
+      ResDepId: model.dtpId,
+    },
+  }),
   // 27.获取我本月的业务数据
   getAchiByMonth: (model) => http('get', '/api/achievement/month', {
     params: {
       gameName: model.gameName,
       areaName: model.areaName,
-      departmentId: model.departmentId,
     },
   }),
 
+  // 27.5 获取我的业务的本月数据
+  getDptAchiByMonth: (model) => http('get', '/api/achievement/month/manage', {
+    params: {
+      gameName: model.gameName,
+      areaName: model.areaName,
+      ResDepId: model.dtpId,
+    },
+  }),
   // 28.获取我全年的业务数据
   getAchiByYear: (model) => http('get', '/api/achievement/month', {
     params: {
       gameName: model.gameName,
       areaName: model.areaName,
-      departmentId: model.departmentId,
     },
   }),
 

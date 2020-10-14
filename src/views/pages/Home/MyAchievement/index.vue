@@ -82,7 +82,7 @@ export default {
       model: {
         gameName: '',
         areaName: '',
-        departmentId: 0,
+        dtpId: '',
         page: 1,
         pageSize: 10,
       },
@@ -276,6 +276,8 @@ export default {
     reset () {
       this.model.gameName = ''
       this.model.areaName = ''
+      this.model.dtpId = ''
+      this.$refs.dtptree.reset()
       this.onRadioChange(this.selTimeRange)
     },
     onRadioChange (val) {
@@ -286,11 +288,13 @@ export default {
       const params = {
         gameName: this.model.gameName,
         areaName: this.model.areaName,
-        departmentId: this.model.departmentId,
+        dtpId: this.model.dtpId,
       }
+      var method = ''
       switch (val) {
         case '今日':
-          this.$api.getAchiByDay(params).then(data => {
+          method = params.dtpId === '' ? 'getAchiByDay' : 'getDptAchiByDay'
+          this.$api[method](params).then(data => {
             const tmp1 = []
             for (const item of data.createUser) {
               tmp1[item.hourKey] = item
@@ -321,12 +325,14 @@ export default {
           })
           break
         case '本周':
-          this.$api.getAchiByWeek(params).then(data => {
+          method = params.dtpId === '' ? 'getAchiByWeek' : 'getDptAchiByWeek'
+          this.$api[method](params).then(data => {
             this.handleData(data, 'dayKey', 7)
           })
           break
         case '本月':
-          this.$api.getAchiByMonth(params).then(data => {
+          method = params.dtpId === '' ? 'getAchiByMonth' : 'getDptAchiByMonth'
+          this.$api[method](params).then(data => {
             this.handleData(data, 'dayKey', 30)
           })
           break
