@@ -37,6 +37,8 @@
 
       el-table.mgt2(:data='User.userList')
         el-table-column(prop='realName', label='姓名')
+          template(slot-scope='{ row }')
+            span(:class="{ 'danger': isLeader(row) }") {{row.realName}}
         el-table-column(prop='dptName', label='所属部门')
         el-table-column(prop='phoneNumber', label='手机号')
         el-table-column(prop='level', label='等级')
@@ -233,13 +235,13 @@ export default {
         })
       }, '您确定要解锁该用户吗?')
     },
-    checkRole (row) {
-      const item = this.Dpt.dptNameList[row.id]
-      if (item && item.userName) {
-        return `${item.userName}(${item.name}负责人)`
-      } else {
-        return row.realName
+    isLeader (row) {
+      for (const key in this.Dpt.dptNameList) {
+        if (this.Dpt.dptNameList[key].userName === row.realName) {
+          return true
+        }
       }
+      return false
     },
   },
 }
