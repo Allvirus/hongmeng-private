@@ -67,9 +67,6 @@ export default {
       const list = state.myDptList.list
       list.splice(0, list.length)
       list.push(data)
-      if (data.name) {
-        state.myDptList.defDptName = data.name
-      }
       state.myDptList.ready = true
     },
   },

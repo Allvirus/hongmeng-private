@@ -18,7 +18,6 @@
             :defProps='myDptList.props',
             nodeKey='id',
             clearable,
-            :deflabel='myDptList.defDptName',
             @change='onDepartChange'
           )
         el-form-item(label='游戏名称:')
