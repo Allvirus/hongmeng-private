@@ -10,24 +10,24 @@
       el-form(label-width='100px')
         el-form-item(label='姓名:', required)
           el-input(
-            v-model='userInfo.realName',
+            v-model='model.realName',
             placeholder='请输入姓名',
             :maxlength='20',
             show-word-limit
           )
         el-form-item(label='入职日期:', required)
-          CommonDatePicker(type='date', v-model='userInfo.hiredate' all)
+          CommonDatePicker(type='date', v-model='model.hiredate' all)
         el-form-item(label='部门:', required)
           tree-selector(
             ref='treesel',
             :data='treeData',
             :defProps='defProps',
             nodeKey='id',
-            :deflabel='userInfo.dptName',
+            :deflabel='model.dptName',
             @change='onDepartChange'
           )
         el-form-item(label='岗位:', required)
-          el-select(v-model='userInfo.job', placeholder='请选择')
+          el-select(v-model='model.job', placeholder='请选择')
             el-option(
               v-for='(item, index) in jobs',
               :key='index',
@@ -35,7 +35,7 @@
               :value='index'
             )
         el-form-item(label='角色:', required)
-          el-select(v-model='userInfo.userRoles', placeholder='请选择' :multiple="true")
+          el-select(v-model='model.userRoles', placeholder='请选择' :multiple="true")
             el-option(
               v-for='item in roles',
               :key='item.id',
@@ -43,19 +43,19 @@
               :value='item.name'
             )
         el-form-item(label='推广员账户:', required)
-          el-input(v-model='userInfo.account', placeholder='请输入推广员账户')
+          el-input(v-model='model.account', placeholder='请输入推广员账户')
         el-form-item(label='工号:')
-          el-input(v-model='userInfo.jobNumber', placeholder='请输入工号')
+          el-input(v-model='model.jobNumber', placeholder='请输入工号')
         el-form-item(label='手机号:')
           el-input(
-            v-model='userInfo.phoneNumber',
+            v-model='model.phoneNumber',
             placeholder='请输入手机号',
             type='tel'
           )
         el-form-item(label='备注:')
-          el-input(v-model='userInfo.remark')
+          el-input(v-model='model.remark')
         //- el-form-item(label='manageDepartmentId:', required)
-        //-   el-input(v-model='userInfo.manageDepartmentId', placeholder='请输入账户' type='tel')
+        //-   el-input(v-model='model.manageDepartmentId', placeholder='请输入账户' type='tel')
     span.dialog-footer(slot='footer')
       el-button.mgl3(type='warning', @click='cancel') 取消
       el-button.mgl3(type='primary', @click='submmit') 提交
@@ -85,7 +85,7 @@ export default {
   },
   data () {
     return {
-      userInfo: {
+      model: {
         realName: '',
         phoneNumber: '',
         account: '',
@@ -116,13 +116,13 @@ export default {
         if (this.userId !== 0) {
           // 编辑
           this.$api.getUserInfoById(this.userId).then(data => {
-            this.userInfo = data
-            this.userInfo.id = this.userId
-            this.userInfo.dptName = this.findDptName(this.userInfo.departmentId, this.treeData)
+            this.model = data
+            this.model.id = this.userId
+            this.model.dptName = this.findDptName(this.model.departmentId, this.treeData)
           })
         } else {
           // 新建
-          this.userInfo.dptName = ''
+          this.model.dptName = ''
         }
         this.getRoles()
       }
@@ -150,38 +150,38 @@ export default {
       return ''
     },
     onDepartChange (newVal) {
-      this.userInfo.departmentId = newVal
+      this.model.departmentId = newVal
     },
     cancel () {
-      for (const key in this.userInfo) {
-        this.userInfo[key] = ''
+      for (const key in this.model) {
+        this.model[key] = ''
       }
       this.$refs.treesel.reset()
       this.$emit('cancel')
     },
     submmit () {
-      this.userInfo.manageDepartmentId = 0
+      this.model.manageDepartmentId = 0
 
       if (!this.checkParams()) {
         return
       }
       if (this.userId !== 0) {
-        this.$api.updateUser(this.userInfo).then(data => {
+        this.$api.updateUser(this.model).then(data => {
           this.$vgo.tip('更新成功', 'success')
-          this.$emit('editchange', this.userInfo.departmentId)
+          this.$emit('editchange', this.model.departmentId)
           this.cancel()
         })
       } else {
-        this.$api.addUser(this.userInfo).then(data => {
+        this.$api.addUser(this.model).then(data => {
           this.$vgo.tip('添加成功', 'success')
-          this.$emit('editchange', this.userInfo.departmentId)
+          this.$emit('editchange', this.model.departmentId)
           this.cancel()
         })
       }
     },
     checkParams () {
       let isOK = true
-      const params = this.userInfo
+      const params = this.model
       if (params.realName === '' ||
           params.departmentId === '' ||
           params.job === '' ||
