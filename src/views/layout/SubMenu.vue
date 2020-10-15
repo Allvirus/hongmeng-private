@@ -2,7 +2,7 @@
 .sub-menu.ff-cn
   .userInfo.pr
     .avatar-bg.pa
-      img.fit-contain.w200.h200(
+      img.fit-contain(
         :src='userInfo.photo !== null ? userInfo.photo : require("@/assets/img/ic_def_avatar.png")'
       )
     .jc-center.mgt3.overflow-hidden
@@ -87,7 +87,7 @@ $avatarSize = 60px
   .userInfo
     width $width
     height $width
-    .avatar-bg
+    .avatar-bg img
       width $width
       height $width
       filter blur(30px)
