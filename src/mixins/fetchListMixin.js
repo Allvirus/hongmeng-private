@@ -89,6 +89,7 @@ export default {
     onDepartChange (dtpId) {
       this.model.resDepId = dtpId
       this.model.userId = ''
+      this.userList.splice(0, this.userList.length)
       this.$api.getDepartMembers(dtpId).then(data => {
         this.userList = data
       })

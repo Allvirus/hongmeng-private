@@ -90,6 +90,7 @@
     )
 </template>
 <script>
+import { mapGetters } from 'vuex'
 export default {
   name: '',
   components: {
@@ -123,6 +124,9 @@ export default {
       },
     }
   },
+  computed: {
+    ...mapGetters(['userInfo']),
+  },
   created: function () {
     this.getDepartTree()
     this.getDptNameList()
@@ -137,8 +141,7 @@ export default {
     },
     getDepartTree () {
       this.Tree.departTree.splice(0, this.Tree.departTree.length)
-      const id = 1
-      this.$api.getDepartById(id).then(res => {
+      this.$api.getDepartById(this.userInfo.resDepartmentId).then(res => {
         this.Tree.departTree.push(res)
         if (this.Tree.curDptId) {
           this.$nextTick(function () {
