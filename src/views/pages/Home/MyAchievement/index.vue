@@ -85,7 +85,7 @@ export default {
         page: 1,
         pageSize: 10,
       },
-      timeRange: ['今日', '本周', '本月'],
+      timeRange: ['今日', '本周', '本月', '全年'],
       selTimeRange: '今日',
       dataSet: {
 
@@ -336,8 +336,9 @@ export default {
           })
           break
         case '全年':
-          this.$api.getAchiByYear(params).then(data => {
-            this.handleData(data, 'dayKey', 12)
+          method = params.dtpId === '' ? 'getAchiByYear' : 'getDptAchiByYear'
+          this.$api[method](params).then(data => {
+            this.handleData(data, 'monthKey', 12)
           })
           break
         default:

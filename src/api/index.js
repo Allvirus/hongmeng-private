@@ -548,11 +548,20 @@ export default {
       ResDepId: model.dtpId,
     },
   }),
-  // 28.获取我全年的业务数据
-  getAchiByYear: (model) => http('get', '/api/achievement/month', {
+  // 27.6 获取我的业务的本年数据
+  getAchiByYear: (model) => http('get', '/api/achievement/year', {
     params: {
       gameName: model.gameName,
       areaName: model.areaName,
+    },
+  }),
+
+  // 27.7 获取部门管理我的业务的本年数据
+  getDptAchiByYear: (model) => http('get', '/api/achievement/year/manage', {
+    params: {
+      gameName: model.gameName,
+      areaName: model.areaName,
+      ResDepId: model.dtpId,
     },
   }),
 
