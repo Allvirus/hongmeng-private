@@ -14,7 +14,10 @@
       el-table-column(prop="ajobIOSExp" label="A岗IOS经验")
       el-table-column(prop="bjobAndroidExp" label="B岗Android经验")
       el-table-column(prop="bjobIOSExp" label="B岗IOS经验")
-      el-table-column(prop="operate" label="操作")
+      el-table-column(prop="ajobRechargeExp" label="A岗充值经验")
+      el-table-column(prop="bjobRechargeExp" label="B岗充值经验")
+      el-table-column(prop="cjobRechargeExp" label="C岗充值经验")
+      el-table-column(prop="operate" label="操作" width="150")
         template(slot-scope="{ row }")
           .ff-rn
             el-button(icon="el-icon-edit-outline" type="text" @click="showEditDlg(true,row)") 编辑
@@ -51,9 +54,14 @@
               el-input-number(v-model="model.bjobAndroidExp")
             el-form-item(label="B岗IOS经验:" required)
               el-input-number(v-model="model.bjobIOSExp")
-          //- .icon
-          //-   el-form-item(label="等级图标" required)
-          //-     el-upload(:on-change='uploadIcon' :avatar='model.levelIcon')
+          .ff-rn
+            el-form-item(label="A岗充值经验:" required)
+              el-input-number(v-model="model.ajobRechargeExp")
+            el-form-item(label="B岗充值经验:" required)
+              el-input-number(v-model="model.bjobRechargeExp")
+          .ff-rn
+            el-form-item(label="C岗充值经验:" required)
+              el-input-number(v-model="model.cjobRechargeExp")
       span.dialog-footer(slot="footer")
         el-button.mgl3(type="warning" @click="cancelEdit") 取消
         el-button.mgl3(type="primary" @click="submmitEdit") 提交
@@ -73,10 +81,12 @@ export default {
         basicSalary: 0,
         bjobAndroidExp: 0,
         bjobIOSExp: 0,
+        ajobRechargeExp: 0,
+        bjobRechargeExp: 0,
+        cjobRechargeExp: 0,
         commission: 0,
         experience: 0,
         level: 0,
-        levelIcon: '',
       },
       levelOptions: [
         '青铜五',
@@ -147,16 +157,6 @@ export default {
           this.getLevelList()
         })
       }
-    },
-    uploadIcon (file) {
-      // this.$refs.VueCropper.openDialog(file.url, (fileRaw) => {
-      //   file.raw = fileRaw
-      //   this.$api.uploadCompanyLogo(file).then(data => {
-      //     this.$vgo.tip('上传成功!', 'success')
-      //     this.model.avatar_url = data[0].file_url
-      //     this.model.avatar = data[0].file_id
-      //   })
-      // })
     },
   },
 }

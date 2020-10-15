@@ -23,6 +23,9 @@
 
     .user-list.mgl2.pd2
       .ff-rn.fs-m.bg-white.pd2.opt-bar
+        .flex-1.ai-center.mgl1
+          el-breadcrumb(separator-class="el-icon-arrow-right")
+            el-breadcrumb-item(v-for="(item,index) in Tree.path") {{item}}
         .flex-1.jc-end
           el-button(
             icon='el-icon-plus',
@@ -116,6 +119,7 @@ export default {
         curNode: {},
         curTreeNode: null, // 当前选择显示的部门人员
         curDptId: '1',
+        path: [],
       },
     }
   },
@@ -140,6 +144,7 @@ export default {
           this.$nextTick(function () {
             // DOM 更新了
             this.setCurrSelecNode(this.Tree.curDptId)
+            this.updatePath()
           })
         }
       })
@@ -166,6 +171,7 @@ export default {
         this.User.userList = data
       })
       this.Tree.ctxMnuShow = false
+      this.updatePath()
     },
     // 取消人员编辑框
     cancelMbEdit () {
@@ -239,6 +245,28 @@ export default {
       for (const key in this.Dpt.dptNameList) {
         if (this.Dpt.dptNameList[key].userName === row.realName) {
           return true
+        }
+      }
+      return false
+    },
+    updatePath () {
+      this.Tree.path.splice(0, this.Tree.path.length)
+      this.getNodePath(this.Tree.departTree[0])
+      this.Tree.path.reverse()
+    },
+    getNodePath (node) {
+      if (node.id === Number(this.Tree.curDptId)) {
+        this.Tree.path.push(node.name)
+        return true
+      } else {
+        if (node.departments.length > 0) {
+          for (const child of node.departments) {
+            const found = this.getNodePath(child)
+            if (found) {
+              this.Tree.path.push(node.name)
+              return found
+            }
+          }
         }
       }
       return false

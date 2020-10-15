@@ -298,7 +298,6 @@ export default {
   // 16.创建等级
   addLevel: (model) => http('post', '/api/level/', {
     data: {
-      levelIcon: model.levelIcon,
       level: model.level,
       experience: model.experience,
       basicSalary: model.basicSalary,
@@ -307,6 +306,9 @@ export default {
       ajobIOSExp: model.ajobIOSExp,
       bjobAndroidExp: model.bjobAndroidExp,
       bjobIOSExp: model.bjobIOSExp,
+      ajobRechargeExp: model.ajobRechargeExp,
+      bjobRechargeExp: model.bjobRechargeExp,
+      cjobRechargeExp: model.cjobRechargeExp,
     },
   }),
 
@@ -316,7 +318,6 @@ export default {
   // 18.根据ID和实体更新等级
   updateLevById: (model) => http('put', `/api/level/${model.id}`, {
     data: {
-      levelIcon: model.levelIcon,
       level: model.level,
       experience: model.experience,
       basicSalary: model.basicSalary,
@@ -325,6 +326,9 @@ export default {
       ajobIOSExp: model.ajobIOSExp,
       bjobAndroidExp: model.bjobAndroidExp,
       bjobIOSExp: model.bjobIOSExp,
+      ajobRechargeExp: model.ajobRechargeExp,
+      bjobRechargeExp: model.bjobRechargeExp,
+      cjobRechargeExp: model.cjobRechargeExp,
     },
   }),
   // 19.获取游戏注册分页信息
