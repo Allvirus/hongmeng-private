@@ -1,6 +1,6 @@
 <template lang='pug'>
 .MyOrders
-  .fs-m.ai-center.bg-white.pd2
+  .fs-m.ai-center.bg-white.pdx2.pdt2
     el-form.ff-rw(label-width='100px')
       el-form-item(label='部门:', v-if='userInfo.isLeader')
         tree-selector.winput(

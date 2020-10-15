@@ -1,7 +1,7 @@
 <template lang='pug'>
 .MyRoles
-  .ff-rn.fs-m.ai-center.mgt2.bg-white.pd2
-    el-form.ff-rw.bg-white.pd2.ai-center(label-width='100px')
+  .ff-rn.fs-m.ai-center.mgt2.bg-white.pdx2.pdt2
+    el-form.ff-rw.ai-center(label-width='100px')
       el-form-item(label='部门:', v-if='userInfo.isLeader')
         tree-selector.winput(
           ref='dtptree',

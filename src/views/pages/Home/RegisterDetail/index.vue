@@ -1,6 +1,6 @@
 <template lang='pug'>
 .MyRegister
-  el-form.ff-rw.bg-white.pd2.ai-center(label-width='100px')
+  el-form.ff-rw.bg-white.pdx2.pdt2.ai-center(label-width='100px')
     el-form-item(label='部门:', v-if='userInfo.isLeader')
       tree-selector.winput(
         ref='dtptree',
