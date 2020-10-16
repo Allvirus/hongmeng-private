@@ -15,7 +15,8 @@
       span.badge.flex-center(v-else) {{ index + 1 }}
       img.avatar.mgl2(:src='testUrl', alt='alt')
       span.mgl1 {{ item["account"] }}
-      span.flex-1.jc-end.mgr3 {{ item[rankingKey] }}
+      span.flex-1.jc-end.mgr3(v-if='toFixed') {{ item[rankingKey] | toFixed}}
+      span.flex-1.jc-end.mgr3(v-else) {{ item[rankingKey]}}
     .flex-center(v-if='data.length === 0')
       span 暂无数据
   .footer.h50.full.pa(:style='{ backgroundColor: themeList[theme].btbg }')
@@ -55,6 +56,10 @@ export default {
     theme: {
       type: String,
       default: 'darkblue',
+    },
+    toFixed: {
+      type: Boolean,
+      default: false,
     },
   },
   data () {

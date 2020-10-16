@@ -3,7 +3,7 @@
   .condition
     .bg-white.pd2
       .btn-group
-        el-radio-group(v-model='selLabel', @change='getRank')
+        el-radio-group(v-model='activeLabel', @change='getRank')
           el-radio-button(
             v-for='(item, index) in timeRange',
             :key='index',
@@ -12,25 +12,52 @@
           )
     .ff-rn.jc-around.mgt3
       ranking-list(
-        :data='rankList.downloadRank',
-        mainTitle='下载排行榜',
-        subTitle='下载量'
-        theme="blue"
-        rankingKey="count"
+        :data='rankList.ajobMoneyRank',
+        mainTitle='A岗充值排行榜',
+        subTitle='充值金额(元)'
+        theme="orange"
+        :toFixed='true'
+        rankingKey="totlaMoney"
       )
       ranking-list(
-        :data='rankList.registerRank',
-        mainTitle='注册排行榜',
-        subTitle='注册数量'
+        :data='rankList.bjobMoneyRank',
+        mainTitle='B岗充值排行榜',
+        subTitle='充值金额(元)'
+        theme="green"
+        :toFixed='true'
+        rankingKey="totlaMoney"
+      )
+      ranking-list(
+        :data='rankList.cjobMoneyRank',
+        mainTitle='C岗充值排行榜',
+        subTitle='充值金额(元)'
+        theme="blue"
+        :toFixed='true'
+        rankingKey="totlaMoney"
+      )
+
+    .ff-rn.jc-around.mgt4
+      ranking-list(
+        :data='rankList.ajobRegRank',
+        mainTitle='A岗注册排行榜',
+        subTitle='注册人数'
+        theme="orange"
+        rankingKey="count"
+      )
+
+      ranking-list(
+        :data='rankList.bjobRegRank',
+        mainTitle='B岗注册排行榜',
+        subTitle='注册人数'
         theme="green"
         rankingKey="count"
       )
       ranking-list(
-        :data='rankList.moneyRank',
-        mainTitle='充值排行榜',
-        subTitle='充值金额(元)'
-        theme="orange"
-        rankingKey="totlaMoney"
+        :data='rankList.cjobRegRank',
+        mainTitle='C岗注册排行榜',
+        subTitle='注册人数'
+        theme="blue"
+        rankingKey="count"
       )
 
 </template>
@@ -69,7 +96,7 @@ export default {
           method: 'getRankLastMonth',
         },
       },
-      selLabel: '今日',
+      activeLabel: '今日',
       rankList: [],
     }
   },
@@ -80,22 +107,9 @@ export default {
   },
   methods: {
     getRank () {
-      this.$api[this.timeRange[this.selLabel].method]().then(data => {
+      this.$api[this.timeRange[this.activeLabel].method]().then(data => {
         this.rankList = data
       })
-    },
-    fillFakeData () {
-      let count = 10
-      while (count-- > 0) {
-        const item = {
-          account: 'lgy0808',
-          count: count * 10,
-          avatarUrl: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1602244834651&di=8a64567985c8b88137bbf1a63b5caba6&imgtype=0&src=http%3A%2F%2F5b0988e595225.cdn.sohucs.com%2Fimages%2F20180313%2Fab29d548f2a54e2c81663261d4a11af0.jpeg',
-        }
-        this.rankList.downloadRank.push(item)
-        this.rankList.moneyRank.push(item)
-        this.rankList.registerRank.push(item)
-      }
     },
   },
 }
