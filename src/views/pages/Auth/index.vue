@@ -85,7 +85,7 @@ header
 
 .form-layout
   position absolute
-  width 410px
+  width 380px
   border 1px solid #e0e0e0
   right 150px
   padding 15px 30px

@@ -18,6 +18,7 @@
             :defProps='myDptList.props',
             nodeKey='id',
             clearable,
+            :deflabel='myDptList.list[0].name',
             @change='onDepartChange'
           )
         el-form-item(label='游戏名称:')
@@ -142,6 +143,7 @@ export default {
     ...mapGetters(['areaList', 'gameList', 'myDptList', 'userInfo']),
   },
   created () {
+    this.model.dtpId = this.myDptList.list[0].id
     this.search()
   },
   methods: {
@@ -275,8 +277,8 @@ export default {
     reset () {
       this.model.gameName = ''
       this.model.areaName = ''
-      this.model.dtpId = ''
-      this.$refs.dtptree.reset()
+      this.model.dtpId = this.myDptList.list[0].id
+      this.$refs.dtptree.reset(this.myDptList.list[0].name)
       this.onRadioChange(this.selTimeRange)
     },
     onRadioChange (val) {
