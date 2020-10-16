@@ -31,8 +31,8 @@
           trigger='hover',
         )
           template
-            .ff-cn.jc-center.pd1
-              p.jc-center {{item.gameContent.name}}
+            .ff-cn.ai-center.jc-center
+              p {{item.gameContent.name}}
               img.w150.h150.mgt1(:src="$utils.getQrcodeUrl(item.linkUrl)")
           el-button.flex-center.mgl4(
             slot='reference',

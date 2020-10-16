@@ -14,12 +14,12 @@
       el-table-column(prop="ajobIOSExp" label="A岗IOS经验值")
       el-table-column(prop="bjobAndroidExp" label="B岗Android经验值")
       el-table-column(prop="bjobIOSExp" label="B岗IOS经验值")
-      el-table-column(prop="ajobRechargeExp" label="A岗充值经验值")
-      el-table-column(prop="bjobRechargeExp" label="B岗充值经验值")
-      el-table-column(prop="cjobRechargeExp" label="C岗充值经验值")
-      el-table-column(prop="ajobRechargeExpAfter" label="A岗充值比经验值")
-      el-table-column(prop="bjobRechargeExpAfter" label="B岗充值比经验值")
-      el-table-column(prop="cjobRechargeExpAfter" label="C岗充值比经验值")
+      el-table-column(prop="ajobRechargeExp" label="A岗充值比经验(新服)")
+      el-table-column(prop="ajobRechargeExpAfter" label="A岗充值比经验(后续)")
+      el-table-column(prop="bjobRechargeExp" label="B岗充值比经验(新服)")
+      el-table-column(prop="bjobRechargeExpAfter" label="B岗充值比经验(后续)")
+      el-table-column(prop="cjobRechargeExp" label="C岗充值比经验(新服)")
+      el-table-column(prop="cjobRechargeExpAfter" label="C岗充值比经验(后续)")
       el-table-column(prop="operate" label="操作" width="150")
         template(slot-scope="{ row }")
           .ff-rn
@@ -57,20 +57,26 @@
               el-input-number(v-model="model.bjobAndroidExp")
             el-form-item(label="B岗IOS经验值:" required)
               el-input-number(v-model="model.bjobIOSExp")
-          .ff-rn
-            el-form-item(label="A岗充值经验值:" required)
+          .ff-rn.w200.jc-end.pdr2
+            label A岗充值比经验值:
+          .ff-rn.mgt2
+            el-form-item(label="新服:" required)
               el-input-number(v-model="model.ajobRechargeExp")
-            el-form-item(label="A岗充值比经验值:" required)
+            el-form-item(label="后续:" required)
               el-input-number(v-model="model.ajobRechargeExpAfter")
-          .ff-rn
-            el-form-item(label="B岗充值经验值:" required)
+          .ff-rn.w200.jc-end.pdr2
+            label B岗充值比经验值:
+          .ff-rn.mgt2
+            el-form-item(label="新服:" required)
               el-input-number(v-model="model.bjobRechargeExp")
-            el-form-item(label="B岗充值比经验值:" required)
+            el-form-item(label="后续:" required)
               el-input-number(v-model="model.bjobRechargeExpAfter")
-          .ff-rn
-            el-form-item(label="C岗充值经验值:" required)
+          .ff-rn.w200.jc-end.pdr2
+            label C岗充值比经验值:
+          .ff-rn.mgt2
+            el-form-item(label="新服:" required)
               el-input-number(v-model="model.cjobRechargeExp")
-            el-form-item(label="C岗充值比经验值:" required)
+            el-form-item(label="后续:" required)
               el-input-number(v-model="model.cjobRechargeExpAfter")
       span.dialog-footer(slot="footer")
         el-button.mgl3(type="warning" @click="cancelEdit") 取消
