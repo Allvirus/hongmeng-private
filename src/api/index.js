@@ -632,4 +632,6 @@ export default {
   getTop10: () => http('get', 'api/player/top10'),
 
   // 38. 图片上传通用接口（不启用权限认证）
+  // 39.获取公告接口
+  getNotices: () => http('get', 'api/notice/'),
 }

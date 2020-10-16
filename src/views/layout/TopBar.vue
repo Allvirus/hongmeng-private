@@ -51,7 +51,8 @@
       el-tab-pane(label='首页', name='HomeMyAchievement')
       el-tab-pane(label='排行', name='Ranking')
     .notice.ai-center.omit.w400
-      scroll-notice(:data='noticeList', :rows='1')
+      //- scroll-notice(:data='dptNotices', :rows='1')
+      p(@click="showDptNotice") {{dptNotices}}
   .edit-pswd
     el-dialog(
       title='修改密码',
@@ -91,6 +92,7 @@
 <script>
 import { mapGetters } from 'vuex'
 import { EUIRule } from '@/plugins/utils'
+import { MessageBox } from 'element-ui'
 export default {
   name: 'TopBar',
   data () {
@@ -110,6 +112,7 @@ export default {
       },
       activeTab: 'HomeMyAchievement',
       noticeList: [],
+      dptNotices: '',
       editPswdDlg: false,
       model: {
         oldpswd: '',
@@ -137,6 +140,10 @@ export default {
           item.id = i
           this.noticeList.push(item)
         }
+      })
+
+      this.$api.getNotices().then(data => {
+        this.dptNotices = data
       })
     },
     exit () {
@@ -167,6 +174,13 @@ export default {
       for (const key in this.model) {
         this.model[key] = ''
       }
+    },
+    showDptNotice () {
+      MessageBox.confirm(this.dptNotices, '公告', {
+        confirmButtonText: '确定',
+        type: 'info',
+        showCancelButton: false,
+      })
     },
   },
 }
