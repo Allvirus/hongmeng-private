@@ -1,106 +1,93 @@
 <template lang='pug'>
-.RechargePlayer
-  .fs-m.ai-center.bg-white.pdx2.pdt2
-    el-form.ff-rw.mgt2.ai-center(label-width='100px')
-      el-form-item(label='部门:' label-width='60px')
+.MyRoles
+  .ff-rn.fs-m.ai-center.mgt2.bg-white.pdx2.pdt2
+    el-form.ff-rw.ai-center(label-width='100px')
+      el-form-item(label='部门:', v-if='userInfo.isLeader')
         tree-selector.winput(
+          ref='dtptree',
           :data='myDptList.list',
           :defProps='myDptList.props',
           nodeKey='id',
           clearable,
           @change='onDepartChange'
         )
-      el-form-item(label='充值玩家:' label-width='90px')
-        el-input.winput(v-model='model.userAccount')
-      el-form-item(label='游戏角色:' label-width='90px')
-        el-input.winput(v-model='model.roleName')
-      el-form-item(label='游戏名称:' label-width='90px')
-        auto-complete(v-model='model.gameName', :data='gameList')
-      el-form-item(label='区服:' label-width='60px')
-        auto-complete(v-model='model.areaName', :data='areaList')
-      el-form-item(label='时间:' label-width='60px')
-        CommonDatePicker.winput(
+      el-form-item(label='员工:' v-if='userInfo.isLeader')
+        el-select.winput(v-model='model.userId', placeholder='请选择', clearable)
+          el-option(
+            v-for='item in userList',
+            :key='item.id',
+            :label='item.realName',
+            :value='item.id'
+          )
+      el-form-item(label='玩家账号:')
+        el-input.winput(v-model='model.UserAccount')
+      el-form-item(label='游戏名称:')
+        auto-complete(v-model='model.GameName', :data='gameList')
+      el-form-item(label='游戏角色:')
+        el-input.winput(v-model='model.RoleName')
+      el-form-item(label='区服:')
+        auto-complete(v-model='model.AreaName', :data='areaList')
+      el-form-item(label='创建时间:')
+        CommonDatePicker.w300(
           :start.sync='model.startTime',
           :end.sync='model.endTime',
-          @change='search()',
           all
         )
-      el-form-item(label-width='0px')
-        el-button.mgl3(
-          icon='el-icon-search',
-          type='primary',
-          @click='getPlRchgRecord'
-        ) 搜索
+        el-button.mgl3(icon='el-icon-search', type='primary', @click='search') 搜索
         el-button.mgl2(
           icon='el-icon-refresh-right',
           type='primary',
-          @click='reset'
+          @click='resetPageMixin'
         ) 重置
 
-  el-table.mgy2.bg-white(:data='playerList')
-    el-table-column(prop='userCode', label='玩家ID')
-    el-table-column(prop='gameOrderID', label='消费订单号')
-    el-table-column(prop='totalPrice', label='支付金额(元)')
-      template(slot-scope='{ row }') {{ row.totalPrice | toFixed }}
+  el-table.mgy2.bg-white.pd2(:data='listMixin.list')
+    el-table-column(prop='userAccount', label='玩家账号')
     el-table-column(prop='gameName', label='游戏名称')
     el-table-column(prop='areaName', label='区服')
     el-table-column(prop='roleName', label='游戏角色')
-    el-table-column(prop='payDate', label='支付时间')
-      template(slot-scope='{ row }') {{ row.payDate | dateFormat }}
+    el-table-column(prop='rechargeCount', label='充值订单数')
+    el-table-column(prop='totalMoney', label='充值总额(元)')
+      template(slot-scope='{ row }') {{ row.totalMoney | toFixed }}
+    el-table-column(prop='ajob', label='A岗')
+    el-table-column(prop='bjob', label='B岗')
+    el-table-column(prop='cjob', label='C岗')
   el-pagination.margin-spacing(
-    :total='playerList.length',
+    :total='listMixin.count',
     :page-size.sync='model.pageSize',
     :current-page.sync='model.page',
-    @current-change='getPlRchgRecord'
+    @current-change='getListMixin'
   )
 </template>
 <script>
 import { mapGetters } from 'vuex'
+import fetchListMixin from '@/mixins/fetchListMixin'
 export default {
   name: 'RechargePlayer',
+  mixins: [fetchListMixin],
   data () {
     return {
+      listApiForMixin: 'getRechInfo',
+      dtpApi: 'getDptRechInfo',
+      myApi: 'getRechInfo',
       model: {
-        roleName: '',
-        gameName: '',
-        areaName: '',
+        UserAccount: '',
         startTime: '',
         endTime: '',
-        userAccount: '',
+        Account: '',
+        GameName: '',
+        RoleName: '',
+        AreaName: '',
+        AreaCode: '',
+        TotalPrice: '',
+        userId: '',
+        resDepId: '',
         page: 1,
         pageSize: 10,
       },
-      playerList: [],
     }
   },
   computed: {
-    ...mapGetters(['areaList', 'gameList', 'myDptList']),
-  },
-  methods: {
-    getPlRchgRecord () {
-      if (this.model.userAccount === '') {
-        this.$vgo.tip('请选择玩家', 'warning')
-        return
-      }
-      this.$utils.autoFillDateTime(this.model)
-      const params = JSON.parse(JSON.stringify(this.model))
-      this.$utils.filterNull(params)
-      this.$api.getPlRchgRecord(params).then(res => {
-        this.playerList = res.list
-      })
-    },
-    reset () {
-      for (const key in this.model) {
-        if (key !== 'userAccount') {
-          this.model[key] = ''
-        }
-      }
-      this.model.page = 1
-      this.model.pageSize = 10
-      this.getPlRchgRecord()
-    },
-    onDepartChange (dtpId) {
-    },
+    ...mapGetters(['areaList', 'gameList', 'myDptList', 'userInfo']),
   },
 }
 </script>

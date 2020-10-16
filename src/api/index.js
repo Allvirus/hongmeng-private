@@ -470,26 +470,47 @@ export default {
     })(),
   }),
   // 22.获取充值玩家信息和订单统计分页数据
-  getRechPlayer: (model) => http('get', '/api/player/recharge', {
-    params: {
-      userAccount: model.userAccount,
-      page: model.page,
-      pageSize: model.pageSize,
-    },
+  getRechInfo: (model) => http('get', '/api/player/recharge', {
+    params: (() => {
+      const p = {
+        UserAccount: model.UserAccount,
+        startTime: model.startTime,
+        endTime: model.endTime,
+        Account: model.Account,
+        GameName: model.GameName,
+        RoleName: model.RoleName,
+        AreaName: model.AreaName,
+        AreaCode: model.AreaCode,
+        TotalPrice: model.TotalPrice,
+        page: model.page,
+        pageSize: model.pageSize,
+      }
+      utils.filterNull(p)
+      return p
+    })(),
   }),
   // 23.获取充值玩家信息充值记录分页
-  getPlRchgRecord: (model) => http('get', `/api/player/recharge/${model.userAccount}`, {
-    params: {
-      userAccount: model.userAccount,
-      page: model.page,
-      pageSize: model.pageSize,
-      gameName: model.gameName,
-      areaName: model.areaName,
-      startTime: model.startTime,
-      endTime: model.endTime,
-    },
+  getDptRechInfo: (model) => http('get', 'api/player/recharge/manage', {
+    params: (() => {
+      const p = {
+        UserAccount: model.UserAccount,
+        startTime: model.startTime,
+        endTime: model.endTime,
+        Account: model.Account,
+        GameName: model.GameName,
+        RoleName: model.RoleName,
+        AreaName: model.AreaName,
+        AreaCode: model.AreaCode,
+        TotalPrice: model.TotalPrice,
+        userId: model.userId,
+        resDepId: model.resDepId,
+        page: model.page,
+        pageSize: model.pageSize,
+      }
+      utils.filterNull(p)
+      return p
+    })(),
   }),
-
   // 24.获取我的业务的所有玩家订单分页数据（自动区分ABC岗）
   getAchiData: (model) => http('get', '/api/achievement', {
     params: {
