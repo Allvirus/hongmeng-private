@@ -89,27 +89,22 @@ const utils = {
     const reg = /^(0|86|17951)?(13[0-9]|15[012356789]|166|17[3678]|1(8|9)[0-9]|14[57])[0-9]{8}$/
     return reg.test(phone)
   },
-
   getQrcodeUrl (url = location.href) {
-    return new Promise((resolve) => {
-      if (!this.QRCode) {
-        this.QRCode = new QRCode(document.createElement('div'), {
-          text: url,
-          width: 200,
-          height: 200,
-          // colorDark: '#ffffff',
-          // colorLight: '#000000',
-          correctLevel: QRCode.CorrectLevel.H,
-        })
-      } else {
-        this.QRCode.makeCode(url)
-      }
-      this.QRCode._el.querySelector('img').onload = function () {
-        resolve(this.src)
-      }
-    })
+    if (!this.QRCode) {
+      this.QRCode = new QRCode(document.createElement('div'), {
+        text: url,
+        width: 200,
+        height: 200,
+        // colorDark: '#ffffff',
+        // colorLight: '#000000',
+        correctLevel: QRCode.CorrectLevel.H,
+      })
+    } else {
+      this.QRCode.makeCode(url)
+    }
+    const canvas = this.QRCode._el.querySelector('canvas')
+    return canvas.toDataURL()
   },
-
   /**
    *获取promise状态(用于加载状态)
   *

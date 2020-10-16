@@ -26,7 +26,7 @@
     //- 编辑、新增对话框
     el-dialog(:title="model.isEdit?'编辑':'新增'"
       @close="cancelEdit"
-      :visible.sync="editDlgVisiable" width="45%")
+      :visible.sync="editDlgVisiable" width="900px")
       .flex-center
         el-form.full(label-width="200px")
           .ff-rn

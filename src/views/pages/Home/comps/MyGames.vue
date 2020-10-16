@@ -25,11 +25,20 @@
         p.mgb1 {{ item.gameContent.name }}
         span {{ item.userName }}
       .ff-cn.flex-1.ai-end.mgr2
-        el-button.flex-center.mgl4(
-          type='primary',
-          round,
-          @click='copyLink(item)'
-        ) 复制链接
+        el-popover(
+          placement='left',
+          width='200',
+          trigger='hover',
+        )
+          template
+            .jc-center.pd1
+              img.w150.h150(:src="$utils.getQrcodeUrl(item.linkUrl)")
+          el-button.flex-center.mgl4(
+            slot='reference',
+            type='primary',
+            round,
+            @click='copyLink(item)'
+          ) 复制链接
         el-button.flex-center.mgl4.mgt1(
           type='danger',
           round,
@@ -41,7 +50,7 @@
     title='添加游戏',
     @close='cancel',
     :visible.sync='dlgVisiable',
-    width='30%'
+    width='600px'
   )
     .flex-center
       el-form(label-width='100px')

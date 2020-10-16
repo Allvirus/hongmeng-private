@@ -3,7 +3,7 @@
   el-dialog(
     :title='isEdit ? "编辑" : "新增"',
     :visible.sync='isShow',
-    width='35%',
+    width='600px',
     @close='cancel'
   )
     .flex-center

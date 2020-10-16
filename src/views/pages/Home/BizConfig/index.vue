@@ -32,7 +32,7 @@
     //- 编辑、新增对话框
     el-dialog(:title="cfgInfo.isEdit?'编辑':'新增'"
       @close="cancelEdit"
-      :visible.sync="editDlgVisiable" width="35%")
+      :visible.sync="editDlgVisiable" width="600px")
       .flex-center
         el-form(label-width="100px")
           el-form-item(label="部门名称:" required)

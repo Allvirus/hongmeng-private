@@ -7,7 +7,7 @@
         width='150',
         trigger='hover',
       )
-        template(slot-scope='{ row }')
+        template()
           ul.mgl2
             li.hand.h30.full.ai-center.hover
               el-upload(
@@ -56,7 +56,7 @@
     el-dialog(
       title='修改密码',
       :visible.sync='editPswdDlg',
-      width='35%',
+      width='600px',
       @close='cancelPswdEdit'
     )
       .flex-center
