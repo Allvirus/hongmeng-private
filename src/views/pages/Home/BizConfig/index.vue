@@ -108,6 +108,7 @@ export default {
   },
   created: function () {
     this.loadOptions()
+    console.log('bizCofing', this.userInfo)
   },
   methods: {
     search () {

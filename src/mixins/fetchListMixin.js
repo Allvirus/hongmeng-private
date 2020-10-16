@@ -33,7 +33,8 @@ export default {
     !this.customExeListApiForMixin && this.getListMixin()
 
     // 获取默认部门人员列表
-    if (this.userInfo.isLeader) {
+
+    if (this.userInfo && this.myDptList && this.userInfo.isLeader) {
       this.onDepartChange(this.myDptList.list[0].id)
     }
   },
@@ -70,7 +71,7 @@ export default {
       this.listApiForMixin = this.myApi
       this.model = JSON.parse(JSON.stringify(this.modelCopyMixin))
       this.model.resDepId = this.myDptList.list[0].id
-      if (this.userInfo.isLeader) {
+      if (this.userInfo && this.userInfo.isLeader) {
         this.listApiForMixin = this.dtpApi
         this.userList.splice(0, this.userList.length)
         this.$refs.dtptree.reset(this.myDptList.list[0].name)
