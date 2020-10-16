@@ -1,26 +1,16 @@
 <template lang='pug'>
-div
-  header
-    .logo.pr
-      img.vertical-center(src='@/assets/img/logo.png', style='height: 35px;')
-    //- ul.menu
-    //-   li.item
-    //-     a(href='/login/common') 登录中心
-    //-   li.item
-    //-     a(href='/') 官网首页
-    //-   li.item
-    //-     a(href='/') 文档中心
-  div(style='position: fixed;top: 60px;left: 0;bottom: 0;right: 0;')
-    img(
-      style='position: absolute;top: 50%;left: 50%;transform: translate(-50%,-50%);height: 100%; min-width: 100%',
-      src='@/assets/img/login_bg.jpg'
-    )
-    .auth-layout
-      .form-layout.page-content
-        h2.mgy5.tac {{ $route.name === "Login" ? "用户登录" : "用户注册" }}
-        component(:is='$route.name', ref='form')
+  div
+    div(style='position: fixed;top: 0px;left: 0;bottom: 0;right: 0;')
+      img(
+        style='position: absolute;top: 50%;left: 50%;transform: translate(-50%,-50%);height: 100%; min-width: 100%',
+        src='@/assets/img/login_bg.jpg'
+      )
+      .auth-layout
+        .form-layout.page-content.border-radius
+          h2.mgy5.tac {{ $route.name === "Login" ? "用户登录" : "用户注册" }}
+          component(:is='$route.name', ref='form')
 
-  .copyright {{ $WD.$globalconfig.COPYRIGHT }}
+    .copyright {{ $WD.$globalconfig.COPYRIGHT }}
 </template>
 <script>
 export default {
@@ -89,7 +79,6 @@ header
   transform translateY(-50%)
 
 .auth-layout
-  width 1200px
   margin 0 auto
   height 100%
   position relative
@@ -98,9 +87,9 @@ header
   position absolute
   width 410px
   border 1px solid #e0e0e0
-  right 0
+  right 150px
   padding 15px 30px
-  top 50%
+  top 45%
   transform translateY(-50%)
 
 .switch-login-type

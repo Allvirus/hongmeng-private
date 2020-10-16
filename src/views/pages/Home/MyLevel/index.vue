@@ -46,6 +46,12 @@
             el-table-column(prop="custom" label="客流岗")
             el-table-column(prop="guide" label="引导岗")
             el-table-column(prop="accompany" label="陪玩岗")
+    .tips
+      p 一、经验值规则
+      p 1、玩家充值是增加经验值的主要来源，暂定为1元等于1点经验值（当天新服），后续第天以后的充值为2元等于1点经验值（具体按等级制度计算）。
+      p 2、新创角玩家（注册新设备，新IP）暂定为增加1个ISO等于50点经验值，安卓等于30点经验值（具体按等级制度计算）。
+      p 3、培训新员工期间，新员工产生的经验值算师父的，新员工试用期满足条件后单独开后台，新员工转正后师父增加经验值500点。
+      p 4、有对公司做出特殊贡献，上级确认后可增加经验值。
 </template>
 <script>
 import { mapGetters } from 'vuex'
@@ -56,7 +62,7 @@ export default {
       commission: [
         {
           job: '提成起点',
-          custom: '当月总流水≥15000',
+          custom: '当月总流水≥10000',
           guide: '当月总流水≥40000',
           accompany: '当月总流水≥40000',
         },
@@ -112,4 +118,6 @@ export default {
   .exp-box
     width 200px
     height 100px
+  .tips p
+    line-height 25px
 </style>

@@ -31,8 +31,9 @@
           trigger='hover',
         )
           template
-            .jc-center.pd1
-              img.w150.h150(:src="$utils.getQrcodeUrl(item.linkUrl)")
+            .ff-cn.jc-center.pd1
+              p.jc-center {{item.gameContent.name}}
+              img.w150.h150.mgt1(:src="$utils.getQrcodeUrl(item.linkUrl)")
           el-button.flex-center.mgl4(
             slot='reference',
             type='primary',
