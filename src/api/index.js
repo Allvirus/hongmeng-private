@@ -642,4 +642,25 @@ export default {
   // 38. 图片上传通用接口（不启用权限认证）
   // 39.获取公告接口
   getNotices: () => http('get', 'api/notice/'),
+  // 40.获取经验值明细分页接口
+  getExpList: (model) => http('get', '/api/experience/', {
+    params: (() => {
+      const p = {
+        startTime: model.startTime,
+        endTime: model.endTime,
+        UserId: model.UserId,
+        Origin: model.Origin,
+        ExpChange: model.ExpChange,
+        page: model.page,
+        pageSize: model.pageSize,
+      }
+      utils.filterNull(p)
+      return p
+    })(),
+  }),
+  // 41.获取单个经验值明细接口
+
+  // 42.创建经验值明细接口
+
+  // 43.删除经验值明细接口
 }

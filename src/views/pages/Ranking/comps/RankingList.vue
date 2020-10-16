@@ -1,8 +1,8 @@
 <template lang='pug'>
-.rank.h650.ff-cn.pr
+.rank.h650.ff-cn.pr.flex-1.mgx1
   .top-bg.pr
     img.pa.tbimg(:src='themeList[theme].tpbg')
-    h1.pa.fc-w3 {{ mainTitle }}
+    h2.pa.fc-w3 {{ mainTitle }}
     .sub-title.pa.fs-s
       span {{ subTitle }}
   .content.bg-white.pa.full.overflow-auto.pr
@@ -101,8 +101,9 @@ export default {
 ::-webkit-scrollbar
   display none /* Chrome Safari */
 
+$width = 300px
+
 .rank
-  width 380px
   background-color #eeeeee
   .avatar
     width 35px
@@ -110,12 +111,14 @@ export default {
     border-radius 50%
   .top-bg
     .tbimg
+      width 100%
       left 0px
       top 0px
-    h1
+    h2
       top 30px
       left 50%
       transform translateX(-50%)
+      white-space nowrap
   .content
     width calc(100% - 20px)
     height calc(100% - 150px)

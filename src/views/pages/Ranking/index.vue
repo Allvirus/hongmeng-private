@@ -36,7 +36,6 @@
         rankingKey="totlaMoney"
       )
 
-    .ff-rn.jc-around.mgt4
       ranking-list(
         :data='rankList.ajobRegRank',
         mainTitle='A岗注册排行榜',
