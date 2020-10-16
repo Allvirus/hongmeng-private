@@ -26,7 +26,9 @@
         .flex-1.ai-center.mgl1
           el-breadcrumb(separator-class="el-icon-arrow-right")
             el-breadcrumb-item(v-for="(item,index) in Tree.path") {{item}}
-        .flex-1.jc-end
+        .flex-1.jc-end.ai-center
+          span.mgr2 是否只查询在职人员
+          el-switch.mgr2(v-model="User.Resigned")
           el-button(
             icon='el-icon-plus',
             type='primary',
@@ -49,7 +51,13 @@
         el-table-column(prop='job', label='岗位')
           template(slot-scope='{ row }') {{ row.job | formatJob }}
         el-table-column(prop='experiences', label='经验值')
-        el-table-column(prop='userStatus', label='用户状态')
+        el-table-column(prop='workingStatus', label='在职状态')
+          template(slot-scope='{ row }')
+            .ff-rn.danger(v-if='!row.workingStatus')
+              span 已离职
+            .ff-rn(v-else)
+              span 在职
+        el-table-column(prop='userStatus', label='锁定状态')
           template(slot-scope='{ row }')
             .ff-rn.danger(v-if='!row.lockoutEnabled')
               span 已锁定
@@ -107,6 +115,7 @@ export default {
         newUserDlg: false, // 人员编辑对话框是否可见
         userId: 0, // 编辑的人员信息
         userList: [], // 部门人员列表
+        Resigned: true, // 是否在职
       },
       Dpt: {
         newDepartDlg: false, // 部门编辑对话框是否可见
@@ -155,7 +164,7 @@ export default {
     setCurrSelecNode (departMentId) {
       this.Tree.curDptId = departMentId
       this.$refs.tree.setCurrentKey(departMentId)
-      this.$api.getDepartMembers(departMentId).then(data => {
+      this.$api.getDepartMembers(departMentId, this.User.Resigned).then(data => {
         // 增加部门字段
         for (const item of data) {
           item.dptName = this.Dpt.dptNameList[item.departmentId].name
@@ -166,7 +175,7 @@ export default {
     handleNodeClick (data) {
       this.Tree.curTreeNode = data
       this.Tree.curDptId = data.id
-      this.$api.getDepartMembers(data.id).then(data => {
+      this.$api.getDepartMembers(data.id, this.User.Resigned).then(data => {
         // 增加部门字段
         for (const item of data) {
           item.dptName = this.Dpt.dptNameList[item.departmentId].name

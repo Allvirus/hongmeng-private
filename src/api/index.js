@@ -149,6 +149,7 @@ export default {
       hiredate: model.hiredate,
       remark: model.remark,
       jobNumber: model.jobNumber,
+      workingStatus: model.workingStatus,
       manageDepartmentId: model.manageDepartmentId,
     },
   }),
@@ -166,7 +167,7 @@ export default {
   getCJobs: () => http('get', 'api/user/c'),
 
   // 4.8 根据部门ID获取用户信息
-  getDepartMembers: (departmentId) => http('get', `api/user/department/${departmentId}`),
+  getDepartMembers: (departmentId, Resigned = true) => http('get', `api/user/department/${departmentId}?Resigned=${Resigned}`),
 
   // 4.9 根据用户ID修改用户信息
   updateUser: (model) => http('put', `api/user/${model.id}`, {
@@ -179,6 +180,7 @@ export default {
       userRoles: model.userRoles,
       hiredate: model.hiredate,
       remark: model.remark,
+      workingStatus: model.workingStatus,
       jobNumber: model.jobNumber,
       manageDepartmentId: model.manageDepartmentId,
     },

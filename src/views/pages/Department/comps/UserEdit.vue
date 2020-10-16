@@ -44,6 +44,8 @@
             )
         el-form-item(label='推广员账户:', required)
           el-input(v-model='model.account', placeholder='请输入推广员账户')
+        el-form-item(label='在职状态:', required)
+          el-switch.jc-end(v-model="model.workingStatus" :active-text="model.workingStatus?'在职':'离职'")
         el-form-item(label='工号:')
           el-input(v-model='model.jobNumber', placeholder='请输入工号')
         el-form-item(label='手机号:')
@@ -97,6 +99,7 @@ export default {
         jobNumber: '',
         manageDepartmentId: '',
         dptName: '',
+        workingStatus: true,
       },
       jobs: ['A岗', 'B岗', 'C岗', '后勤'],
       roles: [],
@@ -156,6 +159,7 @@ export default {
       for (const key in this.model) {
         this.model[key] = ''
       }
+      this.model.workingStatus = true
       this.$refs.treesel.reset()
       this.$emit('cancel')
     },
