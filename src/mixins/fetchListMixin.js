@@ -31,6 +31,11 @@ export default {
       this.model = JSON.parse(localStorage.getItem('model')) || this.model
     }
     !this.customExeListApiForMixin && this.getListMixin()
+
+    // 获取默认部门人员列表
+    if (this.userInfo.isLeader) {
+      this.onDepartChange(this.myDptList.list[0].id)
+    }
   },
 
   beforeDestroy () {
@@ -62,12 +67,15 @@ export default {
     },
     // 条件筛选后 初始页面方法
     resetPageMixin () {
-      if (this.userInfo.isLeader) {
-        this.userList.splice(0, this.userList.length)
-        this.$refs.dtptree.reset()
-      }
       this.listApiForMixin = this.myApi
       this.model = JSON.parse(JSON.stringify(this.modelCopyMixin))
+      this.model.resDepId = this.myDptList.list[0].id
+      if (this.userInfo.isLeader) {
+        this.listApiForMixin = this.dtpApi
+        this.userList.splice(0, this.userList.length)
+        this.$refs.dtptree.reset(this.myDptList.list[0].name)
+        this.onDepartChange(this.myDptList.list[0].id)
+      }
       this.getListMixin()
     },
     // 饿了么表格 排序 el-table(@sort-change='sortElTableMixin'
@@ -80,8 +88,8 @@ export default {
     // 搜索列表
     search () {
       this.listApiForMixin =
-      (this.model.resDepId !== '' && this.userInfo.isLeader)
-        ? this.dtpApi : this.myApi
+        (this.model.resDepId !== '' && this.userInfo.isLeader)
+          ? this.dtpApi : this.myApi
       this.$utils.autoFillDateTime(this.model)
       this.getListMixin()
     },

@@ -53,19 +53,23 @@ export default {
   },
   watch: {
     deflabel (newValue, oldValue) {
-      if (newValue === '') {
-        this.label = ''
-        this.value = ''
-      } else {
-        this.value = ''
-        this.label = newValue
-      }
+      this.value = ''
+      this.label = newValue
     },
     immediate: true,
   },
+  created () {
+    console.log('create deflable = ' + this.deflabel)
+    if (this.deflabel) {
+      this.label = this.deflabel
+    }
+  },
   methods: {
-    reset () {
-      this.label = ''
+    reset (dflb) {
+      if (dflb) {
+        this.label = dflb
+        console.log('reset', dflb, this.label)
+      }
       this.value = ''
     },
     handleNodeClick (item) {

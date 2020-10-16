@@ -9,6 +9,7 @@
           :defProps='myDptList.props',
           nodeKey='id',
           clearable,
+          :deflabel='myDptList.list[0].name',
           @change='onDepartChange'
         )
       el-form-item(label='员工:' v-if='userInfo.isLeader')
@@ -68,7 +69,7 @@ export default {
   mixins: [fetchListMixin],
   data () {
     return {
-      listApiForMixin: 'getRoleInfos',
+      listApiForMixin: 'getDptRoleInfos',
       dtpApi: 'getDptRoleInfos',
       myApi: 'getRoleInfos',
       model: {

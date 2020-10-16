@@ -9,6 +9,7 @@
           :defProps='myDptList.props',
           nodeKey='id',
           clearable,
+          :deflabel='myDptList.list[0].name',
           @change='onDepartChange'
         )
       el-form-item(label='员工:' v-if='userInfo.isLeader')
