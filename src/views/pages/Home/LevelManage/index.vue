@@ -10,13 +10,16 @@
       el-table-column(prop="experience" label="经验值")
       el-table-column(prop="basicSalary" label="底薪")
       el-table-column(prop="commission" label="提成")
-      el-table-column(prop="ajobAndroidExp" label="A岗Android经验")
-      el-table-column(prop="ajobIOSExp" label="A岗IOS经验")
-      el-table-column(prop="bjobAndroidExp" label="B岗Android经验")
-      el-table-column(prop="bjobIOSExp" label="B岗IOS经验")
-      el-table-column(prop="ajobRechargeExp" label="A岗充值经验")
-      el-table-column(prop="bjobRechargeExp" label="B岗充值经验")
-      el-table-column(prop="cjobRechargeExp" label="C岗充值经验")
+      el-table-column(prop="ajobAndroidExp" label="A岗Android经验值")
+      el-table-column(prop="ajobIOSExp" label="A岗IOS经验值")
+      el-table-column(prop="bjobAndroidExp" label="B岗Android经验值")
+      el-table-column(prop="bjobIOSExp" label="B岗IOS经验值")
+      el-table-column(prop="ajobRechargeExp" label="A岗充值经验值")
+      el-table-column(prop="bjobRechargeExp" label="B岗充值经验值")
+      el-table-column(prop="cjobRechargeExp" label="C岗充值经验值")
+      el-table-column(prop="ajobRechargeExpAfter" label="A岗充值比经验值")
+      el-table-column(prop="bjobRechargeExpAfter" label="B岗充值比经验值")
+      el-table-column(prop="cjobRechargeExpAfter" label="C岗充值比经验值")
       el-table-column(prop="operate" label="操作" width="150")
         template(slot-scope="{ row }")
           .ff-rn
@@ -45,23 +48,30 @@
             el-form-item(label="提成:" required)
               el-input-number(v-model="model.commission")
           .ff-rn
-            el-form-item(label="A岗Android经验:" required)
+            el-form-item(label="A岗Android经验值:" required)
               el-input-number(v-model="model.ajobAndroidExp")
-            el-form-item(label="A岗IOS经验:" required)
+            el-form-item(label="A岗IOS经验值:" required)
               el-input-number(v-model="model.ajobIOSExp")
           .ff-rn
-            el-form-item(label="B岗Android经验:" required)
+            el-form-item(label="B岗Android经验值:" required)
               el-input-number(v-model="model.bjobAndroidExp")
-            el-form-item(label="B岗IOS经验:" required)
+            el-form-item(label="B岗IOS经验值:" required)
               el-input-number(v-model="model.bjobIOSExp")
           .ff-rn
-            el-form-item(label="A岗充值经验:" required)
+            el-form-item(label="A岗充值经验值:" required)
               el-input-number(v-model="model.ajobRechargeExp")
-            el-form-item(label="B岗充值经验:" required)
-              el-input-number(v-model="model.bjobRechargeExp")
+            el-form-item(label="A岗充值比经验值:" required)
+              el-input-number(v-model="model.ajobRechargeExpAfter")
           .ff-rn
-            el-form-item(label="C岗充值经验:" required)
+            el-form-item(label="B岗充值经验值:" required)
+              el-input-number(v-model="model.bjobRechargeExp")
+            el-form-item(label="B岗充值比经验值:" required)
+              el-input-number(v-model="model.bjobRechargeExpAfter")
+          .ff-rn
+            el-form-item(label="C岗充值经验值:" required)
               el-input-number(v-model="model.cjobRechargeExp")
+            el-form-item(label="C岗充值比经验值:" required)
+              el-input-number(v-model="model.cjobRechargeExpAfter")
       span.dialog-footer(slot="footer")
         el-button.mgl3(type="warning" @click="cancelEdit") 取消
         el-button.mgl3(type="primary" @click="submmitEdit") 提交
@@ -84,6 +94,9 @@ export default {
         ajobRechargeExp: 0,
         bjobRechargeExp: 0,
         cjobRechargeExp: 0,
+        ajobRechargeExpAfter: 0,
+        bjobRechargeExpAfter: 0,
+        cjobRechargeExpAfter: 0,
         commission: 0,
         experience: 0,
         level: 0,

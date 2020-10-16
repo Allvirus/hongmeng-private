@@ -311,6 +311,9 @@ export default {
       ajobRechargeExp: model.ajobRechargeExp,
       bjobRechargeExp: model.bjobRechargeExp,
       cjobRechargeExp: model.cjobRechargeExp,
+      ajobRechargeExpAfter: model.ajobRechargeExpAfter,
+      bjobRechargeExpAfter: model.bjobRechargeExpAfter,
+      cjobRechargeExpAfter: model.cjobRechargeExpAfter,
     },
   }),
 
@@ -331,6 +334,9 @@ export default {
       ajobRechargeExp: model.ajobRechargeExp,
       bjobRechargeExp: model.bjobRechargeExp,
       cjobRechargeExp: model.cjobRechargeExp,
+      ajobRechargeExpAfter: model.ajobRechargeExpAfter,
+      bjobRechargeExpAfter: model.bjobRechargeExpAfter,
+      cjobRechargeExpAfter: model.cjobRechargeExpAfter,
     },
   }),
   // 19.获取游戏注册分页信息
