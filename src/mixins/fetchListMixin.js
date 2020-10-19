@@ -30,13 +30,13 @@ export default {
     if (this.$route.params.back) {
       this.model = JSON.parse(localStorage.getItem('model')) || this.model
     }
-    !this.customExeListApiForMixin && this.getListMixin()
-
     // 获取默认部门人员列表
-
     if (this.userInfo && this.myDptList && this.userInfo.isLeader) {
       this.onDepartChange(this.myDptList.list[0].id)
+    } else {
+      this.listApiForMixin = this.myApi
     }
+    !this.customExeListApiForMixin && this.getListMixin()
   },
 
   beforeDestroy () {
@@ -49,7 +49,6 @@ export default {
       const { loading = true } = opts
       page && (this.model.page = page)
       return this.$api[this.listApiForMixin || this.customExeListApiForMixin](this.model, loading).then(data => {
-        console.log('getListMixin', data)
         this.listMixin.list = data.list
         this.listMixin.count = data.count
         if (data.list.length <= 0 && this.model.page > 1) this.getListMixin(this.model.page - 1)

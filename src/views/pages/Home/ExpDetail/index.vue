@@ -36,6 +36,7 @@
           type='primary',
           @click='reset'
         ) 重置
+        el-button(icon="el-icon-plus" type="warning" @click="newExpDlg = true" v-if="userInfo.isLeader") 新增经验
 
   el-table.mgy2.bg-white.pd2(:data='listMixin.list')
     el-table-column(prop='userRealName', label='用户名称')
@@ -48,12 +49,39 @@
     el-table-column(prop='effectiveDate', label='有效期')
       template(slot-scope='{ row }') {{ row.effectiveDate | dateFormat }}
     el-table-column(prop='remark', label='备注')
+    el-table-column(prop="operate" label="操作" v-if="userInfo.isLeader")
+        template(slot-scope="{ row }")
+            el-button.mgl3.danger(icon="el-icon-delete" type="text" @click="deleteExp(row)") 删除
   el-pagination.margin-spacing(
     :total='listMixin.count',
     :page-size.sync='model.pageSize',
     :current-page.sync='model.page',
     @current-change='getListMixin'
   )
+
+  el-dialog(title="新增经验"
+    @close="cancel"
+    :visible.sync="newExpDlg" width="600px")
+    .flex-center
+      el-form(label-width="100px")
+        el-form-item(label="用户:" required)
+          el-select.mgl1(v-model="newExpInfo.userId"
+              placeholder="请选择")
+              el-option(v-for="item in userList"
+              :key="item.id"
+              :label="item.realName"
+              :value="item.id")
+        el-form-item(label="经验值:" required)
+          el-input(v-model='newExpInfo.expChange', placeholder='请输入经验值')
+        el-form-item(label="来源:" required)
+          el-input(v-model='newExpInfo.origin', placeholder='请输入来源')
+        el-form-item(label="有效期:" required)
+          CommonDatePicker(type='date', v-model='newExpInfo.effectiveDate' all)
+        el-form-item(label="备注:" )
+          el-input(v-model='newExpInfo.remark', placeholder='')
+    span.dialog-footer(slot="footer")
+      el-button.mgl3(type="warning" @click="cancel") 取消
+      el-button.mgl3(type="primary" @click="submmit") 提交
 </template>
 <script>
 import { mapGetters } from 'vuex'
@@ -76,15 +104,23 @@ export default {
         page: 1,
         pageSize: 10,
       },
+      newExpInfo: {
+        userId: '',
+        expChange: '',
+        origin: '',
+        remark: '',
+        effectiveDate: '',
+      },
+      newExpDlg: false,
     }
   },
   computed: {
     ...mapGetters(['areaList', 'gameList', 'myDptList', 'userInfo']),
   },
   created () {
-    this.$api.getMyExp(this.model).then(data => {
-      console.log('myexp =', data)
-    })
+    // this.$api.getMyExp(this.model).then(data => {
+    //   console.log('myexp =', data)
+    // })
   },
   methods: {
     reset () {
@@ -97,6 +133,38 @@ export default {
       this.listApiForMixin = (this.model.UserId === '') ? this.myApi : this.dtpApi
       this.$utils.autoFillDateTime(this.model)
       this.getListMixin()
+    },
+    deleteExp (row) {
+      this.$vgo.open(() => {
+        this.$api.delExpById(row.id).then(data => {
+          this.$vgo.tip('删除成功!', 'success')
+          this.searchExp()
+        })
+      })
+    },
+    showNewExpDlg () {
+
+    },
+    cancel () {
+      this.newExpDlg = false
+      for (const key in this.newExpInfo) {
+        this.newExpInfo[key] = ''
+      }
+    },
+    submmit () {
+      for (const key in this.newExpInfo) {
+        if (this.newExpInfo[key] === '' && key !== 'remark') {
+          this.$vgo.tip('请完善表单数据！', 'warning')
+          return
+        }
+      }
+      this.$api.createExp(this.newExpInfo).then(data => {
+        this.$vgo.tip('操作成功!', 'success')
+        if (this.model.UserId !== '') {
+          this.searchExp()
+        }
+        this.cancel()
+      })
     },
   },
 }
