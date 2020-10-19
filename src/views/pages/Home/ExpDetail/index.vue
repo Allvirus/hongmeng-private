@@ -30,13 +30,14 @@
           :end.sync='model.endTime',
           all
         )
-        el-button.mgl3(icon='el-icon-search', type='primary', @click='searchExp') 搜索
-        el-button.mgl2(
-          icon='el-icon-refresh-right',
-          type='primary',
-          @click='resetExp'
-        ) 重置
-        el-button(icon="el-icon-plus" type="warning" @click="newExpDlg = true" v-if="userInfo.isLeader") 新增经验
+      el-button.mgl3.mgb2(icon='el-icon-search', type='primary', @click='search') 搜索
+      el-button.mgl2.mgb2(
+        icon='el-icon-refresh-right',
+        type='primary',
+        @click='reset'
+      ) 重置
+      el-button.mgb2.mgr2(icon="el-icon-plus" type="warning" @click="newExpDlg = true" v-if="userInfo.isLeader") 新增经验
+      el-checkbox.flex-center(v-model="searchMyData" v-if="userInfo.isLeader") 搜索我的数据
 
   el-table.mgy2.bg-white.pd2(:data='listMixin.list')
     el-table-column(prop='userRealName', label='用户名称')
@@ -85,7 +86,7 @@ import fetchListMixin from '@/mixins/fetchListMixin'
 import dptListMixin from '@/mixins/dptListMixin'
 export default {
   name: 'ExpDetail',
-  mixins: [fetchListMixin, dptListMixin],
+  mixins: [dptListMixin, fetchListMixin],
   data () {
     return {
       listApiForMixin: 'getDptExpList',
@@ -118,22 +119,22 @@ export default {
     })
   },
   methods: {
-    resetExp () {
-      this.listApiForMixin = this.dtpApi
-      this.model = JSON.parse(JSON.stringify(this.modelCopyMixin))
-      this.model.resDepId = this.myDptList.list[0].id
-      this.getListMixin()
-    },
-    searchExp () {
-      this.listApiForMixin = (this.model.UserId === '') ? this.myApi : this.dtpApi
-      this.$utils.autoFillDateTime(this.model)
-      this.getListMixin()
-    },
+    // resetExp () {
+    //   this.listApiForMixin = this.dtpApi
+    //   this.model = JSON.parse(JSON.stringify(this.modelCopyMixin))
+    //   this.model.resDepId = this.myDptList.list[0].id
+    //   this.getListMixin()
+    // },
+    // searchExp () {
+    //   this.listApiForMixin = (this.model.UserId === '') ? this.myApi : this.dtpApi
+    //   this.$utils.autoFillDateTime(this.model)
+    //   this.getListMixin()
+    // },
     deleteExp (row) {
       this.$vgo.open(() => {
         this.$api.delExpById(row.id).then(data => {
           this.$vgo.tip('删除成功!', 'success')
-          this.searchExp()
+          this.search()
         })
       })
     },
@@ -152,7 +153,7 @@ export default {
       }
       this.$api.createExp(this.newExpInfo).then(data => {
         this.$vgo.tip('操作成功!', 'success')
-        this.searchExp()
+        this.search()
         this.cancel()
       })
     },

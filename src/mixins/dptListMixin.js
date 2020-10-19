@@ -2,6 +2,7 @@ export default {
   data () {
     return {
       userList: [], // 如果是领导，自己部门的员工
+      searchMyData: false,
     }
   },
   async created () {
@@ -11,10 +12,12 @@ export default {
     } else {
       this.listApiForMixin = this.myApi
     }
+    console.log('listApiForMixin...', this.listApiForMixin)
   },
   methods: {
     reset () {
       this.listApiForMixin = this.myApi
+      this.searchMyData = false
       this.model = JSON.parse(JSON.stringify(this.modelCopyMixin))
       this.model.resDepId = this.myDptList.list[0].id
       if (this.userInfo && this.userInfo.isLeader && this.$refs.dtptree) {
@@ -27,9 +30,8 @@ export default {
     },
     // 搜索列表
     search () {
-      this.listApiForMixin =
-        (this.model.resDepId !== '' && this.userInfo.isLeader)
-          ? this.dtpApi : this.myApi
+      this.listApiForMixin = (!this.searchMyData && this.userInfo.isLeader)
+        ? this.dtpApi : this.myApi
       this.$utils.autoFillDateTime(this.model)
       this.getListMixin()
     },

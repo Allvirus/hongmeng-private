@@ -39,6 +39,7 @@ export default {
   methods: {
     // 获取列表
     getListMixin (page, opts = {}) {
+      console.log('getListMixin...')
       const { loading = true } = opts
       page && (this.model.page = page)
       return this.$api[this.listApiForMixin || this.customExeListApiForMixin](this.model, loading).then(data => {
