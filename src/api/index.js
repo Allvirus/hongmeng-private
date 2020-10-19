@@ -648,9 +648,9 @@ export default {
       const p = {
         startTime: model.startTime,
         endTime: model.endTime,
-        UserId: model.UserId,
+        UserId: Number(model.UserId),
         Origin: model.Origin,
-        ExpChange: model.ExpChange,
+        ExpChange: Number(model.ExpChange),
         page: model.page,
         pageSize: model.pageSize,
       }
@@ -659,8 +659,19 @@ export default {
     })(),
   }),
   // 41.获取单个经验值明细接口
+  getExpById: (expId) => http('get', `/api/experience/${expId}`),
 
   // 42.创建经验值明细接口
+  createExp: (model) => http('post', '/api/experience/', {
+    data: {
+      userId: model.userId,
+      expChange: model.expChange,
+      origin: model.origin,
+      remark: model.remark,
+      effectiveDate: model.effectiveDate,
+    },
+  }),
 
   // 43.删除经验值明细接口
+  delExpById: (expId) => http('delete', `/api/experience/${expId}`),
 }

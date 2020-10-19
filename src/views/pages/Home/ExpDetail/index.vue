@@ -13,21 +13,21 @@
           @change='onDepartChange'
         )
       el-form-item(label='员工:' v-if='userInfo.isLeader')
-        el-select.winput(v-model='model.userId', placeholder='请选择', clearable)
+        el-select.winput(v-model='model.UserId', placeholder='请选择', clearable)
           el-option(
             v-for='item in userList',
             :key='item.id',
             :label='item.realName',
             :value='item.id'
           )
-      el-form-item(label='玩家账号:')
-        el-input.winput(v-model='model.UserAccount')
-      el-form-item(label='游戏名称:')
-        auto-complete(v-model='model.GameName', :data='gameList')
-      el-form-item(label='游戏角色:')
-        el-input.winput(v-model='model.RoleName')
-      el-form-item(label='区服:')
-        auto-complete(v-model='model.AreaName', :data='areaList')
+      //- el-form-item(label='玩家账号:')
+      //-   el-input.winput(v-model='model.UserAccount')
+      el-form-item(label='经验来源:')
+        el-input.winput(v-model='model.Origin')
+      el-form-item(label='经验值:')
+        el-input.winput(v-model='model.ExpChange')
+      //- el-form-item(label='区服:')
+      //-   auto-complete(v-model='model.AreaName', :data='areaList')
       el-form-item(label='创建时间:')
         CommonDatePicker.w300(
           :start.sync='model.startTime',
@@ -42,18 +42,16 @@
         ) 重置
 
   el-table.mgy2.bg-white.pd2(:data='listMixin.list')
-    el-table-column(prop='userAccount', label='玩家账号')
-    el-table-column(prop='account', label='推广员账户')
-    el-table-column(prop='gameName', label='游戏名称')
-    el-table-column(prop='areaName', label='区服')
-    el-table-column(prop='roleName', label='游戏角色')
-    el-table-column(prop='osType', label='平台')
-      template(slot-scope='{ row }') {{ row.osType | formatOSType }}
-    el-table-column(prop='createDate', label='创建时间')
-      template(slot-scope='{ row }') {{ row.createDate | dateFormat }}
-    el-table-column(prop='ajob', label='A岗')
-    el-table-column(prop='bjob', label='B岗')
-    el-table-column(prop='cjob', label='C岗')
+    el-table-column(prop='userRealName', label='用户名称')
+    el-table-column(prop='origin', label='经验来源')
+    el-table-column(prop='expChange', label='经验值')
+      template(slot-scope='{ row }')
+        sapn.danger +{{ row.expChange }}
+    el-table-column(prop='createTime', label='创建时间')
+      template(slot-scope='{ row }') {{ row.createTime | dateFormat }}
+    el-table-column(prop='effectiveDate', label='有效期')
+      template(slot-scope='{ row }') {{ row.effectiveDate | dateFormat }}
+    el-table-column(prop='remark', label='备注')
   el-pagination.margin-spacing(
     :total='listMixin.count',
     :page-size.sync='model.pageSize',
@@ -69,19 +67,15 @@ export default {
   mixins: [fetchListMixin],
   data () {
     return {
-      listApiForMixin: '',
-      dtpApi: '',
-      myApi: '',
+      listApiForMixin: 'getExpList',
+      dtpApi: 'getExpList',
+      myApi: 'getExpList',
       model: {
         startTime: '',
         endTime: '',
-        UserAccount: '',
-        Account: '',
-        UserCode: '',
-        GameName: '',
-        RoleName: '',
-        AreaName: '',
-        userId: '',
+        UserId: '',
+        Origin: '',
+        ExpChange: '',
         resDepId: '',
         page: 1,
         pageSize: 10,

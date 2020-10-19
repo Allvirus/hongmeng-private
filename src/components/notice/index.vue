@@ -10,7 +10,7 @@
       class="slide-item"
       @click='onNoticeClick(item)'
       )
-        span 恭喜{{item.department}}{{item.userName}}单笔消费
+        span 恭喜{{item.department}}{{item.userName}}在{{item.time | dateFormat}}玩家单笔消费
         span.danger {{ item.totalPrice }}
         span 元
 </template>
