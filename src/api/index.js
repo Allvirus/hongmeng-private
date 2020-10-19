@@ -643,7 +643,7 @@ export default {
   // 39.获取公告接口
   getNotices: () => http('get', 'api/notice/'),
   // 40.获取经验值明细分页接口
-  getExpList: (model) => http('get', '/api/experience/', {
+  getDptExpList: (model) => http('get', '/api/experience/', {
     params: (() => {
       const p = {
         startTime: model.startTime,
@@ -651,6 +651,21 @@ export default {
         UserId: Number(model.UserId),
         Origin: model.Origin,
         ExpChange: Number(model.ExpChange),
+        page: model.page,
+        pageSize: model.pageSize,
+      }
+      utils.filterNull(p)
+      return p
+    })(),
+  }),
+  // 40. 5 获取个人经验值明细分页接口
+  getMyExp: (model) => http('get', '/api/experience/user', {
+    params: (() => {
+      const p = {
+        startTime: model.startTime,
+        endTime: model.endTime,
+        Origin: model.Origin,
+        ExpChange: model.ExpChange,
         page: model.page,
         pageSize: model.pageSize,
       }

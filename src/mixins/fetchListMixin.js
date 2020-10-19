@@ -71,7 +71,7 @@ export default {
       this.listApiForMixin = this.myApi
       this.model = JSON.parse(JSON.stringify(this.modelCopyMixin))
       this.model.resDepId = this.myDptList.list[0].id
-      if (this.userInfo && this.userInfo.isLeader) {
+      if (this.userInfo && this.userInfo.isLeader && this.$refs.dtptree) {
         this.listApiForMixin = this.dtpApi
         this.userList.splice(0, this.userList.length)
         this.$refs.dtptree.reset(this.myDptList.list[0].name)
