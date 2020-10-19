@@ -30,28 +30,25 @@
             el-table-column(prop="ajobIOSExp" label="A岗iOS换包经验" )
             el-table-column(prop="bjobAndroidExp" label="B岗Android换包经验")
             el-table-column(prop="bjobIOSExp" label="B岗iOS换包经验")
-      .ff-rn
-        .flex-1.pd1
-          h3.mgt1 提成起点
-          el-table.mgy2(:data='commission')
-            el-table-column(prop="job" label="岗位")
-            el-table-column(prop="custom" label="客流岗")
-            el-table-column(prop="guide" label="引导岗")
-            el-table-column(prop="accompany" label="陪玩岗")
 
-        .flex-1.pd1
-          h3.mgt1 流水经验值获取
-          el-table.mgy2(:data='experience')
-            el-table-column(prop="job" label="岗位")
-            el-table-column(prop="custom" label="客流岗")
-            el-table-column(prop="guide" label="引导岗")
-            el-table-column(prop="accompany" label="陪玩岗")
-    .tips
-      p 一、经验值规则
-      p 1、玩家充值是增加经验值的主要来源，暂定为1元等于1点经验值（当天新服），后续第天以后的充值为2元等于1点经验值（具体按等级制度计算）。
-      p 2、新创角玩家（注册新设备，新IP）暂定为增加1个ISO等于50点经验值，安卓等于30点经验值（具体按等级制度计算）。
-      p 3、培训新员工期间，新员工产生的经验值算师父的，新员工试用期满足条件后单独开后台，新员工转正后师父增加经验值500点。
-      p 4、有对公司做出特殊贡献，上级确认后可增加经验值。
+      h3.mgt1 提成起点
+      el-table.mgy2(:data='commission' v-if="levData.length > 0")
+        el-table-column(prop="job" label="岗位")
+        el-table-column(prop="custom" :label="levData[0].configType")
+        el-table-column(prop="guide" :label="levData[1].configType")
+        el-table-column(prop="accompany" :label="levData[2].configType")
+
+      h3.mgt3 流水经验值获取
+      el-table.mgy2(:data='experience' v-if="levData.length > 0")
+        el-table-column(prop="job" label="岗位")
+        el-table-column(prop="custom" :label="levData[3].configType")
+        el-table-column(prop="guide" :label="levData[4].configType")
+        el-table-column(prop="accompany" :label="levData[5].configType")
+
+    .tips(v-if="levData.length > 0")
+      h3.mgt3 {{levData[6].configType}}
+      p.mgt2(v-html="levData[6].context")
+
 </template>
 <script>
 import { mapGetters } from 'vuex'
@@ -62,17 +59,17 @@ export default {
       commission: [
         {
           job: '提成起点',
-          custom: '当月总流水≥10000',
-          guide: '当月总流水≥40000',
-          accompany: '当月总流水≥40000',
+          custom: '',
+          guide: '',
+          accompany: '',
         },
       ],
       experience: [
         {
           job: '流水经验值折算系数',
-          custom: '1',
-          guide: '0.5',
-          accompany: '0.7',
+          custom: '',
+          guide: '',
+          accompany: '',
         },
       ],
       levelInfo: [
@@ -85,6 +82,7 @@ export default {
         },
       ],
       expPercent: 0,
+      levData: [],
     }
   },
   computed: {
@@ -102,6 +100,15 @@ export default {
       })
 
       this.$api.getMyLevInfo().then(data => {
+        this.commission[0].custom = data[0].context
+        this.commission[0].guide = data[1].context
+        this.commission[0].accompany = data[2].context
+
+        this.experience[0].custom = data[3].context
+        this.experience[0].guide = data[4].context
+        this.experience[0].accompany = data[5].context
+
+        this.levData = data
       })
     },
     calcPercent () {
