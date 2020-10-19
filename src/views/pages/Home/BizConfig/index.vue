@@ -164,9 +164,9 @@ export default {
         cUserName: '',
       }
     },
-    onDepartChange (value) {
+    onDepartChange (dptInfo) {
       for (const item of this.cfgInfo.departList) {
-        if (item.id === value) {
+        if (item.id === dptInfo.id) {
           this.cfgInfo.row.departmentName = item.name
         }
       }

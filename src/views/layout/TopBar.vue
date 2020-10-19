@@ -146,10 +146,6 @@ export default {
         this.dptNotices = data
       })
     },
-    exit () {
-      this.$utils.setCookie($globalconfig.COOKIE_NAME, '', { exHours: -1, domain: $globalconfig.COOKIE_DOMAIN })
-      $globalconfig.LOGIN()
-    },
     onUploaded (fileUrl) {
       this.$api.updateAvatar(fileUrl).then(data => {
         this.$store.dispatch('getUserInfo')
@@ -168,6 +164,9 @@ export default {
     logout () {
       this.$utils.clearCookie()
       this.$router.replace({ name: 'Login' })
+
+      // 清除store里面的数据
+      this.$store.dispatch('clearStore')
     },
     cancelPswdEdit () {
       this.editPswdDlg = false

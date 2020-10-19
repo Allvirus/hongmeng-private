@@ -1,7 +1,7 @@
 <template lang='pug'>
 .MyGames
   .jc-between.ai-center.h50
-    p.fs-l.mgl4.flex-1 我的游戏
+    p.fs-b.mgl4.flex-1 我的游戏
     .mgr3
       el-button(
         icon='el-icon-plus',
@@ -16,6 +16,7 @@
       :defProps='defProps',
       nodeKey='id',
       clearable
+      :deflabel='myDptList.list[0].name',
       @change='onDepartChange'
     )
   .h600.overflow-auto.mgt2
@@ -97,18 +98,31 @@ export default {
       },
       userList: [],
       gameCtxList: [],
+      curDptID: '',
     }
   },
   computed: {
-    ...mapGetters(['userInfo']),
+    ...mapGetters(['userInfo', 'myDptList']),
   },
   created: function () {
-    this.getMyGames()
     this.getDepartTree()
-    this.getAllUser()
-    this.getGameCtxList()
+    if (this.userInfo.isLeader) {
+      this.getAllUser()
+      this.getGameCtxList()
+      this.curDptID = this.userInfo.resDepartmentId
+    }
+    this.updateGameList()
   },
   methods: {
+    updateGameList () {
+      if (this.curDptID !== '') {
+        this.$api.getGameByDptId(this.curDptID).then(data => {
+          this.myGameList = data
+        })
+      } else {
+        this.getMyGames()
+      }
+    },
     getGameCtxList () {
       this.$api.getGameCtx().then(data => {
         this.gameCtxList = data
@@ -145,7 +159,7 @@ export default {
       this.$api.addGame(this.gameInfo).then(data => {
         this.cancel()
         this.$vgo.tip('添加成功!', 'success')
-        this.getMyGames()
+        this.updateGameList()
       })
     },
     checkParams () {
@@ -173,18 +187,13 @@ export default {
       this.$vgo.open(() => {
         this.$api.delGameById(item.id).then(data => {
           this.$vgo.tip('删除成功！', 'success')
-          this.getMyGames()
+          this.updateGameList()
         })
       })
     },
-    onDepartChange (dptId) {
-      if (dptId === '') {
-        this.getMyGames()
-      } else {
-        this.$api.getGameByDptId(dptId).then(data => {
-          this.myGameList = data
-        })
-      }
+    onDepartChange (dptInfo) {
+      this.curDptID = dptInfo.id
+      this.updateGameList()
     },
     conbineUrl (item) {
       return $globalconfig.API + item.gameContent.gameImg

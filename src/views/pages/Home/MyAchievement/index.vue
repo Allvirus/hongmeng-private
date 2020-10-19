@@ -347,8 +347,8 @@ export default {
           break
       }
     },
-    onDepartChange (dtpId) {
-      this.model.dtpId = dtpId
+    onDepartChange (dptInfo) {
+      this.model.dtpId = dptInfo.id
     },
   },
 }

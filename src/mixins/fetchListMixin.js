@@ -32,7 +32,7 @@ export default {
     }
     // 获取默认部门人员列表
     if (this.userInfo && this.myDptList && this.userInfo.isLeader) {
-      this.onDepartChange(this.myDptList.list[0].id)
+      this.onDepartChange({ id: this.myDptList.list[0].id })
     } else {
       this.listApiForMixin = this.myApi
     }
@@ -74,7 +74,7 @@ export default {
         this.listApiForMixin = this.dtpApi
         this.userList.splice(0, this.userList.length)
         this.$refs.dtptree.reset(this.myDptList.list[0].name)
-        this.onDepartChange(this.myDptList.list[0].id)
+        this.onDepartChange({ id: this.myDptList.list[0].id })
       }
       this.getListMixin()
     },
@@ -94,11 +94,11 @@ export default {
       this.getListMixin()
     },
     // 部门改变
-    onDepartChange (dtpId) {
-      this.model.resDepId = dtpId
+    onDepartChange (dtpInfo) {
+      this.model.resDepId = dtpInfo.id
       this.model.userId = ''
       this.userList.splice(0, this.userList.length)
-      this.$api.getDepartMembers(dtpId).then(data => {
+      this.$api.getDepartMembers(dtpInfo.id).then(data => {
         this.userList = data
       })
     },

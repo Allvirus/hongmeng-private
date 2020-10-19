@@ -59,7 +59,6 @@ export default {
     immediate: true,
   },
   created () {
-    console.log('create deflable = ' + this.deflabel)
     if (this.deflabel) {
       this.label = this.deflabel
     }
@@ -75,13 +74,21 @@ export default {
     handleNodeClick (item) {
       this.value = item[this.defProps.valKey]
       this.label = item[this.defProps.label]
-      this.$emit('change', this.value)
+      const dtpInfo = {
+        id: this.value,
+        name: this.label,
+      }
+      this.$emit('change', dtpInfo)
       this.$refs.selector.blur()
     },
     onClear () {
       this.label = ''
       this.value = ''
-      this.$emit('change', this.value)
+      const dtpInfo = {
+        id: this.value,
+        name: this.label,
+      }
+      this.$emit('change', dtpInfo)
     },
   },
 }

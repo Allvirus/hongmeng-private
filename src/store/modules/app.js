@@ -48,6 +48,9 @@ export default {
         commit('myDptList', data)
       })
     },
+    clearStore ({ commit, state }) {
+      return commit('clearStore')
+    },
   },
   mutations: {
     userInfo (state, data) {
@@ -68,6 +71,20 @@ export default {
       list.splice(0, list.length)
       list.push(data)
       state.myDptList.ready = true
+    },
+    clearStore (state) {
+      state.regions = []
+      state.userInfo = {}
+      state.projectTagList = []
+      state.myDptList = {
+        list: [],
+        props: {
+          children: 'departments',
+          label: 'name',
+          valKey: 'id',
+        },
+        ready: false,
+      }
     },
   },
 }

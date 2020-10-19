@@ -152,8 +152,8 @@ export default {
       }
       return ''
     },
-    onDepartChange (newVal) {
-      this.model.departmentId = newVal
+    onDepartChange (dptInfo) {
+      this.model.departmentId = dptInfo.id
     },
     cancel () {
       for (const key in this.model) {
