@@ -105,6 +105,16 @@ export default [
             component: () => import('@/views/pages/Home/BizConfig'),
           },
           {
+            path: 'SwitchBind',
+            name: 'HomeSwitchBind',
+            meta: {
+              title: '玩家换绑',
+              icsel: require('@/assets/img/ic_setting_sel.png'),
+              icdef: require('@/assets/img/ic_setting_def.png'),
+            },
+            component: () => import('@/views/pages/Home/SwitchBind'),
+          },
+          {
             path: 'LevelManage',
             name: 'HomeLevelManage',
             meta: {

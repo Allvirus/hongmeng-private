@@ -71,5 +71,6 @@ export default {
       else this.model.orderBy = ''
       this.getListMixin(1)
     },
+
   },
 }

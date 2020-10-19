@@ -692,4 +692,34 @@ export default {
 
   // 43.删除经验值明细接口
   delExpById: (expId) => http('delete', `/api/experience/${expId}`),
+
+  // 44.玩家换绑记录分页接口
+  getBindChangeList: (model) => http('get', '/api/playerswitch/', {
+    params: {
+      UserAccount: model.UserAccount,
+      Page: model.Page,
+      PageSize: model.PageSize,
+    },
+  }),
+  // 45 根据Id玩家换绑记录接口
+  getBCRecById: (id) => http('get', `/api/playerswitch/${id}`),
+  // 46.按玩家账号模糊查询相关abc岗人员Id信息
+  getABCPeople: (useraccount) => http('get', `/api/playerswitch/useraccount/${useraccount}`),
+  // 47.创建玩家换绑记录接口
+  switchBind: (model) => http('post', '/api/playerswitch/', {
+    params: {
+      userAccount: model.userAccount,
+      aJobId: model.aJobId,
+      aJob: model.aJob,
+      bJobId: model.bJobId,
+      bJob: model.bJob,
+      cJobId: model.cJobId,
+      cJob: model.cJob,
+      aJobIdAfter: model.aJobIdAfter,
+      bJobIdAfter: model.bJobIdAfter,
+      cJobIdAfter: model.cJobIdAfter,
+    },
+  }),
+  // 48.删除玩家换绑记录接口
+  delBindRec: (id) => http('delete', `/api/playerswitch/${id}`),
 }
