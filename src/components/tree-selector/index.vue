@@ -67,7 +67,6 @@ export default {
     reset (dflb) {
       if (dflb) {
         this.label = dflb
-        console.log('reset', dflb, this.label)
       }
       this.value = ''
     },

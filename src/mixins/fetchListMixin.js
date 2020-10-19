@@ -18,7 +18,6 @@ export default {
   data () {
     return {
       listMixin: { list: [], count: 0 },
-      userList: [], // 如果是领导，自己部门的员工
     }
   },
   async created () {
@@ -29,12 +28,6 @@ export default {
     // 若是返回列表 获取销毁前的状态
     if (this.$route.params.back) {
       this.model = JSON.parse(localStorage.getItem('model')) || this.model
-    }
-    // 获取默认部门人员列表
-    if (this.userInfo && this.myDptList && this.userInfo.isLeader) {
-      this.onDepartChange({ id: this.myDptList.list[0].id })
-    } else {
-      this.listApiForMixin = this.myApi
     }
     !this.customExeListApiForMixin && this.getListMixin()
   },
@@ -55,7 +48,7 @@ export default {
       })
     },
     /**
-     * 列表修改或添加或删除 后刷新
+     * 列表.修改或添加或删除 后刷新
      * @param {*} isSuccess 是否成功提示
      * @param {number} [delNum=1] 删除的数量, 超过当前页数量后 page> 1 && page -1
      */
@@ -67,15 +60,7 @@ export default {
     },
     // 条件筛选后 初始页面方法
     resetPageMixin () {
-      this.listApiForMixin = this.myApi
       this.model = JSON.parse(JSON.stringify(this.modelCopyMixin))
-      this.model.resDepId = this.myDptList.list[0].id
-      if (this.userInfo && this.userInfo.isLeader && this.$refs.dtptree) {
-        this.listApiForMixin = this.dtpApi
-        this.userList.splice(0, this.userList.length)
-        this.$refs.dtptree.reset(this.myDptList.list[0].name)
-        this.onDepartChange({ id: this.myDptList.list[0].id })
-      }
       this.getListMixin()
     },
     // 饿了么表格 排序 el-table(@sort-change='sortElTableMixin'
@@ -84,23 +69,6 @@ export default {
       else if (row.order === 'ascending') this.model.orderBy = row.prop + '_ASC'
       else this.model.orderBy = ''
       this.getListMixin(1)
-    },
-    // 搜索列表
-    search () {
-      this.listApiForMixin =
-        (this.model.resDepId !== '' && this.userInfo.isLeader)
-          ? this.dtpApi : this.myApi
-      this.$utils.autoFillDateTime(this.model)
-      this.getListMixin()
-    },
-    // 部门改变
-    onDepartChange (dtpInfo) {
-      this.model.resDepId = dtpInfo.id
-      this.model.userId = ''
-      this.userList.splice(0, this.userList.length)
-      this.$api.getDepartMembers(dtpInfo.id).then(data => {
-        this.userList = data
-      })
     },
   },
 }

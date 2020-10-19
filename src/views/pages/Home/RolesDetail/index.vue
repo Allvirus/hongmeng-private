@@ -38,7 +38,7 @@
         el-button.mgl2(
           icon='el-icon-refresh-right',
           type='primary',
-          @click='resetPageMixin'
+          @click='reset'
         ) 重置
 
   el-table.mgy2.bg-white.pd2(:data='listMixin.list')
@@ -64,9 +64,10 @@
 <script>
 import { mapGetters } from 'vuex'
 import fetchListMixin from '@/mixins/fetchListMixin'
+import dptListMixin from '@/mixins/dptListMixin'
 export default {
   name: 'MyRoles',
-  mixins: [fetchListMixin],
+  mixins: [fetchListMixin, dptListMixin],
   data () {
     return {
       listApiForMixin: 'getDptRoleInfos',

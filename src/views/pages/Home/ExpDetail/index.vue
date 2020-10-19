@@ -34,7 +34,7 @@
         el-button.mgl2(
           icon='el-icon-refresh-right',
           type='primary',
-          @click='reset'
+          @click='resetExp'
         ) 重置
         el-button(icon="el-icon-plus" type="warning" @click="newExpDlg = true" v-if="userInfo.isLeader") 新增经验
 
@@ -82,9 +82,10 @@
 <script>
 import { mapGetters } from 'vuex'
 import fetchListMixin from '@/mixins/fetchListMixin'
+import dptListMixin from '@/mixins/dptListMixin'
 export default {
   name: 'ExpDetail',
-  mixins: [fetchListMixin],
+  mixins: [fetchListMixin, dptListMixin],
   data () {
     return {
       listApiForMixin: 'getDptExpList',
@@ -112,12 +113,12 @@ export default {
     ...mapGetters(['areaList', 'gameList', 'myDptList', 'userInfo']),
   },
   created () {
-    // this.$api.getMyExp(this.model).then(data => {
-    //   console.log('myexp =', data)
-    // })
+    this.$api.getDptExpList(this.model).then(data => {
+      console.log('dpt exp ', data)
+    })
   },
   methods: {
-    reset () {
+    resetExp () {
       this.listApiForMixin = this.dtpApi
       this.model = JSON.parse(JSON.stringify(this.modelCopyMixin))
       this.model.resDepId = this.myDptList.list[0].id
@@ -136,9 +137,6 @@ export default {
         })
       })
     },
-    showNewExpDlg () {
-
-    },
     cancel () {
       this.newExpDlg = false
       for (const key in this.newExpInfo) {
@@ -154,9 +152,7 @@ export default {
       }
       this.$api.createExp(this.newExpInfo).then(data => {
         this.$vgo.tip('操作成功!', 'success')
-        if (this.model.UserId !== '') {
-          this.searchExp()
-        }
+        this.searchExp()
         this.cancel()
       })
     },

@@ -34,12 +34,6 @@ export default [
             },
             component: () => import('@/views/pages/Home/MyAchievement'),
           },
-          // {
-          //   path: 'MyCurrency',
-          //   name: 'HomeMyCurrency',
-          //   meta: { title: '我的货币', icon: 'el-icon-data-analysis' },
-          //   component: () => import('@/views/pages/Home/MyCurrency'),
-          // },
           {
             path: 'MyLevel',
             name: 'HomeMyLevel',
