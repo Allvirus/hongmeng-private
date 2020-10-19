@@ -14,7 +14,7 @@
           span {{levelInfo[1].levelName}}
     .tables
       .ff-rn
-        .flex-1.pd2
+        .flex-1.pd1
           h3.mgt3 等级权益说明
           el-table.mgy2(:data='levelInfo')
             el-table-column(prop="levelName" label="等级名称")
@@ -22,16 +22,16 @@
             el-table-column(prop="commission" label="提成")
             el-table-column(prop="basicSalary" label="等级工资")
 
-        .flex-1.pd2
+        .flex-1.pd1.exp-table
           h3.mgt3 换包经验值获取
           el-table.mgy2(:data='levelInfo')
-            el-table-column(prop="levelName" label="等级名称")
+            el-table-column(prop="levelName" label="等级名称" width="80")
             el-table-column(prop="ajobAndroidExp" label="A岗Android换包经验")
-            el-table-column(prop="ajobIOSExp" label="A岗iOS换包经验")
+            el-table-column(prop="ajobIOSExp" label="A岗iOS换包经验" )
             el-table-column(prop="bjobAndroidExp" label="B岗Android换包经验")
             el-table-column(prop="bjobIOSExp" label="B岗iOS换包经验")
       .ff-rn
-        .flex-1.pd2
+        .flex-1.pd1
           h3.mgt1 提成起点
           el-table.mgy2(:data='commission')
             el-table-column(prop="job" label="岗位")
@@ -39,7 +39,7 @@
             el-table-column(prop="guide" label="引导岗")
             el-table-column(prop="accompany" label="陪玩岗")
 
-        .flex-1.pd2
+        .flex-1.pd1
           h3.mgt1 流水经验值获取
           el-table.mgy2(:data='experience')
             el-table-column(prop="job" label="岗位")
@@ -115,6 +115,9 @@ export default {
 </script>
 <style lang='stylus' scoped>
 .MyLevel
+  >>>.exp-table .cell
+    width 150px !important
+    white-space nowrap
   .exp-box
     width 200px
     height 100px

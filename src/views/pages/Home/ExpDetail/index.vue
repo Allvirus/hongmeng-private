@@ -73,10 +73,6 @@
               :value="item.id")
         el-form-item(label="经验值:" required)
           el-input(v-model='newExpInfo.expChange', placeholder='请输入经验值')
-        el-form-item(label="来源:" required)
-          el-input(v-model='newExpInfo.origin', placeholder='请输入来源')
-        el-form-item(label="有效期:" required)
-          CommonDatePicker(type='date', v-model='newExpInfo.effectiveDate' all)
         el-form-item(label="备注:" )
           el-input(v-model='newExpInfo.remark', placeholder='')
     span.dialog-footer(slot="footer")
@@ -107,9 +103,7 @@ export default {
       newExpInfo: {
         userId: '',
         expChange: '',
-        origin: '',
         remark: '',
-        effectiveDate: '',
       },
       newExpDlg: false,
     }
