@@ -100,6 +100,9 @@ export default {
         this.levelInfo = res
         this.calcPercent()
       })
+
+      this.$api.getMyLevInfo().then(data => {
+      })
     },
     calcPercent () {
       const curExp = this.userInfo.experiences

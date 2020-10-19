@@ -294,6 +294,9 @@ export default {
   // 14.5.查询我的等级和下一等级信息
   getMyLevel: () => http('get', '/api/level/my'),
 
+  // 14.6.查询我的等级配置信息
+  getMyLevInfo: () => http('get', '/api/level/config'),
+
   // 15.查询单个等级
   getLevelById: (levId) => http('get', `/api/level/${levId}`),
 

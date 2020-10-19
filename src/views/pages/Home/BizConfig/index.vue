@@ -4,12 +4,12 @@
       el-form.ff-rn(label-width="100px")
         el-form-item(label="注册时间:")
           CommonDatePicker.w300(:start.sync='model.startTime' :end.sync='model.endTime' all)
-          el-button.mgl3(icon="el-icon-search" type="primary" @click="search") 搜索
+          el-button.mgl3(icon="el-icon-search" type="primary" @click="searchCfg") 搜索
           el-button.mgl2(icon="el-icon-refresh-right" type="primary" @click="reset") 重置
       .flex-1.jc-end
         el-button(icon="el-icon-plus" type="primary" @click="showEditDlg(false,null)") 新增配置
 
-    el-table.mgy2.bg-white.pd2(:data='listMixin.list' :row-class-name="({ row }) => row.is_payout ? 'danger' : ''")
+    el-table.mgy2.bg-white.pd2(:data='configList' :row-class-name="({ row }) => row.is_payout ? 'danger' : ''")
       el-table-column(prop="departmentName" label="部门")
       el-table-column(prop="bUserName" label="B岗")
       el-table-column(prop="cUserName" label="C岗")
@@ -24,10 +24,10 @@
             el-button.mgl3.danger(icon="el-icon-delete" type="text" @click="deleteCfg(row)") 删除
 
     el-pagination.margin-spacing(
-      :total="listMixin.count"
+      :total="configList.length"
       :page-size.sync='model.pageSize'
       :current-page.sync='model.page'
-      @current-change="getListMixin")
+      @current-change="getCfgList")
 
     //- 编辑、新增对话框
     el-dialog(:title="cfgInfo.isEdit?'编辑':'新增'"
@@ -68,13 +68,10 @@
 
 </template>
 <script>
-import fetchListMixin from '@/mixins/fetchListMixin'
 export default {
   name: 'BizConfig',
-  mixins: [fetchListMixin],
   data () {
     return {
-      listApiForMixin: 'getBizConfig',
       model: {
         page: 1,
         pageSize: 10,
@@ -104,21 +101,27 @@ export default {
         BUserList: [],
         CUserList: [],
       },
+      configList: [],
     }
   },
   created: function () {
     this.loadOptions()
-    console.log('bizCofing', this.userInfo)
+    this.getCfgList()
   },
   methods: {
-    search () {
+    getCfgList () {
+      this.$api.getBizConfig(this.model).then(data => {
+        this.configList = data.list
+      })
+    },
+    searchCfg () {
       this.$utils.autoFillDateTime(this.model)
-      this.getListMixin()
+      this.getCfgList()
     },
     reset () {
       this.model.startTime = ''
       this.model.endTime = ''
-      this.getListMixin()
+      this.getCfgList()
     },
     loadOptions () {
       // 获取部门列表数据
@@ -134,8 +137,6 @@ export default {
         this.cfgInfo.CUserList = res
       })
     },
-    editItem (row) {
-    },
     showEditDlg (isEdit, row) {
       if (isEdit) {
         this.cfgInfo.row = JSON.parse(JSON.stringify(row))
@@ -146,8 +147,8 @@ export default {
     deleteCfg (row) {
       this.$vgo.open(() => {
         this.$api.delBizCfg(row.id).then(res => {
-          this.afterModifyGetListMixin(1, 1)
-          this.getListMixin()
+          this.$vgo.tip('删除成功!', 'success')
+          this.getCfgList()
         })
       })
     },
@@ -166,10 +167,11 @@ export default {
     },
     onDepartChange (dptInfo) {
       for (const item of this.cfgInfo.departList) {
-        if (item.id === dptInfo.id) {
+        if (item.id === dptInfo) {
           this.cfgInfo.row.departmentName = item.name
         }
       }
+      console.log('dpt name = ', this.cfgInfo.row.departmentName)
     },
     onBJobChange (value) {
       for (const item of this.cfgInfo.BUserList) {
@@ -221,14 +223,14 @@ export default {
         this.$api.updateCfgByIf(params).then(res => {
           this.$vgo.tip('更新成功', 'success')
           this.cancelEdit()
-          this.getListMixin()
+          this.getCfgList()
         })
       } else {
         // 新增
         this.$api.addBizCfg(params).then(res => {
           this.$vgo.tip('提交成功', 'success')
           this.cancelEdit()
-          this.getListMixin()
+          this.getCfgList()
         })
       }
     },
