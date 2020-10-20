@@ -1,10 +1,13 @@
 <template lang="pug">
-.layout.ff-cn.flex-1(v-if='userInfo.id && myDptList.ready')
-  TopBar
-  .layout-bottom.flex-1
-    transition(name='fade-scale', mode='out-in')
-      router-view
-    .copyright.lh3.jc-center.mgt3(v-html='$WD.$globalconfig.COPYRIGHT')
+  .layout.flex-1(v-if='userInfo.id && myDptList.ready')
+    .ff-cn(v-if="OS.isPc")
+      TopBar
+      .layout-bottom.flex-1
+        transition(name='fade-scale', mode='out-in')
+          router-view
+        .copyright.lh3.jc-center.mgt3(v-html='$WD.$globalconfig.COPYRIGHT')
+    .full(v-else)
+      PhoneLayout
 </template>
 
 <script>
@@ -13,6 +16,7 @@ export default {
   name: 'Layout',
   components: {
     TopBar: () => import('./TopBar.vue'),
+    PhoneLayout: () => import('./PhoneLayout.vue'),
   },
   computed: {
     ...mapGetters(['userInfo', 'myDptList', 'OS']),
@@ -26,7 +30,6 @@ export default {
     this.$store.dispatch('getUserInfo')
     this.$store.dispatch('getAreaList')
     this.$store.dispatch('getGameList')
-    this.$store.dispatch('checkOS')
   },
 }
 </script>

@@ -12,6 +12,7 @@ export default {
   },
   created () {
     // 开发环境获取token
+    this.$store.dispatch('checkOS')
     const query = this.$utils.getURLQuery()
     if (process.env.NODE_ENV !== 'production') {
       if (query.access_token) {
