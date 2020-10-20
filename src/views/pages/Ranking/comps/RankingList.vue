@@ -1,5 +1,5 @@
 <template lang='pug'>
-.rank.h650.ff-cn.pr.flex-1.mgx1
+.rank.h650.ff-cn.pr.flex-1.mgx3
   .top-bg.pr
     img.pa.tbimg(:src='themeList[theme].tpbg')
     h2.pa.fc-w3 {{ mainTitle }}

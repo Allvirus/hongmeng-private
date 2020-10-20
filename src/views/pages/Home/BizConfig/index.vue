@@ -60,7 +60,7 @@
               :label="item.realName"
               :value="item.id")
           el-form-item(label="时间:" required)
-            CommonDatePicker(:start.sync='cfgInfo.row.startTime'
+            CommonDatePicker.mgl1(:start.sync='cfgInfo.row.startTime'
               :end.sync='cfgInfo.row.endTime' type='datetimerange' all)
       span.dialog-footer(slot="footer")
         el-button.mgl3(type="warning" @click="cancelEdit") 取消

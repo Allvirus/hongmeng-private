@@ -5,7 +5,7 @@
       el-form-item(label='玩家账号:')
         el-input.winput(v-model='model.UserAccount')
       el-form-item
-        el-button(icon="el-icon-plus" type="primary" @click="swBindDlg = true") 玩家换绑
+        el-button(type="warning" @click="swBindDlg = true") 玩家换绑
         el-button.mgl3(icon="el-icon-search" type="primary" @click="getListMixin") 搜索
         el-button.mgl2(icon="el-icon-refresh-right" type="primary" @click="resetPageMixin") 重置
 
@@ -19,9 +19,6 @@
     el-table-column(prop='cJobAfter', label='C岗(换绑后)')
     el-table-column(prop='switchTime', label='换绑时间')
       template(slot-scope='{ row }') {{ row.switchTime | dateFormat }}
-    el-table-column(prop="operate" label="操作")
-      template(slot-scope="{ row }")
-        el-button.mgl3.danger(icon="el-icon-delete" type="text" @click="delRecord(row)") 删除
   el-pagination.margin-spacing(
     :total='listMixin.count',
     :page-size.sync='model.PageSize',
@@ -33,6 +30,39 @@
       @close="cancelBind"
       :visible.sync="swBindDlg" width="600px")
 
+    el-form(label-width="100px")
+      el-form-item(label="玩家账号:" required)
+        el-input(v-model="swBindParams.userAccount" @change="onUserAccountChange")
+      el-form-item(label="A岗(当前):" required)
+        p {{swBindParams.aJob}}
+      el-form-item(label="B岗(当前):")
+        p {{swBindParams.bJob}}
+      el-form-item(label="C岗(当前):" )
+        p {{swBindParams.cJob}}
+      el-form-item(label="A岗(新):" required)
+        el-select(v-model='swBindParams.aJobIdAfter' placeholder='请选择', clearable)
+          el-option(
+            v-for='item in userList',
+            :key='item.id',
+            :label='item.realName',
+            :value='item.id'
+          )
+      el-form-item(label="B岗(新):" required)
+        el-select(v-model='swBindParams.bJobIdAfter', placeholder='请选择', clearable)
+          el-option(
+            v-for='item in userList',
+            :key='item.id',
+            :label='item.realName',
+            :value='item.id'
+          )
+      el-form-item(label="C岗(新):" required)
+        el-select(v-model='swBindParams.cJobIdAfter', placeholder='请选择', clearable)
+          el-option(
+            v-for='item in userList',
+            :key='item.id',
+            :label='item.realName',
+            :value='item.id'
+          )
     span.dialog-footer(slot="footer")
       el-button.mgl3(type="warning" @click="cancelBind") 取消
       el-button.mgl3(type="primary" @click="commitSwBind") 提交
@@ -63,8 +93,15 @@ export default {
         bJobIdAfter: '',
         cJobIdAfter: '',
       },
+      userList: [],
       swBindDlg: false,
+      originBind: {},
     }
+  },
+  created () {
+    this.$api.getDepartMembers(1).then(data => {
+      this.userList = data
+    })
   },
   methods: {
     delRecord (row) {
@@ -77,9 +114,37 @@ export default {
     },
     cancelBind () {
       this.swBindDlg = false
+      for (const key in this.swBindParams) {
+        this.swBindParams[key] = ''
+      }
     },
     commitSwBind () {
+      for (const key in this.swBindParams) {
+        if (this.swBindParams[key] === '') {
+          this.$vgo.tip('请完善表单数据!', 'warning')
+          return
+        }
+      }
+      this.$api.switchBind(this.swBindParams).then(data => {
+        this.$vgo.tip('换绑成功!', 'success')
+        this.cancelBind()
+        this.getListMixin()
+      })
+    },
+    onUserAccountChange (value) {
+      this.$api.getOriginBind(value).then(data => {
+        console.log('userAccount ', value, data)
 
+        this.swBindParams.userAccount = data.userAccount
+        this.swBindParams.aJob = data.aJob
+        this.swBindParams.aJobId = data.aJobId
+
+        this.swBindParams.bJob = data.bJob
+        this.swBindParams.bJobId = data.bJobId
+
+        this.swBindParams.cJob = data.cJob
+        this.swBindParams.cJobId = data.cJobId
+      })
     },
   },
 }

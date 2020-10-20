@@ -20,12 +20,18 @@
         rankingKey="totlaMoney"
       )
       ranking-list(
-        :data='rankList.bjobMoneyRank',
-        mainTitle='B岗充值排行榜',
-        subTitle='充值金额(元)'
+        :data='rankList.ajobRegRank',
+        mainTitle='A岗注册排行榜',
+        subTitle='注册人数'
+        theme="orange"
+        rankingKey="count"
+      )
+      ranking-list(
+        :data='rankList.bjobRegRank',
+        mainTitle='B岗注册排行榜',
+        subTitle='注册人数'
         theme="green"
-        :toFixed='true'
-        rankingKey="totlaMoney"
+        rankingKey="count"
       )
       ranking-list(
         :data='rankList.cjobMoneyRank',
@@ -35,30 +41,6 @@
         :toFixed='true'
         rankingKey="totlaMoney"
       )
-
-      ranking-list(
-        :data='rankList.ajobRegRank',
-        mainTitle='A岗注册排行榜',
-        subTitle='注册人数'
-        theme="orange"
-        rankingKey="count"
-      )
-
-      ranking-list(
-        :data='rankList.bjobRegRank',
-        mainTitle='B岗注册排行榜',
-        subTitle='注册人数'
-        theme="green"
-        rankingKey="count"
-      )
-      ranking-list(
-        :data='rankList.cjobRegRank',
-        mainTitle='C岗注册排行榜',
-        subTitle='注册人数'
-        theme="blue"
-        rankingKey="count"
-      )
-
 </template>
 <script>
 import RankingList from './comps/RankingList'

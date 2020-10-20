@@ -50,9 +50,6 @@
     el-table-column(prop='effectiveDate', label='有效期')
       template(slot-scope='{ row }') {{ row.effectiveDate | dateFormat }}
     el-table-column(prop='remark', label='备注')
-    el-table-column(prop="operate" label="操作" v-if="userInfo.isLeader")
-        template(slot-scope="{ row }")
-            el-button.mgl3.danger(icon="el-icon-delete" type="text" @click="deleteExp(row)") 删除
   el-pagination.margin-spacing(
     :total='listMixin.count',
     :page-size.sync='model.pageSize',

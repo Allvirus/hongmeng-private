@@ -23,27 +23,27 @@
             el-table-column(prop="basicSalary" label="等级工资")
 
         .flex-1.pd1.exp-table
-          h3.mgt3 换包经验值获取
-          el-table.mgy2(:data='levelInfo')
-            el-table-column(prop="levelName" label="等级名称" width="80")
-            el-table-column(prop="ajobAndroidExp" label="A岗Android换包经验")
-            el-table-column(prop="ajobIOSExp" label="A岗iOS换包经验" )
-            el-table-column(prop="bjobAndroidExp" label="B岗Android换包经验")
-            el-table-column(prop="bjobIOSExp" label="B岗iOS换包经验")
+          h3.mgt3 流水经验值获取
+          el-table.mgy2(:data='experience' v-if="levData.length > 0")
+            el-table-column(prop="job" label="岗位")
+            el-table-column(prop="custom" label="客流岗流水经验")
+            el-table-column(prop="guide" label="引导岗流水经验")
+            el-table-column(prop="accompany" label="陪玩岗流水经验")
+
+      h3.mgt3 换包经验值获取
+      el-table.mgy2(:data='levelInfo')
+        el-table-column(prop="levelName" label="等级名称" width="80")
+        el-table-column(prop="ajobAndroidExp" label="A岗Android换包经验")
+        el-table-column(prop="ajobIOSExp" label="A岗iOS换包经验" )
+        el-table-column(prop="bjobAndroidExp" label="B岗Android换包经验")
+        el-table-column(prop="bjobIOSExp" label="B岗iOS换包经验")
 
       h3.mgt1 提成起点
       el-table.mgy2(:data='commission' v-if="levData.length > 0")
         el-table-column(prop="job" label="岗位")
-        el-table-column(prop="custom" :label="levData[0].configType")
-        el-table-column(prop="guide" :label="levData[1].configType")
-        el-table-column(prop="accompany" :label="levData[2].configType")
-
-      h3.mgt3 流水经验值获取
-      el-table.mgy2(:data='experience' v-if="levData.length > 0")
-        el-table-column(prop="job" label="岗位")
-        el-table-column(prop="custom" :label="levData[3].configType")
-        el-table-column(prop="guide" :label="levData[4].configType")
-        el-table-column(prop="accompany" :label="levData[5].configType")
+        el-table-column(prop="custom" label="客流岗流水经验")
+        el-table-column(prop="guide" label="引导岗流水经验")
+        el-table-column(prop="accompany" label="陪玩岗流水经验")
 
     .tips(v-if="levData.length > 0")
       h3.mgt3 {{levData[6].configType}}
