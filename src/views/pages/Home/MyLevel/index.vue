@@ -37,6 +37,12 @@
         el-table-column(prop="ajobIOSExp" label="A岗iOS换包经验" )
         el-table-column(prop="bjobAndroidExp" label="B岗Android换包经验")
         el-table-column(prop="bjobIOSExp" label="B岗iOS换包经验")
+        el-table-column(prop="ajobRechargeExp" label="A岗充值比经验(新服)")
+        el-table-column(prop="ajobRechargeExpAfter" label="A岗充值比经验(后续)")
+        el-table-column(prop="bjobRechargeExp" label="B岗充值比经验(新服)")
+        el-table-column(prop="bjobRechargeExpAfter" label="B岗充值比经验(后续)")
+        el-table-column(prop="cjobRechargeExp" label="C岗充值比经验(新服)")
+        el-table-column(prop="cjobRechargeExpAfter" label="C岗充值比经验(后续)")
 
       h3.mgt1 提成起点
       el-table.mgy2(:data='commission' v-if="levData.length > 0")

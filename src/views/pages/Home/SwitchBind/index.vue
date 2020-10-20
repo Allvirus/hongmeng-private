@@ -4,7 +4,7 @@
     el-form.ff-rw.ai-center(label-width='100px')
       el-form-item(label='玩家账号:')
         el-input.winput(v-model='model.UserAccount')
-      el-form-item
+      el-form-item(label-width='20px')
         el-button(type="warning" @click="swBindDlg = true") 玩家换绑
         el-button.mgl3(icon="el-icon-search" type="primary" @click="getListMixin") 搜索
         el-button.mgl2(icon="el-icon-refresh-right" type="primary" @click="resetPageMixin") 重置
