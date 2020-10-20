@@ -64,10 +64,8 @@ export default {
     }
   },
   methods: {
-    reset (dflb) {
-      if (dflb) {
-        this.label = dflb
-      }
+    reset (dflb = '') {
+      this.label = dflb
       this.value = ''
     },
     handleNodeClick (item) {

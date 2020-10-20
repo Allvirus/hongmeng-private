@@ -36,13 +36,14 @@
       .flex-center
         el-form(label-width="100px")
           el-form-item(label="部门名称:" required)
-            el-select.mgl1(v-model="cfgInfo.row.departmentId"
-              @change="onDepartChange"
-              placeholder="请选择")
-              el-option(v-for="item in cfgInfo.departList"
-              :key="item.id"
-              :label="item.name"
-              :value="item.id")
+            tree-selector.mgl1(
+              ref='dtptree',
+              :data='myDptList.list',
+              :defProps='myDptList.props',
+              nodeKey='id',
+              clearable,
+              @change='onDepartChange'
+            )
           el-form-item(label="B岗:" required)
             el-select.mgl1(v-model="cfgInfo.row.bUserId"
               @change="onBJobChange"
@@ -68,6 +69,7 @@
 
 </template>
 <script>
+import { mapGetters } from 'vuex'
 export default {
   name: 'BizConfig',
   data () {
@@ -103,6 +105,9 @@ export default {
       },
       configList: [],
     }
+  },
+  computed: {
+    ...mapGetters(['myDptList']),
   },
   created: function () {
     this.loadOptions()
@@ -154,23 +159,14 @@ export default {
     },
     cancelEdit () {
       this.editDlgVisiable = false
-      this.cfgInfo.row = {
-        startTime: '',
-        endTime: '',
-        departmentId: '',
-        departmentName: '',
-        bUserId: '',
-        bUserName: '',
-        cUserId: '',
-        cUserName: '',
+      for (const key in this.cfgInfo.row) {
+        this.cfgInfo.row[key] = ''
       }
+      this.$refs.dtptree.reset('')
     },
     onDepartChange (dptInfo) {
-      for (const item of this.cfgInfo.departList) {
-        if (item.id === dptInfo) {
-          this.cfgInfo.row.departmentName = item.name
-        }
-      }
+      this.cfgInfo.row.departmentId = dptInfo.id
+      this.cfgInfo.row.departmentName = dptInfo.name
     },
     onBJobChange (value) {
       for (const item of this.cfgInfo.BUserList) {
