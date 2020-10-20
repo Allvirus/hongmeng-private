@@ -42,8 +42,14 @@
         :toFixed='item.toFixed',
         :key='idx'
       )
+
+  .ff-rn.mgt2(v-if="!OS.isPc")
+    .ff-cn.bg-white.w100(v-for='(item, key, idx) in panelList')
+      p.mgt2.jc-center {{item.title}}
+      h3.jc-center.mgy2.warning {{item.value}}
+
   //- 图表
-  .mgt3
+  .mgt2
     .chart(
       :class='halfLayout ? "ff-rn" : "ff-cn"',
       :key='halfLayout ? "half" : "full"'
@@ -119,13 +125,13 @@ export default {
           rate: 0,
         },
         rechgOrders: {
-          title: '充值订单数',
+          title: '充值订单',
           value: 0,
           increase: false,
           rate: 0,
         },
         rechgTotal: {
-          title: '充值总额(元)',
+          title: '充值总额',
           value: 0,
           increase: true,
           rate: 0,

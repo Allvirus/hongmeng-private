@@ -53,6 +53,8 @@
       el-tab-pane(label='排行', name='Ranking')
     .notice.ai-center.omit.w400
       p(@click="showDptNotice" v-if="OS.isPc") {{dptNotices}}
+    .menu.ai-center.jc-center(v-if="!OS.isPc")
+      ms-menu
   .edit-pswd
     el-dialog(
       title='修改密码',
@@ -95,6 +97,9 @@ import { EUIRule } from '@/plugins/utils'
 import { MessageBox } from 'element-ui'
 export default {
   name: 'TopBar',
+  components: {
+    MsMenu: () => import('./MsMenu'),
+  },
   data () {
     return {
       rules: {
