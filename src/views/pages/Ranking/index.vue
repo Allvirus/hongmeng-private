@@ -10,7 +10,7 @@
             :value='index',
             :label='item.label'
           )
-    .ff-rn.jc-around.mgt3
+    .rank(:class="OS.isPc?'ff-rn jc-around mgt3':''")
       ranking-list(
         :data='rankList.ajobMoneyRank',
         mainTitle='A岗充值排行榜',
@@ -43,6 +43,7 @@
       )
 </template>
 <script>
+import { mapGetters } from 'vuex'
 import RankingList from './comps/RankingList'
 export default {
   name: '',
@@ -82,6 +83,7 @@ export default {
     }
   },
   computed: {
+    ...mapGetters(['OS']),
   },
   created: function () {
     this.getRank()

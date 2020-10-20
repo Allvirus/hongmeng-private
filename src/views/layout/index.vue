@@ -4,7 +4,7 @@
   .layout-bottom.flex-1
     transition(name='fade-scale', mode='out-in')
       router-view
-    .copyright.lh3.jc-center.mgt3(v-html='$WD.$globalconfig.COPYRIGHT')
+    .copyright.lh3.jc-center.mgt3.pdx2(v-html='$WD.$globalconfig.COPYRIGHT')
 </template>
 
 <script>
@@ -33,9 +33,17 @@ export default {
 <style lang="stylus">
 @import '~@/assets/style/var'
 
-.layout
-  background-color $page-bg
-  .layout-bottom
-    height 0
-    padding 20px 30px
+.pc-mode
+  .layout
+    background-color $page-bg
+    .layout-bottom
+      height 0
+      padding 20px 30px
+
+.mobile-mode
+  .layout
+    background-color $page-bg
+    .layout-bottom
+      height 0
+      padding 20px 0px
 </style>

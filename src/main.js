@@ -32,7 +32,7 @@ Vue.prototype.$WD = window
 window.$globalconfig.serviceTel = '400-9975-996'
 
 Vue.config.productionTip = false
-
+document.body.classList.add(utils.UAis('pc') ? 'pc-mode' : 'mobile-mode')
 new Vue({
   router,
   store,

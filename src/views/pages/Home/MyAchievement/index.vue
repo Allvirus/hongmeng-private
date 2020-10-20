@@ -11,7 +11,7 @@
         )
     .opt-bar
       el-form.ff-rw.mgt2.ai-center(label-width='100px')
-        el-form-item(label='部门:', v-if='userInfo.isLeader' label-width='60px')
+        el-form-item(label='部门:' :class="OS.isPc?'':'mgl1'" v-if='userInfo.isLeader' :label-width='OS.isPc?"60px":"100px"')
           tree-selector.winput(
             ref='dtptree',
             :data='myDptList.list',
@@ -23,9 +23,9 @@
           )
         el-form-item(label='游戏名称:')
           auto-complete.mgl1(v-model='model.gameName', :data='gameList')
-        el-form-item(label='区服:' label-width='60px')
+        el-form-item(label='区服:' :label-width='OS.isPc?"60px":"100px"')
           auto-complete.mgl1(v-model='model.areaName', :data='areaList')
-        el-form-item.search-btn
+        el-form-item.search-btn(:class="OS.isPc?'':'jc-center full'")
           el-button(icon='el-icon-search', type='primary', @click='search') 搜索
           el-button(
             icon='el-icon-refresh-right',
@@ -34,7 +34,7 @@
           ) 重置
 
   //- 创角指数
-  .data-panel.mgt2.ff-rn
+  .data-panel.mgt2.ff-rn(v-if="OS.isPc")
     .pd1.flex-1(v-for='(item, key, idx) in panelList')
       data-box(
         :data='item',
@@ -136,11 +136,11 @@ export default {
     }
   },
   computed: {
+    ...mapGetters(['areaList', 'gameList', 'myDptList', 'userInfo', 'OS']),
     halfLayout () {
       // return this.selTimeRange === '本周'
-      return true
+      return this.OS.isPc
     },
-    ...mapGetters(['areaList', 'gameList', 'myDptList', 'userInfo']),
   },
   created () {
     this.model.dtpId = this.myDptList.list[0].id
@@ -367,7 +367,7 @@ $spc = 44px
   >>>.el-radio-button__inner
     border none !important
   .opt-bar
-    .el-form-item
+    .pc-mode .el-form-item
       margin-bottom 0px
     >>>.search-btn .el-form-item__content
       margin-left 10px !important

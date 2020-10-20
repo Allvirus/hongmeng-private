@@ -1,5 +1,5 @@
 <template lang='pug'>
-.rank.h650.ff-cn.pr.flex-1.mgx3
+.rank.h650.ff-cn.pr.flex-1.mgx3(:class="OS.isPc?'':'mgt3'")
   .top-bg.pr
     img.pa.tbimg(:src='themeList[theme].tpbg')
     h2.pa.fc-w3 {{ mainTitle }}
@@ -32,6 +32,7 @@
       span.flex-1.jc-end.mgr3 {{ myRank[rankingKey] }}
 </template>
 <script>
+import { mapGetters } from 'vuex'
 export default {
   name: '',
   props: {
@@ -90,6 +91,9 @@ export default {
       },
       testUrl: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1602244834651&di=8a64567985c8b88137bbf1a63b5caba6&imgtype=0&src=http%3A%2F%2F5b0988e595225.cdn.sohucs.com%2Fimages%2F20180313%2Fab29d548f2a54e2c81663261d4a11af0.jpeg',
     }
+  },
+  computed: {
+    ...mapGetters(['OS']),
   },
   created: function () {
   },

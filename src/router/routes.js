@@ -78,7 +78,7 @@ export default [
             path: 'ExpDetail',
             name: 'HomeExpDetail',
             meta: {
-              title: '经验值明细',
+              title: '经验明细',
               icsel: require('@/assets/img/ic_exp_sel.png'),
               icdef: require('@/assets/img/ic_exp_def.png'),
             },

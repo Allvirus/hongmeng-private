@@ -25,7 +25,8 @@
             li.hand.warning.h30.full.ai-center.hover(@click='logout')
               i.el-icon-close.fs-l
               span.mgl1 退出登录
-        img.avatar.mg3(
+        img.avatar(
+          :class="OS.isPc?'mg3':''"
           slot='reference',
           :src='userInfo.photo !== null ? userInfo.photo : require("@/assets/img/ic_def_avatar.png")'
         )
@@ -40,8 +41,8 @@
           span.mgl1 {{ userInfo.job | formatJob }}
           span.mgl1 经验值 {{ userInfo.experiences }}
     .swiper.pa.omit
-      scroll-notice(:data='noticeList', :rows='3')
-    .logo.mgr3.ai-center
+      scroll-notice(:data='noticeList', :rows='3' v-if="OS.isPc")
+    .logo.mgr3.ai-center(v-if="OS.isPc")
       img.mgr3(:src='require("@/assets/img/logo_zl.png")')
   .menu-list.jc-between.bg-white
     el-tabs(
@@ -51,8 +52,7 @@
       el-tab-pane(label='首页', name='HomeMyAchievement')
       el-tab-pane(label='排行', name='Ranking')
     .notice.ai-center.omit.w400
-      //- scroll-notice(:data='dptNotices', :rows='1')
-      p(@click="showDptNotice") {{dptNotices}}
+      p(@click="showDptNotice" v-if="OS.isPc") {{dptNotices}}
   .edit-pswd
     el-dialog(
       title='修改密码',
@@ -122,7 +122,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['userInfo']),
+    ...mapGetters(['userInfo', 'OS']),
   },
   created () {
     if (this.$route.name.slice(0, 4) === 'Home') {
@@ -186,37 +186,70 @@ export default {
 </script>
 <style lang="stylus">
 @import '~@/assets/style/var'
-$H = 120px
 
-.top-bar
-  .banner
-    height $H
-    background-image url('../../assets/img/topbar-bg.jpg')
-    .avatar
-      width 60px
-      height 60px
-      border-radius 50%
-    .user-info
-      #ctxMenu
-        position fixed
-        display block
-        z-index 3
-        background-color #fff
-        transform translateX(15px)
-        box-shadow 0 2px 12px 0 rgba(0, 0, 0, 0.1)
-      ul li
-        padding 8px 15px
-      ul li:hover
-        background-color #ebeef5
-  .swiper
-    width 50%
-    height 100%
-    top 0%
-    left 50%
-    transform translateX(-30%)
-  .menu-list
-    height 50px
-    padding 0 70px
-    .el-tabs__item
-      font-size 18px
+.pc-mode
+  .top-bar
+    .banner
+      height 120px
+      background-image url('../../assets/img/topbar-bg.jpg')
+      .avatar
+        width 60px
+        height 60px
+        border-radius 50%
+      .user-info
+        #ctxMenu
+          position fixed
+          display block
+          z-index 3
+          background-color #fff
+          transform translateX(15px)
+          box-shadow 0 2px 12px 0 rgba(0, 0, 0, 0.1)
+        ul li
+          padding 8px 15px
+        ul li:hover
+          background-color #ebeef5
+    .swiper
+      width 50%
+      height 100%
+      top 0%
+      left 50%
+      transform translateX(-30%)
+    .menu-list
+      height 50px
+      padding 0 70px
+      .el-tabs__item
+        font-size 18px
+
+.mobile-mode
+  .top-bar
+    .banner
+      height 90px
+      background-image url('../../assets/img/topbar-bg.jpg')
+      .avatar
+        width 50px
+        height 50px
+        border-radius 50%
+      .user-info
+        #ctxMenu
+          position fixed
+          display block
+          z-index 3
+          background-color #fff
+          transform translateX(15px)
+          box-shadow 0 2px 12px 0 rgba(0, 0, 0, 0.1)
+        ul li
+          padding 8px 15px
+        ul li:hover
+          background-color #ebeef5
+    .swiper
+      width 50%
+      height 100%
+      top 0%
+      left 50%
+      transform translateX(-30%)
+    .menu-list
+      height 50px
+      padding 0 10px
+      .el-tabs__item
+        font-size 18px
 </style>
