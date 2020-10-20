@@ -54,6 +54,7 @@ export default {
         if (item.meta.hideMenu) return
         if ((item.name === 'HomeBizConfig' && !this.userInfo.menu.bizConfigAuthority) ||
             (item.name === 'HomeLevelManage' && !this.userInfo.menu.levelAuthority) ||
+            (item.name === 'HomeSwitchBind' && !this.userInfo.menu.playSwitch) ||
             (item.name === 'HomeDepartment' && !this.userInfo.menu.departmentAuthority)) {
           return
         }

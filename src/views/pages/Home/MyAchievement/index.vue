@@ -143,7 +143,9 @@ export default {
     ...mapGetters(['areaList', 'gameList', 'myDptList', 'userInfo']),
   },
   created () {
-    this.model.dtpId = this.myDptList.list[0].id
+    if (this.userInfo.isLeader) {
+      this.model.dtpId = this.myDptList.list[0].id
+    }
     this.search()
   },
   methods: {
@@ -277,8 +279,10 @@ export default {
     reset () {
       this.model.gameName = ''
       this.model.areaName = ''
-      this.model.dtpId = this.myDptList.list[0].id
-      this.$refs.dtptree.reset(this.myDptList.list[0].name)
+      if (this.userInfo.isLeader) {
+        this.model.dtpId = this.myDptList.list[0].id
+        this.$refs.dtptree.reset(this.myDptList.list[0].name)
+      }
       this.onRadioChange(this.selTimeRange)
     },
     onRadioChange (val) {
