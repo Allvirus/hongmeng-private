@@ -96,7 +96,6 @@ export default {
   },
   created: function () {
     this.getMyLevel()
-    console.log('create', this.userInfo)
   },
   methods: {
     getMyLevel () {

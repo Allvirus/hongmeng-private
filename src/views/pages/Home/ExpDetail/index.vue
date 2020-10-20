@@ -110,23 +110,7 @@ export default {
   computed: {
     ...mapGetters(['areaList', 'gameList', 'myDptList', 'userInfo']),
   },
-  created () {
-    this.$api.getDptExpList(this.model).then(data => {
-      console.log('dpt exp ', data)
-    })
-  },
   methods: {
-    // resetExp () {
-    //   this.listApiForMixin = this.dtpApi
-    //   this.model = JSON.parse(JSON.stringify(this.modelCopyMixin))
-    //   this.model.resDepId = this.myDptList.list[0].id
-    //   this.getListMixin()
-    // },
-    // searchExp () {
-    //   this.listApiForMixin = (this.model.UserId === '') ? this.myApi : this.dtpApi
-    //   this.$utils.autoFillDateTime(this.model)
-    //   this.getListMixin()
-    // },
     deleteExp (row) {
       this.$vgo.open(() => {
         this.$api.delExpById(row.id).then(data => {

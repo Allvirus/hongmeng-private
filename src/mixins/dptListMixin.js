@@ -12,7 +12,6 @@ export default {
     } else {
       this.listApiForMixin = this.myApi
     }
-    console.log('listApiForMixin...', this.listApiForMixin)
   },
   methods: {
     reset () {

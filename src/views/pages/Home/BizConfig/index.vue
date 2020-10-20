@@ -171,7 +171,6 @@ export default {
           this.cfgInfo.row.departmentName = item.name
         }
       }
-      console.log('dpt name = ', this.cfgInfo.row.departmentName)
     },
     onBJobChange (value) {
       for (const item of this.cfgInfo.BUserList) {

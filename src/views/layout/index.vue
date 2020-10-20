@@ -15,7 +15,7 @@ export default {
     TopBar: () => import('./TopBar.vue'),
   },
   computed: {
-    ...mapGetters(['userInfo', 'myDptList']),
+    ...mapGetters(['userInfo', 'myDptList', 'OS']),
   },
   watch: {
     userInfo (newValue, oldValue) {
@@ -26,6 +26,7 @@ export default {
     this.$store.dispatch('getUserInfo')
     this.$store.dispatch('getAreaList')
     this.$store.dispatch('getGameList')
+    this.$store.dispatch('checkOS')
   },
 }
 </script>

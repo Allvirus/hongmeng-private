@@ -46,7 +46,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['userInfo']),
+    ...mapGetters(['userInfo', 'OS']),
     getMenu () {
       const secRoutes = routes[0].children.filter(item => item.name === this.$route.matched[1].name)[0]
       const groupObj = {}
@@ -64,7 +64,7 @@ export default {
     },
   },
   created: function () {
-    console.log('create', this.userInfo)
+    console.log('userInfo =', this.userInfo, ' os is PC = ', this.OS.isPc)
   },
   methods: {
     handleGetGroup (item) {

@@ -133,8 +133,6 @@ export default {
     },
     onUserAccountChange (value) {
       this.$api.getOriginBind(value).then(data => {
-        console.log('userAccount ', value, data)
-
         this.swBindParams.userAccount = data.userAccount
         this.swBindParams.aJob = data.aJob
         this.swBindParams.aJobId = data.aJobId

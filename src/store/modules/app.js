@@ -1,5 +1,6 @@
 // import vgo from '@/plugins/bus'
 import api from '@/api/'
+import utils from '@/plugins/utils'
 export default {
   state: {
     regions: [],
@@ -14,12 +15,16 @@ export default {
       },
       ready: false,
     },
+    OS: {
+      isPc: true,
+    },
   },
   getters: {
     regions: state => state.regions,
     userInfo: state => state.userInfo,
     projectTagList: state => state.projectTagList,
     myDptList: state => state.myDptList,
+    OS: state => state.OS,
   },
   actions: {
     // 获取服务器城市数据
@@ -50,6 +55,9 @@ export default {
     },
     clearStore ({ commit, state }) {
       return commit('clearStore')
+    },
+    checkOS ({ commit, state }) {
+      return commit('checkOS')
     },
   },
   mutations: {
@@ -85,6 +93,9 @@ export default {
         },
         ready: false,
       }
+    },
+    checkOS (state) {
+      state.OS.isPc = utils.UAis('pc')
     },
   },
 }
