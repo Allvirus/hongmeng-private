@@ -5,15 +5,14 @@
       .bg-white.pd2
         .ff-rn.ai-center
           span 累计经验值 {{userInfo.experiences}}
-          //- el-button.mgl3.fs-m(type="text" @click="showDetailExp") 经验值明细
-        .ff-rn.mgt2
-          span {{levelInfo[0].levelName}}
+        .ff-rn.mgt2.ai-center.jc-center
+          p {{levelInfo[0].levelName}}
           .pr
-            el-progress.mgx2.w300(:text-inside="true" :show-text="false" :stroke-width="20" :percentage="expPercent")
+            el-progress.mgx2(:class="OS.isPc?'w300':'w200'" :text-inside="true" :show-text="false" :stroke-width="OS.isPc?20:15" :percentage="expPercent")
             p.flex-center.pac(:style="{ color: '#000000' }") {{userInfo.experiences}}/{{levelInfo[1].experience}}
-          span {{levelInfo[1].levelName}}
+          p {{levelInfo[1].levelName}}
     .tables
-      .ff-rn
+      .tab(:class="OS.isPc?'ff-rn':'ff-cn'")
         .flex-1.pd1
           h3.mgt2 等级权益说明
           el-table.mgy2(:data='levelInfo')
@@ -85,7 +84,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['userInfo']),
+    ...mapGetters(['userInfo', 'OS']),
   },
   created: function () {
     this.getMyLevel()

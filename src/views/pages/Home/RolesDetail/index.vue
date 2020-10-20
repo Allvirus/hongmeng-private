@@ -28,7 +28,7 @@
         el-input.winput(v-model='model.RoleName')
       el-form-item(label='区服:')
         auto-complete(v-model='model.AreaName', :data='areaList')
-      el-form-item(label='创建时间:')
+      el-form-item(label='创建时间:' v-if="OS.isPc")
         CommonDatePicker.w300(
           :start.sync='model.startTime',
           :end.sync='model.endTime',
@@ -60,6 +60,9 @@
     :page-size.sync='model.pageSize',
     :current-page.sync='model.page',
     @current-change='getListMixin'
+    :class="OS.isPc?'margin-spacing':''"
+    :base="!OS.isPc"
+    :small="!OS.isPc"
   )
 </template>
 <script>
@@ -91,7 +94,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['areaList', 'gameList', 'myDptList', 'userInfo']),
+    ...mapGetters(['areaList', 'gameList', 'myDptList', 'userInfo', 'OS']),
   },
 }
 </script>

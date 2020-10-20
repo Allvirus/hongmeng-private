@@ -32,7 +32,7 @@
         el-input.winput(v-model='model.Account')
       el-form-item(label='区服:')
         auto-complete(v-model="model.AreaName" :data='areaList')
-      el-form-item(label='支付时间:')
+      el-form-item(label='支付时间:' v-if="OS.isPc")
         CommonDatePicker.w400(
           :start.sync='model.startTime',
           :end.sync='model.endTime',
@@ -62,11 +62,14 @@
     el-table-column(prop='ajob', label='A岗')
     el-table-column(prop='bjob', label='B岗')
     el-table-column(prop='cjob', label='C岗')
-  el-pagination.margin-spacing(
+  el-pagination(
     :total='listMixin.count',
     :page-size.sync='model.pageSize',
     :current-page.sync='model.page',
     @current-change='getListMixin'
+    :class="OS.isPc?'margin-spacing':''"
+    :base="!OS.isPc"
+    :small="!OS.isPc"
   )
 </template>
 <script>
@@ -101,7 +104,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['areaList', 'gameList', 'myDptList', 'userInfo']),
+    ...mapGetters(['areaList', 'gameList', 'myDptList', 'userInfo', 'OS']),
   },
 }
 </script>

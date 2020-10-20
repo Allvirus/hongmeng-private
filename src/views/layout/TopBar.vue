@@ -31,19 +31,19 @@
           :src='userInfo.photo !== null ? userInfo.photo : require("@/assets/img/ic_def_avatar.png")'
         )
       .ff-cn.mgl2
-        .ff-rn.ai-center.fs-b
+        .ff-rn.ai-center(:class="OS.isPc?'fs-b':'fs-s'")
           span {{ userInfo.realName }}
           img.mgl2.fit-contain.flex-center(:src='userInfo.level | formatBadge')
           span.mgl1.omit {{ userInfo.level | formatLevel }}
 
-        .ff-rn.ai-center.mgt2.fs-m
+        .ff-rn.ai-center.mgt2(:class="OS.isPc?'fs-m':'fs-s'")
           img(:src='require("@/assets/img/ic_job.png")', fit='contain')
           span.mgl1 {{ userInfo.job | formatJob }}
           span.mgl1 经验值 {{ userInfo.experiences }}
     .swiper.pa.omit
       scroll-notice(:data='noticeList', :rows='3' v-if="OS.isPc")
-    .logo.mgr3.ai-center(v-if="OS.isPc")
-      img.mgr3(:src='require("@/assets/img/logo_zl.png")')
+    .ai-center
+      img.logo(:src='require("@/assets/img/logo_zl.png")' :class="OS.isPc?'mgr3':'mgr2'")
   .menu-list.jc-between.bg-white
     el-tabs(
       v-model='activeTab',
@@ -195,69 +195,47 @@ export default {
 <style lang="stylus">
 @import '~@/assets/style/var'
 
-.pc-mode
-  .top-bar
-    .banner
-      height 120px
-      background-image url('../../assets/img/topbar-bg.jpg')
-      .avatar
-        width 60px
-        height 60px
-        border-radius 50%
-      .user-info
-        #ctxMenu
-          position fixed
-          display block
-          z-index 3
-          background-color #fff
-          transform translateX(15px)
-          box-shadow 0 2px 12px 0 rgba(0, 0, 0, 0.1)
-        ul li
-          padding 8px 15px
-        ul li:hover
-          background-color #ebeef5
-    .swiper
-      width 50%
-      height 100%
-      top 0%
-      left 50%
-      transform translateX(-30%)
-    .menu-list
-      height 50px
-      padding 0 70px
-      .el-tabs__item
-        font-size 18px
+.top-bar
+  .banner
+    height 120px
+    background-image url('../../assets/img/topbar-bg.jpg')
+    .avatar
+      width 60px
+      height 60px
+      border-radius 50%
+    .user-info
+      #ctxMenu
+        position fixed
+        display block
+        z-index 3
+        background-color #fff
+        transform translateX(15px)
+        box-shadow 0 2px 12px 0 rgba(0, 0, 0, 0.1)
+      ul li
+        padding 8px 15px
+      ul li:hover
+        background-color #ebeef5
+  .swiper
+    width 50%
+    height 100%
+    top 0%
+    left 50%
+    transform translateX(-30%)
+  .menu-list
+    height 50px
+    padding 0 70px
+    .el-tabs__item
+      font-size 18px
 
 .mobile-mode
-  .top-bar
-    .banner
-      height 90px
-      background-image url('../../assets/img/topbar-bg.jpg')
-      .avatar
-        width 50px
-        height 50px
-        border-radius 50%
-      .user-info
-        #ctxMenu
-          position fixed
-          display block
-          z-index 3
-          background-color #fff
-          transform translateX(15px)
-          box-shadow 0 2px 12px 0 rgba(0, 0, 0, 0.1)
-        ul li
-          padding 8px 15px
-        ul li:hover
-          background-color #ebeef5
-    .swiper
-      width 50%
-      height 100%
-      top 0%
-      left 50%
-      transform translateX(-30%)
-    .menu-list
-      height 50px
-      padding 0 10px
-      .el-tabs__item
-        font-size 18px
+  .banner
+    height 90px
+  .menu-list
+    padding 0 10px
+  .avatar
+    width 40px !important
+    height 40px !important
+  .logo
+    width 100px
+    height 26px
 </style>

@@ -1,6 +1,6 @@
 <template lang='pug'>
 .sub-menu
-  el-button(plain @click="drawer = !drawer") 菜单
+  i.fs-xl(class="el-icon-menu" @click="drawer = !drawer")
   el-drawer(:visible.sync="drawer")
     .menu
       el-menu.flex-auto(

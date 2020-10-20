@@ -1,7 +1,7 @@
 <template lang='pug'>
 .top-bar.h50.jc-between
   .logo.ai-center.pd1
-    img.h100p(src='../../assets/img/logo.png')
+    //- img.h100p(src='../../assets/img/logo.png')
 
   MenuList
 
@@ -41,5 +41,6 @@ export default {
   top 0
   left 0
   width 100%
+
   bar-bg()
 </style>
