@@ -53,39 +53,42 @@
       el-tab-pane(label='排行', name='Ranking')
     .notice.ai-center.omit.w400
       p(@click="showDptNotice" v-if="OS.isPc") {{dptNotices}}
-    .menu.ai-center.jc-center(v-if="!OS.isPc")
+    .menu.ai-center.jc-center(v-if="!OS.isPc && (activeTab === 'HomeMyAchievement')")
       ms-menu
   .edit-pswd
     el-dialog(
       title='修改密码',
       :visible.sync='editPswdDlg',
-      width='600px',
+      :width='OS.isPc?"600px":"300px"',
       @close='cancelPswdEdit'
     )
       .flex-center
         el-form(
-          label-width='100px',
+          :label-width='OS.isPc?"100px":""',
           ref='form',
           :rules='rules',
           :model='model'
         )
-          el-form-item(prop='oldpswd', label='旧密码:')
+          el-form-item(prop='oldpswd', :label='OS.isPc?"旧密码:":""')
             el-input(
               v-model='model.oldpswd',
               type='password',
               placeholder='请输入旧密码'
+              :class="OS.isPc?'':'winput'"
             )
-          el-form-item(prop='password', label='新密码:')
+          el-form-item(prop='password', :label='OS.isPc?"新密码:":""')
             el-input(
               v-model='model.password',
               type='password',
               placeholder='请输入新密码'
+              :class="OS.isPc?'':'winput'"
             )
-          el-form-item(prop='passwordre', label='确认新密码:')
+          el-form-item(prop='passwordre', :label='OS.isPc?"确认新密码:":""')
             el-input(
               v-model='model.passwordre',
               type='password',
               placeholder='请再次输入新密码'
+              :class="OS.isPc?'':'winput'"
             )
       span.dialog-footer(slot='footer')
         el-button.mgl3(type='warning', @click='cancelPswdEdit') 取消
