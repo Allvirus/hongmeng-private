@@ -54,6 +54,7 @@ export default {
         if (item.meta.hideMenu) return
         if ((item.name === 'HomeBizConfig' && !this.userInfo.menu.bizConfigAuthority) ||
             (item.name === 'HomeLevelManage' && !this.userInfo.menu.levelAuthority) ||
+            (item.name === 'HomeSwitchBind' && !this.userInfo.menu.playSwitch) ||
             (item.name === 'HomeDepartment' && !this.userInfo.menu.departmentAuthority)) {
           return
         }
@@ -103,4 +104,6 @@ $avatarSize = 60px
       font-size 20px
   .router-link-active
     color #0487FF
+  .el-menu-item
+    height 42px !important
 </style>
