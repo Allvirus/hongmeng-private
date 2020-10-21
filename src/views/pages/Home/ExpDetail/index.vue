@@ -1,6 +1,6 @@
 <template lang='pug'>
 .MyExp
-  .ff-rn.fs-m.ai-center.mgt2.bg-white.pdx2.pdt2
+  .ff-rn.fs-m.ai-center.bg-white.pdx2.pdt2
     el-form.ff-rw(label-width='100px')
       el-form-item(label='部门:', v-show="false")
         tree-selector.winput(
