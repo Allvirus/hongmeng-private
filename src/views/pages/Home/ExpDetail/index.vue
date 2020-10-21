@@ -44,7 +44,8 @@
     el-table-column(prop='origin', label='经验来源')
     el-table-column(prop='expChange', label='经验值')
       template(slot-scope='{ row }')
-        span.danger +{{ row.expChange }}
+        span.danger {{Number(row.expChange) >0 ?'+':''}}
+        span.danger {{ row.expChange }}
     el-table-column(prop='createTime', label='创建时间')
       template(slot-scope='{ row }') {{ row.createTime | dateFormat }}
     el-table-column(prop='effectiveDate', label='有效期')

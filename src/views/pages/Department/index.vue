@@ -27,7 +27,7 @@
           el-breadcrumb(separator-class="el-icon-arrow-right")
             el-breadcrumb-item(v-for="(item,index) in Tree.path") {{item}}
         .flex-1.jc-end.ai-center
-          span.mgr2 是否只查询在职人员
+          span.mgr2.omit 是否只查询在职人员
           el-switch.mgr2(v-model="User.Resigned")
           el-button(
             icon='el-icon-plus',
