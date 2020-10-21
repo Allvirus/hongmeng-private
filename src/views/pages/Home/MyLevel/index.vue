@@ -21,20 +21,10 @@
             el-table-column(prop="commission" label="提成")
             el-table-column(prop="basicSalary" label="等级工资")
 
-        .flex-1.pd1
-          h3.mgt2 提成起点
-            el-table.mgy2(:data='commission' v-if="levData.length > 0")
-              el-table-column(prop="job" label="岗位")
-              el-table-column(prop="custom" label="客流岗流水经验")
-              el-table-column(prop="guide" label="引导岗流水经验")
-              el-table-column(prop="accompany" label="陪玩岗流水经验")
-
-      h3.mgt2 岗位提成系数
-        el-table.mgy2(:data='experience' v-if="levData.length > 0")
-          el-table-column(prop="job" label="岗位")
-          el-table-column(prop="custom" label="客流岗流水经验")
-          el-table-column(prop="guide" label="引导岗流水经验")
-          el-table-column(prop="accompany" label="陪玩岗流水经验")
+      h3.mgt2 岗位提成起点与系数
+        el-table.mgy2(:data='[1]')
+          el-table-column(prop="" :label="item.configType" v-for="(item,index) in commission")
+            template(slot-scop="{row}") {{item.context}}
 
       h3.mgt2 经验值获取
       el-table.mgy2(:data='levelInfo')
@@ -50,9 +40,9 @@
         el-table-column(prop="cjobRechargeExp" label="C岗充值比经验(新服)")
         el-table-column(prop="cjobRechargeExpAfter" label="C岗充值比经验(后续)")
 
-    .tips(v-if="levData.length > 0")
-      h3.mgt3 {{levData[6].configType}}
-      p.mgt2(v-html="levData[6].context")
+    .tips
+      h3.mgt3 {{ruleText.configType}}
+      p.mgt2(v-html="ruleText.context")
 
 </template>
 <script>
@@ -61,22 +51,7 @@ export default {
   name: 'MyLevel',
   data () {
     return {
-      commission: [
-        {
-          job: '提成起点',
-          custom: '',
-          guide: '',
-          accompany: '',
-        },
-      ],
-      experience: [
-        {
-          job: '流水经验值折算系数',
-          custom: '',
-          guide: '',
-          accompany: '',
-        },
-      ],
+      commission: [],
       levelInfo: [
         {
           levelName: '',
@@ -87,7 +62,7 @@ export default {
         },
       ],
       expPercent: 0,
-      levData: [],
+      ruleText: {},
     }
   },
   computed: {
@@ -104,15 +79,8 @@ export default {
       })
 
       this.$api.getMyLevInfo().then(data => {
-        this.commission[0].custom = data[0].context
-        this.commission[0].guide = data[1].context
-        this.commission[0].accompany = data[2].context
-
-        this.experience[0].custom = data[3].context
-        this.experience[0].guide = data[4].context
-        this.experience[0].accompany = data[5].context
-
-        this.levData = data
+        this.ruleText = data.pop()
+        this.commission = data
       })
     },
     calcPercent () {
@@ -120,9 +88,6 @@ export default {
       const curLevMaxExp = this.levelInfo[0].experience
       const nexLevMaxExp = this.levelInfo[1].experience
       this.expPercent = ((curExp - curLevMaxExp) / (nexLevMaxExp - curLevMaxExp)) * 100
-    },
-    showDetailExp () {
-      this.$vgo.tip('待实现!', 'success')
     },
   },
 }

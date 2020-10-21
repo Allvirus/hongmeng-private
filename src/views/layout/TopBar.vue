@@ -1,5 +1,5 @@
 <template lang="pug">
-.top-bar
+.top-bar.box-shadow
   .banner.jc-between.pr
     .user-info.ff-rn.ai-center.pdl2
       el-popover(
