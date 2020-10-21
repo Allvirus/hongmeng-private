@@ -1,11 +1,11 @@
 <template lang='pug'>
   .MyLevel
     h3 我的等级
-    .info.mgt2
+    .mgt2
       .bg-white.pd2
         .ff-rn.ai-center
-          span 累计经验值 {{userInfo.experiences}}
-        .ff-rn.mgt2.ai-center.jc-center
+          p.fs-b 累计经验值 {{userInfo.experiences}}
+        .ff-rn.mgt2.ai-center(:class="OS.isPc?'':'jc-center'")
           p {{levelInfo[0].levelName}}
           .pr
             el-progress.mgx2(:class="OS.isPc?'w300':'w200'" :text-inside="true" :show-text="false" :stroke-width="OS.isPc?20:15" :percentage="expPercent")
@@ -28,6 +28,13 @@
               el-table-column(prop="custom" label="客流岗流水经验")
               el-table-column(prop="guide" label="引导岗流水经验")
               el-table-column(prop="accompany" label="陪玩岗流水经验")
+
+      h3.mgt2 岗位提成系数
+        el-table.mgy2(:data='experience' v-if="levData.length > 0")
+          el-table-column(prop="job" label="岗位")
+          el-table-column(prop="custom" label="客流岗流水经验")
+          el-table-column(prop="guide" label="引导岗流水经验")
+          el-table-column(prop="accompany" label="陪玩岗流水经验")
 
       h3.mgt2 经验值获取
       el-table.mgy2(:data='levelInfo')

@@ -3,7 +3,7 @@
     div(style='position: fixed;top: 0px;left: 0;bottom: 0;right: 0;')
       img(
         style='position: absolute;top: 50%;left: 50%;transform: translate(-50%,-50%);height: 100%; min-width: 100%',
-        src='@/assets/img/login_bg.jpg'
+        :src='getLoginBg'
       )
       .auth-layout
         .form-layout.page-content.border-radius
@@ -13,6 +13,7 @@
     .copyright {{ $WD.$globalconfig.COPYRIGHT }}
 </template>
 <script>
+import { mapGetters } from 'vuex'
 export default {
   name: 'Auth',
   components: {
@@ -21,8 +22,15 @@ export default {
   },
   data () {
     return {
-
+      pcBg: require('@/assets/img/login_bg.jpg'),
+      mobileBg: require('@/assets/img/mobile_login_bg.jpg'),
     }
+  },
+  computed: {
+    ...mapGetters(['OS']),
+    getLoginBg () {
+      return this.OS.isPc ? this.pcBg : this.mobileBg
+    },
   },
   created () {
 

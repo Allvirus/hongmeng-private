@@ -13,7 +13,7 @@
         alt='altText'
       )
       span.badge.flex-center(v-else) {{ index + 1 }}
-      img.avatar.mgl2(:src='testUrl', alt='alt')
+      img.avatar.mgl2(:src='defAvatar', alt='alt')
       span.mgl1 {{ item["account"] }}
       span.flex-1.jc-end.mgr3(v-if='toFixed') {{ item[rankingKey] | toFixed}}
       span.flex-1.jc-end.mgr3(v-else) {{ item[rankingKey]}}
@@ -27,7 +27,7 @@
         alt='altText'
       )
       span.badge.flex-center(v-else) {{ myRank.ranking }}
-      img.avatar.mgl2(:src='testUrl', alt='alt')
+      img.avatar.mgl2(:src='defAvatar', alt='alt')
       span.mgl1 {{ myRank["account"] }}
       span.flex-1.jc-end.mgr3 {{ myRank[rankingKey] }}
 </template>
@@ -89,7 +89,7 @@ export default {
         count: 1000,
         ranking: 10,
       },
-      testUrl: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1602244834651&di=8a64567985c8b88137bbf1a63b5caba6&imgtype=0&src=http%3A%2F%2F5b0988e595225.cdn.sohucs.com%2Fimages%2F20180313%2Fab29d548f2a54e2c81663261d4a11af0.jpeg',
+      defAvatar: require('@/assets/img/ic_def_avatar.png'),
     }
   },
   computed: {

@@ -105,5 +105,5 @@ $avatarSize = 60px
   .router-link-active
     color #0487FF
   .el-menu-item
-    height 42px !important
+    height 48px !important
 </style>

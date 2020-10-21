@@ -230,6 +230,8 @@ export default {
 .mobile-mode
   .banner
     height 90px
+    background-image url('../../assets/img/mobile_top_bg.jpg')
+    background-size cover
   .menu-list
     padding 0 10px
   .avatar
