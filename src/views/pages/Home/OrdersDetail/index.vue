@@ -44,7 +44,7 @@
         type='primary',
         @click='reset'
       ) 重置
-      el-checkbox.mgt1(v-model="searchMyData" v-if="userInfo.isLeader") 搜索我的数据
+      el-checkbox.mgt1(:class="OS.isPc?'':'mgb3'" v-model="searchMyData" v-if="userInfo.isLeader") 搜索我的数据
 
   el-table.mgy2.bg-white.pd2(:data='listMixin.list')
     el-table-column(prop='userAccount', label='玩家账号')

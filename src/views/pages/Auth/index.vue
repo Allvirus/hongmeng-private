@@ -83,13 +83,22 @@ header
   height 100%
   position relative
 
-.form-layout
+.pc-mode .form-layout
   position absolute
   width 380px
   border 1px solid #e0e0e0
   right 150px
   padding 15px 30px
   top 45%
+  transform translateY(-50%)
+
+.mobile-mode .form-layout
+  position absolute
+  width calc(100% - 50px)
+  border 1px solid #e0e0e0
+  left 25px
+  padding 15px 30px
+  top 50%
   transform translateY(-50%)
 
 .switch-login-type

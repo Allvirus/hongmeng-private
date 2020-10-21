@@ -34,13 +34,14 @@
           :end.sync='model.endTime',
           all
         )
-      el-button.mgl3(icon='el-icon-search', type='primary', @click='search') 搜索
+      el-button.mgl3(:class="OS.isPc?'':'mgb2'" icon='el-icon-search', type='primary', @click='search') 搜索
       el-button.mgl2.mgr2(
+        :class="OS.isPc?'':'mgb2'"
         icon='el-icon-refresh-right',
         type='primary',
         @click='reset'
       ) 重置
-      el-checkbox.flex-center(v-model="searchMyData" v-if="userInfo.isLeader") 搜索我的数据
+      el-checkbox.flex-center(:class="OS.isPc?'':'mgb2'" v-model="searchMyData" v-if="userInfo.isLeader") 搜索我的数据
 
   el-table.mgy2.bg-white.pd2(:data='listMixin.list')
     el-table-column(prop='userAccount', label='玩家账号')

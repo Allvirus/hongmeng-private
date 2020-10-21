@@ -27,19 +27,10 @@ el-form(
     ) 没有账号? 立即注册→
     el-button.w100p.mgt1(@click='submit', type='primary', size='large') 登 录
 
-  //- .input-wrap
-  //-   img.icon.vertical-center(src='/content/images/phone.png')
-  //-   input(type='text', placeholder='请输入用户名', v-model.trim='loginForm.username', maxlength='20', @focus='clearError')
-  //- .input-wrap
-  //-   img.icon.vertical-center(src='/content/images/pwd.png')
-  //-   input(type='password', placeholder='请输入密码', v-model.trim='loginForm.password', maxlength='18', @focus='clearError')
-  //- .input-wrap.vcode
-  //-   img.icon.vertical-center(src='/content/images/code.png')
-  //-   input(type='text', placeholder='请输入验证码', maxlength='5', v-model.trim='loginForm.vcode', @keyup.enter='login', @focus='clearError')
-  //-   img.vcode-img(@click='refreshVcode', :src='vcode_url')
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 import { EUIRule } from '@/plugins/utils'
 export default {
   name: 'Login',
@@ -54,6 +45,9 @@ export default {
         password: '',
       },
     }
+  },
+  computed: {
+    ...mapGetters(['OS']),
   },
   methods: {
     submit () {

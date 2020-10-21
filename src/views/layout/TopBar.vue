@@ -54,7 +54,7 @@
     .notice.ai-center.omit.w400
       p(@click="showDptNotice" v-if="OS.isPc") {{dptNotices}}
     .menu.ai-center.jc-center(v-if="!OS.isPc && (activeTab === 'HomeMyAchievement')")
-      ms-menu
+      ms-menu(derection="bottom")
   .edit-pswd
     el-dialog(
       title='修改密码',

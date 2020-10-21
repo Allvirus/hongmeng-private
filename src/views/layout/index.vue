@@ -1,10 +1,10 @@
 <template lang="pug">
 .layout.ff-cn.flex-1(v-if='userInfo.id && myDptList.ready')
   TopBar
-  .layout-bottom.flex-1
+  .layout-bottom.flex-1.clearfix
     transition(name='fade-scale', mode='out-in')
       router-view
-    .copyright.lh3.jc-center.mgt3.pdx2(v-html='$WD.$globalconfig.COPYRIGHT')
+    .copyright.lh3.jc-center.mgt2.pdx2(v-html='$WD.$globalconfig.COPYRIGHT')
 </template>
 
 <script>
@@ -46,4 +46,10 @@ export default {
     .layout-bottom
       height 0
       padding 20px 0px
+      padding-bottom 60px
+  .copyright
+    text-align center
+    width 100%
+    color #999
+    font-size 6px
 </style>
