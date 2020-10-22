@@ -22,9 +22,6 @@ el-form(
       prefix-icon='el-icon-lock'
     )
   el-form-item
-    router-link.theme.mgb2(
-      :to='$route.name === "Login" ? "Register" : "Login"'
-    ) 没有账号? 立即注册→
     el-button.w100p.mgt1(@click='submit', type='primary', size='large') 登 录
 
 </template>

@@ -2,7 +2,7 @@
   div
     div(style='position: fixed;top: 0px;left: 0;bottom: 0;right: 0;')
       img(
-        style='position: absolute;top: 50%;left: 50%;transform: translate(-50%,-50%);height: 100%; min-width: 100%',
+        style='object-fit:cover; position: absolute;top: 50%;left: 50%;transform: translate(-50%,-50%);height: 100%; min-width: 100%',
         :src='getLoginBg'
       )
       .auth-layout
@@ -18,7 +18,6 @@ export default {
   name: 'Auth',
   components: {
     Login: _ => import('./Login'),
-    Register: _ => import('./Register'),
   },
   data () {
     return {
@@ -178,13 +177,12 @@ header
 
 .copyright
   position fixed
-  background-color rgba(255, 255, 255, 0.5)
   left 0
   bottom 0
   padding 10px
   text-align center
   width 100%
-  color #333
+  color #eee
 
 .impowerBox #wx_default_tip p
   font-size 16px !important
