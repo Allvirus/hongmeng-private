@@ -21,7 +21,7 @@
             :deflabel='myDptList.list[0].name',
             @change='onDepartChange'
           )
-        el-form-item(label='员工:' :label-width='OS.isPc?"60px":"100px"' v-if='userInfo.isLeader')
+        el-form-item(label='员工:' :class="OS.isPc?'':'mgl1'" :label-width='OS.isPc?"60px":"100px"' v-if='userInfo.isLeader')
           el-select.winput(v-model='model.UserId', placeholder='请选择', clearable ,filterable)
             el-option(
               v-for='item in userList',
@@ -33,7 +33,7 @@
           auto-complete.mgl1(v-model='model.gameName', :data='gameList')
         el-form-item(label='区服:' :label-width='OS.isPc?"60px":"100px"')
           auto-complete.mgl1(v-model='model.areaName', :data='areaList')
-        el-form-item.search-btn(:class="OS.isPc?'':'jc-center full'")
+        el-form-item.search-btn.mgb1(:class="OS.isPc?'':'jc-center full'")
           el-button(icon='el-icon-search', type='primary', @click='search') 搜索
           el-button.mgr2(
             icon='el-icon-refresh-right',
@@ -409,9 +409,18 @@ $spc = 44px
     border-radius 0px
   >>>.el-radio-button__inner
     border none !important
+
+.pc-mode
   .opt-bar
-    .pc-mode .el-form-item
+    .el-form-item
       margin-bottom 0px
+    >>>.search-btn .el-form-item__content
+      margin-left 10px !important
+
+.mobile-mode
+  .opt-bar
+    .el-form-item
+      margin-bottom 10px
     >>>.search-btn .el-form-item__content
       margin-left 10px !important
 </style>

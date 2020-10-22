@@ -20,7 +20,7 @@
     .flex-center(v-if='data.length === 0')
       span 暂无数据
   .footer.h50.full.pa(:style='{ backgroundColor: themeList[theme].btbg }')
-    .ff-rn.ai-center.pd1.pr.fc-w3
+    .ff-rn.ai-center.pd1.pr.fc-w3(v-if="isShowMyRank")
       img.badge(
         v-if='myRank.ranking < 3',
         :src='require(`@/assets/img/ic_rank${myRank.ranking}.png`)',
@@ -89,6 +89,7 @@ export default {
         count: 1000,
         ranking: 10,
       },
+      isShowMyRank: false,
       defAvatar: require('@/assets/img/ic_def_avatar.png'),
     }
   },

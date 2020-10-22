@@ -139,10 +139,12 @@ export default {
     } else {
       this.activeTab = this.$route.name
     }
+    this.lastTab = this.activeTab
     this.getNotice()
   },
   methods: {
     onTabClick (e) {
+      console.log('onTabClick', e.name, this.lastTab)
       if (e.name !== this.lastTab) {
         this.$router.replace({ name: e.name })
         this.lastTab = e.name

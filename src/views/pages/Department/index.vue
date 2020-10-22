@@ -40,7 +40,7 @@
             @click='showDptEditDlg(false)'
           ) 新增部门
 
-      el-table.mgt2(:data='User.userList')
+      el-table.mgt2(:data='User.userList' max-height="600")
         el-table-column(prop='realName', label='姓名')
           template(slot-scope='{ row }')
             span(:class="{ 'danger': isLeader(row) }") {{row.realName}}
