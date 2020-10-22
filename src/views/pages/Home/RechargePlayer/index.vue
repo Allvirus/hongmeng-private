@@ -13,7 +13,7 @@
           @change='onDepartChange'
         )
       el-form-item(label='员工:' v-if='userInfo.isLeader')
-        el-select.winput(v-model='model.userId', placeholder='请选择', clearable)
+        el-select.winput(v-model='model.userId', placeholder='请选择', clearable filterable)
           el-option(
             v-for='item in userList',
             :key='item.id',

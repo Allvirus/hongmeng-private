@@ -27,7 +27,7 @@
             @change='onDepartChange'
           )
         el-form-item(label='岗位:', required)
-          el-select(v-model='model.job', placeholder='请选择')
+          el-select(v-model='model.job', placeholder='请选择' filterable)
             el-option(
               v-for='(item, index) in jobs',
               :key='index',
@@ -35,7 +35,7 @@
               :value='index'
             )
         el-form-item(label='角色:', required)
-          el-select(v-model='model.userRoles', placeholder='请选择' :multiple="true")
+          el-select(v-model='model.userRoles', placeholder='请选择' :multiple="true" filterable)
             el-option(
               v-for='item in roles',
               :key='item.id',

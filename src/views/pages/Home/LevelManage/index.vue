@@ -34,7 +34,7 @@
         el-form.full(label-width="200px")
           .ff-rn
             el-form-item(label="等级名称:" required)
-              el-select(v-model="model.level"
+              el-select(v-model="model.level" filterable
               placeholder="请选择")
                 el-option(v-for="(item,idx) in levelOptions"
                 :key="idx"

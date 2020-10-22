@@ -46,6 +46,7 @@
             )
           el-form-item(label="B岗:" required)
             el-select.mgl1(v-model="cfgInfo.row.bUserId"
+              filterable
               @change="onBJobChange"
               placeholder="请选择")
               el-option(v-for="item in cfgInfo.BUserList"
@@ -54,6 +55,7 @@
               :value="item.id")
           el-form-item(label="C岗:" required)
             el-select.mgl1(v-model="cfgInfo.row.cUserId"
+              filterable
               @change="onCJobChange"
               placeholder="请选择")
               el-option(v-for="item in cfgInfo.CUserList"

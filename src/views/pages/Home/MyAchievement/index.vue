@@ -21,6 +21,8 @@
             :deflabel='myDptList.list[0].name',
             @change='onDepartChange'
           )
+        el-form-item(label='员工:' :label-width='OS.isPc?"60px":"100px"' v-if='userInfo.isLeader')
+          auto-complete.mgl1(v-model='model.UserId', :data='userList')
         el-form-item(label='游戏名称:')
           auto-complete.mgl1(v-model='model.gameName', :data='gameList')
         el-form-item(label='区服:' :label-width='OS.isPc?"60px":"100px"')
@@ -89,6 +91,7 @@ export default {
         gameName: '',
         areaName: '',
         dtpId: '',
+        UserId: '',
         page: 1,
         pageSize: 10,
       },
@@ -139,18 +142,22 @@ export default {
         },
       },
       dataList: [],
+      userList: [],
     }
   },
   computed: {
     ...mapGetters(['areaList', 'gameList', 'myDptList', 'userInfo', 'OS']),
     halfLayout () {
-      // return this.selTimeRange === '本周'
       return this.OS.isPc
     },
   },
   created () {
     if (this.userInfo.isLeader) {
       this.model.dtpId = this.myDptList.list[0].id
+      this.$api.getDepartMembers(this.model.dtpId).then(data => {
+        this.userList = data
+        console.log('create', this.userList)
+      })
     }
     this.search()
   },
@@ -359,6 +366,9 @@ export default {
     },
     onDepartChange (dptInfo) {
       this.model.dtpId = dptInfo.id
+      this.$api.getDepartMembers(this.model.dtpId).then(data => {
+        this.userList = data
+      })
     },
   },
 }

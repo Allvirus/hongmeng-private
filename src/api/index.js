@@ -547,6 +547,7 @@ export default {
       gameName: model.gameName,
       areaName: model.areaName,
       ResDepId: model.dtpId,
+      UserId: model.UserId,
     },
   }),
   // 26.获取我本周的业务数据
@@ -563,6 +564,7 @@ export default {
       gameName: model.gameName,
       areaName: model.areaName,
       ResDepId: model.dtpId,
+      UserId: model.UserId,
     },
   }),
   // 27.获取我本月的业务数据
@@ -579,6 +581,7 @@ export default {
       gameName: model.gameName,
       areaName: model.areaName,
       ResDepId: model.dtpId,
+      UserId: model.UserId,
     },
   }),
   // 27.6 获取我的业务的本年数据
@@ -595,6 +598,7 @@ export default {
       gameName: model.gameName,
       areaName: model.areaName,
       ResDepId: model.dtpId,
+      UserId: model.UserId,
     },
   }),
 

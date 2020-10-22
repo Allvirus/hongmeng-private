@@ -13,7 +13,7 @@
           @change='onDepartChange'
         )
       el-form-item(label='员工:' v-if='userInfo.isLeader')
-        el-select.winput(v-model='model.UserId', placeholder='请选择', clearable)
+        el-select.winput(v-model='model.UserId', placeholder='请选择', clearable filterable)
           el-option(
             v-for='item in userList',
             :key='item.id',
@@ -23,7 +23,7 @@
       el-form-item(label='经验来源:')
         el-input.winput(v-model='model.Origin')
       el-form-item(label='经验值:')
-        el-input.winput(v-model='model.ExpChange' type="number")
+        el-input.winput(v-model='model.ExpChange')
       el-form-item(label='创建时间:')
         CommonDatePicker.w300(
           :start.sync='model.startTime',
@@ -64,7 +64,7 @@
     .flex-center
       el-form(label-width="100px")
         el-form-item(label="用户:" required)
-          el-select.mgl1(v-model="newExpInfo.userId"
+          el-select.mgl1(v-model="newExpInfo.userId" filterable
               placeholder="请选择")
               el-option(v-for="item in userList"
               :key="item.id"

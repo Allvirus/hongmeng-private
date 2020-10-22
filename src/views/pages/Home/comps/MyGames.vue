@@ -70,13 +70,14 @@
       el-form(label-width='100px')
         el-form-item(label='游戏名称:', required)
           el-select(v-model="gameInfo.gameContentId"
+            filterable
             placeholder="请选择")
             el-option(v-for="item in gameCtxList"
             :key="item.id"
             :label="item.name"
             :value="item.id")
         el-form-item(label='推广人员:', required)
-          el-select(v-model="gameInfo.userId"
+          el-select(v-model="gameInfo.userId" filterable
             placeholder="请选择")
             el-option(v-for="item in userList"
             :key="item.id"

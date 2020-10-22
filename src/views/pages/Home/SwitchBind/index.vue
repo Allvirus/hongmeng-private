@@ -40,7 +40,7 @@
       el-form-item(label="C岗(当前):" )
         p {{swBindParams.cJob}}
       el-form-item(label="A岗(新):" required)
-        el-select(v-model='swBindParams.aJobIdAfter' placeholder='请选择', clearable)
+        el-select(v-model='swBindParams.aJobIdAfter' placeholder='请选择', clearable filterable)
           el-option(
             v-for='item in userList',
             :key='item.id',
@@ -48,7 +48,7 @@
             :value='item.id'
           )
       el-form-item(label="B岗(新):" required)
-        el-select(v-model='swBindParams.bJobIdAfter', placeholder='请选择', clearable)
+        el-select(v-model='swBindParams.bJobIdAfter', placeholder='请选择', clearable filterable)
           el-option(
             v-for='item in userList',
             :key='item.id',
@@ -56,7 +56,7 @@
             :value='item.id'
           )
       el-form-item(label="C岗(新):" required)
-        el-select(v-model='swBindParams.cJobIdAfter', placeholder='请选择', clearable)
+        el-select(v-model='swBindParams.cJobIdAfter', placeholder='请选择', clearable filterable)
           el-option(
             v-for='item in userList',
             :key='item.id',
