@@ -100,6 +100,7 @@ export default {
         manageDepartmentId: '',
         dptName: '',
         workingStatus: true,
+        photo: '',
       },
       jobs: ['A岗', 'B岗', 'C岗', '后勤'],
       roles: [],
@@ -122,6 +123,7 @@ export default {
             this.model = data
             this.model.id = this.userId
             this.model.dptName = this.findDptName(this.model.departmentId, this.treeData)
+            console.log('onShowEdit', this.model)
           })
         } else {
           // 新建

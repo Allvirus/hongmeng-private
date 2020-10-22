@@ -138,19 +138,15 @@ export default {
     initDefDptIdAndLabel () {
       if (this.userInfo.job === 2) {
         // C岗
-        console.log('C job')
         this.model.departmentId = 1
       } else if (this.userInfo.job === 1) {
         // B岗
-        console.log('C job')
         this.model.departmentId = this.userInfo.departmentId
       } else if (this.userInfo.job === 0 && !this.userInfo.isLeader) {
         // A岗普通员工
-        console.log('A job')
         this.model.departmentId = ''
       } else {
         // 管理者
-        console.log('leader')
         this.model.departmentId = this.userInfo.resDepartmentId
       }
       if (this.model.departmentId !== '') {
@@ -158,7 +154,6 @@ export default {
       } else {
         this.defLable = ''
       }
-      console.log('initDefDptIdAndLabel', this.userInfo, this.model, this.defLable)
       this.updateGameList()
     },
     geAllDptList () {

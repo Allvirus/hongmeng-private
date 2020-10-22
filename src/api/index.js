@@ -183,6 +183,7 @@ export default {
       workingStatus: model.workingStatus,
       jobNumber: model.jobNumber,
       manageDepartmentId: model.manageDepartmentId,
+      photo: model.photo,
     },
   }),
 
