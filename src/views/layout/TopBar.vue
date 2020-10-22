@@ -47,7 +47,7 @@
   .menu-list.jc-between.bg-white
     el-tabs(
       v-model='activeTab',
-      @tab-click='(cmp) => $router.replace({ name: cmp.name })'
+      @tab-click='onTabClick'
     )
       el-tab-pane(label='首页', name='HomeMyAchievement')
       el-tab-pane(label='排行', name='Ranking')
@@ -119,6 +119,7 @@ export default {
           }],
       },
       activeTab: 'HomeMyAchievement',
+      lastTab: 'HomeMyAchievement',
       noticeList: [],
       dptNotices: '',
       editPswdDlg: false,
@@ -141,6 +142,12 @@ export default {
     this.getNotice()
   },
   methods: {
+    onTabClick (e) {
+      if (e.name !== this.lastTab) {
+        this.$router.replace({ name: e.name })
+        this.lastTab = e.name
+      }
+    },
     getNotice () {
       this.$api.getTop10().then(data => {
         for (let i = 0; i < data.length; i++) {

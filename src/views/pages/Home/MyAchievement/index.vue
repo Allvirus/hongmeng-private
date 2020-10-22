@@ -167,7 +167,6 @@ export default {
       this.model.dtpId = this.myDptList.list[0].id
       this.$api.getDepartMembers(this.model.dtpId).then(data => {
         this.userList = data
-        console.log('create', this.userList)
       })
     }
     this.search()
