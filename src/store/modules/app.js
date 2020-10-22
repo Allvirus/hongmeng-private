@@ -63,6 +63,7 @@ export default {
   mutations: {
     userInfo (state, data) {
       if (data.photo) {
+        data.originPhotoPath = JSON.parse(JSON.stringify(data.photo))
         data.photo = data.photo.slice(1, data.photo.length)
         data.photo = $globalconfig.API + data.photo
       }

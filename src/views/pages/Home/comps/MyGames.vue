@@ -1,7 +1,7 @@
 <template lang='pug'>
 .MyGames
   .jc-between.ai-center.h50
-    p.fs-b.mgl4.flex-1 我的游戏
+    p.fs-b.mgl4.flex-1 推广游戏
     .mgr3
       el-button(
         icon='el-icon-plus',
@@ -132,48 +132,41 @@ export default {
       this.$api.getGameCtx().then(data => {
         this.gameCtxList = data
       })
-      this.model.departmentId = this.userInfo.resDepartmentId
-    } else {
-      switch (this.userInfo.job) {
-        // A岗
-        case 0:
-          this.model.departmentId = ''
-          break
-        // B岗
-        case 1:
-          this.model.departmentId = this.userInfo.departmentId
-          break
-        // C岗
-        case 2:
-          this.model.departmentId = 1
-          break
-        default:
-          break
-      }
     }
-    this.updateGameList()
   },
   methods: {
-    genDefLabel () {
-      if ((!this.userInfo.isLeader && this.userInfo.job === 2) ||
-          this.userInfo.isLeader) {
-        // C岗 或者是 leader
-        this.defLable = this.getDptNameByID(1)
-      } else if (!this.userInfo.isLeader && (this.userInfo.job === 1)) {
-        this.defLable = this.getDptNameByID(this.userInfo.departmentId)
+    initDefDptIdAndLabel () {
+      if (this.userInfo.job === 2) {
+        // C岗
+        console.log('C job')
+        this.model.departmentId = 1
+      } else if (this.userInfo.job === 1) {
+        // B岗
+        console.log('C job')
+        this.model.departmentId = this.userInfo.departmentId
+      } else if (this.userInfo.job === 0 && !this.userInfo.isLeader) {
+        // A岗普通员工
+        console.log('A job')
+        this.model.departmentId = ''
+      } else {
+        // 管理者
+        console.log('leader')
+        this.model.departmentId = this.userInfo.resDepartmentId
       }
-      console.log('defLable', this.defLable)
-    },
-    getDptNameByID (id) {
-      return this.dptNameList[id].name
+      if (this.model.departmentId !== '') {
+        this.defLable = this.dptNameList[this.model.departmentId].name
+      } else {
+        this.defLable = ''
+      }
+      console.log('initDefDptIdAndLabel', this.userInfo, this.model, this.defLable)
+      this.updateGameList()
     },
     geAllDptList () {
       this.$api.getAllDeparts().then(data => {
         for (const item of data) {
           this.dptNameList[item.id] = item
         }
-        console.log(this.dptNameList)
-        this.genDefLabel()
+        this.initDefDptIdAndLabel()
       })
     },
     getDepartTree () {
@@ -184,15 +177,12 @@ export default {
       })
     },
     updateGameList () {
-      console.log('updateGameList', this.model.departmentId)
       if (this.model.departmentId !== '') {
         this.$api.getGameByDptId(this.model).then(data => {
-          console.log('dtp games', data)
           this.myGameList = data
         })
       } else {
         this.$api.getMyGames().then(data => {
-          console.log('my games', data)
           this.myGameList = data
         })
       }
