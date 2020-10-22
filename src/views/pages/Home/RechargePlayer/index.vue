@@ -47,6 +47,8 @@
     el-table-column(prop='gameName', label='游戏名称')
     el-table-column(prop='areaName', label='区服')
     el-table-column(prop='roleName', label='游戏角色')
+    el-table-column(prop='osType', label='平台')
+      template(slot-scope='{ row }') {{ row.osType | formatOSType }}
     el-table-column(prop='rechargeCount', label='充值订单数')
     el-table-column(prop='totalMoney', label='充值总额(元)')
       template(slot-scope='{ row }') {{ row.totalMoney | toFixed }}
