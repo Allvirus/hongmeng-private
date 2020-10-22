@@ -3,17 +3,18 @@
     div(style='position: fixed;top: 0px;left: 0;bottom: 0;right: 0;')
       img(
         style='object-fit:cover; position: absolute;top: 50%;left: 50%;transform: translate(-50%,-50%);height: 100%; min-width: 100%',
-        :src='getLoginBg'
+        :src='isPc ? pcBg : mobileBg'
       )
       .auth-layout
         .form-layout.page-content.border-radius
-          h2.mgy5.tac {{ $route.name === "Login" ? "用户登录" : "用户注册" }}
+          h2.mgy2.tac {{ $route.name === "Login" ? "用户登录" : "用户注册" }}
           component(:is='$route.name', ref='form')
 
     .copyright {{ $WD.$globalconfig.COPYRIGHT }}
 </template>
 <script>
 import { mapGetters } from 'vuex'
+import utils from '@/plugins/utils'
 export default {
   name: 'Auth',
   components: {
@@ -23,16 +24,14 @@ export default {
     return {
       pcBg: require('@/assets/img/login_bg.jpg'),
       mobileBg: require('@/assets/img/mobile_login_bg.jpg'),
+      isPc: true,
     }
   },
   computed: {
     ...mapGetters(['OS']),
-    getLoginBg () {
-      return this.OS.isPc ? this.pcBg : this.mobileBg
-    },
   },
   created () {
-
+    this.isPc = utils.UAis('pc')
   },
   methods: {
     switchLoginType () {
@@ -105,7 +104,7 @@ header
   border 1px solid #e0e0e0
   left 25px
   padding 15px 30px
-  top 50%
+  top 41%
   transform translateY(-50%)
 
 .switch-login-type
