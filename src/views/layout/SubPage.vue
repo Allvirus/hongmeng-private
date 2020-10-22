@@ -5,7 +5,7 @@
   .sub-layout-center.flex-1
     transition(name='fade-scale', mode='out-in')
       router-view.sub-view
-  .sub-layout-right.w250.bg-white(v-if="OS.isPc")
+  .sub-layout-right.w250.bg-white.h700.pr(v-if="OS.isPc")
     my-games()
 </template>
 
@@ -16,7 +16,6 @@ export default {
   components: {
     SubMenu: () => import('./SubMenu.vue'),
     MyGames: () => import('@/views/pages/Home/comps/MyGames'),
-    MyContacts: () => import('@/views/pages/Home/comps/MyContacts'),
   },
   data () {
     return {

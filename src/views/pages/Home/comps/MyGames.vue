@@ -10,17 +10,18 @@
         v-if="userInfo.menu.myGameAuthority"
       ) 添加
   .dtp-tree.jc-center
-    tree-selector(
-      ref='treesel',
-      :data='treeData',
-      :defProps='defProps',
+    tree-selector.winput(
+      ref='dtptree',
+      :data='myDptList.list',
+      :defProps='myDptList.props',
       nodeKey='id',
-      clearable
+      clearable,
       :deflabel='myDptList.list[0].name',
       @change='onDepartChange'
     )
-  .h600.overflow-auto.mgt2
-    .item.ff-rn.mgb1.ai-center.h70(v-for='(item, idx) in myGameList', :key='idx')
+  .mgt2
+    .item.ff-rn.mgb1.ai-center.h70(v-for='(item, idx) in (myGameList.list?myGameList.list:myGameList)'
+       :key='idx')
       img.game-icon.mgl2(:src='conbineUrl(item)')
       .name.mgl2.ff-cn
         p.mgb1 {{ item.gameContent.name }}
@@ -47,7 +48,17 @@
           v-if="userInfo.menu.myGameAuthority"
           @click='delGame(item)'
         ) 删除
-    span.jc-center.mgt2(v-if="myGameList.length === 0") 暂无游戏
+    span.jc-center.mgt2(v-if="myGameList.list && myGameList.list.length === 0") 暂无游戏
+
+  .jc-center.pa.pagination(v-if="myGameList.list && myGameList.count > 0")
+    el-pagination(
+      :total='myGameList.count',
+      :page-size.sync='model.pageSize',
+      :current-page.sync='model.page',
+      @current-change='updateGameList'
+      :base="true"
+      :small="true"
+    )
   el-dialog(
     title='添加游戏',
     @close='cancel',
@@ -82,7 +93,7 @@ export default {
   name: '',
   data () {
     return {
-      myGameList: [],
+      myGameList: {},
       keyword: '',
       dlgVisiable: false,
       gameInfo: {
@@ -90,7 +101,6 @@ export default {
         userId: '', // 推广人员ID
         linkUrl: '', // 推广链接
       },
-      treeData: [],
       defProps: {
         children: 'departments',
         label: 'name',
@@ -98,58 +108,44 @@ export default {
       },
       userList: [],
       gameCtxList: [],
-      curDptID: '',
+      model: {
+        departmentId: 1,
+        page: 1,
+        pageSize: 7,
+      },
     }
   },
   computed: {
     ...mapGetters(['userInfo', 'myDptList']),
   },
   created: function () {
-    this.getDepartTree()
     if (this.userInfo.isLeader) {
-      this.getAllUser()
-      this.getGameCtxList()
-      this.curDptID = this.userInfo.resDepartmentId
+      this.$api.getAllUser().then(res => {
+        this.userList = res
+      })
+      this.$api.getGameCtx().then(data => {
+        this.gameCtxList = data
+      })
+      this.model.departmentId = this.userInfo.resDepartmentId
     }
     this.updateGameList()
   },
   methods: {
     updateGameList () {
-      if (this.curDptID !== '') {
-        this.$api.getGameByDptId(this.curDptID).then(data => {
+      if (this.model.departmentId !== '') {
+        this.$api.getGameByDptId(this.model).then(data => {
+          console.log('dtp games', data)
           this.myGameList = data
         })
       } else {
-        this.getMyGames()
+        this.$api.getMyGames().then(data => {
+          console.log('my games', data)
+          this.myGameList = data
+        })
       }
-    },
-    getGameCtxList () {
-      this.$api.getGameCtx().then(data => {
-        this.gameCtxList = data
-      })
-    },
-    getAllUser () {
-      this.$api.getAllUser().then(res => {
-        this.userList = res
-      })
-    },
-    getDepartTree () {
-      this.treeData.splice(0, this.treeData.length)
-      const id = 1
-      this.$api.getDepartById(id).then(res => {
-        this.treeData.push(res)
-      })
-    },
-    getMyGames () {
-      this.$api.getMyGames().then(data => {
-        this.myGameList = data
-      })
     },
     copyLink (item) {
       this.$utils.copyText(item.linkUrl)
-    },
-    search () {
-
     },
     submmit () {
       // 必填参数校验
@@ -192,7 +188,7 @@ export default {
       })
     },
     onDepartChange (dptInfo) {
-      this.curDptID = dptInfo.id
+      this.model.departmentId = dptInfo.id
       this.updateGameList()
     },
     conbineUrl (item) {
@@ -212,4 +208,8 @@ export default {
       width 60px
       height 24px
       padding 2px 6px !important
+  .pagination
+    bottom 10px
+    left 50%
+    transform translateX(-50%)
 </style>

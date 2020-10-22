@@ -601,7 +601,13 @@ export default {
   getMyGames: () => http('get', '/api/mygame/'),
 
   // 28.1.根据部门id获取游戏接口
-  getGameByDptId: (id) => http('get', `/api/mygame/department/${id}`),
+  getGameByDptId: (model) => http('get', `/api/mygame/department/${model.departmentId}`, {
+    params: {
+      departmentId: model.departmentId,
+      Page: model.page,
+      PageSize: model.pageSize,
+    },
+  }),
 
   // 29.根据游戏表ID获取游戏
   getGameById: (id) => http('get', `/api/mygame/${id}`),
