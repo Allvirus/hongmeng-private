@@ -67,9 +67,7 @@ export default {
         data.photo = $globalconfig.API + data.photo
       }
       state.userInfo = data
-      if (data.resDepartmentId) {
-        state.userInfo.isLeader = data.resDepartmentId !== 0
-      }
+      state.userInfo.isLeader = data.resDepartmentId !== 0
     },
     projectTagList (state, data) {
       state.projectTagList = data

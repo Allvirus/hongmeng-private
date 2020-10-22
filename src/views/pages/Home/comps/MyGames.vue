@@ -12,11 +12,11 @@
   .dtp-tree.jc-center
     tree-selector.winput(
       ref='dtptree',
-      :data='myDptList.list',
+      :data='treeData',
       :defProps='myDptList.props',
       nodeKey='id',
       clearable,
-      :deflabel='myDptList.list[0].name',
+      :deflabel='defLable',
       @change='onDepartChange'
     )
   .mgt2
@@ -50,7 +50,8 @@
         ) 删除
     span.jc-center.mgt2(v-if="myGameList.list && myGameList.list.length === 0") 暂无游戏
 
-  .jc-center.pa.pagination(v-if="myGameList.list && myGameList.count > 0")
+  .jc-center.pa.pagination(
+    v-if="!(!userInfo.isLeader && userInfo.job === 0 && model.departmentId === '')")
     el-pagination(
       :total='myGameList.count',
       :page-size.sync='model.pageSize',
@@ -109,16 +110,21 @@ export default {
       userList: [],
       gameCtxList: [],
       model: {
-        departmentId: 1,
+        departmentId: '',
         page: 1,
         pageSize: 7,
       },
+      treeData: [],
+      dptNameList: [],
+      defLable: '',
     }
   },
   computed: {
     ...mapGetters(['userInfo', 'myDptList']),
   },
   created: function () {
+    this.geAllDptList()
+    this.getDepartTree()
     if (this.userInfo.isLeader) {
       this.$api.getAllUser().then(res => {
         this.userList = res
@@ -127,11 +133,58 @@ export default {
         this.gameCtxList = data
       })
       this.model.departmentId = this.userInfo.resDepartmentId
+    } else {
+      switch (this.userInfo.job) {
+        // A岗
+        case 0:
+          this.model.departmentId = ''
+          break
+        // B岗
+        case 1:
+          this.model.departmentId = this.userInfo.departmentId
+          break
+        // C岗
+        case 2:
+          this.model.departmentId = 1
+          break
+        default:
+          break
+      }
     }
     this.updateGameList()
   },
   methods: {
+    genDefLabel () {
+      if ((!this.userInfo.isLeader && this.userInfo.job === 2) ||
+          this.userInfo.isLeader) {
+        // C岗 或者是 leader
+        this.defLable = this.getDptNameByID(1)
+      } else if (!this.userInfo.isLeader && (this.userInfo.job === 1)) {
+        this.defLable = this.getDptNameByID(this.userInfo.departmentId)
+      }
+      console.log('defLable', this.defLable)
+    },
+    getDptNameByID (id) {
+      return this.dptNameList[id].name
+    },
+    geAllDptList () {
+      this.$api.getAllDeparts().then(data => {
+        for (const item of data) {
+          this.dptNameList[item.id] = item
+        }
+        console.log(this.dptNameList)
+        this.genDefLabel()
+      })
+    },
+    getDepartTree () {
+      this.treeData.splice(0, this.treeData.length)
+      const id = 1
+      this.$api.getDepartById(id).then(res => {
+        this.treeData.push(res)
+      })
+    },
     updateGameList () {
+      console.log('updateGameList', this.model.departmentId)
       if (this.model.departmentId !== '') {
         this.$api.getGameByDptId(this.model).then(data => {
           console.log('dtp games', data)
