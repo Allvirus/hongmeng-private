@@ -35,11 +35,15 @@
           auto-complete.mgl1(v-model='model.areaName', :data='areaList')
         el-form-item.search-btn(:class="OS.isPc?'':'jc-center full'")
           el-button(icon='el-icon-search', type='primary', @click='search') 搜索
-          el-button(
+          el-button.mgr2(
             icon='el-icon-refresh-right',
             type='primary',
             @click='reset'
           ) 重置
+          el-checkbox.mgt1(
+            :class="OS.isPc?'':'mgb3'"
+            v-model="searchMyData"
+            v-if="userInfo.isLeader") 搜索我的数据
 
   //- 创角指数
   .data-panel.mgt2.ff-rn(v-if="OS.isPc")
@@ -149,6 +153,7 @@ export default {
       },
       dataList: [],
       userList: [],
+      searchMyData: false,
     }
   },
   computed: {
@@ -308,6 +313,11 @@ export default {
       this.onRadioChange(this.selTimeRange)
     },
     onRadioChange (val) {
+      if (this.model.dtpId === '' && !this.searchMyData) {
+        this.$vgo.tip('请选择部门!', 'warning')
+        return
+      }
+
       // 清除原来的数据
       this.newRoleData.rows.splice(0, this.newRoleData.rows.length)
       this.rechData.rows.splice(0, this.rechData.rows.length)
@@ -320,10 +330,11 @@ export default {
       if (this.UserId !== '') {
         params.UserId = Number(this.model.UserId)
       }
+
       var method = ''
       switch (val) {
         case '今日':
-          method = params.dtpId === '' ? 'getAchiByDay' : 'getDptAchiByDay'
+          method = this.searchMyData ? 'getAchiByDay' : 'getDptAchiByDay'
           this.$api[method](params).then(data => {
             const tmp1 = []
             for (const item of data.createUser) {
@@ -355,19 +366,19 @@ export default {
           })
           break
         case '本周':
-          method = params.dtpId === '' ? 'getAchiByWeek' : 'getDptAchiByWeek'
+          method = this.searchMyData ? 'getAchiByWeek' : 'getDptAchiByWeek'
           this.$api[method](params).then(data => {
             this.handleData(data, 'dayKey', 7)
           })
           break
         case '本月':
-          method = params.dtpId === '' ? 'getAchiByMonth' : 'getDptAchiByMonth'
+          method = this.searchMyData ? 'getAchiByMonth' : 'getDptAchiByMonth'
           this.$api[method](params).then(data => {
             this.handleData(data, 'dayKey', 30)
           })
           break
         case '全年':
-          method = params.dtpId === '' ? 'getAchiByYear' : 'getDptAchiByYear'
+          method = this.searchMyData ? 'getAchiByYear' : 'getDptAchiByYear'
           this.$api[method](params).then(data => {
             this.handleData(data, 'monthKey', 12)
           })
