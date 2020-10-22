@@ -22,7 +22,13 @@
             @change='onDepartChange'
           )
         el-form-item(label='员工:' :label-width='OS.isPc?"60px":"100px"' v-if='userInfo.isLeader')
-          auto-complete.mgl1(v-model='model.UserId', :data='userList')
+          el-select.winput(v-model='model.UserId', placeholder='请选择', clearable ,filterable)
+            el-option(
+              v-for='item in userList',
+              :key='item.id',
+              :label='item.realName',
+              :value='item.id'
+            )
         el-form-item(label='游戏名称:')
           auto-complete.mgl1(v-model='model.gameName', :data='gameList')
         el-form-item(label='区服:' :label-width='OS.isPc?"60px":"100px"')
@@ -292,10 +298,13 @@ export default {
     reset () {
       this.model.gameName = ''
       this.model.areaName = ''
+      this.model.UserId = ''
+      this.userList.splice(0, this.userList.length)
       if (this.userInfo.isLeader) {
         this.model.dtpId = this.myDptList.list[0].id
         this.$refs.dtptree.reset(this.myDptList.list[0].name)
       }
+      this.onDepartChange({ id: this.model.dtpId })
       this.onRadioChange(this.selTimeRange)
     },
     onRadioChange (val) {
@@ -307,6 +316,9 @@ export default {
         gameName: this.model.gameName,
         areaName: this.model.areaName,
         dtpId: this.model.dtpId,
+      }
+      if (this.UserId !== '') {
+        params.UserId = Number(this.model.UserId)
       }
       var method = ''
       switch (val) {
@@ -366,6 +378,7 @@ export default {
     },
     onDepartChange (dptInfo) {
       this.model.dtpId = dptInfo.id
+      this.model.UserId = ''
       this.$api.getDepartMembers(this.model.dtpId).then(data => {
         this.userList = data
       })
