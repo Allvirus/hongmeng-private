@@ -6,14 +6,14 @@ el-form(
   ref='form',
   @keyup.enter.native='submit'
 )
-  el-form-item(prop='username')
+  el-form-item(prop='username' :class="isPc?'mgb5':''")
     el-input.w100p(
       v-model='model.username',
       placeholder='请输入用户名',
       size='large',
       prefix-icon='el-icon-user'
     )
-  el-form-item(prop='password')
+  el-form-item(prop='password' :class="isPc?'mgb5':''")
     el-input.w100p(
       v-model='model.password',
       type='password',
@@ -28,7 +28,8 @@ el-form(
 
 <script>
 import { mapGetters } from 'vuex'
-import { EUIRule } from '@/plugins/utils'
+import utils, { EUIRule } from '@/plugins/utils'
+
 export default {
   name: 'Login',
   data () {
@@ -41,10 +42,14 @@ export default {
         username: '',
         password: '',
       },
+      isPc: true,
     }
   },
   computed: {
     ...mapGetters(['OS']),
+  },
+  created () {
+    this.isPc = utils.UAis('pc')
   },
   methods: {
     submit () {

@@ -7,7 +7,7 @@
       )
       .auth-layout
         .form-layout.page-content.border-radius
-          h2.mgy2.tac {{ $route.name === "Login" ? "用户登录" : "用户注册" }}
+          h2.tac(:class="isPc?'mgy5':'mgy3'") 用户登录
           component(:is='$route.name', ref='form')
 
     .copyright {{ $WD.$globalconfig.COPYRIGHT }}
