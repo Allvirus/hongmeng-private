@@ -131,7 +131,7 @@ export default {
         ctxMnuShow: false,
         curNode: {},
         curTreeNode: null, // 当前选择显示的部门人员
-        curDptId: '1',
+        curDptId: '',
         path: [],
       },
       search: '',
@@ -156,13 +156,11 @@ export default {
       this.Tree.departTree.splice(0, this.Tree.departTree.length)
       this.$api.getDepartById(this.userInfo.resDepartmentId).then(res => {
         this.Tree.departTree.push(res)
-        if (this.Tree.curDptId) {
-          this.$nextTick(function () {
-            // DOM 更新了
-            this.setCurrSelecNode(this.Tree.curDptId)
-            this.updatePath()
-          })
-        }
+        this.$nextTick(function () {
+          // DOM 更新了
+          this.setCurrSelecNode(this.Tree.curDptId === '' ? this.userInfo.resDepartmentId : this.Tree.curDptId)
+          this.updatePath()
+        })
       })
     },
     setCurrSelecNode (departMentId) {
@@ -225,7 +223,7 @@ export default {
       this.$vgo.open(() => {
         this.$api.delDepart(this.Tree.curTreeNode.id).then(data => {
           this.$vgo.tip('已删除!', 'success')
-          this.Tree.curDptId = 1
+          this.Tree.curDptId = this.userInfo.resDepartmentId
           this.getDepartTree()
         })
       }, tipMsg)
