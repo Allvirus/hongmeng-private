@@ -27,8 +27,8 @@
           el-breadcrumb(separator-class="el-icon-arrow-right")
             el-breadcrumb-item(v-for="(item,index) in Tree.path") {{item}}
         .flex-1.jc-end.ai-center
-          span.mgr2.omit 是否只查询在职人员
-          el-switch.mgr2(v-model="User.Resigned")
+          span.mgr2.omit 是否包含离职人员?
+          el-switch.mgr2(v-model="User.isIncludeNoJob" @change="onSwitcherChange")
           el-button(
             icon='el-icon-plus',
             type='primary',
@@ -66,7 +66,7 @@
               span 正常
         el-table-column(prop='operate', label='操作' width="200")
           template(slot="header" slot-scope="scope")
-            el-input(v-model="search" placeholder="输入关键字搜索" size="mini")
+            el-input(v-model="search" placeholder="输入姓名搜索" size="mini")
           template(slot-scope='{ row }')
             el-button(
               icon='el-icon-edit-outline',
@@ -118,7 +118,7 @@ export default {
         newUserDlg: false, // 人员编辑对话框是否可见
         userId: 0, // 编辑的人员信息
         userList: [], // 部门人员列表
-        Resigned: true, // 是否在职
+        isIncludeNoJob: false, // 是否在职
       },
       Dpt: {
         newDepartDlg: false, // 部门编辑对话框是否可见
@@ -168,7 +168,7 @@ export default {
     setCurrSelecNode (departMentId) {
       this.Tree.curDptId = departMentId
       this.$refs.tree.setCurrentKey(departMentId)
-      this.$api.getDepartMembers(departMentId, this.User.Resigned).then(data => {
+      this.$api.getDepartMembers(departMentId, !this.User.isIncludeNoJob).then(data => {
         // 增加部门字段
         for (const item of data) {
           item.dptName = this.Dpt.dptNameList[item.departmentId].name
@@ -179,7 +179,7 @@ export default {
     handleNodeClick (data) {
       this.Tree.curTreeNode = data
       this.Tree.curDptId = data.id
-      this.$api.getDepartMembers(data.id, this.User.Resigned).then(data => {
+      this.$api.getDepartMembers(data.id, !this.User.isIncludeNoJob).then(data => {
         // 增加部门字段
         for (const item of data) {
           item.dptName = this.Dpt.dptNameList[item.departmentId].name
@@ -269,6 +269,9 @@ export default {
       this.Tree.path.splice(0, this.Tree.path.length)
       this.getNodePath(this.Tree.departTree[0])
       this.Tree.path.reverse()
+    },
+    onSwitcherChange () {
+      this.setCurrSelecNode(this.Tree.curDptId)
     },
     getNodePath (node) {
       if (node.id === Number(this.Tree.curDptId)) {
