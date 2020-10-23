@@ -303,16 +303,17 @@ export default {
       this.model.gameName = ''
       this.model.areaName = ''
       this.model.UserId = ''
+      this.searchMyData = false
       this.userList.splice(0, this.userList.length)
       if (this.userInfo.isLeader) {
         this.model.dtpId = this.myDptList.list[0].id
         this.$refs.dtptree.reset(this.myDptList.list[0].name)
+        this.onDepartChange({ id: this.model.dtpId })
       }
-      this.onDepartChange({ id: this.model.dtpId })
       this.onRadioChange(this.selTimeRange)
     },
     onRadioChange (val) {
-      if (this.model.dtpId === '' && !this.searchMyData) {
+      if (this.userInfo.isLeader && this.model.dtpId === '' && !this.searchMyData) {
         this.$vgo.tip('请选择部门!', 'warning')
         return
       }
@@ -333,7 +334,7 @@ export default {
       var method = ''
       switch (val) {
         case '今日':
-          method = this.searchMyData ? 'getAchiByDay' : 'getDptAchiByDay'
+          method = (this.searchMyData || !this.userInfo.isLeader) ? 'getAchiByDay' : 'getDptAchiByDay'
           this.$api[method](params).then(data => {
             const tmp1 = []
             for (const item of data.createUser) {
@@ -365,19 +366,19 @@ export default {
           })
           break
         case '本周':
-          method = this.searchMyData ? 'getAchiByWeek' : 'getDptAchiByWeek'
+          method = (this.searchMyData || !this.userInfo.isLeader) ? 'getAchiByWeek' : 'getDptAchiByWeek'
           this.$api[method](params).then(data => {
             this.handleData(data, 'dayKey', 7)
           })
           break
         case '本月':
-          method = this.searchMyData ? 'getAchiByMonth' : 'getDptAchiByMonth'
+          method = (this.searchMyData || !this.userInfo.isLeader) ? 'getAchiByMonth' : 'getDptAchiByMonth'
           this.$api[method](params).then(data => {
             this.handleData(data, 'dayKey', 30)
           })
           break
         case '全年':
-          method = this.searchMyData ? 'getAchiByYear' : 'getDptAchiByYear'
+          method = (this.searchMyData || !this.userInfo.isLeader) ? 'getAchiByYear' : 'getDptAchiByYear'
           this.$api[method](params).then(data => {
             this.handleData(data, 'monthKey', 12)
           })
@@ -387,6 +388,7 @@ export default {
       }
     },
     onDepartChange (dptInfo) {
+      console.log('ondptchagen...')
       this.model.dtpId = dptInfo.id
       this.model.UserId = ''
       this.$api.getDepartMembers(this.model.dtpId).then(data => {

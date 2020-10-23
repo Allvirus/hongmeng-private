@@ -40,7 +40,8 @@
             @click='showDptEditDlg(false)'
           ) 新增部门
 
-      el-table.mgt2(:data='User.userList' max-height="600")
+      el-table.mgt2(:data='User.userList.filter(data => !search || data.realName.toLowerCase().includes(search.toLowerCase()))'
+        max-height="600")
         el-table-column(prop='realName', label='姓名')
           template(slot-scope='{ row }')
             span(:class="{ 'danger': isLeader(row) }") {{row.realName}}
@@ -63,7 +64,9 @@
               span 已锁定
             .ff-rn(v-else)
               span 正常
-        el-table-column(prop='operate', label='操作')
+        el-table-column(prop='operate', label='操作' width="200")
+          template(slot="header" slot-scope="scope")
+            el-input(v-model="search" placeholder="输入关键字搜索" size="mini")
           template(slot-scope='{ row }')
             el-button(
               icon='el-icon-edit-outline',
@@ -131,6 +134,7 @@ export default {
         curDptId: '1',
         path: [],
       },
+      search: '',
     }
   },
   computed: {
