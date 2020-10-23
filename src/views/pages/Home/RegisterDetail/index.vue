@@ -51,6 +51,9 @@
     el-table-column(prop='ajob', label='A岗')
     el-table-column(prop='bjob', label='B岗')
     el-table-column(prop='cjob', label='C岗')
+    el-table-column(prop='opt', label='操作')
+      template(slot-scope='{ row }')
+        el-button(type="text" @click="showRoleDetail(row)") 查看角色
 
   el-pagination.margin-spacing(
     :total='listMixin.count',
@@ -58,6 +61,8 @@
     :current-page.sync='model.page',
     @current-change='getListMixin'
   )
+
+  RoleDetails(:visible.sync='showRoleDlg' @cancel='cancelDlg' :UserAccount="selUser")
 </template>
 <script>
 import { mapGetters } from 'vuex'
@@ -65,6 +70,9 @@ import fetchListMixin from '@/mixins/fetchListMixin'
 import dptListMixin from '@/mixins/dptListMixin'
 export default {
   name: 'MyRegister',
+  components: {
+    RoleDetails: () => import('@/views/pages/Home/RegisterDetail/comps/RoleDetails'),
+  },
   mixins: [dptListMixin, fetchListMixin],
   data () {
     return {
@@ -83,10 +91,22 @@ export default {
         page: 1,
         pageSize: 10,
       },
+      showRoleDlg: false,
+      selUser: '',
     }
   },
   computed: {
     ...mapGetters(['myDptList', 'userInfo']),
+  },
+  methods: {
+    showRoleDetail (row) {
+      this.showRoleDlg = true
+      this.selUser = row.userAccount
+    },
+    cancelDlg () {
+      this.showRoleDlg = false
+      this.selUser = ''
+    },
   },
 }
 </script>
