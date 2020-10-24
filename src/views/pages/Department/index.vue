@@ -24,11 +24,14 @@
     .user-list.mgl2.pd2
       .ff-rn.fs-m.bg-white.pd2.opt-bar
         .flex-1.ai-center.mgl1
-          el-breadcrumb(separator-class="el-icon-arrow-right")
-            el-breadcrumb-item(v-for="(item,index) in Tree.path") {{item}}
+          el-breadcrumb(separator-class='el-icon-arrow-right')
+            el-breadcrumb-item(v-for='(item, index) in Tree.path') {{ item }}
         .flex-1.jc-end.ai-center
           span.mgr2.omit 是否包含离职人员?
-          el-switch.mgr2(v-model="User.isIncludeNoJob" @change="onSwitcherChange")
+          el-switch.mgr2(
+            v-model='User.isIncludeNoJob',
+            @change='onSwitcherChange'
+          )
           el-button(
             icon='el-icon-plus',
             type='primary',
@@ -40,11 +43,13 @@
             @click='showDptEditDlg(false)'
           ) 新增部门
 
-      el-table.mgt2(:data='User.userList.filter(data => !search || data.realName.toLowerCase().includes(search.toLowerCase()))'
-        max-height="600")
+      el-table.mgt2(
+        :data='User.userList.filter((data) => !search || data.realName.toLowerCase().includes(search.toLowerCase()))',
+        max-height='600'
+      )
         el-table-column(prop='realName', label='姓名')
           template(slot-scope='{ row }')
-            span(:class="{ 'danger': isLeader(row) }") {{row.realName}}
+            span(:class='{ danger: isLeader(row) }') {{ row.realName }}
         el-table-column(prop='dptName', label='所属部门')
         el-table-column(prop='phoneNumber', label='手机号')
         el-table-column(prop='level', label='等级')
@@ -64,9 +69,9 @@
               span 已锁定
             .ff-rn(v-else)
               span 正常
-        el-table-column(prop='operate', label='操作' width="200")
-          template(slot="header" slot-scope="scope")
-            el-input(v-model="search" placeholder="输入姓名搜索" size="mini")
+        el-table-column(prop='operate', label='操作', width='200')
+          template(slot='header', slot-scope='scope')
+            el-input(v-model='search', placeholder='输入姓名搜索', size='mini')
           template(slot-scope='{ row }')
             el-button(
               icon='el-icon-edit-outline',
@@ -135,6 +140,7 @@ export default {
         path: [],
       },
       search: '',
+      hasCalCount: false,
     }
   },
   computed: {
@@ -156,6 +162,7 @@ export default {
       this.Tree.departTree.splice(0, this.Tree.departTree.length)
       this.$api.getDepartById(this.userInfo.resDepartmentId).then(res => {
         this.Tree.departTree.push(res)
+        console.log(this.Tree.departTree)
         this.$nextTick(function () {
           // DOM 更新了
           this.setCurrSelecNode(this.Tree.curDptId === '' ? this.userInfo.resDepartmentId : this.Tree.curDptId)
@@ -172,7 +179,46 @@ export default {
           item.dptName = this.Dpt.dptNameList[item.departmentId].name
         }
         this.User.userList = data
+
+        // 计算部门人数
+        if (!this.hasCalCount) {
+          this.hasCalCount = true
+          this.caclDptUserCnt()
+        }
       })
+    },
+    caclDptUserCnt () {
+      // 先计算出每个部门id有多少人
+      const dptMemberCntMap = new Map()
+      for (const user of this.User.userList) {
+        if (dptMemberCntMap.get(user.departmentId)) {
+          const count = dptMemberCntMap.get(user.departmentId)
+          dptMemberCntMap.set(user.departmentId, (count + 1))
+        } else {
+          dptMemberCntMap.set(user.departmentId, 1)
+        }
+      }
+      console.log(dptMemberCntMap)
+      // 遍历部门树，给部门名称增加人数字符串
+      // 如果有子部门，那么这个部门人数是本节点人数+所有子节点人数
+      this.calcChildDptUserCnt(this.Tree.departTree[0], dptMemberCntMap)
+      console.log('after calculate', this.Tree.departTree[0])
+    },
+    calcChildDptUserCnt (node, map) {
+      if (map.get(node.id)) {
+        node.userCount = map.get(node.id)
+      } else {
+        node.userCount = 0
+      }
+
+      if (node.departments.length > 0) {
+        for (const child of node.departments) {
+          this.calcChildDptUserCnt(child, map)
+          node.userCount += child.userCount
+        }
+      }
+
+      node.name += `(${node.userCount}人)`
     },
     handleNodeClick (data) {
       this.Tree.curTreeNode = data

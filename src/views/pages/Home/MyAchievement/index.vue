@@ -11,7 +11,12 @@
         )
     .opt-bar
       el-form.ff-rw.mgt2.ai-center(label-width='100px')
-        el-form-item(label='部门:' :class="OS.isPc?'':'mgl1'" v-if='userInfo.isLeader' :label-width='OS.isPc?"60px":"100px"')
+        el-form-item(
+          label='部门:',
+          :class='OS.isPc ? "" : "mgl1"',
+          v-if='userInfo.isLeader',
+          :label-width='OS.isPc ? "60px" : "100px"'
+        )
           tree-selector.winput(
             ref='dtptree',
             :data='myDptList.list',
@@ -21,8 +26,18 @@
             :deflabel='myDptList.list[0].name',
             @change='onDepartChange'
           )
-        el-form-item(label='员工:' :class="OS.isPc?'':'mgl1'" :label-width='OS.isPc?"60px":"100px"' v-if='userInfo.isLeader')
-          el-select.winput(v-model='model.UserId', placeholder='请选择', clearable ,filterable)
+        el-form-item(
+          label='员工:',
+          :class='OS.isPc ? "" : "mgl1"',
+          :label-width='OS.isPc ? "60px" : "100px"',
+          v-if='userInfo.isLeader'
+        )
+          el-select.winput(
+            v-model='model.UserId',
+            placeholder='请选择',
+            clearable,
+            filterable
+          )
             el-option(
               v-for='item in userList',
               :key='item.id',
@@ -31,9 +46,9 @@
             )
         el-form-item(label='游戏名称:')
           auto-complete.mgl1(v-model='model.gameName', :data='gameList')
-        el-form-item(label='区服:' :label-width='OS.isPc?"60px":"100px"')
+        el-form-item(label='区服:', :label-width='OS.isPc ? "60px" : "100px"')
           auto-complete.mgl1(v-model='model.areaName', :data='areaList')
-        el-form-item.search-btn.mgb1(:class="OS.isPc?'':'jc-center full'")
+        el-form-item.search-btn.mgb1(:class='OS.isPc ? "" : "jc-center full"')
           el-button(icon='el-icon-search', type='primary', @click='search') 搜索
           el-button.mgr2(
             icon='el-icon-refresh-right',
@@ -41,12 +56,13 @@
             @click='reset'
           ) 重置
           el-checkbox.mgt1(
-            :class="OS.isPc?'':'mgb3'"
-            v-model="searchMyData"
-            v-if="userInfo.isLeader") 搜索我的数据
+            :class='OS.isPc ? "" : "mgb3"',
+            v-model='searchMyData',
+            v-if='userInfo.isLeader'
+          ) 搜索我的数据
 
   //- 创角指数
-  .data-panel.mgt2.ff-rn(v-if="OS.isPc")
+  .data-panel.mgt2.ff-rn(v-if='OS.isPc')
     .pd1.flex-1(v-for='(item, key, idx) in panelList')
       data-box(
         :data='item',
@@ -55,10 +71,10 @@
         :key='idx'
       )
 
-  .ff-rn.mgt2(v-if="!OS.isPc")
+  .ff-rn.mgt2(v-if='!OS.isPc')
     .ff-cn.bg-white.w100(v-for='(item, key, idx) in panelList')
-      p.mgt2.jc-center {{item.title}}
-      h3.jc-center.mgy2.warning {{item.value}}
+      p.mgt2.jc-center {{ item.title }}
+      h3.jc-center.mgy2.warning {{ item.value }}
 
   //- 图表
   .mgt2
@@ -388,7 +404,6 @@ export default {
       }
     },
     onDepartChange (dptInfo) {
-      console.log('ondptchagen...')
       this.model.dtpId = dptInfo.id
       this.model.UserId = ''
       this.$api.getDepartMembers(this.model.dtpId).then(data => {

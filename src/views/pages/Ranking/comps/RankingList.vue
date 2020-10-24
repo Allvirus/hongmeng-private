@@ -1,5 +1,5 @@
 <template lang='pug'>
-.rank.h650.ff-cn.pr.flex-1.mgx3(:class="OS.isPc?'':'mgt3'")
+.rank.h650.ff-cn.pr.flex-1.mgx3(:class='OS.isPc ? "" : "mgt3"')
   .top-bg.pr
     img.pa.tbimg(:src='themeList[theme].tpbg')
     h2.pa.fc-w3 {{ mainTitle }}
@@ -13,14 +13,14 @@
         alt='altText'
       )
       span.badge.flex-center(v-else) {{ index + 1 }}
-      img.avatar.mgl2(:src='defAvatar', alt='alt')
+      img.avatar.mgl2(:src='defAvatar', alt='alt', v-if='isShowMyRank')
       span.mgl1 {{ item["account"] }}
-      span.flex-1.jc-end.mgr3(v-if='toFixed') {{ item[rankingKey] | toFixed}}
-      span.flex-1.jc-end.mgr3(v-else) {{ item[rankingKey]}}
+      span.flex-1.jc-end.mgr3(v-if='toFixed') {{ item[rankingKey] | toFixed }}
+      span.flex-1.jc-end.mgr3(v-else) {{ item[rankingKey] }}
     .flex-center(v-if='data.length === 0')
       span 暂无数据
   .footer.h50.full.pa(:style='{ backgroundColor: themeList[theme].btbg }')
-    .ff-rn.ai-center.pd1.pr.fc-w3(v-if="isShowMyRank")
+    .ff-rn.ai-center.pd1.pr.fc-w3(v-if='isShowMyRank')
       img.badge(
         v-if='myRank.ranking < 3',
         :src='require(`@/assets/img/ic_rank${myRank.ranking}.png`)',

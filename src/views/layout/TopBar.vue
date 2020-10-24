@@ -144,7 +144,6 @@ export default {
   },
   methods: {
     onTabClick (e) {
-      console.log('onTabClick', e.name, this.lastTab)
       if (e.name !== this.lastTab) {
         this.$router.replace({ name: e.name })
         this.lastTab = e.name

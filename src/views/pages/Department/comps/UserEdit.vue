@@ -123,7 +123,6 @@ export default {
             this.model = data
             this.model.id = this.userId
             this.model.dptName = this.findDptName(this.model.departmentId, this.treeData)
-            console.log('onShowEdit', this.model)
           })
         } else {
           // 新建
