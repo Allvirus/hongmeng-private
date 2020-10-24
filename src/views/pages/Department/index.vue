@@ -166,7 +166,6 @@ export default {
         this.$nextTick(function () {
           // DOM 更新了
           this.setCurrSelecNode(this.Tree.curDptId === '' ? this.userInfo.resDepartmentId : this.Tree.curDptId)
-          this.updatePath()
         })
       })
     },
@@ -184,6 +183,7 @@ export default {
         if (!this.hasCalCount) {
           this.hasCalCount = true
           this.caclDptUserCnt()
+          this.updatePath()
         }
       })
     },
@@ -218,7 +218,9 @@ export default {
         }
       }
 
+      node.pathname = JSON.parse(JSON.stringify(node.name))
       node.name += `(${node.userCount}人)`
+      console.log(node)
     },
     handleNodeClick (data) {
       this.Tree.curTreeNode = data
@@ -319,14 +321,14 @@ export default {
     },
     getNodePath (node) {
       if (node.id === Number(this.Tree.curDptId)) {
-        this.Tree.path.push(node.name)
+        this.Tree.path.push(node.pathname)
         return true
       } else {
         if (node.departments.length > 0) {
           for (const child of node.departments) {
             const found = this.getNodePath(child)
             if (found) {
-              this.Tree.path.push(node.name)
+              this.Tree.path.push(node.pathname)
               return found
             }
           }
