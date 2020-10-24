@@ -139,6 +139,7 @@ export default {
 
   // 3.创建用户
   addUser: (model) => http('post', 'api/user/', {
+    loading: true,
     data: {
       realName: model.realName,
       phoneNumber: model.phoneNumber,
@@ -246,6 +247,7 @@ export default {
 
   // 9.获取业务配置分页信息
   getBizConfig: (model) => http('get', '/api/bizconfig', {
+    loading: true,
     params: (() => {
       if (model.startTime === '' || model.endTime === '') {
         delete model.startTime
@@ -345,6 +347,7 @@ export default {
   }),
   // 19.获取游戏注册分页信息
   getPlayerList: (model) => http('get', '/api/player/info', {
+    loading: true,
     params: (() => {
       const p = {
         startTime: model.startTime,
@@ -362,6 +365,7 @@ export default {
   }),
   // 19.5 获取管理游戏注册分页信息
   getDptRegisterInfo: (model) => http('get', '/api/player/info/manage', {
+    loading: true,
     params: (() => {
       const p = {
         startTime: model.startTime,
@@ -381,6 +385,7 @@ export default {
   }),
   // 20.获取游戏订单分页信息
   getGameOrders: (model) => http('get', '/api/player/order', {
+    loading: true,
     params: (() => {
       const p = {
         startTime: model.startTime,
@@ -419,6 +424,7 @@ export default {
 
   // 20.5 获取游戏订单分页信息
   getDptGameOrders: (model) => http('get', '/api/player/order/manage', {
+    loading: true,
     params: (() => {
       const p = {
         startTime: model.startTime,
@@ -443,6 +449,7 @@ export default {
   }),
   // 21.获取游戏角色分页信息
   getRoleInfos: (model) => http('get', '/api/player/role', {
+    loading: true,
     params: (() => {
       const p = {
         startTime: model.startTime,
@@ -462,6 +469,7 @@ export default {
   }),
   // 21.5 获取游戏角色分页信息
   getDptRoleInfos: (model) => http('get', '/api/player/role/manage', {
+    loading: true,
     params: (() => {
       const p = {
         startTime: model.startTime,
@@ -483,6 +491,7 @@ export default {
   }),
   // 22.获取充值玩家信息和订单统计分页数据
   getRechInfo: (model) => http('get', '/api/player/recharge', {
+    loading: true,
     params: (() => {
       const p = {
         UserAccount: model.UserAccount,
@@ -503,6 +512,7 @@ export default {
   }),
   // 23.获取充值玩家信息充值记录分页
   getDptRechInfo: (model) => http('get', 'api/player/recharge/manage', {
+    loading: true,
     params: (() => {
       const p = {
         UserAccount: model.UserAccount,
@@ -535,6 +545,7 @@ export default {
 
   // 25. 获取我本日的业务数据
   getAchiByDay: (model) => http('get', '/api/achievement/day', {
+    loading: true,
     params: {
       gameName: model.gameName,
       areaName: model.areaName,
@@ -543,6 +554,7 @@ export default {
 
   // 25.5 获取部门我的业务的当天数据
   getDptAchiByDay: (model) => http('get', '/api/achievement/day/manage', {
+    loading: true,
     params: {
       gameName: model.gameName,
       areaName: model.areaName,
@@ -552,6 +564,7 @@ export default {
   }),
   // 26.获取我本周的业务数据
   getAchiByWeek: (model) => http('get', '/api/achievement/week', {
+    loading: true,
     params: {
       gameName: model.gameName,
       areaName: model.areaName,
@@ -560,6 +573,7 @@ export default {
 
   // 26.5 获取我的业务的本周数据
   getDptAchiByWeek: (model) => http('get', '/api/achievement/week/manage', {
+    loading: true,
     params: {
       gameName: model.gameName,
       areaName: model.areaName,
@@ -569,6 +583,7 @@ export default {
   }),
   // 27.获取我本月的业务数据
   getAchiByMonth: (model) => http('get', '/api/achievement/month', {
+    loading: true,
     params: {
       gameName: model.gameName,
       areaName: model.areaName,
@@ -577,6 +592,7 @@ export default {
 
   // 27.5 获取我的业务的本月数据
   getDptAchiByMonth: (model) => http('get', '/api/achievement/month/manage', {
+    loading: true,
     params: {
       gameName: model.gameName,
       areaName: model.areaName,
@@ -586,6 +602,7 @@ export default {
   }),
   // 27.6 获取我的业务的本年数据
   getAchiByYear: (model) => http('get', '/api/achievement/year', {
+    loading: true,
     params: {
       gameName: model.gameName,
       areaName: model.areaName,
@@ -594,6 +611,7 @@ export default {
 
   // 27.7 获取部门管理我的业务的本年数据
   getDptAchiByYear: (model) => http('get', '/api/achievement/year/manage', {
+    loading: true,
     params: {
       gameName: model.gameName,
       areaName: model.areaName,
@@ -658,6 +676,7 @@ export default {
   getNotices: () => http('get', 'api/notice/'),
   // 40.获取经验值明细分页接口
   getDptExpList: (model) => http('get', '/api/experience/', {
+    loading: true,
     params: (() => {
       const p = {
         startTime: model.startTime,
@@ -674,6 +693,7 @@ export default {
   }),
   // 40. 5 获取个人经验值明细分页接口
   getMyExp: (model) => http('get', '/api/experience/user', {
+    loading: true,
     params: (() => {
       const p = {
         startTime: model.startTime,
@@ -692,6 +712,7 @@ export default {
 
   // 42.创建经验值明细接口
   createExp: (model) => http('post', '/api/experience/', {
+    loading: true,
     data: {
       userId: model.userId,
       expChange: model.expChange,
@@ -706,6 +727,7 @@ export default {
 
   // 44.玩家换绑记录分页接口
   getBindChangeList: (model) => http('get', '/api/playerswitch/', {
+    loading: true,
     params: {
       UserAccount: model.UserAccount,
       Page: model.Page,

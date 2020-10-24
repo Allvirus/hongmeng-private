@@ -15,7 +15,7 @@ const axiosInstance = axios.create({
  * @returns {Promise}
  */
 export const http = (method, url, config = {}) => {
-  const { loading = true, token = true } = config
+  const { loading = false, token = true } = config
   // 是否需要token
   if (token) {
     const tk = utils.getToken()
