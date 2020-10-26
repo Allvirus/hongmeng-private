@@ -15,7 +15,7 @@
       span.badge.flex-center(v-else) {{ index + 1 }}
       img.avatar.mgl2(:src='defAvatar', alt='alt', v-if='isShowMyRank')
       span.mgl1 {{ item["account"] }}
-      span.flex-1.jc-end.mgr3(v-if='toFixed') {{ item[rankingKey] | toFixed }}
+      span.flex-1.jc-end.mgr3.danger.strong(v-if='toFixed') {{ item[rankingKey] | toFixed }}
       span.flex-1.jc-end.mgr3(v-else) {{ item[rankingKey] }}
     .flex-center(v-if='data.length === 0')
       span 暂无数据

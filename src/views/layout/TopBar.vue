@@ -2,12 +2,8 @@
 .top-bar.box-shadow
   .banner.jc-between.pr
     .user-info.ff-rn.ai-center.pdl2
-      el-popover(
-        placement='top-start',
-        width='150',
-        trigger='hover',
-      )
-        template()
+      el-popover(placement='top-start', width='150', trigger='hover')
+        template
           ul.mgl2
             li.hand.h30.full.ai-center.hover
               el-upload(
@@ -26,69 +22,72 @@
               i.el-icon-close.fs-l
               span.mgl1 退出登录
         img.avatar(
-          :class="OS.isPc?'mg3':''"
+          :class='OS.isPc ? "mg3" : ""',
           slot='reference',
           :src='userInfo.photo !== null ? userInfo.photo : require("@/assets/img/ic_def_avatar.png")'
         )
       .ff-cn.mgl2
-        .ff-rn.ai-center(:class="OS.isPc?'fs-b':'fs-s'")
+        .ff-rn.ai-center(:class='OS.isPc ? "fs-b" : "fs-s"')
           span {{ userInfo.realName }}
           img.mgl2.fit-contain.flex-center(:src='userInfo.level | formatBadge')
           span.mgl1.omit {{ userInfo.level | formatLevel }}
 
-        .ff-rn.ai-center.mgt2(:class="OS.isPc?'fs-m':'fs-s'")
+        .ff-rn.ai-center.mgt2(:class='OS.isPc ? "fs-m" : "fs-s"')
           img(:src='require("@/assets/img/ic_job.png")', fit='contain')
           span.mgl1 {{ userInfo.job | formatJob }}
-          span.mgl1 经验值 {{ userInfo.experiences }}
+            span.mgl1 经验值
+            span.mgl1.warning {{ userInfo.experiences }}
     .swiper.pa.omit
-      scroll-notice(:data='noticeList', :rows='3' v-if="OS.isPc")
+      scroll-notice(:data='noticeList', :rows='3', v-if='OS.isPc')
     .ai-center
-      img.logo(:src='require("@/assets/img/logo_zl.png")' :class="OS.isPc?'mgr3':'mgr2'")
+      img.logo(
+        :src='require("@/assets/img/logo_zl.png")',
+        :class='OS.isPc ? "mgr3" : "mgr2"'
+      )
   .menu-list.jc-between.bg-white
-    el-tabs(
-      v-model='activeTab',
-      @tab-click='onTabClick'
-    )
+    el-tabs(v-model='activeTab', @tab-click='onTabClick')
       el-tab-pane(label='首页', name='HomeMyAchievement')
       el-tab-pane(label='排行', name='Ranking')
     .notice.ai-center.omit.w400
-      p(@click="showDptNotice" v-if="OS.isPc") {{dptNotices}}
-    .menu.ai-center.jc-center(v-if="!OS.isPc && (activeTab === 'HomeMyAchievement')")
-      ms-menu(derection="bottom")
+      p(@click='showDptNotice', v-if='OS.isPc') {{ dptNotices }}
+    .menu.ai-center.jc-center(
+      v-if='!OS.isPc && activeTab === "HomeMyAchievement"'
+    )
+      ms-menu(derection='bottom')
   .edit-pswd
     el-dialog(
       title='修改密码',
       :visible.sync='editPswdDlg',
-      :width='OS.isPc?"600px":"300px"',
+      :width='OS.isPc ? "600px" : "300px"',
       @close='cancelPswdEdit'
     )
       .flex-center
         el-form(
-          :label-width='OS.isPc?"100px":""',
+          :label-width='OS.isPc ? "100px" : ""',
           ref='form',
           :rules='rules',
           :model='model'
         )
-          el-form-item(prop='oldpswd', :label='OS.isPc?"旧密码:":""')
+          el-form-item(prop='oldpswd', :label='OS.isPc ? "旧密码:" : ""')
             el-input(
               v-model='model.oldpswd',
               type='password',
-              placeholder='请输入旧密码'
-              :class="OS.isPc?'':'winput'"
+              placeholder='请输入旧密码',
+              :class='OS.isPc ? "" : "winput"'
             )
-          el-form-item(prop='password', :label='OS.isPc?"新密码:":""')
+          el-form-item(prop='password', :label='OS.isPc ? "新密码:" : ""')
             el-input(
               v-model='model.password',
               type='password',
-              placeholder='请输入新密码'
-              :class="OS.isPc?'':'winput'"
+              placeholder='请输入新密码',
+              :class='OS.isPc ? "" : "winput"'
             )
-          el-form-item(prop='passwordre', :label='OS.isPc?"确认新密码:":""')
+          el-form-item(prop='passwordre', :label='OS.isPc ? "确认新密码:" : ""')
             el-input(
               v-model='model.passwordre',
               type='password',
-              placeholder='请再次输入新密码'
-              :class="OS.isPc?'':'winput'"
+              placeholder='请再次输入新密码',
+              :class='OS.isPc ? "" : "winput"'
             )
       span.dialog-footer(slot='footer')
         el-button.mgl3(type='warning', @click='cancelPswdEdit') 取消
