@@ -50,11 +50,11 @@
         el-table-column(prop='realName', label='姓名')
           template(slot-scope='{ row }')
             span(:class='{ danger: isLeader(row) }') {{ row.realName }}
-        el-table-column(prop='dptName', label='所属部门')
+        el-table-column(prop='dptName', label='所属部门', sortable)
         el-table-column(prop='phoneNumber', label='手机号')
-        el-table-column(prop='level', label='等级')
+        el-table-column(prop='level', label='等级', sortable)
           template(slot-scope='{ row }') {{ row.level | formatLevel }}
-        el-table-column(prop='job', label='岗位')
+        el-table-column(prop='job', label='岗位', sortable)
           template(slot-scope='{ row }') {{ row.job | formatJob }}
         el-table-column(prop='experiences', label='经验值')
         el-table-column(prop='workingStatus', label='在职状态')
