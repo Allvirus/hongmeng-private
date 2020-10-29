@@ -11,8 +11,13 @@
         :deflabel='myDptList.list[0].name',
         @change='onDepartChange'
       )
-    el-form-item(label='员工:' v-if='userInfo.isLeader')
-      el-select.winput(v-model='model.userId', placeholder='请选择', clearable filterable)
+    el-form-item(label='员工:', v-if='userInfo.isLeader')
+      el-select.winput(
+        v-model='model.userId',
+        placeholder='请选择',
+        clearable,
+        filterable
+      )
         el-option(
           v-for='item in userList',
           :key='item.id',
@@ -37,23 +42,26 @@
       type='primary',
       @click='reset'
     ) 重置
-    el-checkbox.flex-center.mgb2(v-model="searchMyData" v-if="userInfo.isLeader") 搜索我的数据
+    el-checkbox.flex-center.mgb2(
+      v-model='searchMyData',
+      v-if='userInfo.isLeader'
+    ) 搜索我的数据
 
   el-table.mgy2.bg-white.pd2(:data='listMixin.list')
     el-table-column(prop='userAccount', label='玩家账号')
     el-table-column(prop='account', label='推广员账户')
-    el-table-column(prop='deviceNo', label='设备号')
-    el-table-column(prop='osType', label='平台')
+    el-table-column(prop='deviceNo', label='设备号', width='270px')
+    el-table-column(prop='osType', label='平台', width='60px')
       template(slot-scope='{ row }') {{ row.osType | formatOSType }}
-    el-table-column(prop='createDate', label='注册时间')
+    el-table-column(prop='createDate', label='注册时间', width='150px')
       template(slot-scope='{ row }') {{ row.createDate | dateFormat }}
     el-table-column(prop='createIp', label='注册IP')
     el-table-column(prop='ajob', label='A岗')
     el-table-column(prop='bjob', label='B岗')
     el-table-column(prop='cjob', label='C岗')
-    el-table-column(prop='opt', label='操作')
+    el-table-column(prop='opt', label='操作', width='100px')
       template(slot-scope='{ row }')
-        el-button(type="text" @click="showRoleDetail(row)") 查看角色
+        el-button(type='text', @click='showRoleDetail(row)') 查看角色
 
   el-pagination.margin-spacing(
     :total='listMixin.count',
@@ -62,7 +70,11 @@
     @current-change='getListMixin'
   )
 
-  RoleDetails(:visible.sync='showRoleDlg' @cancel='cancelDlg' :UserAccount="selUser")
+  RoleDetails(
+    :visible.sync='showRoleDlg',
+    @cancel='cancelDlg',
+    :UserAccount='selUser'
+  )
 </template>
 <script>
 import { mapGetters } from 'vuex'

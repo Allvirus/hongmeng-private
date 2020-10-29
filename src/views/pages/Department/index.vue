@@ -50,8 +50,8 @@
         el-table-column(prop='realName', label='姓名')
           template(slot-scope='{ row }')
             span(:class='{ danger: isLeader(row) }') {{ row.realName }}
-        el-table-column(prop='dptName', label='所属部门', sortable)
-        el-table-column(prop='phoneNumber', label='手机号')
+        el-table-column(prop='dptName', label='所属部门', sortable, width='150px')
+        el-table-column(prop='phoneNumber', label='手机号', width='120px')
         el-table-column(prop='level', label='等级', sortable)
           template(slot-scope='{ row }') {{ row.level | formatLevel }}
         el-table-column(prop='job', label='岗位', sortable)
@@ -162,7 +162,6 @@ export default {
       this.Tree.departTree.splice(0, this.Tree.departTree.length)
       this.$api.getDepartById(this.userInfo.resDepartmentId).then(res => {
         this.Tree.departTree.push(res)
-        console.log(this.Tree.departTree)
         this.$nextTick(function () {
           // DOM 更新了
           this.setCurrSelecNode(this.Tree.curDptId === '' ? this.userInfo.resDepartmentId : this.Tree.curDptId)
@@ -198,11 +197,9 @@ export default {
           dptMemberCntMap.set(user.departmentId, 1)
         }
       }
-      console.log(dptMemberCntMap)
       // 遍历部门树，给部门名称增加人数字符串
       // 如果有子部门，那么这个部门人数是本节点人数+所有子节点人数
       this.calcChildDptUserCnt(this.Tree.departTree[0], dptMemberCntMap)
-      console.log('after calculate', this.Tree.departTree[0])
     },
     calcChildDptUserCnt (node, map) {
       if (map.get(node.id)) {
@@ -220,7 +217,6 @@ export default {
 
       node.pathname = JSON.parse(JSON.stringify(node.name))
       node.name += `(${node.userCount}人)`
-      console.log(node)
     },
     handleNodeClick (data) {
       this.Tree.curTreeNode = data

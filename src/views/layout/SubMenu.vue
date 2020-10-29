@@ -1,6 +1,6 @@
 <template lang="pug">
 .sub-menu.ff-cn
-  .userInfo.pr(v-if="OS.isPc")
+  .userInfo.pr(v-if='OS.isPc')
     .avatar-bg.pa
       img.fit-contain(
         :src='userInfo.photo !== null ? userInfo.photo : require("@/assets/img/ic_def_avatar.png")'
@@ -65,7 +65,6 @@ export default {
     },
   },
   created: function () {
-    console.log('userInfo =', this.userInfo, ' os is PC = ', this.OS.isPc)
   },
   methods: {
     handleGetGroup (item) {
