@@ -48,8 +48,12 @@
     el-tabs(v-model='activeTab', @tab-click='onTabClick')
       el-tab-pane(label='首页', name='HomeMyAchievement')
       el-tab-pane(label='排行', name='Ranking')
-    .notice.ai-center.omit.w400
-      p(@click='showDptNotice', v-if='OS.isPc') {{ dptNotices }}
+    .notice.ai-center
+      p.omit.hand(
+        @click='showDptNotice',
+        v-if='OS.isPc',
+        style='max-width:1200px'
+      ) {{ dptNotices }}
     .menu.ai-center.jc-center(
       v-if='!OS.isPc && activeTab === "HomeMyAchievement"'
     )
