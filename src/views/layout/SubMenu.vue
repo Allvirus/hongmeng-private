@@ -65,6 +65,7 @@ export default {
     },
   },
   created: function () {
+    console.log('userInfo', this.userInfo)
   },
   methods: {
     handleGetGroup (item) {

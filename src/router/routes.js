@@ -154,6 +154,12 @@ export default [
         component: () => import('@/views/pages/Ranking/'),
       },
       {
+        path: 'MyTarget',
+        name: 'MyTarget',
+        meta: { title: '排行' },
+        component: () => import('@/views/pages/MyTarget/'),
+      },
+      {
         path: 'Department',
         name: 'Department',
         meta: { title: '部门管理' },
