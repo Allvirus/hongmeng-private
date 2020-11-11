@@ -21,6 +21,7 @@ export default {
     }
   },
   async created () {
+    console.log('fetchListMixin...', this.userInfo)
     // 在列表请求前预处理
     this.preMethodMixin && await this.preMethodMixin()
     // 记录重置操作 所需源数据

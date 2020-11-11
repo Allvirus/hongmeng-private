@@ -12,8 +12,13 @@
           :deflabel='myDptList.list[0].name',
           @change='onDepartChange'
         )
-      el-form-item(label='员工:' v-if='userInfo.isLeader')
-        el-select.winput(v-model='model.userId', placeholder='请选择', clearable ,filterable)
+      el-form-item(label='员工:', v-if='userInfo.isLeader')
+        el-select.winput(
+          v-model='model.userId',
+          placeholder='请选择',
+          clearable,
+          filterable
+        )
           el-option(
             v-for='item in userList',
             :key='item.id',
@@ -23,7 +28,7 @@
       el-form-item(label='玩家账号:')
         el-input.winput(v-model='model.UserAccount')
       el-form-item(label='游戏名称:')
-        auto-complete(v-model="model.GameName" :data='gameList')
+        auto-complete(v-model='model.GameName', :data='gameList')
       el-form-item(label='游戏角色:')
         el-input.winput(v-model='model.RoleName')
       el-form-item(label='订单号:')
@@ -31,20 +36,28 @@
       el-form-item(label='推广员账户:')
         el-input.winput(v-model='model.Account')
       el-form-item(label='区服:')
-        auto-complete(v-model="model.AreaName" :data='areaList')
-      el-form-item(label='支付时间:' v-if="OS.isPc")
-        CommonDatePicker.w400(
+        auto-complete(v-model='model.AreaName', :data='areaList')
+      el-form-item(label='支付时间:', v-if='OS.isPc')
+        CommonDatePicker.w300(
           :start.sync='model.startTime',
           :end.sync='model.endTime',
           all
         )
-      el-button.mgl3.h30(icon='el-icon-search', type='primary', @click='search') 搜索
+      el-button.mgl3.h30(
+        icon='el-icon-search',
+        type='primary',
+        @click='search'
+      ) 搜索
       el-button.mgl2.h30.mgr2(
         icon='el-icon-refresh-right',
         type='primary',
         @click='reset'
       ) 重置
-      el-checkbox.mgt1(:class="OS.isPc?'':'mgb3'" v-model="searchMyData" v-if="userInfo.isLeader") 搜索我的数据
+      el-checkbox.mgt1(
+        :class='OS.isPc ? "" : "mgb3"',
+        v-model='searchMyData',
+        v-if='userInfo.isLeader'
+      ) 搜索我的数据
 
   el-table.mgy2.bg-white.pd2(:data='listMixin.list')
     el-table-column(prop='userAccount', label='玩家账号')
@@ -66,10 +79,10 @@
     :total='listMixin.count',
     :page-size.sync='model.pageSize',
     :current-page.sync='model.page',
-    @current-change='getListMixin'
-    :class="OS.isPc?'margin-spacing':''"
-    :base="!OS.isPc"
-    :small="!OS.isPc"
+    @current-change='getListMixin',
+    :class='OS.isPc ? "margin-spacing" : ""',
+    :base='!OS.isPc',
+    :small='!OS.isPc'
   )
 </template>
 <script>

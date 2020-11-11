@@ -7,23 +7,38 @@ export default {
   },
   async created () {
     // 获取默认部门人员列表
+    console.log('dptList...', this.userInfo)
     if (this.userInfo && this.myDptList && this.userInfo.isLeader) {
       this.onDepartChange({ id: this.myDptList.list[0].id })
     } else {
       this.listApiForMixin = this.myApi
     }
+    if (this.isMyTarget) {
+      if (!this.userInfo.menu.wechatAuthority) {
+        this.listApiForMixin = this.myApi
+      }
+    }
   },
   methods: {
     reset () {
+      console.log('reset')
       this.listApiForMixin = this.myApi
       this.searchMyData = false
       this.model = JSON.parse(JSON.stringify(this.modelCopyMixin))
       this.model.resDepId = this.myDptList.list[0].id
-      if (this.userInfo && this.userInfo.isLeader && this.$refs.dtptree) {
+      if ((this.userInfo && this.userInfo.isLeader) ||
+        (this.isMyTarget && this.userInfo.menu.wechatAuthority)) {
         this.listApiForMixin = this.dtpApi
         this.userList.splice(0, this.userList.length)
-        this.$refs.dtptree.reset(this.myDptList.list[0].name)
+        if (this.$refs.dtptree) {
+          this.$refs.dtptree.reset(this.myDptList.list[0].name)
+        }
         this.onDepartChange({ id: this.myDptList.list[0].id })
+      }
+      if (this.isMyTarget) {
+        if (!this.userInfo.menu.wechatAuthority) {
+          this.listApiForMixin = this.myApi
+        }
       }
       this.getListMixin()
     },
@@ -31,6 +46,11 @@ export default {
     search () {
       this.listApiForMixin = (!this.searchMyData && this.userInfo.isLeader)
         ? this.dtpApi : this.myApi
+      if (this.isMyTarget) {
+        if (!this.userInfo.menu.wechatAuthority) {
+          this.listApiForMixin = this.myApi
+        }
+      }
       this.$utils.autoFillDateTime(this.model)
       this.getListMixin()
     },

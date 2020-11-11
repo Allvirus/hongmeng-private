@@ -755,4 +755,58 @@ export default {
   }),
   // 48.删除玩家换绑记录接口
   delBindRec: (id) => http('delete', `/api/playerswitch/${id}`),
+
+  // 50.获取自己微信达标员工列表
+  getMyWxAchievedList: (model) => http('get', '/api/quota', {
+    params: (() => {
+      const p = {
+        startTime: model.startTime, // | string |  否  | 开始时间 |
+        endTime: model.endTime, // | string |  否  | 结束时间 |
+        Page: model.Page, // | string |  否  | 页码默认为1 |
+        PageSize: model.PageSize, // | string |  否  | 页数大小默认为5最大为20 |
+      }
+      utils.filterNull(p)
+      return p
+    })(),
+
+  }),
+
+  // 51.获取全部微信达标员工列表(管理员或者B岗人员)
+  getAllWxAchievedList: (model) => http('get', '/api/quota/manage', {
+    params: (() => {
+      const p = {
+        userId: model.userId, // | int |  否  | 查询员工Id |
+        startTime: model.startTime, // | string |  否  | 开始时间 |
+        endTime: model.endTime, // | string |  否  | 结束时间 |
+        Page: model.Page, // | string |  否  | 页码默认为1 |
+        PageSize: model.PageSize, // | string |  否  | 页数大小默认为5最大为20 |
+      }
+      utils.filterNull(p)
+      return p
+    })(),
+  }),
+
+  // 52.创建微信达标记录接口
+  createWxAchievRec: (model) => http('post', '/api/quota/', {
+    data: {
+      userId: model.userId, //
+      receivedPeople: model.receivedPeople, //
+      joinPeople: model.joinPeople, //
+    },
+  }),
+
+  // 53.更新微信达标记录接口
+  updateWxAchievRec: (model) => http('put', `/api/quota/${model.id}`, {
+    data: {
+      receivedPeople: model.receivedPeople, //
+      joinPeople: model.joinPeople, //
+    },
+  }),
+
+  // 54.删除微信达标记录接口
+  deleteWxAchievRec: (quotaId) => http('delete', `/api/quota/${quotaId}`, {
+    params: {
+      quotaId: quotaId,
+    },
+  }),
 }

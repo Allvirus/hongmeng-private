@@ -231,6 +231,12 @@ const utils = {
     }
     return p
   },
+  // 给对象的所有属性填充指定的值
+  setObject (obj, val) {
+    for (const key in obj) {
+      obj[key] = val
+    }
+  },
   // 排序,
   sort (array, key, isDesc = false) {
     if (array) {
