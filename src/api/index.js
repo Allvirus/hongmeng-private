@@ -565,6 +565,24 @@ export default {
       UserId: model.UserId,
     },
   }),
+
+  // 25.6 获取我的业务的昨天数据
+  getAchiYesterday: (model) => http('get', 'api/achievement/yesterday', {
+    params: {
+      GameName: model.gameName, // | string |  否  | 游戏名称 |
+      AreaName: model.areaName, // | string |  否  | 区服名称 |
+    },
+  }),
+
+  // 25.7 获取部门管理我的业务的昨天数据
+  getDptAchiYesterday: (model) => http('get', '/api/achievement/yesterday/manage', {
+    params: {
+      gameName: model.gameName,
+      areaName: model.areaName,
+      ResDepId: model.dtpId,
+      UserId: model.UserId,
+    },
+  }),
   // 26.获取我本周的业务数据
   getAchiByWeek: (model) => http('get', '/api/achievement/week', {
     loading: true,

@@ -129,7 +129,7 @@ export default {
         page: 1,
         pageSize: 10,
       },
-      timeRange: ['今日', '本周', '本月', '全年'],
+      timeRange: ['今日', '昨日', '本周', '本月', '全年'],
       selTimeRange: '今日',
       dataSet: {
 
@@ -358,7 +358,12 @@ export default {
       var method = ''
       switch (val) {
         case '今日':
-          method = (this.searchMyData || !this.userInfo.isLeader) ? 'getAchiByDay' : 'getDptAchiByDay'
+        case '昨日':
+          if (val === '今日') {
+            method = (this.searchMyData || !this.userInfo.isLeader) ? 'getAchiByDay' : 'getDptAchiByDay'
+          } else {
+            method = (this.searchMyData || !this.userInfo.isLeader) ? 'getAchiYesterday' : 'getDptAchiYesterday'
+          }
           this.$api[method](params).then(data => {
             const tmp1 = []
             for (const item of data.createUser) {
