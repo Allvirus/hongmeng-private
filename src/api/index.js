@@ -776,7 +776,14 @@ export default {
   }),
   // 48.删除玩家换绑记录接口
   delBindRec: (id) => http('delete', `/api/playerswitch/${id}`),
-
+  // 49.在职员工通讯录分页接口
+  getContacts: (model) => http('get', '/api/contacts/', {
+    params: {
+      RealName: model.RealName, // | string |  否  | 员工姓名 |
+      Page: model.Page, // | string |  否  | 页码默认为1 |
+      PageSize: model.PageSize, // | string |  否  | 页数大小默认为5最大为20 |
+    },
+  }),
   // 50.获取自己微信达标员工列表
   getMyWxAchievedList: (model) => http('get', '/api/quota', {
     params: (() => {

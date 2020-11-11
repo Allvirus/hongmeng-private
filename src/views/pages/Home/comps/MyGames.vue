@@ -1,25 +1,24 @@
 <template lang='pug'>
-.MyGames
-  .jc-between.ai-center.h50
-    p.fs-b.mgl4.flex-1 推广游戏
-    .mgr3
+.MyGames.ff-cn
+  .h80
+    .flex-1.jc-end
       el-button(
         icon='el-icon-plus',
         type='primary',
         @click='dlgVisiable = true',
         v-if='userInfo.menu.myGameAuthority'
       ) 添加
-  .dtp-tree.jc-center
-    tree-selector.winput(
-      ref='dtptree',
-      :data='treeData',
-      :defProps='myDptList.props',
-      nodeKey='id',
-      clearable,
-      :deflabel='defLable',
-      @change='onDepartChange'
-    )
-  .mgt2
+    .dtp-tree.mgt2
+      tree-selector(
+        ref='dtptree',
+        :data='treeData',
+        :defProps='myDptList.props',
+        nodeKey='id',
+        clearable,
+        :deflabel='defLable',
+        @change='onDepartChange'
+      )
+  .flex-1
     .item.ff-rn.mgb1.ai-center.h70(
       v-for='(item, idx) in (myGameList.list ? myGameList.list : myGameList)',
       :key='idx'
@@ -48,7 +47,8 @@
         ) 删除
     span.jc-center.mgt2(v-if='myGameList.list && myGameList.list.length === 0') 暂无游戏
 
-  .jc-center.pa.pagination(
+    //- 个人没有分页，个人模式下隐藏分页
+  .flex-center.pagination.h30(
     v-if='!(!userInfo.isLeader && userInfo.job === 0 && model.departmentId === "")'
   )
     el-pagination(
@@ -59,6 +59,7 @@
       :base='true',
       :small='true'
     )
+
   el-dialog(
     title='添加游戏',
     @close='cancel',
@@ -246,6 +247,7 @@ export default {
 </script>
 <style lang='stylus' scoped>
 .MyGames
+  height 650px
   .item
     .game-icon
       width 50px
@@ -256,7 +258,5 @@ export default {
       height 24px
       padding 2px 6px !important
   .pagination
-    bottom 10px
-    left 50%
-    transform translateX(-50%)
+    height 50px
 </style>

@@ -1,12 +1,16 @@
 <template lang="pug">
 .sub-layout.jc-between
-  .sub-layout-left(v-if="OS.isPc")
+  .sub-layout-left(v-if='OS.isPc')
     SubMenu
   .sub-layout-center.flex-1
     transition(name='fade-scale', mode='out-in')
       router-view.sub-view
-  .sub-layout-right.w250.bg-white.h700.pr(v-if="OS.isPc")
-    my-games()
+  .sub-layout-right.w250.h700.pr(v-if='OS.isPc')
+    el-tabs(type='border-card', :stretch='true')
+      el-tab-pane(label='推广游戏')
+        my-games
+      el-tab-pane(label='通讯录')
+        my-contacts
 </template>
 
 <script>
@@ -16,6 +20,7 @@ export default {
   components: {
     SubMenu: () => import('./SubMenu.vue'),
     MyGames: () => import('@/views/pages/Home/comps/MyGames'),
+    MyContacts: () => import('@/views/pages/Home/comps/MyContacts'),
   },
   data () {
     return {
