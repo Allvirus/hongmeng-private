@@ -47,8 +47,8 @@
           v-if='userInfo.menu.wechatAuthority',
           @click='showEdit(null, false)'
         ) 登记
-  .bg-white
-    v-histogram.charts.flex-1.mgt2(:data='chartData')
+  //- .bg-white
+  //-   v-histogram.charts.flex-1.mgt2(:data='chartData')
 
   el-table.mgy2.bg-white.pd2(:data='listMixin.list')
     el-table-column(prop='realName', label='姓名')

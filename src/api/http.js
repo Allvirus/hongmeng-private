@@ -38,13 +38,16 @@ export const http = (method, url, config = {}) => {
   }).catch(err => {
     // 对响应错误做点什么
     const { status } = err.response
+    console.log('----', status, err.response.data)
     if (status === 401) LOGIN()
     if (status === 403) vgo.tip('您没有操作权限!', 'warning')
     if (status === 400) {
-      if (err.response.data.data.errorMsg) {
+      if (err.response.data.data && err.response.data.data.errorMsg) {
         vgo.tip(err.response.data.data.errorMsg, 'error')
-      } else if (err.response.data.data[0].description) {
+      } else if (err.response.data.data && err.response.data.data[0].description) {
         vgo.tip(err.response.data.data[0].description, 'error')
+      } else if (err.response.data) {
+        vgo.tip(err.response.data, 'error')
       }
     }
     return Promise.reject(err.response.data)
