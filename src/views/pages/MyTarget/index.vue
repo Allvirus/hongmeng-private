@@ -1,5 +1,5 @@
 <template lang='pug'>
-.target
+.target.pdx2
   .condition.pd2.bg-white
     el-form.ff-rw.ai-center(label-width='100px')
       el-form-item(
@@ -15,7 +15,7 @@
           filterable
         )
           el-option(
-            v-for='item in userList',
+            v-for='item in AJobUserList',
             :key='item.id',
             :label='item.realName',
             :value='item.id'
@@ -41,28 +41,51 @@
           v-model='searchMyData',
           v-if='userInfo.menu.wechatAuthority'
         ) 搜索我的数据
-      .flex-1.jc-end
+      .flex-1.jc-end(v-if='OS.isPc')
         el-button.mgr3(
           type='primary',
           v-if='userInfo.menu.wechatAuthority',
           @click='showEdit(null, false)'
         ) 登记
+    .flex-1.jc-end
+      el-button.mgr3.fr(
+        type='primary',
+        v-if='userInfo.menu.wechatAuthority && !OS.isPc',
+        @click='showEdit(null, false)'
+      ) 登记
   //- .bg-white
   //-   v-histogram.charts.flex-1.mgt2(:data='chartData')
+  .ff-rn.w600.mgt2(v-if='OS.isPc')
+    data-box.w200(
+      :data='{ title: "加入微信群数", value: listMixin.totalJoinPeople }',
+      :colIdx='0'
+    )
+    data-box.mgl3.w200.h50(
+      :data='{ title: "收到微信人数", value: listMixin.totalReceivedPeople }',
+      :colIdx='1'
+    )
+  .ff-rn.mgt2(v-else)
+    .ff-cn.bg-white.flex-1
+      p.mgt2.jc-center 加入微信群数
+      h3.jc-center.mgy2.warning {{ listMixin.totalJoinPeople }}
+    .ff-cn.bg-white.flex-1
+      p.mgt2.jc-center 收到微信人数
+      h3.jc-center.mgy2.warning {{ listMixin.totalReceivedPeople }}
 
   el-table.mgy2.bg-white.pd2(:data='listMixin.list')
     el-table-column(prop='realName', label='姓名')
     el-table-column(prop='joinPeople', label='加入微信群数')
     el-table-column(prop='receivedPeople', label='收到微信人数')
-    el-table-column(prop='createTime', label='时间')
+    el-table-column(prop='createTime', label='时间', :width='OS.isPc ? 0 : 200')
       template(slot-scope='{ row }') {{ row.createTime | dateFormat }}
     el-table-column(
       prop='opt',
       label='操作',
-      v-if='userInfo.menu.wechatAuthority'
+      v-if='userInfo.menu.wechatAuthority',
+      :width='OS.isPc ? 0 : 150'
     )
       template(slot-scope='{ row }')
-        .ff-rn
+        .ff-rn.jc-start
           el-button.mgl3(
             icon='el-icon-edit-outline',
             type='text',
@@ -78,23 +101,30 @@
     :total='listMixin.count',
     :page-size.sync='model.PageSize',
     :current-page.sync='model.Page',
-    @current-change='getListMixin'
+    @current-change='getListMixin',
+    :class='OS.isPc ? "margin-spacing" : ""',
+    :base='!OS.isPc',
+    :small='!OS.isPc'
   )
 
   el-dialog(
     :title='editInfo.isEdit ? "编辑" : "新增"',
     @close='editInfo.isShow = false',
     :visible.sync='editInfo.isShow',
-    width='600px'
+    :width='OS.isPc ? "600px" : "300px"'
   )
     .flex-center
       el-form(
-        label-width='120px',
+        :label-width='OS.isPc ? "120px" : "0px"',
         :model='editInfo',
         ref='form',
         :rules='rules'
       )
-        el-form-item(label='员工:', v-if='!editInfo.isEdit', prop='userId')
+        el-form-item(
+          :label='OS.isPc ? "员工:" : ""',
+          v-if='!editInfo.isEdit',
+          prop='userId'
+        )
           el-select.winput(
             v-model='editInfo.userId',
             placeholder='请选择',
@@ -102,19 +132,24 @@
             filterable
           )
             el-option(
-              v-for='item in userList',
+              v-for='item in AJobUserList',
               :key='item.id',
               :label='item.realName',
               :value='item.id'
             )
-        el-form-item.mgt2(label='加入微信群数:', , prop='joinPeople')
+        el-form-item.mgt2(:label='OS.isPc ? "加入微信群数:" : ""', prop='joinPeople')
           el-input.winput(
             placeholder='请输入加入微信群数',
+            clearable,
             v-model='editInfo.joinPeople'
           )
-        el-form-item.mgt2(label='收到微信人数:', , prop='receivedPeople')
+        el-form-item.mgt2(
+          :label='OS.isPc ? "收到微信人数:" : ""',
+          prop='receivedPeople'
+        )
           el-input.winput(
             placeholder='请输入收到微信人数',
+            clearable,
             v-model='editInfo.receivedPeople'
           )
     span.dialog-footer(slot='footer')
@@ -129,7 +164,7 @@ import { EUIRule } from '@/plugins/utils'
 export default {
   name: 'MyTarget',
   components: {
-    VHistogram: () => import('v-charts/lib/histogram.common'),
+    DataBox: () => import('@/views/pages/Home/MyAchievement/comps/DataBox'),
   },
   mixins: [dptListMixin, fetchListMixin],
   data () {
@@ -161,16 +196,19 @@ export default {
         joinPeople: [EUIRule('required', '加入微信群数')],
       },
       isMyTarget: true,
+      AJobUserList: [],
     }
   },
   computed: {
     ...mapGetters(['myDptList', 'userInfo', 'OS']),
   },
   created () {
-    console.log('page...', this.userInfo)
     if (!this.userInfo.menu.wechatAuthority) {
       this.listApiForMixin = this.myApi
     }
+    this.$api.getAJobsUserList().then(data => {
+      this.AJobUserList = data
+    })
   },
   methods: {
     showEdit (row, isEdit) {
@@ -180,9 +218,6 @@ export default {
       }
       this.editInfo.isEdit = row !== null
       this.editInfo.isShow = true
-      if (this.$refs.form) {
-        this.$refs.form.resetFields()
-      }
     },
     deleteRec (row) {
       this.$vgo.open(() => {

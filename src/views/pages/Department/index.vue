@@ -71,7 +71,12 @@
               span 正常
         el-table-column(prop='operate', label='操作', width='200')
           template(slot='header', slot-scope='scope')
-            el-input(v-model='search', placeholder='输入姓名搜索', size='mini')
+            el-input(
+              v-model='search',
+              placeholder='输入姓名搜索',
+              size='mini',
+              clearable
+            )
           template(slot-scope='{ row }')
             el-button(
               icon='el-icon-edit-outline',

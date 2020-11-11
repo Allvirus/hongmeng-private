@@ -1,8 +1,8 @@
 <template lang='pug'>
 .sub-menu
-  .drawer(v-if="derection === 'right'")
-    i.fs-xl(class="el-icon-menu" @click="drawer = !drawer")
-    el-drawer(:visible.sync="drawer")
+  .drawer(v-if='derection === "right"')
+    i.fs-xl.el-icon-menu(@click='drawer = !drawer')
+    el-drawer(:visible.sync='drawer')
       .menu
         el-menu.flex-auto(
           :default-active='$route.name',
@@ -11,7 +11,11 @@
           :router='true',
           active-text-color='#fff'
         )
-          .item(v-for='(item, index) in getMenu[0]', :key='index' @click="drawer = false")
+          .item(
+            v-for='(item, index) in getMenu[0]',
+            :key='index',
+            @click='drawer = false'
+          )
             router-link(:to='{ name: item.name }')
               .el-menu-item.ff-rn.ai-center.jc-center(
                 :class='{ "router-link-active": $route.name === item.name }'
@@ -20,19 +24,19 @@
                   :src='$route.name === item.name ? item.meta.icsel : item.meta.icdef'
                 )
                 span.mgl2 {{ item.meta.title }}
-  .tabbar.box-shadow(v-if="derection === 'bottom'")
-      el-menu.ff-rn(
-        :default-active='$route.name',
-        background-color='#fff',
-        text-color='#222222',
-        mode="horizontal"
-        :router='true',
-        active-text-color='#fff'
-      )
-        .item.flex-1(v-for='(item, index) in getMenu[0]', :key='index')
-          router-link.full.flex-center(:to='{ name: item.name }')
-            .ff-cn(:class='{ "router-link-active": $route.name === item.name }')
-              p {{ item.meta.title }}
+  .tabbar.box-shadow(v-if='derection === "bottom"')
+    el-menu.ff-rn(
+      :default-active='$route.name',
+      background-color='#fff',
+      text-color='#222222',
+      mode='horizontal',
+      :router='true',
+      active-text-color='#fff'
+    )
+      .item.flex-1(v-for='(item, index) in getMenu[0]', :key='index')
+        router-link.full.flex-center(:to='{ name: item.name }')
+          .ff-cn(:class='{ "router-link-active": $route.name === item.name }')
+            p {{ item.meta.title }}
 </template>
 <script>
 import routes from '@/router/routes'
@@ -55,17 +59,19 @@ export default {
     getMenu () {
       const secRoutes = routes[0].children.filter(item => item.name === this.$route.matched[1].name)[0]
       const groupObj = {}
-      secRoutes.children.map(item => {
-        if (item.meta.hideMenu || item.meta.onlyPcMode) return
-        if ((item.name === 'HomeBizConfig' && !this.userInfo.menu.bizConfigAuthority) ||
-            (item.name === 'HomeLevelManage' && !this.userInfo.menu.levelAuthority) ||
-            (item.name === 'HomeDepartment' && !this.userInfo.menu.departmentAuthority)) {
-          return
-        }
+      if (secRoutes.children) {
+        secRoutes.children.map(item => {
+          if (item.meta.hideMenu || item.meta.onlyPcMode) return
+          if ((item.name === 'HomeBizConfig' && !this.userInfo.menu.bizConfigAuthority) ||
+              (item.name === 'HomeLevelManage' && !this.userInfo.menu.levelAuthority) ||
+              (item.name === 'HomeDepartment' && !this.userInfo.menu.departmentAuthority)) {
+            return
+          }
 
-        groupObj[item.meta.group] = groupObj[item.meta.group] || []
-        groupObj[item.meta.group].push(item)
-      })
+          groupObj[item.meta.group] = groupObj[item.meta.group] || []
+          groupObj[item.meta.group].push(item)
+        })
+      }
       return Object.values(groupObj)
     },
   },

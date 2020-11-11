@@ -7,7 +7,6 @@ export default {
   },
   async created () {
     // 获取默认部门人员列表
-    console.log('dptList...', this.userInfo)
     if (this.userInfo && this.myDptList && this.userInfo.isLeader) {
       this.onDepartChange({ id: this.myDptList.list[0].id })
     } else {

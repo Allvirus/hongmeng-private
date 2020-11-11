@@ -25,11 +25,23 @@
           :value='item.id'
         )
     el-form-item(label='玩家账号:')
-      el-input.winput(v-model='model.UserAccount')
+      el-input.winput(
+        v-model='model.UserAccount',
+        placeholder='请输入玩家账号',
+        clearable
+      )
     el-form-item(label='设备号:')
-      el-input.winput(v-model='model.DeviceNo')
+      el-input.winput(
+        v-model='model.DeviceNo',
+        placeholder='请输入设备号',
+        clearable
+      )
     el-form-item(label='注册IP:')
-      el-input.winput(v-model='model.CreateIp')
+      el-input.winput(
+        v-model='model.CreateIp',
+        placeholder='请输入注册IP',
+        clearable
+      )
     el-form-item(label='注册时间:')
       CommonDatePicker.w300(
         :start.sync='model.startTime',

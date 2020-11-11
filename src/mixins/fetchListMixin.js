@@ -17,11 +17,10 @@
 export default {
   data () {
     return {
-      listMixin: { list: [], count: 0 },
+      listMixin: { list: [], count: 0, totalJoinPeople: 0, totalReceivedPeople: 0 },
     }
   },
   async created () {
-    console.log('fetchListMixin...', this.userInfo)
     // 在列表请求前预处理
     this.preMethodMixin && await this.preMethodMixin()
     // 记录重置操作 所需源数据
@@ -45,6 +44,10 @@ export default {
       return this.$api[this.listApiForMixin || this.customExeListApiForMixin](this.model, loading).then(data => {
         this.listMixin.list = data.list
         this.listMixin.count = data.count
+        if (data.totalJoinPeople !== undefined && data.totalReceivedPeople !== undefined) {
+          this.listMixin.totalJoinPeople = data.totalJoinPeople
+          this.listMixin.totalReceivedPeople = data.totalReceivedPeople
+        }
         if (data.list.length <= 0 && this.model.page > 1) this.getListMixin(this.model.page - 1)
       })
     },

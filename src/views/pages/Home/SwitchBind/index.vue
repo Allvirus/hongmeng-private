@@ -3,11 +3,23 @@
   .ff-rn.fs-m.ai-center.bg-white.pdx2.pdt2
     el-form.ff-rw.ai-center(label-width='100px')
       el-form-item(label='玩家账号:')
-        el-input.winput(v-model='model.UserAccount')
+        el-input.winput(
+          v-model='model.UserAccount',
+          placeholder='请输入玩家账号',
+          clearable
+        )
       el-form-item(label-width='20px')
-        el-button(type="warning" @click="swBindDlg = true") 玩家换绑
-        el-button.mgl3(icon="el-icon-search" type="primary" @click="getListMixin") 搜索
-        el-button.mgl2(icon="el-icon-refresh-right" type="primary" @click="resetPageMixin") 重置
+        el-button(type='warning', @click='swBindDlg = true') 玩家换绑
+        el-button.mgl3(
+          icon='el-icon-search',
+          type='primary',
+          @click='getListMixin'
+        ) 搜索
+        el-button.mgl2(
+          icon='el-icon-refresh-right',
+          type='primary',
+          @click='resetPageMixin'
+        ) 重置
 
   el-table.mgy2.bg-white.pd2(:data='listMixin.list')
     el-table-column(prop='userAccount', label='玩家账号')
@@ -26,46 +38,68 @@
     @current-change='getListMixin'
   )
 
-  el-dialog(title="玩家换绑"
-      @close="cancelBind"
-      :visible.sync="swBindDlg" width="600px")
-
-    el-form(label-width="100px")
-      el-form-item(label="玩家账号:" required)
-        el-input(v-model="swBindParams.userAccount" @change="onUserAccountChange")
-      el-form-item(label="A岗(当前):" required)
-        p {{swBindParams.aJob}}
-      el-form-item(label="B岗(当前):")
-        p {{swBindParams.bJob}}
-      el-form-item(label="C岗(当前):" )
-        p {{swBindParams.cJob}}
-      el-form-item(label="A岗(新):" required)
-        el-select(v-model='swBindParams.aJobIdAfter' placeholder='请选择', clearable filterable)
+  el-dialog(
+    title='玩家换绑',
+    @close='cancelBind',
+    :visible.sync='swBindDlg',
+    width='600px'
+  )
+    el-form(label-width='100px')
+      el-form-item(label='玩家账号:', required)
+        el-input(
+          v-model='swBindParams.userAccount',
+          @change='onUserAccountChange',
+          placeholder='请输入玩家账号',
+          clearable
+        )
+      el-form-item(label='A岗(当前):', required)
+        p {{ swBindParams.aJob }}
+      el-form-item(label='B岗(当前):')
+        p {{ swBindParams.bJob }}
+      el-form-item(label='C岗(当前):')
+        p {{ swBindParams.cJob }}
+      el-form-item(label='A岗(新):', required)
+        el-select(
+          v-model='swBindParams.aJobIdAfter',
+          placeholder='请选择',
+          clearable,
+          filterable
+        )
           el-option(
             v-for='item in userList',
             :key='item.id',
             :label='item.realName',
             :value='item.id'
           )
-      el-form-item(label="B岗(新):" required)
-        el-select(v-model='swBindParams.bJobIdAfter', placeholder='请选择', clearable filterable)
+      el-form-item(label='B岗(新):', required)
+        el-select(
+          v-model='swBindParams.bJobIdAfter',
+          placeholder='请选择',
+          clearable,
+          filterable
+        )
           el-option(
             v-for='item in userList',
             :key='item.id',
             :label='item.realName',
             :value='item.id'
           )
-      el-form-item(label="C岗(新):" required)
-        el-select(v-model='swBindParams.cJobIdAfter', placeholder='请选择', clearable filterable)
+      el-form-item(label='C岗(新):', required)
+        el-select(
+          v-model='swBindParams.cJobIdAfter',
+          placeholder='请选择',
+          clearable,
+          filterable
+        )
           el-option(
             v-for='item in userList',
             :key='item.id',
             :label='item.realName',
             :value='item.id'
           )
-    span.dialog-footer(slot="footer")
-      el-button.mgl3(type="warning" @click="cancelBind") 取消
-      el-button.mgl3(type="primary" @click="commitSwBind") 提交
+    span.dialog-footer(slot='footer')
+      el-button.mgl3(type='warning', @click='cancelBind') 取消
+      el-button.mgl3(type='primary', @click='commitSwBind') 提交
 </template>
 
 <script>

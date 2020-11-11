@@ -26,9 +26,17 @@
             :value='item.id'
           )
       el-form-item(label='经验来源:')
-        el-input.winput(v-model='model.Origin')
+        el-input.winput(
+          v-model='model.Origin',
+          placeholder='请输入经验来源',
+          clearable
+        )
       el-form-item(label='经验值:')
-        el-input.winput(v-model='model.ExpChange')
+        el-input.winput(
+          v-model='model.ExpChange',
+          placeholder='请输入经验值',
+          clearable
+        )
       el-form-item(label='创建时间:')
         CommonDatePicker.w300(
           :start.sync='model.startTime',
@@ -96,9 +104,13 @@
               :value='item.id'
             )
         el-form-item(label='经验值:', required)
-          el-input(v-model='newExpInfo.expChange', placeholder='请输入经验值')
+          el-input(
+            v-model='newExpInfo.expChange',
+            placeholder='请输入经验值',
+            clearable
+          )
         el-form-item(label='备注:')
-          el-input(v-model='newExpInfo.remark', placeholder='')
+          el-input(v-model='newExpInfo.remark', placeholder='请输入备注', clearable)
     span.dialog-footer(slot='footer')
       el-button.mgl3(type='warning', @click='cancel') 取消
       el-button.mgl3(type='primary', @click='submmit') 提交

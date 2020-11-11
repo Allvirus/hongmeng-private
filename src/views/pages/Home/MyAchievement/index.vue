@@ -45,9 +45,17 @@
               :value='item.id'
             )
         el-form-item(label='游戏名称:')
-          auto-complete.mgl1(v-model='model.gameName', :data='gameList')
+          auto-complete.mgl1(
+            v-model='model.gameName',
+            :data='gameList',
+            placeholder='请输入游戏名称'
+          )
         el-form-item(label='区服:', :label-width='OS.isPc ? "60px" : "100px"')
-          auto-complete.mgl1(v-model='model.areaName', :data='areaList')
+          auto-complete.mgl1(
+            v-model='model.areaName',
+            :data='areaList',
+            placeholder='请输入区服'
+          )
         el-form-item.search-btn.mgb1(:class='OS.isPc ? "" : "jc-center full"')
           el-button(icon='el-icon-search', type='primary', @click='search') 搜索
           el-button.mgr2(

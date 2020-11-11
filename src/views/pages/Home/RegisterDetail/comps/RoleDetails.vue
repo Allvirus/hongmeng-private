@@ -10,11 +10,23 @@
     .ff-rn.fs-m.ai-center.bg-white.pdx2.pdt2
       el-form.ff-rw.ai-center(label-width='100px')
         el-form-item(label='游戏角色:')
-          el-input.winput(v-model='model.RoleName')
+          el-input.winput(
+            v-model='model.RoleName',
+            placeholder='请输入游戏角色',
+            clearable
+          )
         el-form-item(label='游戏名称:')
-          auto-complete(v-model='model.GameName', :data='gameList')
+          auto-complete(
+            v-model='model.GameName',
+            :data='gameList',
+            placeholder='请输入游戏名称'
+          )
         el-form-item(label='区服:')
-          auto-complete(v-model='model.AreaName', :data='areaList')
+          auto-complete(
+            v-model='model.AreaName',
+            :data='areaList',
+            placeholder='请输入区服'
+          )
         el-form-item(label='创建时间:', v-if='OS.isPc')
           CommonDatePicker.w300(
             :start.sync='model.startTime',

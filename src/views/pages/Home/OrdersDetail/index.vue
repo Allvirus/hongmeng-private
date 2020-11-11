@@ -26,17 +26,43 @@
             :value='item.id'
           )
       el-form-item(label='玩家账号:')
-        el-input.winput(v-model='model.UserAccount')
+        el-input.winput(
+          v-model='model.UserAccount',
+          placeholder='请输入玩家账号',
+          clearable
+        )
       el-form-item(label='游戏名称:')
-        auto-complete(v-model='model.GameName', :data='gameList')
+        auto-complete(
+          v-model='model.GameName',
+          :data='gameList',
+          placeholder='请输入游戏名称',
+          clearable
+        )
       el-form-item(label='游戏角色:')
-        el-input.winput(v-model='model.RoleName')
+        el-input.winput(
+          v-model='model.RoleName',
+          placeholder='请输入游戏角色',
+          clearable
+        )
       el-form-item(label='订单号:')
-        el-input.winput(v-model='model.GameOrderID')
+        el-input.winput(
+          v-model='model.GameOrderID',
+          placeholder='请输入订单号',
+          clearable
+        )
       el-form-item(label='推广员账户:')
-        el-input.winput(v-model='model.Account')
+        el-input.winput(
+          v-model='model.Account',
+          placeholder='请输入推广员账户',
+          clearable
+        )
       el-form-item(label='区服:')
-        auto-complete(v-model='model.AreaName', :data='areaList')
+        auto-complete(
+          v-model='model.AreaName',
+          :data='areaList',
+          placeholder='请输入区服',
+          clearable
+        )
       el-form-item(label='支付时间:', v-if='OS.isPc')
         CommonDatePicker.w300(
           :start.sync='model.startTime',

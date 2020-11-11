@@ -13,10 +13,16 @@
             v-model='model.realName',
             placeholder='请输入姓名',
             :maxlength='20',
-            show-word-limit
+            show-word-limit,
+            clearable
           )
         el-form-item(label='入职日期:', required)
-          CommonDatePicker(type='date', v-model='model.hiredate' all)
+          CommonDatePicker(
+            type='date',
+            v-model='model.hiredate',
+            all,
+            placeholder='请选择日期'
+          )
         el-form-item(label='部门:', required)
           tree-selector(
             ref='treesel',
@@ -27,7 +33,7 @@
             @change='onDepartChange'
           )
         el-form-item(label='岗位:', required)
-          el-select(v-model='model.job', placeholder='请选择' filterable)
+          el-select(v-model='model.job', placeholder='请选择', filterable)
             el-option(
               v-for='(item, index) in jobs',
               :key='index',
@@ -35,7 +41,12 @@
               :value='index'
             )
         el-form-item(label='角色:', required)
-          el-select(v-model='model.userRoles', placeholder='请选择' :multiple="true" filterable)
+          el-select(
+            v-model='model.userRoles',
+            placeholder='请选择',
+            :multiple='true',
+            filterable
+          )
             el-option(
               v-for='item in roles',
               :key='item.id',
@@ -43,19 +54,23 @@
               :value='item.name'
             )
         el-form-item(label='推广员账户:', required)
-          el-input(v-model='model.account', placeholder='请输入推广员账户')
+          el-input(v-model='model.account', placeholder='请输入推广员账户', clearable)
         el-form-item(label='在职状态:', required)
-          el-switch.jc-end(v-model="model.workingStatus" :active-text="model.workingStatus?'在职':'离职'")
+          el-switch.jc-end(
+            v-model='model.workingStatus',
+            :active-text='model.workingStatus ? "在职" : "离职"'
+          )
         el-form-item(label='工号:')
-          el-input(v-model='model.jobNumber', placeholder='请输入工号')
+          el-input(v-model='model.jobNumber', placeholder='请输入工号', clearable)
         el-form-item(label='手机号:')
           el-input(
             v-model='model.phoneNumber',
             placeholder='请输入手机号',
+            clearable,
             type='tel'
           )
         el-form-item(label='备注:')
-          el-input(v-model='model.remark')
+          el-input(v-model='model.remark', placeholder='请输入备注', clearable)
         //- el-form-item(label='manageDepartmentId:', required)
         //-   el-input(v-model='model.manageDepartmentId', placeholder='请输入账户' type='tel')
     span.dialog-footer(slot='footer')

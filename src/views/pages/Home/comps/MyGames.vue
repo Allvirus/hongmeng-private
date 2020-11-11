@@ -6,8 +6,8 @@
       el-button(
         icon='el-icon-plus',
         type='primary',
-        @click='dlgVisiable = true'
-        v-if="userInfo.menu.myGameAuthority"
+        @click='dlgVisiable = true',
+        v-if='userInfo.menu.myGameAuthority'
       ) 添加
   .dtp-tree.jc-center
     tree-selector.winput(
@@ -20,22 +20,20 @@
       @change='onDepartChange'
     )
   .mgt2
-    .item.ff-rn.mgb1.ai-center.h70(v-for='(item, idx) in (myGameList.list?myGameList.list:myGameList)'
-       :key='idx')
+    .item.ff-rn.mgb1.ai-center.h70(
+      v-for='(item, idx) in (myGameList.list ? myGameList.list : myGameList)',
+      :key='idx'
+    )
       img.game-icon.mgl2(:src='conbineUrl(item)')
       .name.mgl2.ff-cn
         p.mgb1 {{ item.gameContent.name }}
         span {{ item.userName }}
       .ff-cn.flex-1.ai-end.mgr2
-        el-popover(
-          placement='left',
-          width='200',
-          trigger='hover',
-        )
+        el-popover(placement='left', width='200', trigger='hover')
           template
             .ff-cn.ai-center.jc-center
-              p {{item.gameContent.name}}
-              img.w150.h150.mgt1(:src="$utils.getQrcodeUrl(item.linkUrl)")
+              p {{ item.gameContent.name }}
+              img.w150.h150.mgt1(:src='$utils.getQrcodeUrl(item.linkUrl)')
           el-button.flex-center.mgl4(
             slot='reference',
             type='primary',
@@ -45,20 +43,21 @@
         el-button.flex-center.mgl4.mgt1(
           type='danger',
           round,
-          v-if="userInfo.menu.myGameAuthority"
+          v-if='userInfo.menu.myGameAuthority',
           @click='delGame(item)'
         ) 删除
-    span.jc-center.mgt2(v-if="myGameList.list && myGameList.list.length === 0") 暂无游戏
+    span.jc-center.mgt2(v-if='myGameList.list && myGameList.list.length === 0') 暂无游戏
 
   .jc-center.pa.pagination(
-    v-if="!(!userInfo.isLeader && userInfo.job === 0 && model.departmentId === '')")
+    v-if='!(!userInfo.isLeader && userInfo.job === 0 && model.departmentId === "")'
+  )
     el-pagination(
       :total='myGameList.count',
       :page-size.sync='model.pageSize',
       :current-page.sync='model.page',
-      @current-change='updateGameList'
-      :base="true"
-      :small="true"
+      @current-change='updateGameList',
+      :base='true',
+      :small='true'
     )
   el-dialog(
     title='添加游戏',
@@ -69,22 +68,31 @@
     .flex-center
       el-form(label-width='100px')
         el-form-item(label='游戏名称:', required)
-          el-select(v-model="gameInfo.gameContentId"
-            filterable
-            placeholder="请选择")
-            el-option(v-for="item in gameCtxList"
-            :key="item.id"
-            :label="item.name"
-            :value="item.id")
+          el-select(
+            v-model='gameInfo.gameContentId',
+            filterable,
+            placeholder='请选择'
+          )
+            el-option(
+              v-for='item in gameCtxList',
+              :key='item.id',
+              :label='item.name',
+              :value='item.id'
+            )
         el-form-item(label='推广人员:', required)
-          el-select(v-model="gameInfo.userId" filterable
-            placeholder="请选择")
-            el-option(v-for="item in userList"
-            :key="item.id"
-            :label="item.realName"
-            :value="item.id")
+          el-select(v-model='gameInfo.userId', filterable, placeholder='请选择')
+            el-option(
+              v-for='item in userList',
+              :key='item.id',
+              :label='item.realName',
+              :value='item.id'
+            )
         el-form-item(label='推广链接:', required)
-          el-input(v-model='gameInfo.linkUrl')
+          el-input(
+            v-model='gameInfo.linkUrl',
+            placeholder='请输入推广链接',
+            clearable
+          )
     span.dialog-footer(slot='footer')
       el-button.mgl3(type='warning', @click='cancel') 取消
       el-button.mgl3(type='primary', @click='submmit') 提交
