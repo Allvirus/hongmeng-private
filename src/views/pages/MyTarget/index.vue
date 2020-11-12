@@ -55,27 +55,49 @@
       ) 登记
   //- .bg-white
   //-   v-histogram.charts.flex-1.mgt2(:data='chartData')
-  .ff-rn.w600.mgt2(v-if='OS.isPc')
-    data-box.w200(
+  .ff-rn.mgt2(v-if='OS.isPc')
+    data-box.flex-1.mgx1(
       :data='{ title: "加入微信群数", value: listMixin.totalJoinPeople }',
-      :colIdx='0'
+      :colIdx='1'
     )
-    data-box.mgl3.w200.h50(
+    data-box.flex-1.mgx1(
       :data='{ title: "收到微信人数", value: listMixin.totalReceivedPeople }',
       :colIdx='1'
     )
+    data-box.flex-1.mgx1(
+      :data='{ title: "加入微信群目标数", value: achievTarget[0].context }',
+      :colIdx='2'
+    )
+    data-box.flex-1.mgx1(
+      :data='{ title: "收到微信人目标数", value: achievTarget[1].context }',
+      :colIdx='2'
+    )
   .ff-rn.mgt2(v-else)
     .ff-cn.bg-white.flex-1
-      p.mgt2.jc-center 加入微信群数
+      p.mgt2.jc-center 入微信群数
       h3.jc-center.mgy2.warning {{ listMixin.totalJoinPeople }}
     .ff-cn.bg-white.flex-1
       p.mgt2.jc-center 收到微信人数
       h3.jc-center.mgy2.warning {{ listMixin.totalReceivedPeople }}
+    .ff-cn.bg-white.flex-1
+      p.mgt2.jc-center 入微信群目标
+      h3.jc-center.mgy2.success {{ achievTarget[0].context }}
+    .ff-cn.bg-white.flex-1
+      p.mgt2.jc-center 收到微信目标
+      h3.jc-center.mgy2.success {{ achievTarget[1].context }}
 
   el-table.mgy2.bg-white.pd2(:data='listMixin.list')
     el-table-column(prop='realName', label='姓名')
     el-table-column(prop='joinPeople', label='加入微信群数')
+      template(slot-scope='{ row }')
+        span(
+          :class='Number(row.joinPeople) > Number(achievTarget[0].context) ? "success" : "danger"'
+        ) {{ row.joinPeople }}
     el-table-column(prop='receivedPeople', label='收到微信人数')
+      template(slot-scope='{ row }')
+        span(
+          :class='Number(row.receivedPeople) > Number(achievTarget[1].context) ? "success" : "danger"'
+        ) {{ row.receivedPeople }}
     el-table-column(prop='createTime', label='时间', :width='OS.isPc ? 0 : 200')
       template(slot-scope='{ row }') {{ row.createTime | dateFormat }}
     el-table-column(
@@ -120,7 +142,10 @@
         ref='form',
         :rules='rules'
       )
-        el-form-item(
+        el-form-item(label='日期:', v-if='!editInfo.isEdit', prop='userId')
+          sapn {{ editInfo.date }}
+
+        el-form-item.mgt3(
           :label='OS.isPc ? "员工:" : ""',
           v-if='!editInfo.isEdit',
           prop='userId'
@@ -137,13 +162,13 @@
               :label='item.realName',
               :value='item.id'
             )
-        el-form-item.mgt2(:label='OS.isPc ? "加入微信群数:" : ""', prop='joinPeople')
+        el-form-item.mgt3(:label='OS.isPc ? "加入微信群数:" : ""', prop='joinPeople')
           el-input.winput(
             placeholder='请输入加入微信群数',
             clearable,
             v-model='editInfo.joinPeople'
           )
-        el-form-item.mgt2(
+        el-form-item.mgt3(
           :label='OS.isPc ? "收到微信人数:" : ""',
           prop='receivedPeople'
         )
@@ -174,8 +199,8 @@ export default {
       myApi: 'getMyWxAchievedList',
       model: {
         userId: '',
-        startTime: '',
-        endTime: '',
+        startTime: new Date().toLocaleDateString().split('/').join('-'),
+        endTime: new Date().toLocaleDateString().split('/').join('-'),
         Page: 1,
         PageSize: 10,
       },
@@ -186,6 +211,7 @@ export default {
       editInfo: {
         isShow: false,
         isEdit: false,
+        date: '',
         userId: '',
         receivedPeople: '',
         joinPeople: '',
@@ -195,8 +221,12 @@ export default {
         receivedPeople: [EUIRule('required', '收到微信人数')],
         joinPeople: [EUIRule('required', '加入微信群数')],
       },
-      isMyTarget: true,
-      AJobUserList: [],
+      isMyTarget: true, // 主要是用于混合代码的逻辑判断处理
+      AJobUserList: [], // A岗用户列表
+      achievTarget: [
+        { context: '' },
+        { context: '' },
+      ],
     }
   },
   computed: {
@@ -209,12 +239,20 @@ export default {
     this.$api.getAJobsUserList().then(data => {
       this.AJobUserList = data
     })
+
+    this.$api.getAchievTarget().then(data => {
+      this.achievTarget = data
+      console.log(this.achievTarget)
+    })
   },
   methods: {
     showEdit (row, isEdit) {
       this.$utils.setObject(this.editInfo, '')
       if (row !== null) {
         Object.assign(this.editInfo, row)
+      } else {
+        // 获取今天的日期
+        this.editInfo.date = new Date().toLocaleDateString().split('/').join('-')
       }
       this.editInfo.isEdit = row !== null
       this.editInfo.isShow = true

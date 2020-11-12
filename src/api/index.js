@@ -837,4 +837,7 @@ export default {
       quotaId: quotaId,
     },
   }),
+
+  // 55.获取微信达标配置
+  getAchievTarget: () => http('get', '/api/quota/config'),
 }
