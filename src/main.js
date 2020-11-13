@@ -17,14 +17,12 @@ import './components/'
 import api from '@/api'
 import bus from '@/plugins/bus'
 import utils from '@/plugins/utils'
-import krp from '@/plugins/pano'
 // import promission from './promission'
 import './plugins/directives'
 
 import '@/assets/style/theme/index.css'
 
 Vue.prototype.$api = api
-Vue.prototype.$krp = krp
 Vue.prototype.$utils = utils
 Vue.prototype.$vgo = bus
 Vue.prototype.$WD = window

@@ -3,12 +3,12 @@
     VERSION: '1.0.0.0',
     COPYRIGHT: 'Copyright 2016 - 2020 © 逐浪网络 All Rights Reserved 闽ICP备17006851号',
     PANO_LOGIN_API: 'https://editor.vgoyun.com/user/login',
-    API: 'http://122.9.89.59/',
+    API: 'http://gxzlwl.com/',
     '3DVIEW_URL': 'http://3d.vgoyun.com/',
     USER_URL: 'http://manage.vgoyun.com/',
-    PANO_FILE_API: 'http://122.9.89.59/api/common/file',
+    PANO_FILE_API: 'http://gxzlwl.com/api/common/file',
     COOKIE_NAME: 'ZhuLangUserAccount',
-    COOKIE_DOMAIN: '122.9.89.59',
+    COOKIE_DOMAIN: 'gxzlwl.com',
   }
 })()
 $globalconfig.UPLOAD_IMAGE_PREFIX = $globalconfig.CLOUD_FILE_API + 'api/images/upload'
