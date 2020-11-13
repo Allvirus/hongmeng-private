@@ -65,11 +65,11 @@
       :colIdx='1'
     )
     data-box.flex-1.mgx1(
-      :data='{ title: "加入微信群目标数", value: achievTarget[0].context }',
+      :data='{ title: "微信收人转化群人数", value: achievTarget[0].context }',
       :colIdx='2'
     )
     data-box.flex-1.mgx1(
-      :data='{ title: "收到微信人目标数", value: achievTarget[1].context }',
+      :data='{ title: "微信收人达标数", value: achievTarget[1].context }',
       :colIdx='2'
     )
   .ff-rn.mgt2(v-else)

@@ -48,7 +48,7 @@
     el-tabs(v-model='activeTab', @tab-click='onTabClick')
       el-tab-pane(label='首页', name='HomeMyAchievement')
       el-tab-pane(label='排行', name='Ranking')
-      el-tab-pane(label='我的考核指标', name='MyTarget')
+      el-tab-pane(label='数据指标', name='MyTarget')
     .notice.ai-center
       p.omit.hand(
         @click='showDptNotice',
