@@ -13,6 +13,7 @@ export default {
       this.listApiForMixin = this.myApi
     }
     if (this.isMyTarget) {
+      this.$utils.autoFillDateTime(this.model)
       if (!this.userInfo.menu.wechatAuthority) {
         this.listApiForMixin = this.myApi
       }
@@ -20,7 +21,6 @@ export default {
   },
   methods: {
     reset () {
-      console.log('reset')
       this.listApiForMixin = this.myApi
       this.searchMyData = false
       this.model = JSON.parse(JSON.stringify(this.modelCopyMixin))
@@ -35,6 +35,7 @@ export default {
         this.onDepartChange({ id: this.myDptList.list[0].id })
       }
       if (this.isMyTarget) {
+        this.$utils.autoFillDateTime(this.model)
         if (!this.userInfo.menu.wechatAuthority) {
           this.listApiForMixin = this.myApi
         }

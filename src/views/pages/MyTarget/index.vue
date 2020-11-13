@@ -142,8 +142,8 @@
         ref='form',
         :rules='rules'
       )
-        el-form-item(label='日期:', v-if='!editInfo.isEdit', prop='userId')
-          sapn {{ editInfo.date }}
+        el-form-item(label='日期:', v-if='!editInfo.isEdit')
+          span {{ editInfo.date }}
 
         el-form-item.mgt3(
           :label='OS.isPc ? "员工:" : ""',
@@ -201,6 +201,8 @@ export default {
         userId: '',
         startTime: new Date().toLocaleDateString().split('/').join('-'),
         endTime: new Date().toLocaleDateString().split('/').join('-'),
+        // startTime: '',
+        // endTime: '',
         Page: 1,
         PageSize: 10,
       },
@@ -218,8 +220,12 @@ export default {
       },
       rules: {
         userId: [EUIRule('required', '员工')],
-        receivedPeople: [EUIRule('required', '收到微信人数')],
-        joinPeople: [EUIRule('required', '加入微信群数')],
+        receivedPeople: [
+          EUIRule('required', '收到微信人数'),
+        ],
+        joinPeople: [
+          EUIRule('required', '加入微信群数'),
+        ],
       },
       isMyTarget: true, // 主要是用于混合代码的逻辑判断处理
       AJobUserList: [], // A岗用户列表
@@ -242,7 +248,6 @@ export default {
 
     this.$api.getAchievTarget().then(data => {
       this.achievTarget = data
-      console.log(this.achievTarget)
     })
   },
   methods: {
