@@ -1,6 +1,17 @@
 <template lang='pug'>
 .target.pdx2
-  .condition.pd2.bg-white
+  .ff-rn.mgt1(v-if='OS.isPc')
+    data-box.flex-1.mgx1(:data='wxCountData.joinWx', :colIdx='1')
+    data-box.flex-1.mgx1(:data='wxCountData.receiveWx', :colIdx='1')
+    data-box.flex-1.mgx1(
+      :data='{ title: "微信收人转化群人数", value: achievTarget[0].context }',
+      :colIdx='2'
+    )
+    data-box.flex-1.mgx1(
+      :data='{ title: "微信收人达标数", value: achievTarget[1].context }',
+      :colIdx='2'
+    )
+  .condition.pd2.bg-white.mgt2
     el-form.ff-rw.ai-center(label-width='100px')
       el-form-item(
         label='员工:',
@@ -55,24 +66,7 @@
       ) 登记
   //- .bg-white
   //-   v-histogram.charts.flex-1.mgt2(:data='chartData')
-  .ff-rn.mgt2(v-if='OS.isPc')
-    data-box.flex-1.mgx1(
-      :data='{ title: "加入微信群数", value: listMixin.totalJoinPeople }',
-      :colIdx='1'
-    )
-    data-box.flex-1.mgx1(
-      :data='{ title: "收到微信人数", value: listMixin.totalReceivedPeople }',
-      :colIdx='1'
-    )
-    data-box.flex-1.mgx1(
-      :data='{ title: "微信收人转化群人数", value: achievTarget[0].context }',
-      :colIdx='2'
-    )
-    data-box.flex-1.mgx1(
-      :data='{ title: "微信收人达标数", value: achievTarget[1].context }',
-      :colIdx='2'
-    )
-  .ff-rn.mgt2(v-else)
+  .ff-rn.mgt2(v-if='!OS.isPc')
     .ff-cn.bg-white.flex-1
       p.mgt2.jc-center 入微信群数
       h3.jc-center.mgy2.warning {{ listMixin.totalJoinPeople }}
@@ -88,12 +82,18 @@
 
   el-table.mgy2.bg-white.pd2(:data='listMixin.list')
     el-table-column(prop='realName', label='姓名')
-    el-table-column(prop='joinPeople', label='加入微信群数')
+    el-table-column(
+      prop='joinPeople',
+      :label='"加入微信群数(" + listMixin.totalJoinPeople + ")"'
+    )
       template(slot-scope='{ row }')
         span(
           :class='Number(row.joinPeople) > Number(achievTarget[0].context) ? "success" : "danger"'
         ) {{ row.joinPeople }}
-    el-table-column(prop='receivedPeople', label='收到微信人数')
+    el-table-column(
+      prop='receivedPeople',
+      :label='"收到微信人数(" + listMixin.totalReceivedPeople + ")"'
+    )
       template(slot-scope='{ row }')
         span(
           :class='Number(row.receivedPeople) > Number(achievTarget[1].context) ? "success" : "danger"'
@@ -189,7 +189,7 @@ import { EUIRule } from '@/plugins/utils'
 export default {
   name: 'MyTarget',
   components: {
-    DataBox: () => import('@/views/pages/Home/MyAchievement/comps/DataBox'),
+    DataBox: () => import('./comps/DataBox'),
   },
   mixins: [dptListMixin, fetchListMixin],
   data () {
@@ -199,10 +199,8 @@ export default {
       myApi: 'getMyWxAchievedList',
       model: {
         userId: '',
-        startTime: new Date().toLocaleDateString().split('/').join('-'),
-        endTime: new Date().toLocaleDateString().split('/').join('-'),
-        // startTime: '',
-        // endTime: '',
+        startTime: '',
+        endTime: '',
         Page: 1,
         PageSize: 10,
       },
@@ -233,6 +231,20 @@ export default {
         { context: '' },
         { context: '' },
       ],
+      wxCountData: {
+        joinWx: {
+          title: '加入微信群数',
+          yesterday: 0,
+          today: 0,
+          isShowY: true,
+        },
+        receiveWx: {
+          title: '收到微信人数',
+          yesterday: 0,
+          today: 0,
+          isShowY: true,
+        },
+      },
     }
   },
   computed: {
@@ -249,8 +261,40 @@ export default {
     this.$api.getAchievTarget().then(data => {
       this.achievTarget = data
     })
+    this.getYesterdayData()
   },
   methods: {
+    getYesterdayData () {
+      // 获取昨日数据
+      var day1 = new Date()
+      day1.setTime(day1.getTime() - 24 * 60 * 60 * 1000)
+      var s1 = day1.getFullYear() + '-' + (day1.getMonth() + 1) + '-' + day1.getDate()
+      const params = {
+        userId: '',
+        startTime: s1 + ' 00:00:00',
+        endTime: s1 + ' 23:59:59',
+        Page: 1,
+        PageSize: 10,
+      }
+      this.$api[this.listApiForMixin](params).then(data => {
+        this.wxCountData.joinWx.yesterday = data.totalJoinPeople
+        this.wxCountData.receiveWx.yesterday = data.totalReceivedPeople
+      })
+
+      // 获取今日数据
+      const todayDate = new Date().toLocaleDateString().split('/').join('-')
+      const tParams = {
+        userId: '',
+        startTime: todayDate + ' 00:00:00',
+        endTime: todayDate + ' 23:59:59',
+        Page: 1,
+        PageSize: 10,
+      }
+      this.$api[this.listApiForMixin](tParams).then(data => {
+        this.wxCountData.joinWx.today = data.totalJoinPeople
+        this.wxCountData.receiveWx.today = data.totalReceivedPeople
+      })
+    },
     showEdit (row, isEdit) {
       this.$utils.setObject(this.editInfo, '')
       if (row !== null) {
