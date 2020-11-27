@@ -132,4 +132,7 @@ export default {
 <style lang='stylus' scoped>
 .el-form-item
   margin-bottom 10px
+
+>>>.el-table .cell
+  padding 0px 4px !important
 </style>

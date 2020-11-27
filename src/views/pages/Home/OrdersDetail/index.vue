@@ -86,21 +86,21 @@
       ) 搜索我的数据
 
   el-table.mgy2.bg-white.pd2(:data='listMixin.list')
-    el-table-column(prop='userAccount', label='玩家账号')
-    el-table-column(prop='account', label='推广员账号')
-    el-table-column(prop='gameName', label='游戏名称')
     el-table-column(prop='areaName', label='区服')
     el-table-column(prop='roleName', label='游戏角色')
-    el-table-column(prop='osType', label='平台')
-      template(slot-scope='{ row }') {{ row.osType | formatOSType }}
-    el-table-column(prop='gameOrderID', label='订单号', width='160px')
     el-table-column(prop='totalPrice', label='支付金额(元)')
       template(slot-scope='{ row }') {{ row.totalPrice | toFixed }}
-    el-table-column(prop='payDate', label='支付时间', width='150px')
-      template(slot-scope='{ row }') {{ row.payDate | dateFormat }}
     el-table-column(prop='ajob', label='A岗')
     el-table-column(prop='bjob', label='B岗')
     el-table-column(prop='cjob', label='C岗')
+    el-table-column(prop='userAccount', label='玩家账号')
+    el-table-column(prop='account', label='推广员账号')
+    el-table-column(prop='gameName', label='游戏名称')
+    el-table-column(prop='osType', label='平台')
+      template(slot-scope='{ row }') {{ row.osType | formatOSType }}
+    el-table-column(prop='payDate', label='支付时间', width='150px')
+      template(slot-scope='{ row }') {{ row.payDate | dateFormat }}
+    el-table-column(prop='gameOrderID', label='订单号', width='160px')
   el-pagination(
     :total='listMixin.count',
     :page-size.sync='model.pageSize',
@@ -150,4 +150,7 @@ export default {
 <style lang='stylus' scoped>
 .el-form-item
   margin-bottom 10px
+
+>>>.el-table .cell
+  padding 0px 4px !important
 </style>
