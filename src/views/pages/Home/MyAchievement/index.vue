@@ -129,7 +129,7 @@ export default {
         page: 1,
         pageSize: 10,
       },
-      timeRange: ['今日', '昨日', '本周', '上月', '本月', '全年', '去年'],
+      timeRange: ['今日', '昨日', '本周', '本月', '上月', '全年', '去年'],
       selTimeRange: '今日',
       dataSet: {
 
