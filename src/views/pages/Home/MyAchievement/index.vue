@@ -129,7 +129,7 @@ export default {
         page: 1,
         pageSize: 10,
       },
-      timeRange: ['今日', '昨日', '本周', '本月', '全年'],
+      timeRange: ['今日', '昨日', '本周', '上月', '本月', '全年', '去年'],
       selTimeRange: '今日',
       dataSet: {
 
@@ -400,6 +400,12 @@ export default {
             this.handleData(data, 'dayKey', 7)
           })
           break
+        case '上月':
+          method = (this.searchMyData || !this.userInfo.isLeader) ? 'getAchiLastMonth' : 'getDptAchiLastMonth'
+          this.$api[method](params).then(data => {
+            this.handleData(data, 'dayKey', 30)
+          })
+          break
         case '本月':
           method = (this.searchMyData || !this.userInfo.isLeader) ? 'getAchiByMonth' : 'getDptAchiByMonth'
           this.$api[method](params).then(data => {
@@ -408,6 +414,12 @@ export default {
           break
         case '全年':
           method = (this.searchMyData || !this.userInfo.isLeader) ? 'getAchiByYear' : 'getDptAchiByYear'
+          this.$api[method](params).then(data => {
+            this.handleData(data, 'monthKey', 12)
+          })
+          break
+        case '去年':
+          method = (this.searchMyData || !this.userInfo.isLeader) ? 'getAchiLastYear' : 'getDptAchiLastYear'
           this.$api[method](params).then(data => {
             this.handleData(data, 'monthKey', 12)
           })

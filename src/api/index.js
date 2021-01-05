@@ -602,6 +602,22 @@ export default {
       UserId: model.UserId,
     },
   }),
+  // 27.4 获取我的业务的上月数据
+  getAchiLastMonth: (model) => http('get', '/api/achievement/lastmonth', {
+    params: {
+      GameName: model.GameName, // | string | 否 | 游戏名称 |
+      AreaName: model.AreaName, // | string | 否 | 区服名称 |
+    },
+  }),
+  // 27.5 获取部门管理我的业务的上月数据
+  getDptAchiLastMonth: (model) => http('get', '/api/achievement/lastmonth/manage', {
+    params: {
+      GameName: model.GameName, // | string | 否 | 游戏名称 |
+      AreaName: model.AreaName, // | string | 否 | 区服名称 |
+      ResDepId: model.ResDepId, // | int | 否 | 查询部门ID |
+      UserId: model.UserId, // | int | 否 | 查询用户ID |
+    },
+  }),
   // 27.获取我本月的业务数据
   getAchiByMonth: (model) => http('get', '/api/achievement/month', {
     loading: true,
@@ -638,6 +654,23 @@ export default {
       areaName: model.areaName,
       ResDepId: model.dtpId,
       UserId: model.UserId,
+    },
+  }),
+
+  // 27.8 获取我的业务的去年数据
+  getAchiLastYear: (model) => http('get', '/api/achievement/lastyear', {
+    params: {
+      GameName: model.GameName, // | string | 否 | 游戏名称 |
+      AreaName: model.AreaName, // | string | 否 | 区服名称 |
+    },
+  }),
+  // 27.9 获取部门管理我的业务的去年数据
+  getDptAchiLastYear: (model) => http('get', '/api/achievement/lastyear/manage', {
+    params: {
+      GameName: model.GameName, // | string | 否 | 游戏名称 |
+      AreaName: model.AreaName, // | string | 否 | 区服名称 |
+      ResDepId: model.ResDepId, // | int | 否 | 查询部门ID |
+      UserId: model.UserId, // | int | 否 | 查询用户ID |
     },
   }),
 
