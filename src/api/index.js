@@ -705,22 +705,46 @@ export default {
   getGameCtx: () => http('get', '/api/mygame/gamecontext'),
 
   // 32.获取今天排行接口
-  getRankToday: () => http('get', '/api/rank/today'),
+  getRankToday: (model) => http('get', '/api/rank/today', {
+    params: {
+      areaName: model.areaName,
+    },
+  }),
 
   // 33.获取昨天排行接口
-  getRankYesterday: () => http('get', '/api/rank/yesterday'),
+  getRankYesterday: (model) => http('get', '/api/rank/yesterday', {
+    params: {
+      areaName: model.areaName,
+    },
+  }),
 
   // 33.获取本周排行接口
-  getRankWeek: () => http('get', '/api/rank/week'),
+  getRankWeek: (model) => http('get', '/api/rank/week', {
+    params: {
+      areaName: model.areaName,
+    },
+  }),
 
   // 34.获取上周排行接口
-  getRankLastweek: () => http('get', '/api/rank/lastweek'),
+  getRankLastweek: (model) => http('get', '/api/rank/lastweek', {
+    params: {
+      areaName: model.areaName,
+    },
+  }),
 
   // 35.获取本月排行接口
-  getRankMonth: () => http('get', '/api/rank/month'),
+  getRankMonth: (model) => http('get', '/api/rank/month', {
+    params: {
+      areaName: model.areaName,
+    },
+  }),
 
   // 36.获取上月排行接口
-  getRankLastMonth: () => http('get', '/api/rank/lastmonth'),
+  getRankLastMonth: (model) => http('get', '/api/rank/lastmonth', {
+    params: {
+      areaName: model.areaName,
+    },
+  }),
 
   // 37.获取前10大于100订单接口
   getTop10: () => http('get', 'api/player/top10'),
