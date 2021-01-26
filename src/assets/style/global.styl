@@ -38,6 +38,7 @@
 
 .bg-select
   background-color #e5f2ff !important
+
 // 字号
 .fs-s
   font-size $fs-s // 10px // small
@@ -105,6 +106,9 @@ for dKey, dVal in $border-directions
 
 .border-bottom
   border-bottom 1px solid $border
+
+.border-bottom-dot
+  border-bottom 1px dashed $border
 
 // flex
 .flex
@@ -247,13 +251,12 @@ $fit = {
   contain: contain,
   cover: cover,
   fill: fill,
-  scale-down: scale-down,
+  scale-down: scale-down
 }
-
 
 for type in $fit
   .fit-{type}
-    object-fit type;
+    object-fit type
 
 // 公共类
 .line-through
@@ -278,6 +281,7 @@ for type in $fit
 
 .overflow-auto
   overflow auto
+
 .fl
   float left
 

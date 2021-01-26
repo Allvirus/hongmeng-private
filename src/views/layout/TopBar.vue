@@ -49,11 +49,12 @@
       el-tab-pane(label='首页', name='HomeMyAchievement')
       el-tab-pane(label='排行', name='Ranking')
       el-tab-pane(label='数据指标', name='MyTarget')
+      el-tab-pane(label='同类游戏', name='SameGames')
     .notice.ai-center
       p.omit.hand(
         @click='showDptNotice',
         v-if='OS.isPc',
-        style='max-width:1200px'
+        style='max-width: 1200px'
       ) {{ dptNotices }}
     .menu.ai-center.jc-center(
       v-if='!OS.isPc && activeTab === "HomeMyAchievement"'

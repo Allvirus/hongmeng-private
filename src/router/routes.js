@@ -156,8 +156,14 @@ export default [
       {
         path: 'MyTarget',
         name: 'MyTarget',
-        meta: { title: '排行' },
+        meta: { title: '数据指标' },
         component: () => import('@/views/pages/MyTarget/'),
+      },
+      {
+        path: 'SameGames',
+        name: 'SameGames',
+        meta: { title: '同类游戏' },
+        component: () => import('@/views/pages/SameGames/'),
       },
       {
         path: 'Department',
