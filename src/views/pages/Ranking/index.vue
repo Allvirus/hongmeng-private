@@ -30,14 +30,14 @@
       )
       ranking-list(
         :data='rankList.ajobRegRank',
-        mainTitle='A岗注册排行榜',
+        mainTitle='A岗注册创角排行榜',
         subTitle='注册人数',
         theme='orange',
         rankingKey='count'
       )
       ranking-list(
         :data='rankList.bjobRegRank',
-        mainTitle='B岗注册排行榜',
+        mainTitle='B岗注册创角排行榜',
         subTitle='注册人数',
         theme='green',
         rankingKey='count'
