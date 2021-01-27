@@ -22,7 +22,7 @@
       p 同类游戏列表
       .ff-rn.ai-center
         el-button.btn.btn-primary.el-icon-plus(
-          v-if='userInfo.isLeader',
+          v-if='userInfo.menu.gameChannel',
           type='primary',
           @click='showEditDlg(null)'
         ) 添加
@@ -75,13 +75,13 @@
               @click='downLoad(row)'
             ) 下载
             el-button.mgl3(
-              v-if='userInfo.isLeader',
+              v-if='userInfo.menu.gameChannel',
               icon='el-icon-edit-outline',
               type='text',
               @click='showEditDlg(row)'
             ) 编辑
             el-button.mgl3.danger(
-              v-if='userInfo.isLeader',
+              v-if='userInfo.menu.gameChannel',
               icon='el-icon-delete',
               type='text',
               @click='deleteGame(row)'
