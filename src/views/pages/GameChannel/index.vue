@@ -105,20 +105,23 @@
   )
     .flex-center
       el-form(
-        label-width='100px',
-        label-position='left',
+        :label-width='OS.isPc ? "120px" : "0"',
         ref='form',
         :model='gameInfo',
         :rules='rules'
       )
-        el-form-item(label='游戏名称:', prop='gameName')
-          el-input(v-model='gameInfo.gameName', placeholder='请输入游戏', clearable)
-        el-form-item(label='设备类型:', prop='equipmentType')
-          el-radio-group(v-model='gameInfo.equipmentType')
+        el-form-item(:label='OS.isPc ? "游戏名称:" : ""', prop='gameName')
+          el-input.winput(
+            v-model='gameInfo.gameName',
+            placeholder='请输入游戏名称',
+            clearable
+          )
+        el-form-item(:label='OS.isPc ? "设备类型:" : ""', prop='equipmentType')
+          el-radio-group.winput(v-model='gameInfo.equipmentType')
             el-radio(:label='1') 安卓
             el-radio(:label='2') 苹果
-        el-form-item(label='运营商:', prop='operator')
-          el-select(
+        el-form-item(:label='OS.isPc ? "运营商:" : ""', prop='operator')
+          el-select.winput(
             v-model='gameInfo.operator',
             placeholder='请选择运营商',
             clearable,
@@ -130,10 +133,10 @@
               :label='item.operatorName',
               :value='item.operatorName'
             )
-        el-form-item(label='游戏类型:', prop='gameType')
-          el-select(
+        el-form-item(:label='OS.isPc ? "游戏类型:" : ""', prop='gameType')
+          el-select.winput(
             v-model='gameInfo.gameType',
-            placeholder='请选择运营商',
+            placeholder='请选择游戏类型',
             clearable,
             filterable
           )
@@ -143,29 +146,30 @@
               :label='item.gameTypeName',
               :value='item.gameTypeName'
             )
-        el-form-item(label='游戏描述:', prop='remark')
-          el-input(
+        el-form-item(:label='OS.isPc ? "游戏描述:" : ""', prop='remark')
+          el-input.winput(
             v-model='gameInfo.remark',
             type='textarea',
+            placeholder='请输入游戏描述',
             :rows='2',
             clearable
           )
-        el-form-item(label='apk:')
+        el-form-item(:label='OS.isPc ? "apk:" : ""')
           el-upload(
             displayType='button',
             :isPicture='false',
             :onChange='onApkChanged'
           )
             .ff-rn.ai-center
-              el-button.el-icon-folder-opened 上传
+              el-button.el-icon-folder-opened 上传APK
               span.mgl2 {{ apkName }}
-        el-form-item(label='下载地址:', prop='downloadUrl')
-          el-input(
+        el-form-item(:label='OS.isPc ? "下载地址:" : ""', prop='downloadUrl')
+          el-input.winput(
             v-model='gameInfo.downloadUrl',
-            placeholder='请输下载地址',
+            placeholder='请输入下载地址',
             clearable
           )
-        el-form-item(label='游戏图标:', prop='gamePicUrl')
+        el-form-item(:label='OS.isPc ? "游戏图标:" : ""', prop='gamePicUrl')
           el-upload(
             action='true',
             accept='.jpg,.jpeg,.png,.bmp,.gif',
@@ -175,39 +179,42 @@
           )
         .border-bottom
         p.mgy2 自定义信息
-        el-form-item(label='帮聊等级:', prop='juntoChatLevel')
-          el-input(
+        el-form-item(:label='OS.isPc ? "帮聊等级:" : ""', prop='juntoChatLevel')
+          el-input.winput(
             v-model='gameInfo.juntoChatLevel',
             placeholder='请输入帮聊等级',
             clearable
           )
-        el-form-item(label='私聊等级:', prop='privateChatLevel')
-          el-input(
+        el-form-item(:label='OS.isPc ? "私聊等级:" : ""', prop='privateChatLevel')
+          el-input.winput(
             v-model='gameInfo.privateChatLevel',
             placeholder='请输入私聊等级',
             clearable
           )
-        el-form-item(label='世界聊等级:', prop='worldChatLevel')
-          el-input(
+        el-form-item(:label='OS.isPc ? "世界聊等级:" : ""', prop='worldChatLevel')
+          el-input.winput(
             v-model='gameInfo.worldChatLevel',
             placeholder='请输入世界聊等级',
             clearable
           )
-        el-form-item(label='建帮等级:', prop='ceateJuntoLevel')
-          el-input(
+        el-form-item(:label='OS.isPc ? "建帮等级:" : ""', prop='ceateJuntoLevel')
+          el-input.winput(
             v-model='gameInfo.ceateJuntoLevel',
             placeholder='请输入建帮等级',
             clearable
           )
-        el-form-item(label='建帮金额(元):', prop='ceateJuntoCost')
-          el-input(
+        el-form-item(:label='OS.isPc ? "建帮金额(元):" : ""', prop='ceateJuntoCost')
+          el-input.winput(
             v-model='gameInfo.ceateJuntoCost',
             placeholder='请输入建帮金额(元)',
             clearable
           )
-        el-form-item(label='是否可邀帮:', prop='isInviteJunto')
+        el-form-item(:label='OS.isPc ? "是否可邀帮:" : ""', prop='isInviteJunto')
           el-checkbox(v-model='gameInfo.isInviteJunto') 是否可邀帮
-        el-form-item(label='是否可职位邀帮:', prop='isPostInviteJunto')
+        el-form-item(
+          :label='OS.isPc ? "是否可职位邀帮:" : ""',
+          prop='isPostInviteJunto'
+        )
           el-checkbox(v-model='gameInfo.isPostInviteJunto') 是否可职位邀帮
     span.dialog-footer(slot='footer')
       el-button.mgl3(type='warning', @click='gameInfo.isShow = false') 取消
