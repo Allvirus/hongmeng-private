@@ -140,12 +140,14 @@ export default {
       if (this.action) {
         console.log('action', this.action)
         this.$api.uploadApi(file, this.action, { isPicture: this.isPicture }).then(data => {
+          console.log('uploaded---', data)
           this.$emit('update:fileId', data[0].file_id)
           this.fileIds.push(data[0].file_id)
           this.$emit('update:fileUrl', data[0].file_url)
           this.fileUrls.push(data[0].file_url)
           this.$emit('update:thumbUrl', data[0].thumb_url)
           this.$emit('avatarUrl', data[0].fileName)
+          this.$emit('uploaded', { ...data[0], name: file.maxName })
           this.$vgo.tip('上传成功!', 'success')
         })
       }

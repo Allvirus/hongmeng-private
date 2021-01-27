@@ -749,7 +749,8 @@ export default {
   // 37.获取前10大于100订单接口
   getTop10: () => http('get', 'api/player/top10'),
 
-  // 38. 图片上传通用接口（不启用权限认证）
+  // 38. 图片上传通用接口（不启用权限认证
+
   // 39.获取公告接口
   getNotices: () => http('get', 'api/notice/'),
   // 40.获取经验值明细分页接口

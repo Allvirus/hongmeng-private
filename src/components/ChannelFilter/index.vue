@@ -10,7 +10,7 @@
     p.item.hand.mgr4.mgb1(
       v-for='(item, index) in data',
       :key='index',
-      :class='item.isCheck ? "active" : ""',
+      :class='item.id === selId ? "active" : ""',
       @click='onItemClick(item)'
     ) {{ item[propKey] }}
 </template>
@@ -30,6 +30,10 @@ export default {
       type: String,
       default: '',
     },
+    selName: {
+      type: String,
+      default: '',
+    },
     isMulti: {
       type: Boolean,
       default: false,
@@ -38,32 +42,48 @@ export default {
   data () {
     return {
       channel: [],
-      selIds: [],
+      selItems: [],
       noLimit: true,
+      selId: -1,
     }
   },
   created () {
-    this.channel = JSON.parse(JSON.stringify(this.data))
+    if (this.isMulti) {
+      this.channel = JSON.parse(JSON.stringify(this.data))
+      this.onNoLimitClick()
+    }
   },
   methods: {
     onNoLimitClick () {
       this.noLimit = true
+      this.selId = -1
       this.channel.map((item) => {
         item.isCheck = false
       })
+      this.$emit('update:selName', '')
+      this.$emit('onChange')
     },
     onItemClick (item) {
-      item.isCheck = !item.isCheck
-      this.updateSelIds()
-      this.noLimit = this.selIds.length === 0
+      if (this.isMulti) {
+        item.isCheck = !item.isCheck
+        this.updateSelIds(item)
+        this.noLimit = this.selItems.length === 0
+      } else {
+        this.noLimit = false
+        this.selId = item.id
+        this.$emit('update:selName', item[this.propKey])
+        this.$emit('onChange')
+      }
     },
-    updateSelIds () {
-      this.selIds.splice(0, this.selIds.length)
-      this.channel.map((item) => {
-        if (item.isCheck) {
-          this.selIds.push(item.ids)
-        }
-      })
+    updateSelIds (item) {
+      this.selItems.splice(0, this.selItems.length)
+      if (this.isMulti) {
+        this.channel.map((obj) => {
+          if (obj.isCheck) {
+            this.selItems.push(obj[this.propKey])
+          }
+        })
+      }
     },
   },
 }

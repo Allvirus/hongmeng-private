@@ -137,13 +137,13 @@
   )
     .flex-center
       el-form(
-        :label-width='OS.isPc ? "120px" : "0px"',
+        :label-width='OS.isPc ? "120px" : "0"',
         :model='editInfo',
         ref='form',
         :rules='rules'
       )
-        el-form-item(label='日期:', v-if='!editInfo.isEdit')
-          span {{ editInfo.date }}
+        el-form-item(:label='OS.isPc ? "日期:" : ""', v-if='!editInfo.isEdit')
+          span {{ OS.isPc ? "" : "日期：" }} {{ editInfo.date }}
 
         el-form-item.mgt3(
           :label='OS.isPc ? "员工:" : ""',

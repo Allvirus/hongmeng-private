@@ -4,12 +4,16 @@
     .border-bottom-dash
       ChannelFilter(
         :data='paramsList.operators',
+        :selName.sync='model.Operator',
+        @onChange='getListMixin',
         title='运营商',
         propKey='operatorName'
       )
     .item
       ChannelFilter(
         :data='paramsList.gameTypes',
+        :selName.sync='model.GameType',
+        @onChange='getListMixin',
         title='游戏类型',
         propKey='gameTypeName'
       )
@@ -18,6 +22,7 @@
       p 同类游戏列表
       .ff-rn.ai-center
         el-button.btn.btn-primary.el-icon-plus(
+          v-if='userInfo.isLeader',
           type='primary',
           @click='showEditDlg(null)'
         ) 添加
@@ -33,7 +38,7 @@
             @click='getListMixin'
           )
     el-table.mgt2(:data='listMixin.list')
-      el-table-column(prop='gameName', label='游戏名称', width='150')
+      el-table-column(prop='gameName', label='游戏名称', width='160')
         template(slot-scope='{ row }')
           .ff-rn.ai-center
             img.w50.h50.border-radius(:src='getLogoUrl(row)', alt='alt')
@@ -55,7 +60,6 @@
       el-table-column(prop='isPostInviteJunto', label='是否可职位邀帮')
         template(slot-scope='{ row }')
           span {{ row.isPostInviteJunto ? "是" : "否" }}
-      el-table-column(prop='remark', label='游戏描述', width='100')
       el-table-column(prop='joinPeople', label='上传时间', width='130')
         template(slot-scope='{ row }')
           span {{ row.uploadTime | dateFormat }}
@@ -66,16 +70,19 @@
         template(slot-scope='{ row }')
           .ff-rn.jc-start
             el-button.mgl3(
-              icon='el-icon-download',
+              v-if='userInfo.isLeader',
+              icon='el-icon-edit-outline',
               type='text',
               @click='downLoad(row)'
             ) 下载
             el-button.mgl3(
+              v-if='userInfo.isLeader',
               icon='el-icon-edit-outline',
               type='text',
               @click='showEditDlg(row)'
             ) 编辑
             el-button.mgl3.danger(
+              v-if='userInfo.isLeader',
               icon='el-icon-delete',
               type='text',
               @click='deleteGame(row)'
@@ -95,7 +102,7 @@
     :title='gameInfo.isEdit ? "编辑" : "新增"',
     @close='gameInfo.isShow = false',
     :visible.sync='gameInfo.isShow',
-    width='600px'
+    :width='OS.isPc ? "600px" : "300px"'
   )
     .flex-center
       el-form(
@@ -137,10 +144,6 @@
               :label='item.gameTypeName',
               :value='item.gameTypeName'
             )
-        el-form-item(label='建帮金额(元):', prop='equipmentType')
-          el-checkbox-group(v-model='gameInfo.ceateJuntoCost')
-            el-checkbox(label='免费')
-            el-checkbox(label='10~50')
         el-form-item(label='游戏描述:', prop='remark')
           el-input(
             v-model='gameInfo.remark',
@@ -148,14 +151,21 @@
             :rows='2',
             clearable
           )
-        el-form-item(label='apk:', prop='gamePicUrl')
+        el-form-item(label='apk:')
           el-upload(
             displayType='button',
-            action='true',
-            accept='.apk',
-            :crop='true'
+            :isPicture='false',
+            :onChange='onApkChanged'
           )
-            el-button.btn.btn-default(type='submit') 上传
+            .ff-rn.ai-center
+              el-button.el-icon-folder-opened 上传
+              span.mgl2 {{ apkName }}
+        el-form-item(label='下载地址:', prop='downloadUrl')
+          el-input(
+            v-model='gameInfo.downloadUrl',
+            placeholder='请输下载地址',
+            clearable
+          )
         el-form-item(label='游戏图标:', prop='gamePicUrl')
           el-upload(
             action='true',
@@ -218,6 +228,7 @@ export default {
     return {
       listApiForMixin: 'getGameChannel',
       previewLogo: '',
+      apkName: '',
       paramsList: {
         operators: [],
         gameTypes: [],
@@ -252,12 +263,12 @@ export default {
         operator: [EUIRule('required', '运营商')],
         gameType: [EUIRule('required', '游戏类型')],
         gamePicUrl: [EUIRule('required', '游戏图标')],
-        downloadUrl: [EUIRule('required', 'apk地址')],
+        downloadUrl: [EUIRule('required', '下载地址')],
       },
     }
   },
   computed: {
-    ...mapGetters(['OS']),
+    ...mapGetters(['OS', 'userInfo']),
   },
   created () {
     this.init()
@@ -266,22 +277,39 @@ export default {
   methods: {
     init () {
       this.$api.getOperators().then(data => {
+        data.map((item) => {
+          item.isCheck = false
+        })
         this.paramsList.operators = data
       })
 
       this.$api.getGameType().then(data => {
+        data.map((item) => {
+          item.isCheck = false
+        })
         this.paramsList.gameTypes = data
       })
     },
     getLogoUrl (row) {
       return $globalconfig.API + row.gamePicUrl
     },
+    onApkChanged (file) {
+      this.$api.uploadApi(file, '', { url: 'api/common/file/apk', key: 'file' }).then(data => {
+        this.$vgo.tip('apk上传成功!', 'success')
+        this.apkName = file.name
+        this.gameInfo.downloadUrl = $globalconfig.API + data.fileName
+      })
+    },
     onLogoUploaded (fileUrl) {
       this.previewLogo = $globalconfig.API + fileUrl
       this.gameInfo.gamePicUrl = fileUrl
     },
     downLoad (row) {
-
+      if (row.downloadUrl) {
+        window.open(row.downloadUrl)
+      } else {
+        this.$vgo.tip('apk地址无效!', 'warning')
+      }
     },
     showEditDlg (row) {
       if (row) {
@@ -290,6 +318,7 @@ export default {
       } else {
         this.gameInfo = JSON.parse(JSON.stringify(this.gameInfoBak))
         this.previewLogo = ''
+        this.apkName = ''
       }
       this.gameInfo.isEdit = row !== null
       this.gameInfo.isShow = true

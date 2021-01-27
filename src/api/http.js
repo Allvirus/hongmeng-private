@@ -78,7 +78,7 @@ const onUploadProgressDefault = (e, num) => {
  * @returns {Promise}
  */
 export const uploadApi = (fileList, action, options = {}) => {
-  const { isPicture = true, appendObj = {}, url, onUploadProgress } = options
+  const { isPicture = true, appendObj = {}, url, onUploadProgress, key = 'files' } = options
   const formData = new FormData()
   action && formData.append('action', action)
   for (const key in appendObj) {
@@ -86,7 +86,7 @@ export const uploadApi = (fileList, action, options = {}) => {
   }
   const arr = Array.isArray(fileList) ? fileList.map(it => it.raw) : [fileList.raw]
   arr.forEach((item) => {
-    formData.append('files', item)
+    formData.append(key, item)
   })
 
   return http('post', url || (isPicture ? $globalconfig.PANO_FILE_API : $globalconfig.PANO_FILE_API), {
