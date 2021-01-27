@@ -60,18 +60,17 @@
       el-table-column(prop='isPostInviteJunto', label='是否可职位邀帮')
         template(slot-scope='{ row }')
           span {{ row.isPostInviteJunto ? "是" : "否" }}
-      el-table-column(prop='joinPeople', label='上传时间', width='130')
+      el-table-column(prop='joinPeople', label='上传时间', width='150')
         template(slot-scope='{ row }')
           span {{ row.uploadTime | dateFormat }}
-      el-table-column(prop='joinPeople', label='更新时间', width='130')
+      el-table-column(prop='joinPeople', label='更新时间', width='150')
         template(slot-scope='{ row }')
           span {{ row.updateTime | dateFormat }}
       el-table-column(prop='opt', label='操作', :width='OS.isPc ? 250 : 150')
         template(slot-scope='{ row }')
           .ff-rn.jc-start
             el-button.mgl3(
-              v-if='userInfo.isLeader',
-              icon='el-icon-edit-outline',
+              icon='el-icon-download',
               type='text',
               @click='downLoad(row)'
             ) 下载
