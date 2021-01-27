@@ -938,7 +938,7 @@ export default {
   deleteChannel: (gameChannelId) => http('delete', `/api/channel/${gameChannelId}`),
 
   // 61.更新游戏渠道
-  updateChannel: (model) => http('put', `/api/channel/${model.gameChannelId}`, {
+  updateChannel: (model) => http('put', `/api/channel/${model.id}`, {
     data: {
       gameName: model.gameName, // "测试121231212",
       equipmentType: model.equipmentType, // 0,

@@ -1,21 +1,30 @@
 <template lang="pug">
 ele-upload.lh1.custom--el-upload(
-  action=''
-  ref='upload'
-  :on-change='onElChangeUpload'
-  :auto-upload='false'
-  :show-file-list='false'
-  v-bind="$attrs"
-  v-on="$listeners"
-  :class='displayType + "--type"'
-  :drag='displayType !== "button"')
+  action='',
+  ref='upload',
+  :on-change='onElChangeUpload',
+  :auto-upload='false',
+  :show-file-list='false',
+  v-bind='$attrs',
+  v-on='$listeners',
+  :class='displayType + "--type"',
+  :drag='displayType !== "button"'
+)
   .upload-tips.h100p(v-if='displayType !== "button"')
-    i.fs-xl.pac(:class='icon' v-if="!fileUrl && !avatar")
+    i.fs-xl.pac(:class='icon', v-if='!fileUrl && !avatar')
     slot
   slot(v-else)
-  img.pac(:src='thumbUrl || fileUrl || avatar' v-if="isPicture && (thumbUrl || fileUrl || avatar)")
+  img.pac(
+    :src='thumbUrl || fileUrl || avatar',
+    v-if='isPicture && (thumbUrl || fileUrl || avatar)'
+  )
 
-  VueCropper(ref='VueCropper' v-if="crop" :width='cropConfig.width' :height='cropConfig.height')
+  VueCropper(
+    ref='VueCropper',
+    v-if='crop',
+    :width='cropConfig.width',
+    :height='cropConfig.height'
+  )
 
 //- 图片类型自动上传 使用
 //- el-upload(
@@ -23,7 +32,6 @@ ele-upload.lh1.custom--el-upload(
 //-   accept='.jpg,.jpeg,.png,.bmp,.gif'
 //-   :fileId.sync='model.cover_image_id'
 //-   :fileUrl.sync='model.cover_image_url')
-
 </template>
 <script>
 import { Upload } from 'element-ui'
@@ -130,6 +138,7 @@ export default {
       if (this.crop) file.raw = await this.handleCropper(file)
       // 是否自动上传
       if (this.action) {
+        console.log('action', this.action)
         this.$api.uploadApi(file, this.action, { isPicture: this.isPicture }).then(data => {
           this.$emit('update:fileId', data[0].file_id)
           this.fileIds.push(data[0].file_id)
@@ -199,6 +208,7 @@ export default {
 <style lang="stylus">
 .custom--el-upload
   display inline-block
+
 .avatar--type
   width 120px
   height 120px
@@ -216,5 +226,4 @@ export default {
         transform translate(-50%, -50%)
         max-width 100%
         max-height 100%
-
 </style>

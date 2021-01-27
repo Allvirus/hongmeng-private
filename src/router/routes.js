@@ -160,10 +160,10 @@ export default [
         component: () => import('@/views/pages/MyTarget/'),
       },
       {
-        path: 'SameGames',
-        name: 'SameGames',
+        path: 'GameChannel',
+        name: 'GameChannel',
         meta: { title: '游戏渠道' },
-        component: () => import('@/views/pages/SameGames/'),
+        component: () => import('@/views/pages/GameChannel/'),
       },
       {
         path: 'Department',
