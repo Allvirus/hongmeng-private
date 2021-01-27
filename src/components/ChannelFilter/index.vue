@@ -2,17 +2,21 @@
 .channel.pdt2.pdb1.ff-rn
   .w100
     p.mgl2.info {{ title }}：
-  .ff-rw.flex-1
+  .ff-rw.flex-1.ai-center.item-box(
+    :class='isExpand ? "" : "h30 overflow-hidden"'
+  )
     p.item.hand.mgr4.mgb1(
       :class='noLimit ? "active" : ""',
       @click='onNoLimitClick'
     ) 不限
-    p.item.hand.mgr4.mgb1(
+    p.item.hand.mgr4.mgb1.flex-center(
       v-for='(item, index) in data',
       :key='index',
       :class='item.id === selId ? "active" : ""',
       @click='onItemClick(item)'
     ) {{ item[propKey] }}
+  .w50.h30.flex-center.hand(v-if='isTooMuch', @click='isExpand = !isExpand')
+    i.el-icon-arrow-right.fs-l.arrow(:class='isExpand ? "expanded" : ""')
 </template>
 <script>
 export default {
@@ -41,6 +45,8 @@ export default {
   },
   data () {
     return {
+      isExpand: false,
+      isTooMuch: true,
       channel: [],
       selItems: [],
       noLimit: true,
@@ -97,4 +103,8 @@ export default {
     color white
     background-color #0CAAFD
     border-radius 6px
+  .arrow
+    transition-duration 0.3s
+  .expanded
+    transform rotate(90deg)
 </style>

@@ -1,7 +1,7 @@
 <template lang='pug'>
 .games
   .selector.border.border-radius.bg-white.ff-cn
-    .border-bottom-dash
+    .border-bottom-dash(v-if='OS.isPc')
       ChannelFilter(
         :data='paramsList.operators',
         :selName.sync='model.Operator',
@@ -38,11 +38,11 @@
             @click='getListMixin'
           )
     el-table.mgt2(:data='listMixin.list')
-      el-table-column(prop='gameName', label='游戏名称', width='160')
+      el-table-column(prop='gameName', label='游戏名称', width='180')
         template(slot-scope='{ row }')
           .ff-rn.ai-center
             img.w50.h50.border-radius(:src='getLogoUrl(row)', alt='alt')
-            span.mgl2.omit {{ row.gameName }}
+            span.mgl2 {{ row.gameName }}
       el-table-column(prop='operator', label='运营商')
       el-table-column(prop='gameType', label='游戏类型')
       el-table-column(prop='equipmentType', label='设备类型')
