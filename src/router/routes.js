@@ -162,7 +162,7 @@ export default [
       {
         path: 'SameGames',
         name: 'SameGames',
-        meta: { title: '同类游戏' },
+        meta: { title: '游戏渠道' },
         component: () => import('@/views/pages/SameGames/'),
       },
       {

@@ -49,7 +49,7 @@
       el-tab-pane(label='首页', name='HomeMyAchievement')
       el-tab-pane(label='排行', name='Ranking')
       el-tab-pane(label='数据指标', name='MyTarget')
-      el-tab-pane(label='同类游戏', name='SameGames')
+      el-tab-pane(label='游戏渠道', name='SameGames')
     .notice.ai-center
       p.omit.hand(
         @click='showDptNotice',

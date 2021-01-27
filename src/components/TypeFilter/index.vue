@@ -22,10 +22,6 @@ export default {
       type: Object,
       default: () => { return {} },
     },
-    ids: {
-      type: Array,
-      default: () => { return [] },
-    },
   },
   data () {
     return {

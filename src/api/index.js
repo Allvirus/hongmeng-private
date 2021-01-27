@@ -897,4 +897,63 @@ export default {
 
   // 55.获取微信达标配置
   getAchievTarget: () => http('get', '/api/quota/config'),
+
+  // 56.获取运营商列表 (不分页)
+  getOperators: () => http('get', '/api/channel/operator/'),
+
+  // 57.获取游戏类型列表(不分页)
+  getGameType: () => http('get', '/api/channel/gametype/'),
+
+  // 58.获取游戏渠道列表
+  getGameChannel: (model) => http('get', '/api/channel/', {
+    params: {
+      GameName: model.GameName, // | string | 否 | 游戏名称 |
+      Operator: model.Operator, // | string | 否 | 运营商 |
+      GameType: model.GameType, // | string | 否 | 游戏类型 |
+      Page: model.Page, // | string | 否 | 页码默认为1 |
+      PageSize: model.PageSize, // | string | 否 | 页数大小默认为5最大为20 |
+    },
+  }),
+  // 59.创建游戏渠道
+  createChannel: (model) => http('post', '/api/channel/', {
+    data: {
+      gameName: model.gameName, // "string",
+      equipmentType: model.equipmentType, // 0,
+      operator: model.operator, // "string",
+      gameType: model.gameType, // "string",
+      downloadUrl: model.downloadUrl, // "string",
+      gamePicUrl: model.gamePicUrl, // "string",
+      remark: model.remark, // "string",
+      juntoChatLevel: model.juntoChatLevel, // "string",
+      privateChatLevel: model.privateChatLevel, // "string",
+      worldChatLevel: model.worldChatLevel, // "string",
+      ceateJuntoLevel: model.ceateJuntoLevel, // "string",
+      ceateJuntoCost: model.ceateJuntoCost, // "string",
+      isInviteJunto: model.isInviteJunto, // true,
+      isPostInviteJunto: model.isPostInviteJunto, // true
+    },
+  }),
+
+  // 60.删除游戏渠道
+  deleteChannel: (gameChannelId) => http('delete', `/api/channel/${gameChannelId}`),
+
+  // 61.更新游戏渠道
+  updateChannel: (model) => http('put', `/api/channel/${model.gameChannelId}`, {
+    data: {
+      gameName: model.gameName, // "测试121231212",
+      equipmentType: model.equipmentType, // 0,
+      operator: model.operator, // "string11",
+      gameType: model.gameType, // "string11",
+      downloadUrl: model.downloadUrl, // "string1",
+      gamePicUrl: model.gamePicUrl, // "string1",
+      remark: model.remark, // "string1",
+      juntoChatLevel: model.juntoChatLevel, // "string",
+      privateChatLevel: model.privateChatLevel, // "string",
+      worldChatLevel: model.worldChatLevel, // "string",
+      ceateJuntoLevel: model.ceateJuntoLevel, // "string",
+      ceateJuntoCost: model.ceateJuntoCost, // "string",
+      isInviteJunto: model.isInviteJunto, // true,
+      isPostInviteJunto: model.isPostInviteJunto, // true
+    },
+  }),
 }
