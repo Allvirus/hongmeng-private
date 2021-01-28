@@ -155,20 +155,19 @@
             clearable
           )
         el-form-item(:label='OS.isPc ? "apk:" : ""')
-          el-upload(
-            displayType='button',
-            :isPicture='false',
-            :onChange='onApkChanged'
-          )
-            .ff-rn.ai-center
-              el-button.el-icon-folder-opened 上传APK
-              span.mgl2 {{ apkName }}
-        el-form-item(:label='OS.isPc ? "下载地址:" : ""', prop='downloadUrl')
           el-input.winput(
+            placeholder='上传apk',
             v-model='gameInfo.downloadUrl',
-            placeholder='请输入下载地址',
             clearable
           )
+            template(slot='append')
+              el-upload(
+                displayType='button',
+                :isPicture='false',
+                :onChange='onApkChanged'
+              )
+                el-button
+                  i.el-icon-folder-opened
         el-form-item(:label='OS.isPc ? "游戏图标:" : ""', prop='gamePicUrl')
           el-upload(
             action='true',
@@ -234,7 +233,6 @@ export default {
     return {
       listApiForMixin: 'getGameChannel',
       previewLogo: '',
-      apkName: '',
       paramsList: {
         operators: [],
         gameTypes: [],
@@ -263,6 +261,7 @@ export default {
         ceateJuntoCost: '', // "string",
         isInviteJunto: true, // true,
         isPostInviteJunto: true, // true
+        apkName: '',
       },
       rules: {
         gameName: [EUIRule('required', '游戏名称')],
@@ -302,7 +301,8 @@ export default {
     onApkChanged (file) {
       this.$api.uploadApi(file, '', { url: 'api/common/file/apk', key: 'file' }).then(data => {
         this.$vgo.tip('apk上传成功!', 'success')
-        this.apkName = file.name
+        this.gameInfo.apkName = file.name
+        console.log('gameInfo.apkName', this.gameInfo.apkName, file)
         this.gameInfo.downloadUrl = $globalconfig.API + data.fileName
       })
     },
@@ -321,10 +321,11 @@ export default {
       if (row) {
         Object.assign(this.gameInfo, row)
         this.previewLogo = $globalconfig.API + row.gamePicUrl
+        console.log(row)
       } else {
         this.gameInfo = JSON.parse(JSON.stringify(this.gameInfoBak))
         this.previewLogo = ''
-        this.apkName = ''
+        this.gameInfo.apkName = ''
       }
       this.gameInfo.isEdit = row !== null
       this.gameInfo.isShow = true
