@@ -79,9 +79,9 @@
         :key='idx'
       )
 
-  .ff-rn.mgt2(v-if='!OS.isPc')
-    .ff-cn.bg-white.w100(v-for='(item, key, idx) in panelList')
-      p.mgt2.jc-center {{ item.title }}
+  .ff-rn.mgt2.w100p.jc-around.bg-white(v-if='!OS.isPc')
+    .ff-cn(v-for='(item, key, idx) in panelList')
+      p.mgt2.jc-center.omit {{ item.title }}
       h3.jc-center.mgy2.warning {{ item.value }}
 
   //- 图表
