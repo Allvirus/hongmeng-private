@@ -143,6 +143,12 @@ export default {
         rows: [],
       },
       panelList: {
+        registerCount: {
+          title: '注册数',
+          value: 0,
+          increase: true,
+          rate: 0,
+        },
         newRoles: {
           title: '创角数',
           value: 0,
@@ -196,24 +202,6 @@ export default {
     this.search()
   },
   methods: {
-    handleData (data, key, range) {
-      // 排序
-      this.$utils.sort(data, key, false)
-
-      // 插入数据
-      const fullList = this.insertData(data, key, range)
-      // 把数据转换成图表需要的格式
-      this.fillVChartData(fullList)
-
-      // 表格数据
-      this.dataList = data
-      for (const item of this.dataList) {
-        item.xText = this.formatXaxis(item)
-      }
-
-      // 计算创角数...
-      this.sum()
-    },
     insertData (data, key, range) {
       const fullList = []
       // 把xxxKey的值作为数组的索引
@@ -366,12 +354,12 @@ export default {
           }
           this.$api[method](params).then(data => {
             const tmp1 = []
-            for (const item of data.createUser) {
+            for (const item of data.data.createUser) {
               tmp1[item.hourKey] = item
             }
 
             const tmp2 = []
-            for (const item of data.rechageUser) {
+            for (const item of data.data.rechageUser) {
               tmp2[item.hourKey] = item
             }
             const postData = []
@@ -391,7 +379,11 @@ export default {
                 postData.push(item)
               }
             }
-            this.handleData(postData, 'hourKey', 24)
+            const obj = {
+              data: postData,
+              registerCount: data.registerCount,
+            }
+            this.handleData(obj, 'hourKey', 24)
           })
           break
         case '本周':
@@ -427,6 +419,26 @@ export default {
         default:
           break
       }
+    },
+    handleData (res, key, range) {
+      const data = res.data
+      // 排序
+      this.$utils.sort(data, key, false)
+
+      // 插入数据
+      const fullList = this.insertData(data, key, range)
+      // 把数据转换成图表需要的格式
+      this.fillVChartData(fullList)
+
+      // 表格数据
+      this.dataList = data
+      for (const item of this.dataList) {
+        item.xText = this.formatXaxis(item)
+      }
+
+      // 计算创角数...
+      this.sum()
+      this.panelList.registerCount.value = res.registerCount
     },
     onDepartChange (dptInfo) {
       this.model.dtpId = dptInfo.id

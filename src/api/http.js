@@ -27,6 +27,9 @@ export const http = (method, url, config = {}) => {
   if (loading) vgo.openLoading()
 
   return axiosInstance(Object.assign(config, { method, url })).then(({ data }) => {
+    if (+data.code === 200 && 'registerCount' in data) {
+      return data
+    }
     if (+data.code === 200 || +data.code === 100) {
       return data.data ? data.data : data
     } else if (!('code' in data)) {
