@@ -75,6 +75,7 @@
 
   el-table.mgy2.bg-white.pd2(:data='listMixin.list')
     el-table-column(prop='userAccount', label='玩家账号')
+    el-table-column(prop='userCode', label='玩家代码')
     el-table-column(prop='account', label='推广员账户')
     el-table-column(prop='gameName', label='游戏名称')
     el-table-column(prop='areaName', label='区服')

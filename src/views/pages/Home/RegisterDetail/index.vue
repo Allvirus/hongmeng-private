@@ -60,7 +60,8 @@
     ) 搜索我的数据
 
   el-table.mgy2.bg-white.pd2(:data='listMixin.list')
-    el-table-column(prop='userAccount', label='玩家账号')
+    el-table-column(prop='userAccount', label='玩家账号', width='130')
+    el-table-column(prop='userCode', label='玩家代码')
     el-table-column(prop='account', label='推广员账户', width='100px')
     el-table-column(prop='deviceNo', label='设备号', width='300px')
     el-table-column(prop='osType', label='平台', width='100px')

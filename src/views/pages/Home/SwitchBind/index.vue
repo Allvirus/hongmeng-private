@@ -23,6 +23,7 @@
 
   el-table.mgy2.bg-white.pd2(:data='listMixin.list')
     el-table-column(prop='userAccount', label='玩家账号')
+    el-table-column(prop='userCode', label='玩家代码')
     el-table-column(prop='aJob', label='A岗(换绑前)')
     el-table-column(prop='bJob', label='B岗(换绑前)')
     el-table-column(prop='cJob', label='C岗(换绑前)')
@@ -45,9 +46,9 @@
     width='600px'
   )
     el-form(label-width='100px')
-      el-form-item(label='玩家账号:', required)
+      el-form-item(label='玩家代码:', required)
         el-input(
-          v-model='swBindParams.userAccount',
+          v-model='swBindParams.userCode',
           @change='onUserAccountChange',
           placeholder='请输入玩家账号',
           clearable
@@ -116,7 +117,7 @@ export default {
         PageSize: 10,
       },
       swBindParams: {
-        userAccount: '',
+        userCode: '',
         aJobId: '',
         aJob: '',
         bJobId: '',
@@ -166,17 +167,19 @@ export default {
       })
     },
     onUserAccountChange (value) {
-      this.$api.getOriginBind(value).then(data => {
-        this.swBindParams.userAccount = data.userAccount
-        this.swBindParams.aJob = data.aJob
-        this.swBindParams.aJobId = data.aJobId
+      if (value) {
+        this.$api.getOriginBind(value).then(data => {
+          this.swBindParams.userCode = data.userCode
+          this.swBindParams.aJob = data.aJob
+          this.swBindParams.aJobId = data.aJobId
 
-        this.swBindParams.bJob = data.bJob
-        this.swBindParams.bJobId = data.bJobId
+          this.swBindParams.bJob = data.bJob
+          this.swBindParams.bJobId = data.bJobId
 
-        this.swBindParams.cJob = data.cJob
-        this.swBindParams.cJobId = data.cJobId
-      })
+          this.swBindParams.cJob = data.cJob
+          this.swBindParams.cJobId = data.cJobId
+        })
+      }
     },
   },
 }

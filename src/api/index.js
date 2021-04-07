@@ -816,11 +816,11 @@ export default {
   // 45 根据Id玩家换绑记录接口
   getBCRecById: (id) => http('get', `/api/playerswitch/${id}`),
   // 46.按玩家账号模糊查询相关abc岗人员Id信息
-  getOriginBind: (useraccount) => http('get', `/api/playerswitch/useraccount/${useraccount}`),
+  getOriginBind: (usercode) => http('get', `/api/playerswitch/usercode/${usercode}`),
   // 47.创建玩家换绑记录接口
   switchBind: (model) => http('post', '/api/playerswitch/', {
     data: {
-      userAccount: model.userAccount,
+      userCode: model.userCode,
       aJobId: model.aJobId,
       aJob: model.aJob,
       bJobId: model.bJobId,
