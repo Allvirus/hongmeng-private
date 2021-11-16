@@ -57,6 +57,7 @@
         el-table-column(prop='job', label='岗位', sortable)
           template(slot-scope='{ row }') {{ row.job | formatJob }}
         el-table-column(prop='experiences', label='经验值')
+        el-table-column(prop='account', label='推广账号')
         el-table-column(prop='workingStatus', label='在职状态')
           template(slot-scope='{ row }')
             .ff-rn.danger(v-if='!row.workingStatus')

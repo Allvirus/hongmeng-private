@@ -30,8 +30,10 @@
     el-table-column(prop='aJobAfter', label='A岗(换绑后)')
     el-table-column(prop='bJobAfter', label='B岗(换绑后)')
     el-table-column(prop='cJobAfter', label='C岗(换绑后)')
-    el-table-column(prop='switchTime', label='换绑时间')
+    el-table-column(prop='switchTime', label='创建时间' width="150px")
       template(slot-scope='{ row }') {{ row.switchTime | dateFormat }}
+    el-table-column(prop='targetTime', label='换绑时间' width="160px")
+      template(slot-scope='{ row }') {{ row.targetTime | dateFormat }}
   el-pagination.margin-spacing(
     :total='listMixin.count',
     :page-size.sync='model.PageSize',
@@ -98,6 +100,8 @@
             :label='item.realName',
             :value='item.id'
           )
+      el-form-item(label='换绑时间', required)
+        el-date-picker(type="datetime" placeholder="选择日期时间" :end-placeholde="swBindParams.targetTime"  v-model="swBindParams.targetTime" :picker-options="pickerOptions")
     span.dialog-footer(slot='footer')
       el-button.mgl3(type='warning', @click='cancelBind') 取消
       el-button.mgl3(type='primary', @click='commitSwBind') 提交
@@ -127,10 +131,16 @@ export default {
         aJobIdAfter: '',
         bJobIdAfter: '',
         cJobIdAfter: '',
+        targetTime: '',
       },
       userList: [],
       swBindDlg: false,
       originBind: {},
+      pickerOptions: {
+        disabledDate (time) {
+          return time.getTime() > Date.now() - 8.64e6
+        },
+      },
     }
   },
   created () {
@@ -178,10 +188,18 @@ export default {
 
           this.swBindParams.cJob = data.cJob
           this.swBindParams.cJobId = data.cJobId
+
+          this.swBindParams.targetTime = new Date()
         })
       }
     },
   },
 }
 </script>
-<style lang='stylus' scoped></style>
+<style lang='stylus'>
+.el-picker-panel__body
+  .el-date-picker__editor-wrap
+      width 140px !important
+      .el-input--small
+        width 140px !important
+</style>

@@ -35,6 +35,17 @@ export default [
             },
             component: () => import('@/views/pages/Home/MyAchievement'),
           },
+          // {
+          //   path: 'TotalKpi',
+          //   name: 'HomeTotalKpi',
+          //   meta: {
+          //     title: '总的业绩',
+          //     icsel: require('@/assets/img/ic_total_kpi_sel.png'),
+          //     icdef: require('@/assets/img/ic_total_kpi_def.png'),
+          //     onlyPcMode: true,
+          //   },
+          //   component: () => import('@/views/pages/Home/TotalKpi'),
+          // },
           {
             path: 'MyLevel',
             name: 'HomeMyLevel',
@@ -94,12 +105,23 @@ export default [
             path: 'RechargePlayer',
             name: 'HomeRechargePlayer',
             meta: {
-              title: '充值玩家',
+              title: '玩家充值排行榜',
               icsel: require('@/assets/img/ic_rech_sel.png'),
               icdef: require('@/assets/img/ic_rech_def.png'),
               onlyPcMode: true,
             },
             component: () => import('@/views/pages/Home/RechargePlayer'),
+          },
+          {
+            path: 'Register',
+            name: 'HomeRegister',
+            meta: {
+              title: '玩家社交账号登记',
+              icsel: require('@/assets/img/ic_register_sel.png'),
+              icdef: require('@/assets/img/ic_register_def.png'),
+              onlyPcMode: true,
+            },
+            component: () => import('@/views/pages/Home/Register'),
           },
           {
             path: 'BizConfig',
@@ -111,6 +133,17 @@ export default [
               onlyPcMode: true,
             },
             component: () => import('@/views/pages/Home/BizConfig'),
+          },
+          {
+            path: 'FixedPost',
+            name: 'HomeFixedPost',
+            meta: {
+              title: '每日定岗',
+              icsel: require('@/assets/img/ic_setting_sel.png'),
+              icdef: require('@/assets/img/ic_setting_def.png'),
+              onlyPcMode: true,
+            },
+            component: () => import('@/views/pages/Home/FixedPost'),
           },
           {
             path: 'SwitchBind',
@@ -133,6 +166,17 @@ export default [
               onlyPcMode: true,
             },
             component: () => import('@/views/pages/Home/LevelManage'),
+          },
+          {
+            path: 'Update',
+            name: 'HomeUpdate',
+            meta: {
+              title: '升级记录',
+              icsel: require('@/assets/img/ic_update_sel.png'),
+              icdef: require('@/assets/img/ic_update_def.png'),
+              onlyPcMode: true,
+            },
+            component: () => import('@/views/pages/Home/Update'),
           },
           {
             path: 'Department',

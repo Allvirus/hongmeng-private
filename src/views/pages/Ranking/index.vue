@@ -28,19 +28,19 @@
         :toFixed='true',
         rankingKey='totlaMoney'
       )
+      //- ranking-list(
+      //-   :data='rankList.ajobRegRank',
+      //-   mainTitle='A岗注册创角排行榜',
+      //-   subTitle='注册人数',
+      //-   theme='orange',
+      //-   rankingKey='count'
+      //- )
       ranking-list(
-        :data='rankList.ajobRegRank',
-        mainTitle='A岗注册创角排行榜',
-        subTitle='注册人数',
-        theme='orange',
-        rankingKey='count'
-      )
-      ranking-list(
-        :data='rankList.bjobRegRank',
-        mainTitle='B岗注册创角排行榜',
-        subTitle='注册人数',
+        :data='rankList.bjobMoneyRank',
+        mainTitle='B岗充值排行榜',
+        subTitle='充值金额(元)',
         theme='green',
-        rankingKey='count'
+        rankingKey='totlaMoney'
       )
       ranking-list(
         :data='rankList.cjobMoneyRank',

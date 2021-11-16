@@ -830,6 +830,7 @@ export default {
       aJobIdAfter: model.aJobIdAfter,
       bJobIdAfter: model.bJobIdAfter,
       cJobIdAfter: model.cJobIdAfter,
+      targetTime: new Date(+new Date(model.targetTime) + 8 * 3600 * 1000),
     },
   }),
   // 48.删除玩家换绑记录接口
@@ -955,6 +956,92 @@ export default {
       ceateJuntoCost: model.ceateJuntoCost, // "string",
       isInviteJunto: model.isInviteJunto, // true,
       isPostInviteJunto: model.isPostInviteJunto, // true
+    },
+  }),
+
+  // 62. 玩家社交账号登记
+  accountRegistration: (model) => http('Post', '/api/playreg/', {
+    data: model,
+  }),
+
+  // 63. 获取登记列表
+  getRegistrationList: (model) => http('get', '/api/playreg/', {
+    params: (() => {
+      const p = {
+        Isblock: model.Isblock,
+        Page: model.Page,
+        PageSize: model.PageSize,
+        startTime: model.startTime,
+        endTime: model.endTime,
+      }
+      utils.filterNull(p)
+      return p
+    })(),
+  }),
+
+  // 64. 获取等级升级列表
+  getUpdateList: (model) => http('get', 'api/level/levelupgrade', {
+    params: (() => {
+      const p = {
+        resDepId: model.resDepId,
+        userId: model.userId,
+        startTime: model.startTime,
+        endTime: model.endTime,
+        Page: model.page,
+        PageSize: model.pageSize,
+      }
+      utils.filterNull(p)
+      return p
+    })(),
+  }),
+
+  // 65.获取业务配置分页信息
+  getBusinessConfiguration: (model) => http('get', '/api/bizconf', {
+    params: (() => {
+      const p = {
+        aUserId: model.aUserId,
+        bUserId: model.bUserId,
+        cUserId: model.cUserId,
+        startTime: model.startTime,
+        endTime: model.endTime,
+        Page: model.page,
+        PageSize: model.pageSize,
+      }
+      utils.filterNull(p)
+      return p
+    })(),
+  }),
+
+  // 66. 通过业务配置 Id 查询单个业务配置
+  useIDConfigureBusiness: (bizId) => http('get', `/api/bizconf/${bizId}`),
+
+  // 67. 批量创建业务配置
+  batchToCreateBusiness: (module) => http('post', '/api/bizconf/bluk', {
+    data: {
+      startTime: module.startTime,
+      endTime: module.endTime,
+      aUserIds: module.aUserId, // A岗用户多选
+      bUserId: module.bUserId,
+      bUserName: module.bUserName,
+      cUserId: module.cUserId,
+      cUserName: module.cUserName,
+    },
+  }),
+
+  // 68. 根据业务配置 Id 删除业务配置
+  deleteBusinessionsById: (bizId) => http('delete', `/api/bizconf/${bizId}`),
+
+  // 69. 根据业务配置 Id 和实体全更新
+  modifiedBusinessById: (module) => http('put', `/api/bizconf/${module.id}`, {
+    data: {
+      startTime: module.startTime,
+      endTime: module.endTime,
+      aUserId: module.aUserId,
+      aUserName: module.aUserName,
+      bUserId: module.bUserId,
+      bUserName: module.bUserName,
+      cUserId: module.cUserId,
+      cUserName: module.cUserName,
     },
   }),
 }
