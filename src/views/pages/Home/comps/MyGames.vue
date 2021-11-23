@@ -25,8 +25,8 @@
     )
       img.game-icon.mgl2(:src='conbineUrl(item)')
       .name.mgl2.ff-cn
-        p.mgb1 {{ item.gameContent.name }}
-        span {{ item.userName }}
+        p(:title="item.gameContent.name").mgb1 {{ item.gameContent.name }}
+        span(:title="item.userName") {{ item.userName }}
       .ff-cn.flex-1.ai-end.mgr2
         el-popover(placement='left', width='200', trigger='hover')
           template
@@ -249,6 +249,12 @@ export default {
 .MyGames
   height 650px
   .item
+    .name
+      width 65px
+      p,span
+       overflow:hidden
+       text-overflow:ellipsis
+       white-space:nowrap
     .game-icon
       width 50px
       height 50px

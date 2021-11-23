@@ -1018,8 +1018,8 @@ export default {
   // 67. 批量创建业务配置
   batchToCreateBusiness: (module) => http('post', '/api/bizconf/bluk', {
     data: {
-      startTime: module.startTime,
-      endTime: module.endTime,
+      bindStartTime: module.startTime,
+      bindEndTime: module.endTime,
       aUserIds: module.aUserId, // A岗用户多选
       bUserId: module.bUserId,
       bUserName: module.bUserName,
@@ -1034,14 +1034,38 @@ export default {
   // 69. 根据业务配置 Id 和实体全更新
   modifiedBusinessById: (module) => http('put', `/api/bizconf/${module.id}`, {
     data: {
-      startTime: module.startTime,
-      endTime: module.endTime,
-      aUserId: module.aUserId,
-      aUserName: module.aUserName,
       bUserId: module.bUserId,
       bUserName: module.bUserName,
       cUserId: module.cUserId,
       cUserName: module.cUserName,
     },
   }),
+
+  // 70. 获取账号关联分页信息
+  getAccountAssociatData: (module) => http('get', '/api/userbind', {
+    params: (() => {
+      const p = {
+        UserId: module.userId,
+        Account: module.Account,
+        Page: module.page,
+        PageSize: module.pageSize,
+      }
+      utils.filterNull(p)
+      return p
+    })(),
+  }),
+
+  // 71. 根据账号关联 Id 删除
+  byIDDeleteAccountAssociat: (id) => http('delete', `/api/userbind/${id}`),
+
+  // 72. 创建账号关联
+  createAssociatedUser: (module) => http('post', '/api/userbind', {
+    data: module,
+  }),
+
+  // 73. 修改公告
+  modifyNotice: (noticeString) => http('post', `/api/Notice?noticeString=${noticeString}`),
+
+  // 74. 获取在职用户信息
+  getWorking: () => http('get', 'api/user/working'),
 }

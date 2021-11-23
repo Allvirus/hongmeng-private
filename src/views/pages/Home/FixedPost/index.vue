@@ -10,18 +10,19 @@
         el-button(icon="el-icon-plus" type="primary" @click="showEditDlg(false,null)") 新增配置
 
     el-table.mgy2.bg-white.pd2(:data='configList' :row-class-name="({ row }) => row.is_payout ? 'danger' : ''")
-      el-table-column(prop="aUserName" label="A岗")
-      el-table-column(prop="bUserName" label="B岗")
-      el-table-column(prop="cUserName" label="C岗")
-      el-table-column(prop="startTime" label="开始时间")
+      el-table-column(prop="aUserName" label="A岗" width='130')
+      el-table-column(prop="bUserName" label="B岗" width='130')
+      el-table-column(prop="cUserName" label="C岗" width='130')
+      el-table-column(prop="startTime" label="开始时间" width='170')
         template(slot-scope="{ row }") {{row.startTime | dateFormat}}
-      el-table-column(prop="endTime" label="结束时间")
+      el-table-column(prop="endTime" label="结束时间" width='170')
         template(slot-scope="{ row }") {{row.endTime | dateFormat}}
+      el-table-column(prop="endTime" label="绑定时间" width='170')
+        template(slot-scope="{ row }") {{row.bindTime | dateFormat}}
       el-table-column(prop="operate" label="操作")
         template(slot-scope="{ row }")
-          .ff-rn
-            el-button.mgl3(icon="el-icon-edit-outline" type="text" @click="showEditDlg(true,row)") 编辑
-            el-button.mgl3.danger(icon="el-icon-delete" type="text" @click="deleteCfg(row)") 删除
+            el-button.mgl2(icon="el-icon-edit-outline" type="text" @click="showEditDlg(true,row)") 编辑
+            el-button.mgl2.danger(icon="el-icon-delete" type="text" @click="deleteCfg(row)") 删除
 
     el-pagination.margin-spacing(
       :total="count"
@@ -38,6 +39,7 @@
           el-form-item(label="A岗:" required)
             el-select.mgl1(v-model="cfgInfo.row.aUserId"
               filterable
+              :disabled="cfgInfo.isEdit"
               :multiple='!cfgInfo.isEdit'
               @change="onAJobChange"
               placeholder="请选择")
@@ -63,7 +65,7 @@
               :key="item.id"
               :label="item.realName"
               :value="item.id")
-          el-form-item(label="时间:" required)
+          el-form-item(label="时间:" required v-if="!cfgInfo.isEdit")
             CommonDatePicker.mgl1(:start.sync='cfgInfo.row.startTime'
               :end.sync='cfgInfo.row.endTime' type='datetimerange' all)
       span.dialog-footer(slot="footer")
@@ -136,15 +138,9 @@ export default {
     },
     loadOptions () {
       // 获取部门列表数据
-      this.$api.getAJobsUserList().then(res => {
+      this.$api.getWorking().then(res => {
         this.cfgInfo.AUserList = res
-      })
-
-      this.$api.getBJobs().then(res => {
         this.cfgInfo.BUserList = res
-      })
-
-      this.$api.getCJobs().then(res => {
         this.cfgInfo.CUserList = res
       })
     },
@@ -212,7 +208,7 @@ export default {
     submmitEdit () {
       const params = this.cfgInfo.row
       if (!this.checkFormData(this.cfgInfo.row)) {
-        return
+        return false
       }
 
       if (this.cfgInfo.isEdit) {

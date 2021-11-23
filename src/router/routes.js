@@ -105,7 +105,7 @@ export default [
             path: 'RechargePlayer',
             name: 'HomeRechargePlayer',
             meta: {
-              title: '玩家充值排行榜',
+              title: '充值排行榜',
               icsel: require('@/assets/img/ic_rech_sel.png'),
               icdef: require('@/assets/img/ic_rech_def.png'),
               onlyPcMode: true,
@@ -116,24 +116,24 @@ export default [
             path: 'Register',
             name: 'HomeRegister',
             meta: {
-              title: '玩家社交账号登记',
+              title: '社交账号登记',
               icsel: require('@/assets/img/ic_register_sel.png'),
               icdef: require('@/assets/img/ic_register_def.png'),
               onlyPcMode: true,
             },
             component: () => import('@/views/pages/Home/Register'),
           },
-          {
-            path: 'BizConfig',
-            name: 'HomeBizConfig',
-            meta: {
-              title: '业务配置',
-              icsel: require('@/assets/img/ic_setting_sel.png'),
-              icdef: require('@/assets/img/ic_setting_def.png'),
-              onlyPcMode: true,
-            },
-            component: () => import('@/views/pages/Home/BizConfig'),
-          },
+          // {
+          //   path: 'BizConfig',
+          //   name: 'HomeBizConfig',
+          //   meta: {
+          //     title: '业务配置',
+          //     icsel: require('@/assets/img/ic_setting_sel.png'),
+          //     icdef: require('@/assets/img/ic_setting_def.png'),
+          //     onlyPcMode: true,
+          //   },
+          //   component: () => import('@/views/pages/Home/BizConfig'),
+          // },
           {
             path: 'FixedPost',
             name: 'HomeFixedPost',
@@ -177,6 +177,17 @@ export default [
               onlyPcMode: true,
             },
             component: () => import('@/views/pages/Home/Update'),
+          },
+          {
+            path: 'AssociatedAccount',
+            name: 'HomeAssociatedAccount',
+            meta: {
+              title: '账号关联',
+              icsel: require('@/assets/img/ic_associat_sel.png'),
+              icdef: require('@/assets/img/ic_associat_def.png'),
+              onlyPcMode: true,
+            },
+            component: () => import('@/views/pages/Home/AssociatedAccount'),
           },
           {
             path: 'Department',

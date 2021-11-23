@@ -98,11 +98,26 @@
       span.dialog-footer(slot='footer')
         el-button.mgl3(type='warning', @click='cancelPswdEdit') 取消
         el-button.mgl3(type='primary', @click='submitPswd') 提交
+
+  // 修改公告
+  el-dialog(
+    title="公告"
+    :visible.sync="dialogVisible"
+    width="30%")
+    .notice
+      .content(:class='isModifyNotice ? "isShow" : ""') {{ dptNotices }}
+      .input(:class='isModifyNotice ? "" : "isShow"')
+        span 请输入新公告：
+        el-input.mgl2(v-model='noticeString')
+      el-button(type='warning' size="mini" @click="isModifyNotice = true") 修改公告
+    span(span slot="footer" class="dialog-footer")
+      el-button(@click="cancelChange") 取消
+      el-button(type="primary" @click="modifyNotice") 确定
 </template>
 <script>
 import { mapGetters } from 'vuex'
 import { EUIRule } from '@/plugins/utils'
-import { MessageBox } from 'element-ui'
+// import { MessageBox } from 'element-ui'
 export default {
   name: 'TopBar',
   components: {
@@ -123,10 +138,13 @@ export default {
             trigger: 'blur',
           }],
       },
+      dialogVisible: false,
       activeTab: 'HomeMyAchievement',
       lastTab: 'HomeMyAchievement',
       noticeList: [],
       dptNotices: '',
+      isModifyNotice: false,
+      noticeString: '',
       editPswdDlg: false,
       model: {
         oldpswd: '',
@@ -164,7 +182,11 @@ export default {
       })
 
       this.$api.getNotices().then(data => {
-        this.dptNotices = data
+        if (typeof data !== 'string') {
+          this.dptNotices = '暂无公告'
+        } else {
+          this.dptNotices = data
+        }
       })
     },
     onUploaded (fileUrl) {
@@ -196,11 +218,28 @@ export default {
       }
     },
     showDptNotice () {
-      MessageBox.confirm(this.dptNotices, '公告', {
-        confirmButtonText: '确定',
-        type: 'info',
-        showCancelButton: false,
+      this.dialogVisible = true
+      this.noticeString = this.dptNotices
+    },
+    // 确认修改公告
+    modifyNotice () {
+      if (this.noticeString === '') {
+        return this.$vgo.tip('请输入公告内容', 'warn')
+      }
+      this.$api.modifyNotice(this.noticeString).then(res => {
+        console.log(res)
+        this.$vgo.tip('修改成功', 'success')
+        this.noticeString = ''
+        this.dialogVisible = false
+        this.isModifyNotice = false
+        this.getNotice()
       })
+    },
+    // 取消修改
+    cancelChange () {
+      this.noticeString = ''
+      this.dialogVisible = false
+      this.isModifyNotice = false
     },
   },
 }
@@ -253,4 +292,12 @@ export default {
   .logo
     width 100px
     height 26px
+
+.notice
+  display flex
+  align-items center
+  justify-content: space-between
+
+.isShow
+  display none
 </style>

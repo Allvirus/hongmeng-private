@@ -31,9 +31,8 @@
 
     el-table.mgy2.bg-white.pd2(:data='listMixin.list')
       el-table-column(prop="deparmentName" label="部门")
-      el-table-column(prop="levelName" label="等级")
-      el-table-column(prop="cUserName" label="C岗")
       el-table-column(prop="memberName" label="推广员")
+      el-table-column(prop="levelName" label="等级")
       el-table-column(prop="upgradeDate" label="升级时间")
         template(slot-scope="{ row }") {{row.upgradeDate | dateFormat}}
 
@@ -65,8 +64,6 @@ export default {
   },
   computed: {
     ...mapGetters(['myDptList', 'userInfo']),
-  },
-  created () {
   },
   methods: {
     searchCfg () {
