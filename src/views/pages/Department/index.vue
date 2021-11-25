@@ -60,10 +60,12 @@
         el-table-column(prop='account', label='推广账号')
         el-table-column(prop='workingStatus', label='在职状态')
           template(slot-scope='{ row }')
-            .ff-rn.danger(v-if='!row.workingStatus')
-              span 已离职
-            .ff-rn(v-else)
+            .ff-rn(v-if='row.workingStatus === 1')
               span 在职
+            .ff-rn.danger(v-else-if="row.workingStatus === 2")
+              span 已离职
+            .ff-rn.danger(v-else)
+              span 已离职3个月
         el-table-column(prop='userStatus', label='锁定状态')
           template(slot-scope='{ row }')
             .ff-rn.danger(v-if='!row.lockoutEnabled')
@@ -185,11 +187,8 @@ export default {
         this.User.userList = data
 
         // 计算部门人数
-        if (!this.hasCalCount) {
-          this.hasCalCount = true
-          this.caclDptUserCnt()
-          this.updatePath()
-        }
+        this.caclDptUserCnt()
+        this.updatePath()
       })
     },
     caclDptUserCnt () {
@@ -220,9 +219,13 @@ export default {
           node.userCount += child.userCount
         }
       }
-
+      const regex = /([0-9])/
+      if (regex.test(node.name)) {
+        node.name = node.name.split('(')[0]
+      }
       node.pathname = JSON.parse(JSON.stringify(node.name))
       node.name += `(${node.userCount}人)`
+      // console.log(node.name)
     },
     handleNodeClick (data) {
       this.Tree.curTreeNode = data
@@ -337,6 +340,17 @@ export default {
         }
       }
       return false
+    },
+    // 清除人数
+    clearUserCount (node) {
+      if (node.departments.length > 0) {
+        for (const child of node.departments) {
+          this.clearUserCount(child)
+          node.userCount = 0
+        }
+      }
+      node.pathname = JSON.parse(JSON.stringify(node.name))
+      node.name += `(${node.userCount}人)`
     },
   },
 }

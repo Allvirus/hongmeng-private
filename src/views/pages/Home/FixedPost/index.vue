@@ -2,6 +2,19 @@
   .BizConfig
     .ff-rn.fs-m.bg-white.pd2.opt-bar
       el-form.ff-rn(label-width="100px")
+        el-form-item(label='员工:', v-if='userInfo.isLeader')
+          el-select.winput(
+            v-model='model.userId',
+            placeholder='请选择',
+            clearable,
+            filterable
+          )
+            el-option(
+              v-for='item in userList',
+              :key='item.id',
+              :label='item.realName',
+              :value='item.id'
+            )
         el-form-item(label="注册时间:")
           CommonDatePicker.w300(:start.sync='model.startTime' :end.sync='model.endTime' all)
           el-button.mgl3(icon="el-icon-search" type="primary" @click="searchCfg") 搜索
@@ -75,8 +88,11 @@
 </template>
 <script>
 import { mapGetters } from 'vuex'
+// import fetchListMixin from '@/mixins/fetchListMixin'
+import dptListMixin from '@/mixins/dptListMixin'
 export default {
   name: 'BizConfig',
+  mixins: [dptListMixin],
   data () {
     return {
       model: {
@@ -85,8 +101,7 @@ export default {
         startTime: '',
         endTime: '',
         departmentId: 0,
-        bUserId: 0,
-        cUserId: 0,
+        userId: '',
       },
       delDlgVisiable: false,
       editDlgVisiable: false,
@@ -114,7 +129,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['myDptList']),
+    ...mapGetters(['myDptList', 'userInfo']),
   },
   created: function () {
     this.loadOptions()
@@ -134,6 +149,7 @@ export default {
     reset () {
       this.model.startTime = ''
       this.model.endTime = ''
+      this.model.userId = ''
       this.getCfgList()
     },
     loadOptions () {

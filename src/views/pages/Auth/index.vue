@@ -2,11 +2,12 @@
   div
     div(style='position: fixed;top: 0px;left: 0;bottom: 0;right: 0;')
       img(
-        style='object-fit:cover; position: absolute;top: 50%;left: 50%;transform: translate(-50%,-50%);height: 100%; min-width: 100%',
+        style='object-fit:cover; position: absolute;top: 50%;left: 50%;transform: translate(-50%,-50%);height: 70%; min-width: 100%',
         :src='isPc ? pcBg : mobileBg'
       )
       .auth-layout
         .form-layout.page-content.border-radius
+          img(:src="logoTitle" class="logo-title")
           h2.tac(:class="isPc?'mgy5':'mgy3'") 用户登录
           component(:is='$route.name', ref='form')
 
@@ -24,11 +25,12 @@ export default {
     return {
       pcBg: require('@/assets/img/login_bg.jpg'),
       mobileBg: require('@/assets/img/mobile_login_bg.jpg'),
+      logoTitle: require('@/assets/img/login-title.png'),
       isPc: true,
     }
   },
   computed: {
-    ...mapGetters(['OS']),
+    ...mapGetters(['OS', 'myDptList', 'userInfo']),
   },
   created () {
     this.isPc = utils.UAis('pc')
@@ -89,6 +91,10 @@ header
   height 100%
   position relative
 
+  .logo-title
+    position absolute
+    top -15%
+
 .pc-mode .form-layout
   position absolute
   width 380px
@@ -96,7 +102,8 @@ header
   right 150px
   padding 15px 30px
   top 45%
-  transform translateY(-50%)
+  left 50%
+  transform translate(-50%, -50%)
 
 .mobile-mode .form-layout
   position absolute

@@ -706,6 +706,7 @@ export default {
 
   // 32.获取今天排行接口
   getRankToday: (model) => http('get', '/api/rank/today', {
+    loading: true,
     params: {
       areaName: model.areaName,
     },
@@ -713,6 +714,7 @@ export default {
 
   // 33.获取昨天排行接口
   getRankYesterday: (model) => http('get', '/api/rank/yesterday', {
+    loading: true,
     params: {
       areaName: model.areaName,
     },
@@ -720,6 +722,7 @@ export default {
 
   // 33.获取本周排行接口
   getRankWeek: (model) => http('get', '/api/rank/week', {
+    loading: true,
     params: {
       areaName: model.areaName,
     },
@@ -727,6 +730,7 @@ export default {
 
   // 34.获取上周排行接口
   getRankLastweek: (model) => http('get', '/api/rank/lastweek', {
+    loading: true,
     params: {
       areaName: model.areaName,
     },
@@ -734,6 +738,7 @@ export default {
 
   // 35.获取本月排行接口
   getRankMonth: (model) => http('get', '/api/rank/month', {
+    loading: true,
     params: {
       areaName: model.areaName,
     },
@@ -741,6 +746,7 @@ export default {
 
   // 36.获取上月排行接口
   getRankLastMonth: (model) => http('get', '/api/rank/lastmonth', {
+    loading: true,
     params: {
       areaName: model.areaName,
     },
@@ -999,9 +1005,7 @@ export default {
   getBusinessConfiguration: (model) => http('get', '/api/bizconf', {
     params: (() => {
       const p = {
-        aUserId: model.aUserId,
-        bUserId: model.bUserId,
-        cUserId: model.cUserId,
+        UserId: model.userId,
         startTime: model.startTime,
         endTime: model.endTime,
         Page: model.page,

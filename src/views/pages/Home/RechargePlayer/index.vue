@@ -106,7 +106,7 @@ export default {
       myApi: 'getRechInfo',
       model: {
         UserAccount: '',
-        startTime: this.GetDateStr(-1),
+        startTime: this.GetDateStr(0),
         endTime: this.GetDateStr(0),
         Account: '',
         GameName: '',
