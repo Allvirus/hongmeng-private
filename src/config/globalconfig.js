@@ -8,7 +8,7 @@ window.$globalconfig = {
   USER_URL: 'http://manage.vgoyun.com/',
   PANO_FILE_API: 'http://lxy.gxzlwl.com/api/common/file',
   COOKIE_NAME: 'ZhuLangUserAccount',
-  COOKIE_DOMAIN: 'gxzlwl.com',
+  COOKIE_DOMAIN: 'lxy.hmwl369.com',
 }
 $globalconfig.UPLOAD_IMAGE_PREFIX = $globalconfig.CLOUD_FILE_API + 'api/images/upload'
 $globalconfig.UPLOAD_FILE_PREFIX = $globalconfig.CLOUD_FILE_API + 'api/files/upload'
