@@ -9,8 +9,8 @@
     el-tabs(type='border-card', :stretch='true')
       el-tab-pane(label='推广游戏')
         my-games
-      el-tab-pane(label='通讯录')
-        my-contacts
+      //- el-tab-pane(label='通讯录')
+      //-   my-contacts
 </template>
 
 <script>

@@ -1072,4 +1072,54 @@ export default {
 
   // 74. 获取在职用户信息
   getWorking: () => http('get', 'api/user/working'),
+
+  // 75. 获取工资分页信息
+  getSalaryData: (module) => http('get', '/api/salary', {
+    params: (() => {
+      if (module.Month && module.Month.indexOf('-') !== -1) {
+        module.Month = module.Month.replace('-', '')
+      }
+      const p = {
+        userId: module.userId,
+        resDepId: module.resDepId,
+        Month: module.Month,
+        WorkStatus: module.WorkStatus,
+        Page: module.page,
+        PageSize: module.pageSize,
+      }
+      utils.filterNull(p)
+      return p
+    })(),
+  }),
+
+  // 76. 创建某月工资记录
+  createPayrollRecords: (module) => http('post', `/api/salary?month=${module.Month}`),
+
+  // 77 .获取所有角色
+  getRoleController: () => http('get', '/api/role'),
+
+  // 78. 获取所有菜单
+  getRoleMenu: () => http('get', '/api/role/menu'),
+
+  // 79. 创建角色
+  createRole: (module) => http('post', '/api/role', {
+    data: {
+      name: module.name,
+      menusList: module.menusList,
+    },
+  }),
+
+  // 80. 修改角色
+  updateRole: (module) => http('put', '/api/role/', {
+    data: {
+      id: module.id,
+      menusList: module.menusList,
+    },
+  }),
+
+  // 81. 删除角色
+  deleteRole: (roleId) => http('delete', `/api/role/${roleId}`),
+
+  // 82. 获取角色菜单权限
+  getRoleMenuPower: (roleId) => http('get', `api/role/${roleId}`),
 }

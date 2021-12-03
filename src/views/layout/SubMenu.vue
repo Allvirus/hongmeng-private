@@ -49,6 +49,7 @@ export default {
     ...mapGetters(['userInfo', 'OS']),
     getMenu () {
       const secRoutes = routes[0].children.filter(item => item.name === this.$route.matched[1].name)[0]
+      const userMenuList = this.userInfo.menuList
       const groupObj = {}
       secRoutes.children.map(item => {
         if (item.meta.hideMenu) return
@@ -58,8 +59,12 @@ export default {
             (item.name === 'HomeDepartment' && !this.userInfo.menu.departmentAuthority)) {
           return
         }
-        groupObj[item.meta.group] = groupObj[item.meta.group] || []
-        groupObj[item.meta.group].push(item)
+        for (let i = 0; i < userMenuList.length; i++) {
+          if (item.meta.fnId === userMenuList[i]) {
+            groupObj[item.meta.group] = groupObj[item.meta.group] || []
+            groupObj[item.meta.group].push(item)
+          }
+        }
       })
       return Object.values(groupObj)
     },

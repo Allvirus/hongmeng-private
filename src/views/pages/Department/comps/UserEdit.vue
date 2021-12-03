@@ -53,8 +53,8 @@
               :label='item.name',
               :value='item.name'
             )
-        el-form-item(label='推广员账户:', required)
-          el-input(v-model='model.account', placeholder='请输入推广员账户', clearable)
+        //- el-form-item(label='推广员账户:', required)
+        //-   el-input(v-model='model.account', placeholder='请输入推广员账户', clearable)
         el-form-item(label='在职状态:', required)
           el-switch.jc-end(
             v-model='model.workingStatus',
@@ -105,14 +105,14 @@ export default {
       model: {
         realName: '',
         phoneNumber: '',
-        account: '',
+        // account: '',
         departmentId: '',
         job: '',
         userRoles: '',
         hiredate: '',
         remark: '',
         jobNumber: '',
-        manageDepartmentId: '',
+        // manageDepartmentId: '',
         dptName: '',
         workingStatus: true,
         photo: '',
