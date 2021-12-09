@@ -25,7 +25,11 @@
             :label='item.realName',
             :value='item.id'
           )
-      el-form-item(label='员工状态:', v-if='userInfo.isLeader' label-width="100px")
+      el-form-item(
+        label='员工状态:',
+        v-if='userInfo.isLeader',
+        label-width='100px'
+      )
         el-select.winput(
           v-model='model.WorkStatus',
           placeholder='请选择',
@@ -38,49 +42,49 @@
             :label='item.status',
             :value='item.value'
           )
-      el-form-item(label='选择时间:', v-if='OS.isPc' label-width="100px")
+      el-form-item(label='选择时间:', v-if='OS.isPc', label-width='100px')
         el-date-picker(
-          v-model="model.Month"
-          type="month"
-          placeholder="选择月"
-          value-format="yyyyMM"
+          v-model='model.Month',
+          type='month',
+          placeholder='选择月',
+          value-format='yyyyMM'
         )
       el-button.mgl3.mgb3(
-          :class='OS.isPc ? "" : "mgb2"',
-          icon='el-icon-search',
-          type='primary',
-          @click='search'
-        ) 搜索
+        :class='OS.isPc ? "" : "mgb2"',
+        icon='el-icon-search',
+        type='primary',
+        @click='search'
+      ) 搜索
       el-button.mgl2.mgb3(
-          :class='OS.isPc ? "" : "mgb2"',
-          icon='el-icon-refresh-right',
-          type='primary',
-          @click='reset'
-        ) 重置
+        :class='OS.isPc ? "" : "mgb2"',
+        icon='el-icon-refresh-right',
+        type='primary',
+        @click='reset'
+      ) 重置
       el-button.mgl2.mgb3(
-          :class='OS.isPc ? "" : "mgb2"',
-          type="success",
-          @click="dialogVisible = true"
-        ) 新增
+        :class='OS.isPc ? "" : "mgb2"',
+        type='success',
+        @click='dialogVisible = true'
+      ) 新增
 
   el-table.mgy2.bg-white.pd2(:data='listMixin.list')
     el-table-column(label='月份')
       template(slot-scope='{ row }') {{ row.month }}
     el-table-column(prop='userName', label='员工')
     el-table-column(label='在职状态')
-      template(slot-scope='{ row }') {{ row.status == 1 ? '在职' : '离职' }}
+      template(slot-scope='{ row }') {{ row.status == 1 ? "在职" : "离职" }}
     el-table-column(label='月定岗')
       template(slot-scope='{ row }')
-        span(v-if="row.monthJob === 0") A岗
-        span(v-else-if="row.monthJob === 1") B岗
-        span(v-else="row.monthJob === 2") C岗
+        span(v-if='row.monthJob === 0') A岗
+        span(v-else-if='row.monthJob === 1') B岗
+        span(v-else='row.monthJob === 2') C岗
     el-table-column(prop='totalExp', label='总经验值')
     el-table-column(prop='totalSalary', label='核算工资流水')
     el-table-column(prop='levelName', label='等级')
     el-table-column(prop='commission', label='提成点')
-      template(slot-scope='{ row }') {{ row.commission + '%'}}
-    el-table-column(prop='percentAmount', label='提现金额')
-    el-table-column(label='创建时间' width="190")
+      template(slot-scope='{ row }') {{ row.commission + "%" }}
+    el-table-column(prop='percentAmount', label='提成金额')
+    el-table-column(label='创建时间', width='190')
       template(slot-scope='{ row }') {{ row.createDate | dateFormat }}
   el-pagination.margin-spacing(
     :total='listMixin.count',
@@ -91,22 +95,19 @@
     :base='!OS.isPc',
     :small='!OS.isPc'
   )
-
     // 创建某月工资记录
-  el-dialog(
-    title="创建工资记录"
-    :visible.sync="dialogVisible"
-    width="30%")
+  el-dialog(title='创建工资记录', :visible.sync='dialogVisible', width='30%')
     .box
       span.mgr3 请选择月份：
       el-date-picker(
-        v-model="createWage.Month"
-          type="month"
-          value-format="yyyy-MM"
-          placeholder="选择月")
-    span(span slot="footer" class="dialog-footer")
-      el-button(@click="cancelChange") 取消
-      el-button(type="primary" @click="confirmChange") 确定
+        v-model='createWage.Month',
+        type='month',
+        value-format='yyyy-MM',
+        placeholder='选择月'
+      )
+    span.dialog-footer(span, slot='footer')
+      el-button(@click='cancelChange') 取消
+      el-button(type='primary', @click='confirmChange') 确定
 </template>
 <script>
 import { mapGetters } from 'vuex'

@@ -16,8 +16,7 @@
       el-form-item(
         label='员工:',
         :class='OS.isPc ? "" : "mgl1"',
-        :label-width='OS.isPc ? "60px" : "100px"',
-        v-if='userInfo.menu.wechatAuthority'
+        :label-width='OS.isPc ? "60px" : "100px"'
       )
         el-select.winput(
           v-model='model.userId',
@@ -49,21 +48,12 @@
         ) 重置
         el-checkbox.mgt1(
           :class='OS.isPc ? "" : "mgb3"',
-          v-model='searchMyData',
-          v-if='userInfo.menu.wechatAuthority'
+          v-model='searchMyData'
         ) 搜索我的数据
       .flex-1.jc-end(v-if='OS.isPc')
-        el-button.mgr3(
-          type='primary',
-          v-if='userInfo.menu.wechatAuthority',
-          @click='showEdit(null, false)'
-        ) 登记
+        el-button.mgr3(type='primary', @click='showEdit(null, false)') 登记
     .flex-1.jc-end
-      el-button.mgr3.fr(
-        type='primary',
-        v-if='userInfo.menu.wechatAuthority && !OS.isPc',
-        @click='showEdit(null, false)'
-      ) 登记
+      el-button.mgr3.fr(type='primary', @click='showEdit(null, false)') 登记
   //- .bg-white
   //-   v-histogram.charts.flex-1.mgt2(:data='chartData')
   .ff-rn.mgt2(v-if='!OS.isPc')

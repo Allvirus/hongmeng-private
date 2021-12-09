@@ -57,12 +57,11 @@
         el-table-column(prop='job', label='岗位', sortable)
           template(slot-scope='{ row }') {{ row.job | formatJob }}
         el-table-column(prop='experiences', label='经验值')
-        el-table-column(prop='account', label='推广账号')
         el-table-column(prop='workingStatus', label='在职状态')
           template(slot-scope='{ row }')
             .ff-rn(v-if='row.workingStatus === 1')
               span 在职
-            .ff-rn.danger(v-else-if="row.workingStatus === 2")
+            .ff-rn.danger(v-else-if='row.workingStatus === 2')
               span 已离职
             .ff-rn.danger(v-else)
               span 已离职3个月
@@ -212,7 +211,6 @@ export default {
       } else {
         node.userCount = 0
       }
-
       if (node.departments.length > 0) {
         for (const child of node.departments) {
           this.calcChildDptUserCnt(child, map)

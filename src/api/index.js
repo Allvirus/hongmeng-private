@@ -1050,7 +1050,7 @@ export default {
     params: (() => {
       const p = {
         UserId: module.userId,
-        Account: module.Account,
+        Account: module.account,
         Page: module.page,
         PageSize: module.pageSize,
       }
@@ -1064,7 +1064,10 @@ export default {
 
   // 72. 创建账号关联
   createAssociatedUser: (module) => http('post', '/api/userbind', {
-    data: module,
+    data: {
+      UserId: module.userId,
+      Account: module.account,
+    },
   }),
 
   // 73. 修改公告

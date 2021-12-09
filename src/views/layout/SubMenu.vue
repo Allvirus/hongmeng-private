@@ -53,12 +53,12 @@ export default {
       const groupObj = {}
       secRoutes.children.map(item => {
         if (item.meta.hideMenu) return
-        if ((item.name === 'HomeBizConfig' && !this.userInfo.menu.bizConfigAuthority) ||
-            (item.name === 'HomeLevelManage' && !this.userInfo.menu.levelAuthority) ||
-            (item.name === 'HomeSwitchBind' && !this.userInfo.menu.playSwitch) ||
-            (item.name === 'HomeDepartment' && !this.userInfo.menu.departmentAuthority)) {
-          return
-        }
+        // if ((item.name === 'HomeBizConfig' && !this.userInfo.menu.bizConfigAuthority) ||
+        //     (item.name === 'HomeLevelManage' && !this.userInfo.menu.levelAuthority) ||
+        //     (item.name === 'HomeSwitchBind' && !this.userInfo.menu.playSwitch) ||
+        //     (item.name === 'HomeDepartment' && !this.userInfo.menu.departmentAuthority)) {
+        //   return
+        // }
         for (let i = 0; i < userMenuList.length; i++) {
           if (item.meta.fnId === userMenuList[i]) {
             groupObj[item.meta.group] = groupObj[item.meta.group] || []

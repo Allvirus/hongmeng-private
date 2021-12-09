@@ -5,8 +5,7 @@
       el-button(
         icon='el-icon-plus',
         type='primary',
-        @click='dlgVisiable = true',
-        v-if='userInfo.menu.myGameAuthority'
+        @click='dlgVisiable = true'
       ) 添加
     .dtp-tree.mgt2
       tree-selector(
@@ -25,8 +24,8 @@
     )
       img.game-icon.mgl2(:src='conbineUrl(item)')
       .name.mgl2.ff-cn
-        p(:title="item.gameContent.name").mgb1 {{ item.gameContent.name }}
-        span(:title="item.userName") {{ item.userName }}
+        p.mgb1(:title='item.gameContent.name') {{ item.gameContent.name }}
+        span(:title='item.userName') {{ item.userName }}
       .ff-cn.flex-1.ai-end.mgr2
         el-popover(placement='left', width='200', trigger='hover')
           template
@@ -42,7 +41,6 @@
         el-button.flex-center.mgl4.mgt1(
           type='danger',
           round,
-          v-if='userInfo.menu.myGameAuthority',
           @click='delGame(item)'
         ) 删除
     span.jc-center.mgt2(v-if='myGameList.list && myGameList.list.length === 0') 暂无游戏
@@ -251,10 +249,10 @@ export default {
   .item
     .name
       width 65px
-      p,span
-       overflow:hidden
-       text-overflow:ellipsis
-       white-space:nowrap
+      p, span
+        overflow hidden
+        text-overflow ellipsis
+        white-space nowrap
     .game-icon
       width 50px
       height 50px

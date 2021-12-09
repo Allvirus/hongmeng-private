@@ -16,7 +16,7 @@
             show-word-limit
           )
         el-form-item(label='负责人:')
-          el-select(v-model='departInfo.userId', placeholder='请选择' filterable)
+          el-select(v-model='departInfo.userId', placeholder='请选择', filterable)
             el-option(
               v-for='item in userList',
               :key='item.id',
@@ -25,7 +25,7 @@
             )
         el-form-item(label='上级部门:', required)
           el-select(
-            filterable
+            filterable,
             v-model='departInfo.superiorDepartmentId',
             placeholder='请选择'
           )
@@ -46,6 +46,7 @@
       el-button.mgl3(type='primary', @click='submmit') 提交
 </template>
 <script>
+import { mapGetters } from 'vuex'
 export default {
   name: '',
   props: {
@@ -70,7 +71,11 @@ export default {
         isAjobDepartment: true,
       },
       isEdit: false,
+      reslist: [],
     }
+  },
+  computed: {
+    ...mapGetters(['userInfo']),
   },
   watch: {
     show (newValue, oldValue) {
@@ -96,8 +101,14 @@ export default {
         this.userList = res
       })
 
-      this.$api.getAllDeparts().then(res => {
-        this.departList = res
+      this.$api.getDepartById(this.userInfo.resDepartmentId).then(res => {
+        // 将父级的部门添加
+        this.departList.push({
+          id: res.id,
+          name: res.name,
+        })
+        // 将子部门递归处理
+        this.processDptData(res)
       })
     },
     cancel () {
@@ -105,6 +116,7 @@ export default {
         this.departInfo[key] = ''
       }
       this.departInfo.isAjobDepartment = true
+      this.departList = []
       this.$emit('cancel')
     },
     submmit () {
@@ -138,6 +150,16 @@ export default {
           this.$emit('success', data)
           this.cancel()
         })
+      }
+    },
+    processDptData (data) {
+      if (!data.departments || data.departments.length === 0) {
+        return false
+      } else {
+        this.departList.push(...data.departments)
+        for (let i = 0; i < data.departments.length; i++) {
+          this.processDptData(data.departments[i])
+        }
       }
     },
   },

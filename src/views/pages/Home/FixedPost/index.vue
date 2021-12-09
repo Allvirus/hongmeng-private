@@ -1,13 +1,103 @@
 <template lang='pug'>
-  .BizConfig
-    .ff-rn.fs-m.bg-white.pd2.opt-bar
-      el-form.ff-rn(label-width="100px")
-        el-form-item(label='员工:', v-if='userInfo.isLeader')
-          el-select.winput(
-            v-model='model.userId',
-            placeholder='请选择',
-            clearable,
-            filterable
+.BizConfig
+  .ff-rn.fs-m.bg-white.pd2.opt-bar
+    el-form.ff-rn(label-width='80px')
+      el-form-item(label='部门:')
+        tree-selector.winput(
+          ref='dtptree',
+          :data='myDptList.list',
+          :defProps='myDptList.props',
+          nodeKey='id',
+          clearable,
+          :deflabel='myDptList.list[0].name',
+          @change='onDepartChange'
+        )
+      el-form-item(label='员工:')
+        el-select.winput(
+          v-model='model.userId',
+          placeholder='请选择',
+          clearable,
+          filterable
+        )
+          el-option(
+            v-for='item in userList',
+            :key='item.id',
+            :label='item.realName',
+            :value='item.id'
+          )
+      el-form-item.mgl3(label='注册时间:')
+        CommonDatePicker.w300(
+          :start.sync='model.startTime',
+          :end.sync='model.endTime',
+          all
+        )
+        el-button.mgl3(
+          icon='el-icon-search',
+          type='primary',
+          @click='searchCfg'
+        ) 搜索
+        el-button.mgl2(
+          icon='el-icon-refresh-right',
+          type='primary',
+          @click='reset'
+        ) 重置
+    .flex-1.jc-end
+      el-button(
+        icon='el-icon-plus',
+        type='primary',
+        @click='showEditDlg(false, null)'
+      ) 新增配置
+
+  el-table.mgy2.bg-white.pd2(
+    :data='configList',
+    :row-class-name='({ row }) => (row.is_payout ? "danger" : "")'
+  )
+    el-table-column(prop='aUserName', label='A岗', width='130')
+    el-table-column(prop='bUserName', label='B岗', width='130')
+    el-table-column(prop='cUserName', label='C岗', width='130')
+    el-table-column(prop='startTime', label='开始时间', width='170')
+      template(slot-scope='{ row }') {{ row.startTime | dateFormat }}
+    el-table-column(prop='endTime', label='结束时间', width='170')
+      template(slot-scope='{ row }') {{ row.endTime | dateFormat }}
+    el-table-column(prop='endTime', label='绑定时间', width='170')
+      template(slot-scope='{ row }') {{ row.bindTime | dateFormat }}
+    el-table-column(prop='operate', label='操作')
+      template(slot-scope='{ row }')
+        el-button.mgl2(
+          icon='el-icon-edit-outline',
+          type='text',
+          @click='showEditDlg(true, row)'
+        ) 编辑
+        el-button.mgl2.danger(
+          icon='el-icon-delete',
+          type='text',
+          @click='deleteCfg(row)'
+        ) 删除
+
+  el-pagination.margin-spacing(
+    :total='count',
+    :page-size.sync='model.pageSize',
+    :current-page.sync='model.page',
+    @current-change='getCfgList'
+  )
+
+  //- 编辑、新增对话框
+  el-dialog(
+    :title='cfgInfo.isEdit ? "编辑" : "新增"',
+    @close='cancelEdit',
+    :visible.sync='editDlgVisiable',
+    width='600px'
+  )
+    .flex-center
+      el-form(label-width='100px')
+        el-form-item(label='A岗:', required)
+          el-select.mgl1(
+            v-model='cfgInfo.row.aUserId',
+            filterable,
+            :disabled='cfgInfo.isEdit',
+            :multiple='!cfgInfo.isEdit',
+            @change='onAJobChange',
+            placeholder='请选择'
           )
             el-option(
               v-for='item in userList',
@@ -15,86 +105,54 @@
               :label='item.realName',
               :value='item.id'
             )
-        el-form-item(label="注册时间:")
-          CommonDatePicker.w300(:start.sync='model.startTime' :end.sync='model.endTime' all)
-          el-button.mgl3(icon="el-icon-search" type="primary" @click="searchCfg") 搜索
-          el-button.mgl2(icon="el-icon-refresh-right" type="primary" @click="reset") 重置
-      .flex-1.jc-end
-        el-button(icon="el-icon-plus" type="primary" @click="showEditDlg(false,null)") 新增配置
-
-    el-table.mgy2.bg-white.pd2(:data='configList' :row-class-name="({ row }) => row.is_payout ? 'danger' : ''")
-      el-table-column(prop="aUserName" label="A岗" width='130')
-      el-table-column(prop="bUserName" label="B岗" width='130')
-      el-table-column(prop="cUserName" label="C岗" width='130')
-      el-table-column(prop="startTime" label="开始时间" width='170')
-        template(slot-scope="{ row }") {{row.startTime | dateFormat}}
-      el-table-column(prop="endTime" label="结束时间" width='170')
-        template(slot-scope="{ row }") {{row.endTime | dateFormat}}
-      el-table-column(prop="endTime" label="绑定时间" width='170')
-        template(slot-scope="{ row }") {{row.bindTime | dateFormat}}
-      el-table-column(prop="operate" label="操作")
-        template(slot-scope="{ row }")
-            el-button.mgl2(icon="el-icon-edit-outline" type="text" @click="showEditDlg(true,row)") 编辑
-            el-button.mgl2.danger(icon="el-icon-delete" type="text" @click="deleteCfg(row)") 删除
-
-    el-pagination.margin-spacing(
-      :total="count"
-      :page-size.sync='model.pageSize'
-      :current-page.sync='model.page'
-      @current-change="getCfgList")
-
-    //- 编辑、新增对话框
-    el-dialog(:title="cfgInfo.isEdit?'编辑':'新增'"
-      @close="cancelEdit"
-      :visible.sync="editDlgVisiable" width="600px")
-      .flex-center
-        el-form(label-width="100px")
-          el-form-item(label="A岗:" required)
-            el-select.mgl1(v-model="cfgInfo.row.aUserId"
-              filterable
-              :disabled="cfgInfo.isEdit"
-              :multiple='!cfgInfo.isEdit'
-              @change="onAJobChange"
-              placeholder="请选择")
-              el-option(v-for="item in cfgInfo.AUserList"
-              :key="item.id"
-              :label="item.realName"
-              :value="item.id")
-          el-form-item(label="B岗:" required)
-            el-select.mgl1(v-model="cfgInfo.row.bUserId"
-              filterable
-              @change="onBJobChange"
-              placeholder="请选择")
-              el-option(v-for="item in cfgInfo.BUserList"
-              :key="item.id"
-              :label="item.realName"
-              :value="item.id")
-          el-form-item(label="C岗:" required)
-            el-select.mgl1(v-model="cfgInfo.row.cUserId"
-              filterable
-              @change="onCJobChange"
-              placeholder="请选择")
-              el-option(v-for="item in cfgInfo.CUserList"
-              :key="item.id"
-              :label="item.realName"
-              :value="item.id")
-          el-form-item(label="时间:" required v-if="!cfgInfo.isEdit")
-            CommonDatePicker.mgl1(:start.sync='cfgInfo.row.startTime'
-              :end.sync='cfgInfo.row.endTime' type='datetimerange' all)
-      span.dialog-footer(slot="footer")
-        el-button.mgl3(type="warning" @click="cancelEdit") 取消
-        el-button.mgl3(type="primary" @click="submmitEdit") 提交
-
+        el-form-item(label='B岗:', required)
+          el-select.mgl1(
+            v-model='cfgInfo.row.bUserId',
+            filterable,
+            @change='onBJobChange',
+            placeholder='请选择'
+          )
+            el-option(
+              v-for='item in userList',
+              :key='item.id',
+              :label='item.realName',
+              :value='item.id'
+            )
+        el-form-item(label='C岗:', required)
+          el-select.mgl1(
+            v-model='cfgInfo.row.cUserId',
+            filterable,
+            @change='onCJobChange',
+            placeholder='请选择'
+          )
+            el-option(
+              v-for='item in userList',
+              :key='item.id',
+              :label='item.realName',
+              :value='item.id'
+            )
+        el-form-item(label='时间:', required, v-if='!cfgInfo.isEdit')
+          CommonDatePicker.mgl1(
+            :start.sync='cfgInfo.row.startTime',
+            :end.sync='cfgInfo.row.endTime',
+            type='datetimerange',
+            all
+          )
+    span.dialog-footer(slot='footer')
+      el-button.mgl3(type='warning', @click='cancelEdit') 取消
+      el-button.mgl3(type='primary', @click='submmitEdit') 提交
 </template>
 <script>
 import { mapGetters } from 'vuex'
-// import fetchListMixin from '@/mixins/fetchListMixin'
+import fetchListMixin from '@/mixins/fetchListMixin'
 import dptListMixin from '@/mixins/dptListMixin'
 export default {
   name: 'BizConfig',
-  mixins: [dptListMixin],
+  mixins: [fetchListMixin, dptListMixin],
   data () {
     return {
+      listApiForMixin: 'getBusinessConfiguration',
+      dtpApi: 'getBusinessConfiguration',
       model: {
         page: 1,
         pageSize: 10,
@@ -132,7 +190,7 @@ export default {
     ...mapGetters(['myDptList', 'userInfo']),
   },
   created: function () {
-    this.loadOptions()
+    // this.loadOptions()
     this.getCfgList()
   },
   methods: {
@@ -206,8 +264,8 @@ export default {
     },
     checkFormData (row) {
       let msg = ''
-      if (row.departmentId === '') {
-        msg = '请选择部门'
+      if (row.aUserId === '') {
+        msg = '请选择A岗'
       } else if (row.bUserId === '') {
         msg = '请选择B岗'
       } else if (row.cUserId === '') {

@@ -235,12 +235,12 @@ export default [
         meta: { title: '排行' },
         component: () => import('@/views/pages/Ranking/'),
       },
-      {
-        path: 'MyTarget',
-        name: 'MyTarget',
-        meta: { title: '数据指标' },
-        component: () => import('@/views/pages/MyTarget/'),
-      },
+      // {
+      //   path: 'MyTarget',
+      //   name: 'MyTarget',
+      //   meta: { title: '数据指标' },
+      //   component: () => import('@/views/pages/MyTarget/'),
+      // },
       {
         path: 'GameChannel',
         name: 'GameChannel',

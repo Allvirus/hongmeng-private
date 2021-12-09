@@ -14,9 +14,9 @@ export default {
     }
     if (this.isMyTarget) {
       this.$utils.autoFillDateTime(this.model)
-      if (!this.userInfo.menu.wechatAuthority) {
-        this.listApiForMixin = this.myApi
-      }
+      // if (!this.userInfo.menu.wechatAuthority) {
+      //   this.listApiForMixin = this.myApi
+      // }
     }
   },
   methods: {
@@ -25,8 +25,7 @@ export default {
       this.searchMyData = false
       this.model = JSON.parse(JSON.stringify(this.modelCopyMixin))
       this.model.resDepId = this.myDptList.list[0].id
-      if ((this.userInfo && this.userInfo.isLeader) ||
-        (this.isMyTarget && this.userInfo.menu.wechatAuthority)) {
+      if (this.userInfo && this.userInfo.isLeader) {
         this.listApiForMixin = this.dtpApi
         this.userList.splice(0, this.userList.length)
         if (this.$refs.dtptree) {
@@ -36,9 +35,9 @@ export default {
       }
       if (this.isMyTarget) {
         this.$utils.autoFillDateTime(this.model)
-        if (!this.userInfo.menu.wechatAuthority) {
-          this.listApiForMixin = this.myApi
-        }
+        // if (!this.userInfo.menu.wechatAuthority) {
+        //   this.listApiForMixin = this.myApi
+        // }
       }
       this.getListMixin()
     },
@@ -47,9 +46,9 @@ export default {
       this.listApiForMixin = (!this.searchMyData && this.userInfo.isLeader)
         ? this.dtpApi : this.myApi
       if (this.isMyTarget) {
-        if (!this.userInfo.menu.wechatAuthority) {
-          this.listApiForMixin = this.myApi
-        }
+        // if (!this.userInfo.menu.wechatAuthority) {
+        //   this.listApiForMixin = this.myApi
+        // }
       }
       this.$utils.autoFillDateTime(this.model)
       this.getListMixin()

@@ -106,8 +106,8 @@ export default {
       myApi: 'getRechInfo',
       model: {
         UserAccount: '',
-        startTime: this.GetDateStr(0),
-        endTime: this.GetDateStr(0),
+        startTime: this.GetDateStr(0, 'start'),
+        endTime: this.GetDateStr(0, 'end'),
         Account: '',
         GameName: '',
         RoleName: '',
@@ -125,13 +125,17 @@ export default {
     ...mapGetters(['areaList', 'gameList', 'myDptList', 'userInfo']),
   },
   methods: {
-    GetDateStr (AddDayCount) {
+    GetDateStr (AddDayCount, ST) {
       const dd = new Date()
       dd.setDate(dd.getDate() + AddDayCount) // 获取 AddDayCount 天后的日期
       const y = dd.getFullYear()
       const m = (dd.getMonth() + 1) < 10 ? '0' + (dd.getMonth() + 1) : (dd.getMonth() + 1)
       const d = dd.getDate() < 10 ? '0' + dd.getDate() : dd.getDate()
-      return y + '-' + m + '-' + d + ' ' + '00:00:00'
+      if (ST === 'end') {
+        return y + '-' + m + '-' + d + ' ' + '23:59:59'
+      } else {
+        return y + '-' + m + '-' + d + ' ' + '00:00:00'
+      }
     },
   },
 }

@@ -1,7 +1,7 @@
 import router from '@/router'
 window.$globalconfig = {
   VERSION: '1.0.0.0',
-  COPYRIGHT: 'Copyright 2016 - 2020 © 逐浪网络 All Rights Reserved 闽ICP备17006851号',
+  COPYRIGHT: 'Copyright 2016 - 2020 © All Rights Reserved',
   PANO_LOGIN_API: 'https://editor.vgoyun.com/user/login',
   API: 'http://lxy.gxzlwl.com/',
   '3DVIEW_URL': 'http://3d.vgoyun.com/',

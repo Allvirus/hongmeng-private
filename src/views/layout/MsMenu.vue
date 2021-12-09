@@ -62,11 +62,11 @@ export default {
       if (secRoutes.children) {
         secRoutes.children.map(item => {
           if (item.meta.hideMenu || item.meta.onlyPcMode) return
-          if ((item.name === 'HomeBizConfig' && !this.userInfo.menu.bizConfigAuthority) ||
-              (item.name === 'HomeLevelManage' && !this.userInfo.menu.levelAuthority) ||
-              (item.name === 'HomeDepartment' && !this.userInfo.menu.departmentAuthority)) {
-            return
-          }
+          // if ((item.name === 'HomeBizConfig' && !this.userInfo.menu.bizConfigAuthority) ||
+          //     (item.name === 'HomeLevelManage' && !this.userInfo.menu.levelAuthority) ||
+          //     (item.name === 'HomeDepartment' && !this.userInfo.menu.departmentAuthority)) {
+          //   return
+          // }
 
           groupObj[item.meta.group] = groupObj[item.meta.group] || []
           groupObj[item.meta.group].push(item)
