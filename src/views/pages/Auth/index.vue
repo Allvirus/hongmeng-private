@@ -1,17 +1,17 @@
 <template lang='pug'>
-  div
-    div(style='position: fixed;top: 0px;left: 0;bottom: 0;right: 0;')
-      img(
-        style='object-fit:cover; position: absolute;top: 50%;left: 50%;transform: translate(-50%,-50%);height: 70%; min-width: 100%',
-        :src='isPc ? pcBg : mobileBg'
-      )
-      .auth-layout
-        .form-layout.page-content.border-radius
-          img(:src="logoTitle" class="logo-title")
-          h2.tac(:class="isPc?'mgy5':'mgy3'") 用户登录
-          component(:is='$route.name', ref='form')
+div
+  div(style='position: fixed; top: 0px; left: 0; bottom: 0; right: 0')
+    img.login_bg(
+      style='object-fit: cover; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); height: 80%; min-width: 100%',
+      :src='isPc ? pcBg : mobileBg'
+    )
+    .auth-layout
+      .form-layout.page-content.border-radius
+        img.logo-title(:src='logoTitle')
+        h2.tac(:class='isPc ? "mgy5" : "mgy3"') 用户登录
+        component(:is='$route.name', ref='form')
 
-    .copyright {{ $WD.$globalconfig.COPYRIGHT }}
+  .copyright {{ $WD.$globalconfig.COPYRIGHT }}
 </template>
 <script>
 import { mapGetters } from 'vuex'
@@ -90,7 +90,6 @@ header
   margin 0 auto
   height 100%
   position relative
-
   .logo-title
     position absolute
     top -15%
@@ -113,6 +112,13 @@ header
   padding 15px 30px
   top 41%
   transform translateY(-50%)
+
+.mobile-mode
+  .login_bg
+    top 40% !important
+  .logo-title
+    left 50%
+    transform translateX(-50%)
 
 .switch-login-type
   position absolute

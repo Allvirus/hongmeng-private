@@ -10,12 +10,11 @@
           :label='item'
         )
     .opt-bar
-      el-form.ff-rw.mgt2.ai-center(label-width='100px')
+      el-form.ff-rw.mgt2.ai-center(label-width='60px')
         el-form-item(
           label='部门:',
           :class='OS.isPc ? "" : "mgl1"',
-          v-if='userInfo.isLeader',
-          :label-width='OS.isPc ? "60px" : "100px"'
+          v-if='userInfo.isLeader'
         )
           tree-selector.winput(
             ref='dtptree',
@@ -29,7 +28,6 @@
         el-form-item(
           label='员工:',
           :class='OS.isPc ? "" : "mgl1"',
-          :label-width='OS.isPc ? "60px" : "100px"',
           v-if='userInfo.isLeader'
         )
           el-select.winput(
@@ -44,13 +42,13 @@
               :label='item.realName',
               :value='item.id'
             )
-        el-form-item(label='游戏名称:')
+        el-form-item(label='游戏名称:', :label-width='OS.isPc ? "90px" : "60px"')
           auto-complete.mgl1(
             v-model='model.gameName',
             :data='gameList',
             placeholder='请输入游戏名称'
           )
-        el-form-item(label='区服:', :label-width='OS.isPc ? "60px" : "100px"')
+        el-form-item(label='区服:')
           auto-complete.mgl1(
             v-model='model.areaName',
             :data='areaList',
@@ -79,7 +77,7 @@
         :key='idx'
       )
 
-  .ff-rn.mgt2.w100p.jc-around.bg-white(v-if='!OS.isPc')
+  .ff-rn.mgt2.w100p.jc-around.bg-white.dataOverview(v-if='!OS.isPc')
     .ff-cn(v-for='(item, key, idx) in panelList')
       p.mgt2.jc-center.omit {{ item.title }}
       h3.jc-center.mgy2.warning {{ item.value }}
@@ -477,4 +475,6 @@ $spc = 44px
       margin-bottom 10px
     >>>.search-btn .el-form-item__content
       margin-left 10px !important
+  .dataOverview
+    font-size 11px !important
 </style>
