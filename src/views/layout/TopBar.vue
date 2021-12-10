@@ -47,7 +47,7 @@
   .menu-list.jc-between.bg-white
     el-tabs(v-model='activeTab', @tab-click='onTabClick')
       el-tab-pane(label='首页', name='HomeMyAchievement')
-      el-tab-pane(label='排行', name='Ranking')
+      el-tab-pane(label='排行', name='Ranking', v-if='isShow')
       //- el-tab-pane(label='数据指标', name='MyTarget')
       //- el-tab-pane(label='游戏渠道', name='GameChannel')
     .notice.ai-center
@@ -100,19 +100,16 @@
         el-button.mgl3(type='primary', @click='submitPswd') 提交
 
   // 修改公告
-  el-dialog(
-    title="公告"
-    :visible.sync="dialogVisible"
-    width="30%")
+  el-dialog(title='公告', :visible.sync='dialogVisible', width='30%')
     .notice
       .content(:class='isModifyNotice ? "isShow" : ""') {{ dptNotices }}
       .input(:class='isModifyNotice ? "" : "isShow"')
         span 请输入新公告：
         el-input.mgl2(v-model='noticeString')
-      el-button(type='warning' size="mini" @click="isModifyNotice = true") 修改公告
-    span(span slot="footer" class="dialog-footer")
-      el-button(@click="cancelChange") 取消
-      el-button(type="primary" @click="modifyNotice") 确定
+      el-button(type='warning', size='mini', @click='isModifyNotice = true') 修改公告
+    span.dialog-footer(span, slot='footer')
+      el-button(@click='cancelChange') 取消
+      el-button(type='primary', @click='modifyNotice') 确定
 </template>
 <script>
 import { mapGetters } from 'vuex'
@@ -155,6 +152,9 @@ export default {
   },
   computed: {
     ...mapGetters(['userInfo', 'OS']),
+    isShow () {
+      return this.userInfo.menuList.includes(17)
+    },
   },
   created () {
     if (this.$route.name.slice(0, 4) === 'Home') {
@@ -296,7 +296,7 @@ export default {
 .notice
   display flex
   align-items center
-  justify-content: space-between
+  justify-content space-between
 
 .isShow
   display none
