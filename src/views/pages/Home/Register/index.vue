@@ -18,7 +18,7 @@
       el-button.mgl4.mgb2(
         icon='el-icon-search',
         type='primary',
-        @click='dialogVisible = true'
+        @click='addUser'
         ) 添加账号
       el-button.mgl4.mgr2.mgb2(
         icon='el-icon-close',
@@ -124,6 +124,10 @@ export default {
         }
         this.getRegisterList()
       })
+    },
+    addUser () {
+      this.model.isblock = false
+      this.dialogVisible = true
     },
     shieldingUsers () {
       this.model.isblock = true
