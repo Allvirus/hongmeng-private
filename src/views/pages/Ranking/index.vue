@@ -17,16 +17,24 @@
           :data='areaList',
           placeholder='请输入区服'
         )
+      el-form-item(label-width="20px")
+        el-select(v-model="typeId" placeholder="请选择数据")
+          el-option(
+            v-for="item in listData"
+            :key="item.id"
+            :label="item.name"
+            :value="item.id"
+            )
       el-form-item(:class='OS.isPc ? "" : "jc-center full"')
         el-button.mgl2(icon='el-icon-search', type='primary', @click='getRank') 搜索
     .rank(:class='OS.isPc ? "ff-rn jc-around mgt1" : ""')
       ranking-list(
-        :data='rankList.ajobMoneyRank',
-        mainTitle='A岗充值排行榜',
-        subTitle='充值金额(元)',
+        :data='typeId === 1 ? rankList.ajobMoneyRank : rankList.ajobRegRank',
+        :mainTitle='typeId === 1 ? "A岗充值排行榜" : "A岗共享换包排行"',
+        :subTitle='typeId === 1 ? "充值金额(元)" : "换包数"',
         theme='orange',
         :toFixed='true',
-        rankingKey='totlaMoney'
+        :rankingKey='typeId === 1 ? "totlaMoney" : "count"'
       )
       //- ranking-list(
       //-   :data='rankList.ajobRegRank',
@@ -36,16 +44,17 @@
       //-   rankingKey='count'
       //- )
       ranking-list(
-        :data='rankList.bjobMoneyRank',
-        mainTitle='B岗充值排行榜',
-        subTitle='充值金额(元)',
+        :data='typeId === 1 ? rankList.bjobMoneyRank : rankList.bjobRegRank',
+        :mainTitle='typeId === 1 ? "B岗充值排行榜" : "B岗共享换包排行"',
+        :subTitle='typeId === 1 ? "充值金额(元)" : "换包数"',
         theme='green',
-        rankingKey='totlaMoney'
+        :rankingKey='typeId === 1 ? "totlaMoney" : "count"'
       )
       ranking-list(
+        v-show="typeId === 1"
         :data='rankList.cjobMoneyRank',
-        mainTitle='C岗充值排行榜',
-        subTitle='充值金额(元)',
+        :mainTitle='typeId === 1 ? "C岗充值排行榜" : "C岗共享换包排行"',
+        :subTitle='typeId === 1 ? "充值金额(元)" : "换包数"',
         theme='blue',
         :toFixed='true',
         rankingKey='totlaMoney'
@@ -61,9 +70,20 @@ export default {
   },
   data () {
     return {
+      listData: [
+        {
+          name: '总业绩',
+          id: 1,
+        },
+        {
+          name: '换包数',
+          id: 2,
+        },
+      ],
       model: {
         areaName: '',
       },
+      typeId: 1,
       timeRange: {
         今日: {
           label: '今日',

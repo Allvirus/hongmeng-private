@@ -25,6 +25,18 @@ export default [
         component: SubPage,
         children: [
           {
+            path: 'ResultsOverview',
+            name: 'HomeResultsOverview',
+            meta: {
+              title: '业绩总览',
+              fnId: 18,
+              icsel: require('@/assets/img/ic_total_kpi_sel.png'),
+              icdef: require('@/assets/img/ic_total_kpi_def.png'),
+              onlyPcMode: false,
+            },
+            component: () => import('@/views/pages/Home/ResultsOverview'),
+          },
+          {
             path: 'MyAchievement',
             name: 'HomeMyAchievement',
             meta: {
@@ -37,16 +49,16 @@ export default [
             component: () => import('@/views/pages/Home/MyAchievement'),
           },
           {
-            path: 'MyLevel',
-            name: 'HomeMyLevel',
+            path: 'Register',
+            name: 'HomeRegister',
             meta: {
-              title: '我的等级',
-              fnId: 2,
-              icsel: require('@/assets/img/ic_level_sel.png'),
-              icdef: require('@/assets/img/ic_level_def.png'),
-              onlyPcMode: false,
+              title: '社交账号登记',
+              fnId: 8,
+              icsel: require('@/assets/img/ic_register_sel.png'),
+              icdef: require('@/assets/img/ic_register_def.png'),
+              onlyPcMode: true,
             },
-            component: () => import('@/views/pages/Home/MyLevel'),
+            component: () => import('@/views/pages/Home/Register'),
           },
           {
             path: 'RegisterDetail',
@@ -85,18 +97,6 @@ export default [
             component: () => import('@/views/pages/Home/OrdersDetail'),
           },
           {
-            path: 'ExpDetail',
-            name: 'HomeExpDetail',
-            meta: {
-              title: '经验明细',
-              fnId: 6,
-              icsel: require('@/assets/img/ic_exp_sel.png'),
-              icdef: require('@/assets/img/ic_exp_def.png'),
-              onlyPcMode: true,
-            },
-            component: () => import('@/views/pages/Home/ExpDetail'),
-          },
-          {
             path: 'RechargePlayer',
             name: 'HomeRechargePlayer',
             meta: {
@@ -109,16 +109,40 @@ export default [
             component: () => import('@/views/pages/Home/RechargePlayer'),
           },
           {
-            path: 'Register',
-            name: 'HomeRegister',
+            path: 'ExpDetail',
+            name: 'HomeExpDetail',
             meta: {
-              title: '社交账号登记',
-              fnId: 8,
-              icsel: require('@/assets/img/ic_register_sel.png'),
-              icdef: require('@/assets/img/ic_register_def.png'),
+              title: '经验明细',
+              fnId: 6,
+              icsel: require('@/assets/img/ic_exp_sel.png'),
+              icdef: require('@/assets/img/ic_exp_def.png'),
               onlyPcMode: true,
             },
-            component: () => import('@/views/pages/Home/Register'),
+            component: () => import('@/views/pages/Home/ExpDetail'),
+          },
+          {
+            path: 'MyLevel',
+            name: 'HomeMyLevel',
+            meta: {
+              title: '我的等级',
+              fnId: 2,
+              icsel: require('@/assets/img/ic_level_sel.png'),
+              icdef: require('@/assets/img/ic_level_def.png'),
+              onlyPcMode: false,
+            },
+            component: () => import('@/views/pages/Home/MyLevel'),
+          },
+          {
+            path: 'Update',
+            name: 'HomeUpdate',
+            meta: {
+              title: '升级记录',
+              fnId: 12,
+              icsel: require('@/assets/img/ic_update_sel.png'),
+              icdef: require('@/assets/img/ic_update_def.png'),
+              onlyPcMode: true,
+            },
+            component: () => import('@/views/pages/Home/Update'),
           },
           // {
           //   path: 'BizConfig',
@@ -156,6 +180,18 @@ export default [
             component: () => import('@/views/pages/Home/SwitchBind'),
           },
           {
+            path: 'PlayersBind',
+            name: 'HomePlayersBind',
+            meta: {
+              title: '玩家重绑记录',
+              fnId: 11,
+              icsel: require('@/assets/img/ic_player_sel.png'),
+              icdef: require('@/assets/img/ic_player_def.png'),
+              onlyPcMode: true,
+            },
+            component: () => import('@/views/pages/Home/PlayersBind'),
+          },
+          {
             path: 'LevelManage',
             name: 'HomeLevelManage',
             meta: {
@@ -166,18 +202,6 @@ export default [
               onlyPcMode: true,
             },
             component: () => import('@/views/pages/Home/LevelManage'),
-          },
-          {
-            path: 'Update',
-            name: 'HomeUpdate',
-            meta: {
-              title: '升级记录',
-              fnId: 12,
-              icsel: require('@/assets/img/ic_update_sel.png'),
-              icdef: require('@/assets/img/ic_update_def.png'),
-              onlyPcMode: true,
-            },
-            component: () => import('@/views/pages/Home/Update'),
           },
           {
             path: 'AssociatedAccount',
@@ -227,6 +251,18 @@ export default [
             },
             component: () => import('@/views/pages/Home/RoleList'),
           },
+          {
+            path: 'StaffPositions',
+            name: 'HomeStaffPositions',
+            meta: {
+              title: '员工岗位数据汇总',
+              fnId: 17,
+              icsel: require('@/assets/img/ic_staffPositions_sel.png'),
+              icdef: require('@/assets/img/ic_staffPositions_def.png'),
+              onlyPcMode: true,
+            },
+            component: () => import('@/views/pages/Home/StaffPositions'),
+          },
         ],
       },
       {
@@ -235,12 +271,12 @@ export default [
         meta: { title: '排行' },
         component: () => import('@/views/pages/Ranking/'),
       },
-      // {
-      //   path: 'MyTarget',
-      //   name: 'MyTarget',
-      //   meta: { title: '数据指标' },
-      //   component: () => import('@/views/pages/MyTarget/'),
-      // },
+      {
+        path: 'MyTarget',
+        name: 'MyTarget',
+        meta: { title: '数据指标' },
+        component: () => import('@/views/pages/MyTarget/'),
+      },
       {
         path: 'GameChannel',
         name: 'GameChannel',

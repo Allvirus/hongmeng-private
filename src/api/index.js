@@ -1125,4 +1125,23 @@ export default {
 
   // 82. 获取角色菜单权限
   getRoleMenuPower: (roleId) => http('get', `api/role/${roleId}`),
+
+  // 83. 玩家重绑查询功能
+  getPlayerData: (module) => http('get', '/api/player/rebind', {
+    params: (() => {
+      const p = {
+        startTime: module.startTime,
+        endTime: module.endTime,
+        UserAccount: module.UserAccount,
+        UserCode: module.UserCode,
+        FromAccount: module.FromAccount,
+        ToAccount: module.ToAccount,
+        Type: module.Type,
+        Page: module.page,
+        PageSize: module.pageSize,
+      }
+      utils.filterNull(p)
+      return p
+    })(),
+  }),
 }
