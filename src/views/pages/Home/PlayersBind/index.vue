@@ -33,6 +33,11 @@
           type='primary',
           @click="search"
         ) 搜索
+        el-button.mgl2(
+          icon='el-icon-refresh-right',
+          type='primary',
+          @click='reset'
+        ) 重置
     .showbox.bg-white.mgt2.pd2
       el-table(
         :data='listMixin.list',
@@ -101,6 +106,17 @@ export default {
   mounted () {
   },
   methods: {
+    reset () {
+      for (const key in this.model) {
+        if (key === 'pageSize') {
+          this.model[key] = 10
+        } else if (key === 'page') {
+          this.model[key] = 1
+        } else {
+          this.model[key] = ''
+        }
+      }
+    },
   },
 }
 </script>

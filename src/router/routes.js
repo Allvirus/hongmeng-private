@@ -24,18 +24,18 @@ export default [
         redirect: { name: 'HomeMyAchievement' },
         component: SubPage,
         children: [
-          {
-            path: 'ResultsOverview',
-            name: 'HomeResultsOverview',
-            meta: {
-              title: '业绩总览',
-              fnId: 18,
-              icsel: require('@/assets/img/ic_total_kpi_sel.png'),
-              icdef: require('@/assets/img/ic_total_kpi_def.png'),
-              onlyPcMode: false,
-            },
-            component: () => import('@/views/pages/Home/ResultsOverview'),
-          },
+          // {
+          //   path: 'ResultsOverview',
+          //   name: 'HomeResultsOverview',
+          //   meta: {
+          //     title: '业绩总览',
+          //     fnId: 20,
+          //     icsel: require('@/assets/img/ic_total_kpi_sel.png'),
+          //     icdef: require('@/assets/img/ic_total_kpi_def.png'),
+          //     onlyPcMode: false,
+          //   },
+          //   component: () => import('@/views/pages/Home/ResultsOverview'),
+          // },
           {
             path: 'MyAchievement',
             name: 'HomeMyAchievement',
@@ -184,7 +184,7 @@ export default [
             name: 'HomePlayersBind',
             meta: {
               title: '玩家重绑记录',
-              fnId: 11,
+              fnId: 18,
               icsel: require('@/assets/img/ic_player_sel.png'),
               icdef: require('@/assets/img/ic_player_def.png'),
               onlyPcMode: true,
@@ -251,18 +251,18 @@ export default [
             },
             component: () => import('@/views/pages/Home/RoleList'),
           },
-          {
-            path: 'StaffPositions',
-            name: 'HomeStaffPositions',
-            meta: {
-              title: '员工岗位数据汇总',
-              fnId: 17,
-              icsel: require('@/assets/img/ic_staffPositions_sel.png'),
-              icdef: require('@/assets/img/ic_staffPositions_def.png'),
-              onlyPcMode: true,
-            },
-            component: () => import('@/views/pages/Home/StaffPositions'),
-          },
+          // {
+          //   path: 'StaffPositions',
+          //   name: 'HomeStaffPositions',
+          //   meta: {
+          //     title: '员工岗位数据汇总',
+          //     fnId: 19,
+          //     icsel: require('@/assets/img/ic_staffPositions_sel.png'),
+          //     icdef: require('@/assets/img/ic_staffPositions_def.png'),
+          //     onlyPcMode: true,
+          //   },
+          //   component: () => import('@/views/pages/Home/StaffPositions'),
+          // },
         ],
       },
       {

@@ -69,6 +69,8 @@
     el-table-column(prop='createDate', label='注册时间', width='150px')
       template(slot-scope='{ row }') {{ row.createDate | dateFormat }}
     el-table-column(prop='createIp', label='注册IP')
+    el-table-column(prop='isRepeatReg', label='有效换包')
+      template(slot-scope='{ row }') {{ row.isRepeatReg ? '否' : '是' }}
     el-table-column(prop='ajob', label='A岗')
     el-table-column(prop='bjob', label='B岗')
     el-table-column(prop='cjob', label='C岗')
