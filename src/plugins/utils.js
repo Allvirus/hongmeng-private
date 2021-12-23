@@ -44,6 +44,7 @@ const utils = {
    * @returns {String} token or false
    */
   getToken () {
+    // COOKIE_NAME = 'ZhuLangUserAccount'
     const token = this.getCookie(COOKIE_NAME)
     if (!token) LOGIN()
     else return token

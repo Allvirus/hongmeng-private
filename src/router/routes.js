@@ -41,6 +41,7 @@ export default [
             name: 'HomeMyAchievement',
             meta: {
               title: '我的业绩',
+              group: '基础功能',
               fnId: 1,
               icsel: require('@/assets/img/ic_my_achiv_sel.png'),
               icdef: require('@/assets/img/ic_my_achiv_def.png'),
@@ -53,6 +54,7 @@ export default [
             name: 'HomeRegister',
             meta: {
               title: '社交账号登记',
+              group: '基础功能',
               fnId: 8,
               icsel: require('@/assets/img/ic_register_sel.png'),
               icdef: require('@/assets/img/ic_register_def.png'),
@@ -65,6 +67,7 @@ export default [
             name: 'HomeRegisterDetail',
             meta: {
               title: '注册明细',
+              group: '基础功能',
               fnId: 3,
               icsel: require('@/assets/img/ic_reg_sel.png'),
               icdef: require('@/assets/img/ic_reg_def.png'),
@@ -77,6 +80,7 @@ export default [
             name: 'HomeRolesDetail',
             meta: {
               title: '角色明细',
+              group: '基础功能',
               fnId: 4,
               icsel: require('@/assets/img/ic_role_sel.png'),
               icdef: require('@/assets/img/ic_role_def.png'),
@@ -89,6 +93,7 @@ export default [
             name: 'HomeOrdersDetail',
             meta: {
               title: '订单明细',
+              group: '基础功能',
               fnId: 5,
               icsel: require('@/assets/img/ic_order_sel.png'),
               icdef: require('@/assets/img/ic_order_def.png'),
@@ -101,6 +106,7 @@ export default [
             name: 'HomeRechargePlayer',
             meta: {
               title: '充值排行榜',
+              group: '基础功能',
               fnId: 7,
               icsel: require('@/assets/img/ic_rech_sel.png'),
               icdef: require('@/assets/img/ic_rech_def.png'),
@@ -113,6 +119,7 @@ export default [
             name: 'HomeExpDetail',
             meta: {
               title: '经验明细',
+              group: '基础功能',
               fnId: 6,
               icsel: require('@/assets/img/ic_exp_sel.png'),
               icdef: require('@/assets/img/ic_exp_def.png'),
@@ -125,6 +132,7 @@ export default [
             name: 'HomeMyLevel',
             meta: {
               title: '我的等级',
+              group: '基础功能',
               fnId: 2,
               icsel: require('@/assets/img/ic_level_sel.png'),
               icdef: require('@/assets/img/ic_level_def.png'),
@@ -137,6 +145,7 @@ export default [
             name: 'HomeUpdate',
             meta: {
               title: '升级记录',
+              group: '基础功能',
               fnId: 12,
               icsel: require('@/assets/img/ic_update_sel.png'),
               icdef: require('@/assets/img/ic_update_def.png'),
@@ -160,6 +169,7 @@ export default [
             name: 'HomeFixedPost',
             meta: {
               title: '每日定岗',
+              group: '管理功能',
               fnId: 9,
               icsel: require('@/assets/img/ic_setting_sel.png'),
               icdef: require('@/assets/img/ic_setting_def.png'),
@@ -172,6 +182,7 @@ export default [
             name: 'HomeSwitchBind',
             meta: {
               title: '玩家换绑',
+              group: '管理功能',
               fnId: 10,
               icsel: require('@/assets/img/ic_setting_sel.png'),
               icdef: require('@/assets/img/ic_setting_def.png'),
@@ -184,6 +195,7 @@ export default [
             name: 'HomePlayersBind',
             meta: {
               title: '玩家重绑记录',
+              group: '管理功能',
               fnId: 18,
               icsel: require('@/assets/img/ic_player_sel.png'),
               icdef: require('@/assets/img/ic_player_def.png'),
@@ -196,6 +208,7 @@ export default [
             name: 'HomeLevelManage',
             meta: {
               title: '等级管理',
+              group: '管理功能',
               fnId: 11,
               icsel: require('@/assets/img/ic_lev_manage_sel.png'),
               icdef: require('@/assets/img/ic_lev_manage_def.png'),
@@ -208,6 +221,7 @@ export default [
             name: 'HomeAssociatedAccount',
             meta: {
               title: '账号关联',
+              group: '管理功能',
               fnId: 13,
               icsel: require('@/assets/img/ic_associat_sel.png'),
               icdef: require('@/assets/img/ic_associat_def.png'),
@@ -220,6 +234,7 @@ export default [
             name: 'HomeDepartment',
             meta: {
               title: '部门人员管理',
+              group: '管理功能',
               fnId: 14,
               icsel: require('@/assets/img/ic_depart_sel.png'),
               icdef: require('@/assets/img/ic_depart_def.png'),
@@ -232,6 +247,7 @@ export default [
             name: 'HomeTotalKpi',
             meta: {
               title: '薪酬统计',
+              group: '管理功能',
               fnId: 15,
               icsel: require('@/assets/img/ic_total_kpi_sel.png'),
               icdef: require('@/assets/img/ic_total_kpi_def.png'),
@@ -244,6 +260,7 @@ export default [
             name: 'HomeRoleList',
             meta: {
               title: '角色管理',
+              group: '管理功能',
               fnId: 16,
               icsel: require('@/assets/img/ic_rolelist_sel.png'),
               icdef: require('@/assets/img/ic_rolelist_def.png'),

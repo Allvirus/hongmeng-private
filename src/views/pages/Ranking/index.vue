@@ -17,14 +17,14 @@
           :data='areaList',
           placeholder='请输入区服'
         )
-      el-form-item(label-width="20px")
-        el-select(v-model="typeId" placeholder="请选择数据")
+      el-form-item(label-width='20px')
+        el-select(v-model='typeId', placeholder='请选择数据')
           el-option(
-            v-for="item in listData"
-            :key="item.id"
-            :label="item.name"
-            :value="item.id"
-            )
+            v-for='item in listData',
+            :key='item.id',
+            :label='item.name',
+            :value='item.id'
+          )
       el-form-item(:class='OS.isPc ? "" : "jc-center full"')
         el-button.mgl2(icon='el-icon-search', type='primary', @click='getRank') 搜索
     .rank(:class='OS.isPc ? "ff-rn jc-around mgt1" : ""')
@@ -51,7 +51,7 @@
         :rankingKey='typeId === 1 ? "totlaMoney" : "count"'
       )
       ranking-list(
-        v-show="typeId === 1"
+        v-show='typeId === 1',
         :data='rankList.cjobMoneyRank',
         :mainTitle='typeId === 1 ? "C岗充值排行榜" : "C岗共享换包排行"',
         :subTitle='typeId === 1 ? "充值金额(元)" : "换包数"',

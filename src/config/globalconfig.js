@@ -3,10 +3,10 @@ window.$globalconfig = {
   VERSION: '1.0.0.0',
   COPYRIGHT: 'Copyright 2016 - 2020 © All Rights Reserved',
   PANO_LOGIN_API: 'https://editor.vgoyun.com/user/login',
-  API: 'http://lxy.gxzlwl.com/',
+  API: 'http://lxy.gxzlwl.com/', // 默认请求地址 baseURL
   '3DVIEW_URL': 'http://3d.vgoyun.com/',
   USER_URL: 'http://manage.vgoyun.com/',
-  PANO_FILE_API: 'http://lxy.gxzlwl.com/api/common/file',
+  PANO_FILE_API: 'http://lxy.gxzlwl.com/api/common/file', // 文件上传 URL
   COOKIE_NAME: 'ZhuLangUserAccount',
   COOKIE_DOMAIN: 'lxy.hmwl369.com',
 }

@@ -23,17 +23,26 @@
       background-color='#fff',
       text-color='#222222',
       :router='true',
-      active-text-color='#fff'
+      active-text-color='#fff',
+      unique-opened,
+      :default-openeds='defaultArr'
     )
-      .item(v-for='(item, index) in getMenu[0]', :key='index')
-        router-link(:to='{ name: item.name }')
-          .el-menu-item.ff-rn.ai-center(
-            :class='{ "router-link-active": $route.name === item.name }'
-          )
-            img.fit-contain.w20.h20(
-              :src='$route.name === item.name ? item.meta.icsel : item.meta.icdef'
+      el-submenu(
+        v-for='(group, gidx) in getMenu',
+        :index='String(gidx)',
+        :key='gidx'
+      )
+        template(slot='title')
+          span {{ group[0].meta.group }}
+        .item(v-for='(item, index) in group', :key='index')
+          router-link(:to='{ name: item.name }')
+            .el-menu-item.ff-rn.ai-center(
+              :class='{ "router-link-active": $route.name === item.name }'
             )
-            span.mgl2 {{ item.meta.title }}
+              img.fit-contain.w20.h20(
+                :src='$route.name === item.name ? item.meta.icsel : item.meta.icdef'
+              )
+              span.mgl2 {{ item.meta.title }}
 </template>
 <script>
 import routes from '@/router/routes'
@@ -43,6 +52,7 @@ export default {
   data () {
     return {
       activeName: '',
+      defaultArr: ['0'],
     }
   },
   computed: {
@@ -53,12 +63,6 @@ export default {
       const groupObj = {}
       secRoutes.children.map(item => {
         if (item.meta.hideMenu) return
-        // if ((item.name === 'HomeBizConfig' && !this.userInfo.menu.bizConfigAuthority) ||
-        //     (item.name === 'HomeLevelManage' && !this.userInfo.menu.levelAuthority) ||
-        //     (item.name === 'HomeSwitchBind' && !this.userInfo.menu.playSwitch) ||
-        //     (item.name === 'HomeDepartment' && !this.userInfo.menu.departmentAuthority)) {
-        //   return
-        // }
         for (let i = 0; i < userMenuList.length; i++) {
           if (item.meta.fnId === userMenuList[i]) {
             groupObj[item.meta.group] = groupObj[item.meta.group] || []
@@ -111,4 +115,6 @@ $avatarSize = 60px
     color #0487FF
   .el-menu-item
     height 48px !important
+  .el-submenu .el-menu-item
+    padding 0 30px
 </style>
