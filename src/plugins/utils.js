@@ -226,7 +226,7 @@ const utils = {
   // 请求参数为''的情况无法正常请求，需要删除值为''的字段
   filterNull (p) {
     for (const key in p) {
-      if (p[key] === '') {
+      if (p[key] === '' || p[key] === ' ') {
         delete p[key]
       }
     }

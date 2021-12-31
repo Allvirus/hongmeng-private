@@ -24,18 +24,19 @@ export default [
         redirect: { name: 'HomeMyAchievement' },
         component: SubPage,
         children: [
-          // {
-          //   path: 'ResultsOverview',
-          //   name: 'HomeResultsOverview',
-          //   meta: {
-          //     title: '业绩总览',
-          //     fnId: 20,
-          //     icsel: require('@/assets/img/ic_total_kpi_sel.png'),
-          //     icdef: require('@/assets/img/ic_total_kpi_def.png'),
-          //     onlyPcMode: false,
-          //   },
-          //   component: () => import('@/views/pages/Home/ResultsOverview'),
-          // },
+          {
+            path: 'ResultsOverview',
+            name: 'HomeResultsOverview',
+            meta: {
+              title: '业绩总览',
+              group: '基础功能',
+              fnId: 19,
+              icsel: require('@/assets/img/ic_total_kpi_sel.png'),
+              icdef: require('@/assets/img/ic_total_kpi_def.png'),
+              onlyPcMode: false,
+            },
+            component: () => import('@/views/pages/Home/ResultsOverview'),
+          },
           {
             path: 'MyAchievement',
             name: 'HomeMyAchievement',

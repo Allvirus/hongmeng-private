@@ -2,13 +2,12 @@
 .MyExp
   .ff-rn.fs-m.ai-center.bg-white.pdx2.pdt2
     el-form.ff-rw(label-width='100px')
-      el-form-item(label='部门:', v-show='false')
+      el-form-item(label='部门:')
         tree-selector.winput(
           ref='dtptree',
           :data='myDptList.list',
           :defProps='myDptList.props',
           nodeKey='id',
-          clearable,
           :deflabel='myDptList.list[0].name',
           @change='onDepartChange'
         )

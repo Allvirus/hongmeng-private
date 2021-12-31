@@ -143,7 +143,7 @@ export default {
     data: {
       realName: model.realName,
       phoneNumber: model.phoneNumber,
-      account: model.account,
+      // account: model.account,
       departmentId: model.departmentId,
       job: model.job,
       userRoles: model.userRoles,
@@ -178,7 +178,7 @@ export default {
     data: {
       realName: model.realName,
       phoneNumber: model.phoneNumber,
-      account: model.account,
+      // account: model.account,
       departmentId: model.departmentId,
       job: model.job,
       userRoles: model.userRoles,
@@ -767,6 +767,7 @@ export default {
         startTime: model.startTime,
         endTime: model.endTime,
         UserId: Number(model.UserId),
+        ResDepId: model.resDepId,
         Origin: model.Origin,
         ExpChange: Number(model.ExpChange),
         page: model.page,
@@ -970,7 +971,7 @@ export default {
     data: model,
   }),
 
-  // 63. 获取登记列表
+  // 63. 普通员工获取登记列表
   getRegistrationList: (model) => http('get', '/api/playreg/', {
     params: (() => {
       const p = {
@@ -979,6 +980,27 @@ export default {
         PageSize: model.PageSize,
         startTime: model.startTime,
         endTime: model.endTime,
+        userId: model.userId,
+        resDepId: model.resDepId,
+        playAccount: model.playAccount,
+      }
+      utils.filterNull(p)
+      return p
+    })(),
+  }),
+
+  // 管理层获取登记列表
+  getManageRegistrationList: (model) => http('get', 'api/playreg/manage', {
+    params: (() => {
+      const p = {
+        Isblock: model.Isblock,
+        Page: model.Page,
+        PageSize: model.PageSize,
+        startTime: model.startTime,
+        endTime: model.endTime,
+        userId: model.userId,
+        resDepId: model.resDepId,
+        playAccount: model.playAccount,
       }
       utils.filterNull(p)
       return p
@@ -1139,6 +1161,68 @@ export default {
         Type: module.Type,
         Page: module.page,
         PageSize: module.pageSize,
+      }
+      utils.filterNull(p)
+      return p
+    })(),
+  }),
+
+  // 84. 获取首页按部门统计数据（不分页）
+  getStatisticsData: (module) => http('get', '/api/statistics', {
+    loading: true,
+    params: (() => {
+      const p = {
+        StartTime: module.startTime,
+        EndTime: module.endTime,
+        DepaetmentId: module.resDepId,
+      }
+      utils.filterNull(p)
+      return p
+    })(),
+  }),
+
+  // 85. 查询某一部门换包数
+  getStatisticsDevice: (module) => http('get', '/api/statistics/device', {
+    loading: true,
+    params: (() => {
+      const p = {
+        StartTime: module.startTime,
+        EndTime: module.endTime,
+        DepaetmentId: module.psdnDepId,
+        Page: module.psdnPage,
+        PageSize: module.psdnPageSize,
+      }
+      utils.filterNull(p)
+      return p
+    })(),
+  }),
+
+  // 86. 查询某叶子节点部门下员工统计
+  getStatisticsEmployee: (module) => http('get', '/api/statistics/employee', {
+    loading: true,
+    params: (() => {
+      const p = {
+        StartTime: module.startTime,
+        EndTime: module.endTime,
+        DepaetmentId: module.resDepId,
+        Page: module.Page,
+        PageSize: module.PageSize,
+      }
+      utils.filterNull(p)
+      return p
+    })(),
+  }),
+
+  // 87. 查询单个员工换包记录
+  getStatisticsEmployeeDevice: (module) => http('get', '/api/statistics/employee/device', {
+    loading: true,
+    params: (() => {
+      const p = {
+        StartTime: module.startTime,
+        EndTime: module.endTime,
+        UserId: module.userId,
+        Page: module.psdnPage,
+        PageSize: module.psdnPageSize,
       }
       utils.filterNull(p)
       return p

@@ -136,6 +136,11 @@ export default {
           // 编辑
           this.$api.getUserInfoById(this.userId).then(data => {
             this.model = data
+            if (data.workingStatus === 1) {
+              this.model.workingStatus = true
+            } else {
+              this.model.workingStatus = false
+            }
             this.model.id = this.userId
             this.model.dptName = this.findDptName(this.model.departmentId, this.treeData)
           })
@@ -206,10 +211,14 @@ export default {
           params.departmentId === '' ||
           params.job === '' ||
           params.hiredate === '' ||
-          params.userRoles.length === 0 ||
-          params.account === '') {
+          params.userRoles.length === 0) {
         isOK = false
         this.$vgo.tip('请完善表单数据!', 'warning')
+      }
+      if (this.model.workingStatus) {
+        this.model.workingStatus = 1
+      } else {
+        this.model.workingStatus = 0
       }
       return isOK
     },

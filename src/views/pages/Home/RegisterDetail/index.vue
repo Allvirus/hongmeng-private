@@ -60,15 +60,15 @@
     ) 搜索我的数据
 
   el-table.mgy2.bg-white.pd2(:data='listMixin.list')
-    el-table-column(prop='userAccount', label='玩家账号', width='130')
-    el-table-column(prop='userCode', label='玩家代码')
+    el-table-column(prop='userAccount', label='玩家账号' width='100')
+    el-table-column(prop='userCode', label='玩家代码' width='100')
     el-table-column(prop='account', label='推广员账户', width='100px')
     el-table-column(prop='deviceNo', label='设备号', width='300px')
     el-table-column(prop='osType', label='平台', width='100px')
       template(slot-scope='{ row }') {{ row.osType | formatOSType }}
     el-table-column(prop='createDate', label='注册时间', width='150px')
       template(slot-scope='{ row }') {{ row.createDate | dateFormat }}
-    el-table-column(prop='createIp', label='注册IP')
+    el-table-column(prop='createIp', label='注册IP' width='120px')
     el-table-column(prop='isRepeatReg', label='有效换包')
       template(slot-scope='{ row }') {{ row.isRepeatReg ? '否' : '是' }}
     el-table-column(prop='ajob', label='A岗')

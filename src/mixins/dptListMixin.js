@@ -14,9 +14,6 @@ export default {
     }
     if (this.isMyTarget) {
       this.$utils.autoFillDateTime(this.model)
-      // if (!this.userInfo.menu.wechatAuthority) {
-      //   this.listApiForMixin = this.myApi
-      // }
     }
   },
   methods: {
@@ -35,9 +32,6 @@ export default {
       }
       if (this.isMyTarget) {
         this.$utils.autoFillDateTime(this.model)
-        // if (!this.userInfo.menu.wechatAuthority) {
-        //   this.listApiForMixin = this.myApi
-        // }
       }
       this.getListMixin()
     },
