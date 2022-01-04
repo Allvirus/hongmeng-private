@@ -269,18 +269,19 @@ export default [
             },
             component: () => import('@/views/pages/Home/RoleList'),
           },
-          // {
-          //   path: 'StaffPositions',
-          //   name: 'HomeStaffPositions',
-          //   meta: {
-          //     title: '员工岗位数据汇总',
-          //     fnId: 19,
-          //     icsel: require('@/assets/img/ic_staffPositions_sel.png'),
-          //     icdef: require('@/assets/img/ic_staffPositions_def.png'),
-          //     onlyPcMode: true,
-          //   },
-          //   component: () => import('@/views/pages/Home/StaffPositions'),
-          // },
+          {
+            path: 'StaffPositions',
+            name: 'HomeStaffPositions',
+            meta: {
+              title: '员工岗位数据汇总',
+              group: '管理功能',
+              fnId: 20,
+              icsel: require('@/assets/img/ic_staffPositions_sel.png'),
+              icdef: require('@/assets/img/ic_staffPositions_def.png'),
+              onlyPcMode: true,
+            },
+            component: () => import('@/views/pages/Home/StaffPositions'),
+          },
         ],
       },
       {

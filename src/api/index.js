@@ -1228,4 +1228,38 @@ export default {
       return p
     })(),
   }),
+
+  // 88. 查询员工岗位数据统计
+  getStatisticsJob: (module) => http('get', '/api/statistics/job', {
+    loading: true,
+    params: (() => {
+      const p = {
+        StartTime: module.startTime,
+        EndTime: module.endTime,
+        DepaetmentId: module.resDepId,
+        UserId: module.userId,
+        Page: module.Page,
+        PageSize: module.PageSize,
+      }
+      utils.filterNull(p)
+      return p
+    })(),
+  }),
+
+  // 89. 查询员工岗位数据统计
+  getStaffJobsData: (module) => http('get', '/api/statistics/job/statistics', {
+    loading: true,
+    params: (() => {
+      const p = {
+        StartTime: module.startTime,
+        EndTime: module.endTime,
+        DepaetmentId: module.resDepId,
+        UserId: module.userId,
+        Page: module.Page,
+        PageSize: module.PageSize,
+      }
+      utils.filterNull(p)
+      return p
+    })(),
+  }),
 }

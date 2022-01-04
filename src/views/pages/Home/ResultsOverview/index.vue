@@ -2,18 +2,28 @@
   .ResultsOv
     el-form.ff-rn.bg-white.pdt2.pdx2(label-width='70px')
       el-form-item(label='部门:' v-if='userInfo.isLeader')
-        el-select.winput(
-          v-model='model.resDepId',
-          placeholder='请选择',
-          @change="changeDep"
-          filterable
+        tree-selector.winput(
+          ref='dtptree',
+          :data='myDptList.list',
+          :defProps='myDptList.props',
+          nodeKey='id',
+          clearable,
+          :deflabel='myDptList.list[0].name',
+          @change='onDepartChange'
         )
-          el-option(
-            v-for='item in allDepID',
-            :key='item.id',
-            :label='item.name',
-            :value='item.id'
-          )
+      //- el-form-item(label='部门:' v-if='userInfo.isLeader')
+      //-   el-select.winput(
+      //-     v-model='model.resDepId',
+      //-     placeholder='请选择',
+      //-     @change="changeDep"
+      //-     filterable
+      //-   )
+      //-     el-option(
+      //-       v-for='item in allDepID',
+      //-       :key='item.id',
+      //-       :label='item.name',
+      //-       :value='item.id'
+      //-     )
       el-form-item.mgl3(label='选择时间:' label-width='80px')
         CommonDatePicker.w300(
           :start.sync='model.startTime',
@@ -205,6 +215,9 @@ export default {
     radio () {
       this.setPieData()
     },
+    'model.resDepId' () {
+      this.getSuperiorID()
+    },
   },
   created () {
     this.$api.getAllDeparts().then(res => {
@@ -306,6 +319,11 @@ export default {
     },
     checkDetails (row) {
       if (row.userId) return false
+      const depInfo = {}
+      depInfo.name = row.departmentName
+      depInfo.id = row.departmentId
+      this.$refs.dtptree.label = row.departmentName
+      this.onDepartChange(depInfo)
       // 获取部门ID
       const depId = row.departmentId
       this.model.resDepId = depId
@@ -327,7 +345,6 @@ export default {
     // 合计
     getSummaries (param) {
       const { columns, data } = param
-      console.log(columns)
       const sums = []
       columns.forEach((column, index) => {
         if (index === 0) {
@@ -393,10 +410,6 @@ export default {
         this.model.Page = page
         this.search()
       }
-    },
-    // 排序
-    listSort () {
-
     },
     // 返回上级
     // goBack () {

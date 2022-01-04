@@ -7,7 +7,6 @@
           :data='myDptList.list',
           :defProps='myDptList.props',
           nodeKey='id',
-          clearable,
           :deflabel='myDptList.list[0].name',
           @change='onDepartChange'
         )
@@ -33,27 +32,42 @@
         el-button.mgl3(
           icon='el-icon-search',
           type='primary',
+          @click="search"
         ) 搜索
     .showbox.bg-white.mgt2.pd2
       el-table(
-        :data='configList'
+        :data='listMixin.list'
+        :span-method="SpanMethod"
+        class="my-table"
+        border
       )
-        el-table-column(prop='aUserName', label='推广员')
-        el-table-column(prop='bUserName', label='员工状态')
-        el-table-column(prop='cUserName', label='岗位')
-        el-table-column(prop='startTime', label='新增流水')
-        el-table-column(prop='startTime', label='共享换包数')
-        el-table-column(prop='startTime', label='后续流水')
-        el-table-column(prop='startTime', label='换包数')
-        el-table-column(prop='startTime', label='天数')
-        el-table-column(prop='startTime', label='绑定销售岗人数')
-        el-table-column(prop='startTime', label='共享人')
+        el-table-column(prop='realName', label='推广员')
+        el-table-column(prop='workStatus', label='员工状态')
+          template(slot-scope="{ row }") {{ row.workStatus === 1 ? '在职' : '离职' }}
+        el-table-column(prop='job', label='岗位')
+          template(slot-scope="{ row }")
+            span {{ jobArr[row.job] }}
+        el-table-column(prop='postMonthPrice', label='新增流水')
+        //- el-table-column(prop='startTime', label='共享换包数')
+        el-table-column(prop='postSubsequentAmount', label='后续流水')
+        el-table-column(prop='postDeviceCount', label='换包数')
+        el-table-column(prop='days', label='天数')
+        el-table-column(prop='aPostCount', label='绑定销售岗人数')
+        //- el-table-column(prop='startTime', label='共享人')
       el-pagination.margin-spacing(
-        :total='10',
-        :page-size.sync='model.pageSize',
-        :current-page.sync='model.page',
+        :total='listMixin.count',
+        :page-size.sync='model.PageSize',
+        :current-page.sync='model.Page',
         @current-change='getListMixin'
       )
+      el-divider
+      .Total
+        p.fs-b.strong 总计：
+        p.mgt1(v-for="item in totalList")
+          span {{ jobArr[item.job] }}岗 (
+          span  新增流水： {{ item.postMonthPrice }} ，
+          span 后续流水：{{ item.postSubsequentAmount  }}，
+          span 换包数： {{ item.postDeviceCount }} )
 </template>
 <script>
 import { mapGetters } from 'vuex'
@@ -63,37 +77,53 @@ export default {
   mixins: [dptListMixin, fetchListMixin],
   data () {
     return {
-      depData: [],
+      listApiForMixin: 'getStatisticsJob',
+      dtpApi: 'getStatisticsJob',
       model: {
         startTime: '',
         endTime: '',
-        UserAccount: '',
-        UserCode: '',
-        FromAccount: '',
-        ToAccount: '',
-        Type: '',
+        userId: '',
         PageSize: 10,
         Page: 1,
       },
-      configList: [],
-      radio3: 1,
+      jobArr: ['销售', '客服', '后勤'],
+      totalList: [],
     }
   },
   computed: {
     ...mapGetters(['areaList', 'gameList', 'myDptList', 'userInfo', 'OS']),
   },
+  watch: {
+    model: {
+      handler: function () {
+        this.getStaffJobsData()
+      },
+      deep: true,
+    },
+  },
   mounted () {
-    this.getdefData()
+    this.getStaffJobsData()
   },
   methods: {
-    getdefData () {
-      this.$api.getAllDeparts().then(res => {
-        this.depData = res
+    SpanMethod ({ row, column, rowIndex, columnIndex }) {
+      if (columnIndex === 0 || columnIndex === 1) {
+        if (rowIndex % 3 === 0) {
+          return [3, 1]
+        } else {
+          return [0, 0]
+        }
+      }
+    },
+    getStaffJobsData () {
+      this.$api.getStaffJobsData(this.model).then(res => {
+        this.totalList = res.list
       })
     },
   },
 }
 </script>
-<style lang="stylus" scoped>
-
+<style lang="stylus">
+.my-table
+  .el-table__row:nth-child(2n)
+    background none !important
 </style>
