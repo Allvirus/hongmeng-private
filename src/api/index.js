@@ -152,6 +152,8 @@ export default {
       jobNumber: model.jobNumber,
       workingStatus: model.workingStatus,
       manageDepartmentId: model.manageDepartmentId,
+      password: model.password,
+      confirmPassword: model.confirmPassword,
     },
   }),
 
@@ -188,6 +190,9 @@ export default {
       jobNumber: model.jobNumber,
       manageDepartmentId: model.manageDepartmentId,
       photo: model.photo,
+      leavedate: model.leavedate,
+      password: model.password,
+      confirmPassword: model.confirmPassword,
     },
   }),
 
@@ -971,6 +976,9 @@ export default {
     data: model,
   }),
 
+  // 62.5 查询重复登记记录
+  queryRegister: (playerAccount) => http('get', `/api/playreg/${playerAccount}`),
+
   // 63. 普通员工获取登记列表
   getRegistrationList: (model) => http('get', '/api/playreg/', {
     params: (() => {
@@ -1118,7 +1126,9 @@ export default {
   }),
 
   // 76. 创建某月工资记录
-  createPayrollRecords: (module) => http('post', `/api/salary?month=${module.Month}`),
+  createPayrollRecords: (module) => http('post', `/api/salary?month=${module.Month}`, {
+    loading: true,
+  }),
 
   // 77 .获取所有角色
   getRoleController: () => http('get', '/api/role'),

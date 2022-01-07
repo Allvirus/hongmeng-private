@@ -75,14 +75,15 @@
 
   el-table.mgy2.bg-white.pd2(:data='listMixin.list')
     el-table-column(prop='userAccount', label='玩家账号')
+    el-table-column(prop='roleLevel', label='玩家等级')
     el-table-column(prop='userCode', label='玩家代码')
     el-table-column(prop='account', label='推广员账户')
     el-table-column(prop='gameName', label='游戏名称')
     el-table-column(prop='areaName', label='区服')
     el-table-column(prop='roleName', label='游戏角色')
-    el-table-column(prop='osType', label='平台')
+    el-table-column(prop='osType', label='平台' width="70px")
       template(slot-scope='{ row }') {{ row.osType | formatOSType }}
-    el-table-column(prop='createDate', label='创建时间')
+    el-table-column(prop='createDate', label='创建时间' width="130px")
       template(slot-scope='{ row }') {{ row.createDate | dateFormat }}
     el-table-column(prop='ajob', label='A岗')
     el-table-column(prop='bjob', label='B岗')

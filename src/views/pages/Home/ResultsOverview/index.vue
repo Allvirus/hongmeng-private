@@ -105,7 +105,7 @@
           template(slot="header" slot-scope="scope")
             el-tooltip(effect="dark" content="LTV值=流水/换包数，换包数是指走链接进来的换包数" placement="top-start")
               span ltv
-          template(slot-scope='{ row }') {{ row.ltv | toFixed }}
+          template(slot-scope='{ row }') {{ row.ltv | toFixed(1) }}
     el-pagination.margin-spacing(
       v-if="isleaf"
       :total='count',

@@ -80,8 +80,8 @@ export default {
       listApiForMixin: 'getStatisticsJob',
       dtpApi: 'getStatisticsJob',
       model: {
-        startTime: '',
-        endTime: '',
+        startTime: this.GetDateStr(0, 'start'),
+        endTime: this.GetDateStr(0, 'end'),
         userId: '',
         PageSize: 10,
         Page: 1,
@@ -118,6 +118,18 @@ export default {
       this.$api.getStaffJobsData(this.model).then(res => {
         this.totalList = res.list
       })
+    },
+    GetDateStr (AddDayCount, ST) {
+      const dd = new Date()
+      dd.setDate(dd.getDate() + AddDayCount) // 获取 AddDayCount 天后的日期
+      const y = dd.getFullYear()
+      const m = (dd.getMonth() + 1) < 10 ? '0' + (dd.getMonth() + 1) : (dd.getMonth() + 1)
+      const d = dd.getDate() < 10 ? '0' + dd.getDate() : dd.getDate()
+      if (ST === 'end') {
+        return y + '-' + m + '-' + d + ' ' + '23:59:59'
+      } else {
+        return y + '-' + m + '-' + d + ' ' + '00:00:00'
+      }
     },
   },
 }

@@ -82,6 +82,7 @@
             v-model.trim ='addModel.playerAccount',
             placeholder='请输入玩家社交账号',
             clearable
+            @blur="queryBlacklist"
           )
         el-form-item.mgl3.mgt2.mgb2(label='社交账号类型:')
           el-radio-group(v-model='addModel.socialType')
@@ -90,8 +91,9 @@
         el-form-item.mgl3.mgt2.mgb2(label='平台分类:')
           el-radio-group(v-model='platformType')
             el-radio(label='手游') 手游
+    p.tac.mgt2.danger(v-if="shieldingRecord.length !== 0") 该玩家账号于 {{ shieldingRecord[0].createTime | dateFormat }} 首次拉黑
     span(span slot="footer" class="dialog-footer")
-      el-button(@click="dialogVisible = false") 取消
+      el-button(@click="cancel") 取消
       el-button(type="primary" @click="registeredUsers") 确定
 </template>
 <script>
@@ -123,6 +125,7 @@ export default {
         socialType: '0',
         isblock: false,
       },
+      shieldingRecord: [],
     }
   },
   computed: {
@@ -131,6 +134,12 @@ export default {
   watch: {
     'model.Isblock' () {
       this.getListMixin()
+    },
+    'addModel.playerAccount' () {
+      if (this.addModel.playerAccount === '') {
+        this.shieldingRecord = []
+        return false
+      }
     },
   },
   methods: {
@@ -144,8 +153,13 @@ export default {
           socialType: '0',
           isblock: false,
         }
-
+        this.shieldingRecord = []
         this.getListMixin()
+      })
+    },
+    getQueryRegister () {
+      this.$api.queryRegister(this.addModel.playerAccount).then(res => {
+        this.shieldingRecord = res
       })
     },
     addUser () {
@@ -158,6 +172,22 @@ export default {
     },
     search () {
       this.getListMixin()
+    },
+    cancel () {
+      this.addModel = {
+        playerAccount: '',
+        socialType: '0',
+        isblock: false,
+      }
+      this.shieldingRecord = []
+      this.dialogVisible = false
+    },
+    queryBlacklist () {
+      if (this.addModel.playerAccount === '') {
+        this.shieldingRecord = []
+        return false
+      }
+      this.getQueryRegister()
     },
   },
 }

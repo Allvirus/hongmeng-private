@@ -60,6 +60,17 @@
             v-model='model.workingStatus',
             :active-text='model.workingStatus ? "在职" : "离职"'
           )
+          CommonDatePicker.mgl3(
+            v-if="!model.workingStatus"
+            type='date',
+            v-model='model.leavedate',
+            all,
+            placeholder='请选择离职日期'
+          )
+        el-form-item(label='密码:' v-if="this.userId === 0")
+          el-input(v-model.trim='model.password', placeholder='请输入密码', show-password clearable)
+        el-form-item(label='确认密码:' v-if="this.userId === 0")
+          el-input(v-model.trim='model.confirmPassword', placeholder='请确认密码',show-password clearable)
         el-form-item(label='工号:')
           el-input(v-model='model.jobNumber', placeholder='请输入工号', clearable)
         el-form-item(label='手机号:')
@@ -116,6 +127,9 @@ export default {
         dptName: '',
         workingStatus: true,
         photo: '',
+        password: '',
+        confirmPassword: '',
+        leavedate: '',
       },
       jobs: ['A岗', 'B岗', 'C岗', '后勤'],
       roles: [],
@@ -190,6 +204,12 @@ export default {
       if (!this.checkParams()) {
         return
       }
+      if (this.model.workingStatus) {
+        this.model.workingStatus = 1
+      } else {
+        this.model.workingStatus = 0
+      }
+
       if (this.userId !== 0) {
         this.$api.updateUser(this.model).then(data => {
           this.$vgo.tip('更新成功', 'success')
@@ -215,10 +235,11 @@ export default {
         isOK = false
         this.$vgo.tip('请完善表单数据!', 'warning')
       }
-      if (this.model.workingStatus) {
-        this.model.workingStatus = 1
-      } else {
-        this.model.workingStatus = 0
+      if (this.model.password !== '' || this.confirmPassword !== '') {
+        if (this.model.password !== this.model.confirmPassword) {
+          this.$vgo.tip('两次输入密码不一致', 'warning')
+          isOK = false
+        }
       }
       return isOK
     },
