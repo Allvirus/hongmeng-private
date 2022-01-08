@@ -674,7 +674,7 @@ export default {
     params: {
       GameName: model.GameName, // | string | 否 | 游戏名称 |
       AreaName: model.AreaName, // | string | 否 | 区服名称 |
-      ResDepId: model.ResDepId, // | int | 否 | 查询部门ID |
+      ResDepId: model.dtpId, // | int | 否 | 查询部门ID |
       UserId: model.UserId, // | int | 否 | 查询用户ID |
     },
   }),
