@@ -2,10 +2,10 @@
 .switch-bind
   .ff-rn.fs-m.ai-center.bg-white.pdx2.pdt2
     el-form.ff-rw.ai-center(label-width='100px')
-      el-form-item(label='玩家账号:')
+      el-form-item(label='玩家代码:')
         el-input.winput(
-          v-model='model.UserAccount',
-          placeholder='请输入玩家账号',
+          v-model='model.UserCode',
+          placeholder='请输入玩家代码',
           clearable
         )
       el-form-item(label-width='20px')
@@ -22,7 +22,7 @@
         ) 重置
 
   el-table.mgy2.bg-white.pd2(:data='listMixin.list')
-    el-table-column(prop='userAccount', label='玩家账号')
+    //- el-table-column(prop='userAccount', label='玩家账号')
     el-table-column(prop='userCode', label='玩家代码')
     el-table-column(prop='aJob', label='A岗(换绑前)')
     el-table-column(prop='bJob', label='B岗(换绑前)')
@@ -116,7 +116,7 @@ export default {
     return {
       listApiForMixin: 'getBindChangeList',
       model: {
-        UserAccount: '',
+        UserCode: '',
         Page: 1,
         PageSize: 10,
       },

@@ -74,6 +74,7 @@
   el-dialog(
     :title="this.addModel.isblock ? '拉黑账户' : '添加账户'"
     :visible.sync="dialogVisible"
+    :before-close="cancel"
     width="30%")
     .notice
       el-form.ff-rw.ai-center(label-width='100px')
@@ -91,7 +92,8 @@
         el-form-item.mgl3.mgt2.mgb2(label='平台分类:')
           el-radio-group(v-model='platformType')
             el-radio(label='手游') 手游
-    p.tac.mgt2.danger(v-if="shieldingRecord.length !== 0") 该玩家账号于 {{ shieldingRecord[0].createTime | dateFormat }} 首次拉黑
+    .list.tac(v-for="item in shieldingRecord" :key="item.id")
+      p.mgt2(v-if="item.isblock === addModel.isblock") 该玩家账号于 {{ item.createTime | dateFormat }} 由 {{ item.createUser }} {{ item.regCount === 0 ? "首" : "第" + item.regCount }}次 {{ item.isblock ? '拉黑' : '登记' }}
     span(span slot="footer" class="dialog-footer")
       el-button(@click="cancel") 取消
       el-button(type="primary" @click="registeredUsers") 确定

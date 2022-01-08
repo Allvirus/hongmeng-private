@@ -820,7 +820,7 @@ export default {
   getBindChangeList: (model) => http('get', '/api/playerswitch/', {
     loading: true,
     params: {
-      UserAccount: model.UserAccount,
+      UserCode: model.UserCode,
       Page: model.Page,
       PageSize: model.PageSize,
     },
