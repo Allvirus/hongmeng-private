@@ -36,7 +36,7 @@ export default {
       this.getListMixin()
     },
     // 搜索列表
-    search () {
+    search (cb = null) {
       this.listApiForMixin = (!this.searchMyData && this.userInfo.isLeader)
         ? this.dtpApi : this.myApi
       if (this.isMyTarget) {
@@ -46,6 +46,9 @@ export default {
       }
       this.$utils.autoFillDateTime(this.model)
       this.getListMixin()
+      if (cb !== null && typeof cb === 'function') {
+        cb()
+      }
     },
     // 部门改变
     onDepartChange (dtpInfo) {

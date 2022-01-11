@@ -32,7 +32,7 @@
         el-button.mgl3(
           icon='el-icon-search',
           type='primary',
-          @click="search"
+          @click="search(getStaffJobsData)"
         ) 搜索
     .showbox.bg-white.mgt2.pd2
       el-table(
@@ -92,14 +92,6 @@ export default {
   },
   computed: {
     ...mapGetters(['areaList', 'gameList', 'myDptList', 'userInfo', 'OS']),
-  },
-  watch: {
-    model: {
-      handler: function () {
-        this.getStaffJobsData()
-      },
-      deep: true,
-    },
   },
   mounted () {
     this.getStaffJobsData()

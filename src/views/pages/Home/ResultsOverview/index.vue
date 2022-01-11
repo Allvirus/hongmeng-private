@@ -76,11 +76,11 @@
               span 换包数
           template(slot-scope="{ row }")
             span(@click="getPsdn(row)" class="psdn") {{ row.totalDeviceCount }}
-        el-table-column(prop='showSnsRegisterCount', label='总登记数/转化率' width="80px")
+        el-table-column(prop='showSnsRegisterCount', label='新增登记数/转化率' width="80px")
           template(slot="header" slot-scope="scope")
             el-tooltip(effect="dark" content="总登记数：玩家社交账号登记总数，转化率=总换包数/总登记数" placement="top-start")
               span 总登记数/转化率
-        el-table-column(prop='snsRegisterCount', label='总登记数')
+        el-table-column(prop='snsRegisterRepartCount', label='重复登记数')
         el-table-column(prop='snsBlockCount', label='总拉黑数')
           template(slot="header" slot-scope="scope")
             el-tooltip(effect="dark" content="玩家社交账号拉黑总数" placement="top-start")
@@ -351,7 +351,7 @@ export default {
           sums[index] = '总计'
           return false
         }
-        if (index === 1 && column.label === '在职人数/离职人数') {
+        if (index === 1) {
           let inCountSum = 0
           let inOutCountSum = 0
           for (let i = 0; i < data.length; i++) {
@@ -360,7 +360,7 @@ export default {
           }
           const numberTotal = inCountSum + ' / ' + inOutCountSum
           sums[index] = numberTotal
-        } else if (index === 5 && column.label === '总登记数/转化率') {
+        } else if (index === 5) {
           // 总登记数
           let total = 0
           // 转化率

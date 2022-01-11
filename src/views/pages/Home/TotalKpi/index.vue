@@ -66,6 +66,7 @@
         type='success',
         @click='dialogVisible = true'
       ) 新增
+      el-button.mgb2(type='warning' @click="exportWages") 导出工资
 
   el-table.mgy2.bg-white.pd2(:data='listMixin.list')
     el-table-column(label='月份')
@@ -80,7 +81,7 @@
         span(v-else='row.monthJob === 2') C岗
     el-table-column(prop='totalExp', label='总经验值')
       template(slot="header" slot-scope="scope")
-        span 总充值金额
+        span 总经验值
         i.toLoadMore(:class="isShowExp ? 'el-icon-minus' : 'el-icon-plus'" @click="isShowExp = !isShowExp")
     el-table-column(prop='aPostExp', label='销售岗经验值' v-if="isShowExp")
     el-table-column(prop='bPostExp', label='客服岗经验值' v-if="isShowExp")
@@ -124,6 +125,8 @@
 import { mapGetters } from 'vuex'
 import fetchListMixin from '@/mixins/fetchListMixin'
 import dptListMixin from '@/mixins/dptListMixin'
+import axios from 'axios'
+import utils from '@/plugins/utils'
 export default {
   name: 'TotalKpi',
   mixins: [dptListMixin, fetchListMixin],
@@ -133,7 +136,7 @@ export default {
       dtpApi: 'getSalaryData',
       myApi: 'getRoleInfos',
       model: {
-        Month: '',
+        Month: this.getLastMonth(),
         WorkStatus: 0,
         userId: '',
         resDepId: '0',
@@ -165,10 +168,6 @@ export default {
   computed: {
     ...mapGetters(['areaList', 'gameList', 'myDptList', 'userInfo', 'OS']),
   },
-  created () {
-    this.getLastMonth()
-    this.search()
-  },
   methods: {
     cancelChange () {
       this.dialogVisible = false
@@ -191,9 +190,36 @@ export default {
     },
     getLastMonth () {
       const date = new Date()
-      const LastMonth = date.getMonth()
+      let LastMonth = date.getMonth()
+      LastMonth = '00' + (LastMonth + 1)
       const Y = date.getFullYear()
-      this.model.Month = Y + '-' + LastMonth
+      return Y + '-' + LastMonth.substr(-2)
+    },
+    exportWages () {
+      if (this.listMixin.list.length < 1) {
+        this.$vgo.tip('无数据', 'error')
+        return false
+      }
+      axios.get('/api/salary/excel', {
+        responseType: 'blob',
+        params: utils.filterNull(this.model),
+        baseURL: $globalconfig.API,
+        timeout: 0,
+        headers: { Authorization: utils.getToken() },
+      }).then(res => {
+        const url = window.URL.createObjectURL(new Blob([res.data]))
+        const link = document.createElement('a')
+        link.style.display = 'none'
+        link.href = url
+        link.setAttribute('download', this.$route.meta.title + '.xlsx')
+
+        document.body.appendChild(link)
+
+        link.click()
+      }).catch(err => {
+        this.$vgo.tip('下载失败', 'error')
+        console.log(err)
+      })
     },
   },
 }

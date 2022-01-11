@@ -1272,4 +1272,18 @@ export default {
       return p
     })(),
   }),
+
+  // 90. 导出工资 Excel
+  // exportWages: (model) => http('get', '/api/salary/excel', {
+  //   params: (() => {
+  //     const p = {
+  //       Month: module.Month,
+  //       resDepId: module.resDepId,
+  //       userId: module.userId,
+  //       WorkStatus: module.WorkStatus,
+  //     }
+  //     utils.filterNull(p)
+  //     return p
+  //   })(),
+  // }),
 }
