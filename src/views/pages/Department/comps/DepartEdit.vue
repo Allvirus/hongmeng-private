@@ -88,6 +88,12 @@ export default {
       this.isEdit = newValue !== null
       if (newValue !== null) {
         this.departInfo = newValue
+        if (this.departInfo.name) {
+          const regexp = /(\([^)]*\))/
+          if (regexp.test(this.departInfo.name)) {
+            this.departInfo.name = this.departInfo.name.replace(regexp, '')
+          }
+        }
         if (this.departInfo.userId === 0) {
           this.departInfo.userId = ''
         }
