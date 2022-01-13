@@ -173,7 +173,7 @@ export default {
   getAJobsUserList: () => http('get', 'api/user/a'),
 
   // 4.8 根据部门ID获取用户信息
-  getDepartMembers: (departmentId, Resigned = true) => http('get', `api/user/department/${departmentId}?Resigned=${Resigned}`),
+  getDepartMembers: (departmentId, Resigned = false) => http('get', `api/user/department/${departmentId}?Resigned=${Resigned}`),
 
   // 4.9 根据用户ID修改用户信息
   updateUser: (model) => http('put', `api/user/${model.id}`, {
