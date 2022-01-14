@@ -64,7 +64,7 @@
             .ff-rn.danger(v-else-if='row.workingStatus === 2')
               span 已离职
             .ff-rn.danger(v-else)
-              span 已离职3个月
+              span 已离职2个月
         el-table-column(prop='userStatus', label='锁定状态')
           template(slot-scope='{ row }')
             .ff-rn.danger(v-if='!row.lockoutEnabled')

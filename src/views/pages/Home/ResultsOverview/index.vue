@@ -245,6 +245,7 @@ export default {
       this.getSuperiorID()
     },
     search () {
+      this.$utils.autoFillDateTime(this.model)
       if (this.superiorDepId !== null && this.superiorDepId > 3) {
         this.getStatisticsEmployee()
         this.isleaf = true

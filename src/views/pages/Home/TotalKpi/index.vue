@@ -97,6 +97,7 @@
     el-table-column(prop='commission', label='提成点')
       template(slot-scope='{ row }') {{ row.commission + "%" }}
     el-table-column(prop='percentAmount', label='提成金额')
+    el-table-column(prop='basicSalary', label='底薪')
     el-table-column(label='创建时间', width='190')
       template(slot-scope='{ row }') {{ row.createDate | dateFormat }}
   el-pagination.margin-spacing(
@@ -191,8 +192,12 @@ export default {
     getLastMonth () {
       const date = new Date()
       let LastMonth = date.getMonth()
-      LastMonth = '00' + (LastMonth + 1)
-      const Y = date.getFullYear()
+      let Y = date.getFullYear()
+      if (LastMonth === 0) {
+        LastMonth = 12
+        Y = Y - 1
+      }
+      LastMonth = '00' + (LastMonth)
       return Y + '-' + LastMonth.substr(-2)
     },
     exportWages () {

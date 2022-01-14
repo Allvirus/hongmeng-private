@@ -172,9 +172,6 @@ export default {
       this.addModel.isblock = true
       this.dialogVisible = true
     },
-    search () {
-      this.getListMixin()
-    },
     cancel () {
       this.addModel = {
         playerAccount: '',
