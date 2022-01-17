@@ -22,7 +22,6 @@
         default-expand-all,
         :expand-on-click-node="false"
         @node-click='handleNodeClick',
-        @check="clickCheck"
         :node-key='nodeKey'
       )
 </template>
@@ -77,7 +76,6 @@ export default {
       this.value = ''
     },
     handleNodeClick (item) {
-      if (this.isCheckbox) return false
       this.value = item[this.defProps.valKey]
       this.label = item[this.defProps.label]
       const dtpInfo = {
@@ -86,21 +84,6 @@ export default {
       }
       this.$emit('change', dtpInfo)
       this.$refs.selector.blur()
-    },
-    clickCheck (data) {
-      // data 当前选中的数据对象
-      const nodes = this.$refs.tree.getCheckedNodes()
-      let lableStr = ''
-      const dtpArr = []
-      nodes.forEach(item => {
-        const info = {
-          id: item.id,
-          naame: item.name,
-        }
-        dtpArr.push(info)
-        lableStr += item.name + ' '
-      })
-      this.label = lableStr
     },
     onClear () {
       this.label = ''

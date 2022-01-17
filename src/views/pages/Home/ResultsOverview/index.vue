@@ -222,10 +222,8 @@ export default {
   created () {
     this.$api.getAllDeparts().then(res => {
       this.allDepID = res
+      this.search()
     })
-  },
-  mounted () {
-    this.getStatisticsData()
   },
   methods: {
     getPsdn (row) {
@@ -241,12 +239,10 @@ export default {
         this.dialogTableVisible = true
       }
     },
-    changeDep (item) {
-      this.getSuperiorID()
-    },
     search () {
+      this.getSuperiorID()
       this.$utils.autoFillDateTime(this.model)
-      if (this.superiorDepId !== null && this.superiorDepId > 3) {
+      if (this.superiorDepId !== null && this.superiorDepId >= 3) {
         this.getStatisticsEmployee()
         this.isleaf = true
       } else {
