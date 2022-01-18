@@ -67,6 +67,7 @@ export default {
     return {
       listApiForMixin: 'getPlayerData',
       dtpApi: 'getPlayerData',
+      myApi: 'getPlayerData',
       TypeList: [
         {
           name: 'In',

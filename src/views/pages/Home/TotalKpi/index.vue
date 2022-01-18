@@ -2,17 +2,16 @@
 .TotalKpi
   .ff-rn.fs-m.ai-center.bg-white.pdx2.pdt2
     el-form.ff-rw.ai-center(label-width='60px')
-      el-form-item(label='部门:', v-if='userInfo.isLeader')
+      el-form-item(label='部门:')
         tree-selector.winput(
           ref='dtptree',
           :data='myDptList.list',
           :defProps='myDptList.props',
           nodeKey='id',
-          clearable,
           :deflabel='myDptList.list[0].name',
           @change='onDepartChange'
         )
-      el-form-item(label='员工:', v-if='userInfo.isLeader')
+      el-form-item(label='员工:')
         el-select.winput(
           v-model='model.userId',
           placeholder='请选择',
@@ -53,22 +52,16 @@
         :class='OS.isPc ? "" : "mgb2"',
         icon='el-icon-search',
         type='primary',
-        @click='search'
+        @click='getSalaryList'
       ) 搜索
-      el-button.mgl2.mgb3(
-        :class='OS.isPc ? "" : "mgb2"',
-        icon='el-icon-refresh-right',
-        type='primary',
-        @click='reset'
-      ) 重置
       el-button.mgl2.mgb3(
         :class='OS.isPc ? "" : "mgb2"',
         type='success',
         @click='dialogVisible = true'
       ) 新增
-      el-button.mgb2(type='warning' @click="exportWages") 导出工资
+      el-button.mgb3(type='warning' @click="exportWages") 导出工资
 
-  el-table.mgy2.bg-white.pd2(:data='listMixin.list')
+  el-table.mgy2.bg-white.pd2(:data='salaryList')
     el-table-column(label='月份')
       template(slot-scope='{ row }') {{ row.month }}
     el-table-column(prop='userName', label='员工')
@@ -101,10 +94,10 @@
     el-table-column(label='创建时间', width='190')
       template(slot-scope='{ row }') {{ row.createDate | dateFormat }}
   el-pagination.margin-spacing(
-    :total='listMixin.count',
+    :total='count',
     :page-size.sync='model.pageSize',
     :current-page.sync='model.page',
-    @current-change='getListMixin',
+    @current-change='getSalaryList',
     :class='OS.isPc ? "margin-spacing" : ""',
     :base='!OS.isPc',
     :small='!OS.isPc'
@@ -124,26 +117,24 @@
 </template>
 <script>
 import { mapGetters } from 'vuex'
-import fetchListMixin from '@/mixins/fetchListMixin'
 import dptListMixin from '@/mixins/dptListMixin'
 import axios from 'axios'
 import utils from '@/plugins/utils'
 export default {
   name: 'TotalKpi',
-  mixins: [dptListMixin, fetchListMixin],
+  mixins: [dptListMixin],
   data () {
     return {
-      listApiForMixin: 'getSalaryData',
-      dtpApi: 'getSalaryData',
-      myApi: 'getRoleInfos',
       model: {
         Month: this.getLastMonth(),
         WorkStatus: 0,
         userId: '',
-        resDepId: '0',
+        resDepId: 1,
         page: 1,
         pageSize: 10,
       },
+      count: 0,
+      salaryList: [],
       createWage: {
         Month: '',
       },
@@ -164,12 +155,28 @@ export default {
       dialogVisible: false,
       isShowExp: false,
       isShowSalary: false,
+      myDpt: {
+        list: [],
+      },
     }
   },
   computed: {
     ...mapGetters(['areaList', 'gameList', 'myDptList', 'userInfo', 'OS']),
   },
+  created () {
+    this.$store.dispatch('getMyDptList', 1)
+    this.getSalaryList()
+  },
+  mounted () {
+    this.onDepartChange({ id: 1 })
+  },
   methods: {
+    getSalaryList () {
+      this.$api.getSalaryData(this.model).then(res => {
+        this.count = res.count
+        this.salaryList = res.list
+      })
+    },
     cancelChange () {
       this.dialogVisible = false
     },
@@ -201,7 +208,7 @@ export default {
       return Y + '-' + LastMonth.substr(-2)
     },
     exportWages () {
-      if (this.listMixin.list.length < 1) {
+      if (this.salaryList.length < 1) {
         this.$vgo.tip('无数据', 'error')
         return false
       }

@@ -158,7 +158,11 @@ export default {
         this.model.departmentId = this.userInfo.resDepartmentId
       }
       if (this.model.departmentId !== '') {
-        this.defLable = this.dptNameList[this.model.departmentId].name
+        if (!this.dptNameList[this.model.departmentId]) {
+          this.defLable = this.dptNameList[this.model.departmentId + 1].name
+        } else {
+          this.defLable = this.dptNameList[this.model.departmentId].name
+        }
       } else {
         this.defLable = ''
       }

@@ -48,10 +48,16 @@ export default {
         commit('projectTagList', data)
       })
     },
-    getMyDptList ({ commit, state }) {
-      return api.getDepartById(state.userInfo.resDepartmentId).then(data => {
-        commit('myDptList', data)
-      })
+    getMyDptList ({ commit, state }, id = null) {
+      if (id !== null) {
+        return api.getDepartById(id).then(data => {
+          commit('myDptList', data)
+        })
+      } else {
+        return api.getDepartById(state.userInfo.resDepartmentId).then(data => {
+          commit('myDptList', data)
+        })
+      }
     },
     clearStore ({ commit, state }) {
       return commit('clearStore')
