@@ -59,7 +59,7 @@
         type='success',
         @click='dialogVisible = true'
       ) 新增
-      el-button.mgb3(type='warning' @click="exportWages") 导出工资
+      el-button.mgb3(type='warning', @click='exportWages') 导出工资
 
   el-table.mgy2.bg-white.pd2(:data='salaryList')
     el-table-column(label='月份')
@@ -67,25 +67,35 @@
     el-table-column(prop='userName', label='员工')
     el-table-column(label='在职状态')
       template(slot-scope='{ row }') {{ row.status == 1 ? "在职" : "离职" }}
-    el-table-column(label='月定岗' )
+    el-table-column(label='月定岗')
       template(slot-scope='{ row }')
         span(v-if='row.monthJob === 0') A岗
         span(v-else-if='row.monthJob === 1') B岗
         span(v-else='row.monthJob === 2') C岗
     el-table-column(prop='totalExp', label='总经验值')
-      template(slot="header" slot-scope="scope")
+      template(slot='header', slot-scope='scope')
         span 总经验值
-        i.toLoadMore(:class="isShowExp ? 'el-icon-minus' : 'el-icon-plus'" @click="isShowExp = !isShowExp")
-    el-table-column(prop='aPostExp', label='销售岗经验值' v-if="isShowExp")
-    el-table-column(prop='bPostExp', label='客服岗经验值' v-if="isShowExp")
-    el-table-column(prop='cPostExp', label='后勤岗经验值' v-if="isShowExp")
-    el-table-column(prop='totalSalary', label='核算工资流水' :width="isShowSalary ? '120px' : ''")
-      template(slot="header" slot-scope="scope")
+        i.toLoadMore(
+          :class='isShowExp ? "el-icon-minus" : "el-icon-plus"',
+          @click='isShowExp = !isShowExp'
+        )
+    el-table-column(prop='aPostExp', label='销售岗经验值', v-if='isShowExp')
+    el-table-column(prop='bPostExp', label='客服岗经验值', v-if='isShowExp')
+    el-table-column(prop='cPostExp', label='后勤岗经验值', v-if='isShowExp')
+    el-table-column(
+      prop='totalSalary',
+      label='核算工资流水',
+      :width='isShowSalary ? "120px" : ""'
+    )
+      template(slot='header', slot-scope='scope')
         span 核算工资流水
-        i.toLoadMore(:class="isShowSalary ? 'el-icon-minus' : 'el-icon-plus'" @click="isShowSalary = !isShowSalary")
-    el-table-column(prop='aPostSalary', label='销售岗流水' v-if="isShowSalary")
-    el-table-column(prop='bPostSalary', label='客服岗流水' v-if="isShowSalary")
-    el-table-column(prop='cPostSalary', label='后勤岗流水' v-if="isShowSalary")
+        i.toLoadMore(
+          :class='isShowSalary ? "el-icon-minus" : "el-icon-plus"',
+          @click='isShowSalary = !isShowSalary'
+        )
+    el-table-column(prop='aPostSalary', label='销售岗流水', v-if='isShowSalary')
+    el-table-column(prop='bPostSalary', label='客服岗流水', v-if='isShowSalary')
+    el-table-column(prop='cPostSalary', label='后勤岗流水', v-if='isShowSalary')
     el-table-column(prop='levelName', label='等级')
     el-table-column(prop='commission', label='提成点')
       template(slot-scope='{ row }') {{ row.commission + "%" }}

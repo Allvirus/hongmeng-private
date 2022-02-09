@@ -32,7 +32,7 @@ export const http = (method, url, config = {}) => {
     }
     if (+data.code === 200 || +data.code === 100) {
       return data.data ? data.data : data
-    } else if (!('code' in data)) {
+    } else if (!('code' in data) || +data.code === 400) {
       return data
     } else if (data.msg) {
       vgo.tip(data.msg, 'error')
