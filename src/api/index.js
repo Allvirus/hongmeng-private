@@ -1286,4 +1286,7 @@ export default {
   //     return p
   //   })(),
   // }),
+
+  // 91. 重置密码
+  resetPassword: (userName) => http('post', `/api/user/reset?userName=${userName}`),
 }

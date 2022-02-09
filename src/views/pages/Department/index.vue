@@ -97,6 +97,7 @@
               v-else,
               @click='unlockUser(row)'
             ) 解锁
+            el-button(type='text', @click='resetPad(row)') 重置密码
 
     user-edit(
       :treeData='Tree.departTree',
@@ -349,6 +350,13 @@ export default {
       }
       node.pathname = JSON.parse(JSON.stringify(node.name))
       node.name += `(${node.userCount}人)`
+    },
+    resetPad (user) {
+      this.$vgo.open(() => {
+        this.$api.resetPassword(user.username).then(res => {
+          this.$vgo.tip('密码已重置为mhyx123', 'success')
+        })
+      }, `是否确认重置 { ${user.realName} } 密码`)
     },
   },
 }
