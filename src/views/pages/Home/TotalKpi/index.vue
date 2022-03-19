@@ -66,7 +66,7 @@
       template(slot-scope='{ row }') {{ row.month }}
     el-table-column(prop='userName', label='员工')
     el-table-column(label='在职状态')
-      template(slot-scope='{ row }') {{ row.status == 1 ? "在职" : "离职" }}
+      template(slot-scope='{ row }') {{ workStatus[row.status].status }}
     el-table-column(label='月定岗')
       template(slot-scope='{ row }')
         span(v-if='row.monthJob === 0') A岗
@@ -135,6 +135,24 @@ export default {
   mixins: [dptListMixin],
   data () {
     return {
+      workStatus: [
+        {
+          status: '未知',
+          class: '',
+        },
+        {
+          status: '在职',
+          class: '',
+        },
+        {
+          status: '离职',
+          class: 'danger',
+        },
+        {
+          status: '离职超3个月',
+          class: 'danger',
+        },
+      ],
       model: {
         Month: this.getLastMonth(),
         WorkStatus: 0,

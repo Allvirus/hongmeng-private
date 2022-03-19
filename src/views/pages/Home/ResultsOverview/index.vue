@@ -1,144 +1,203 @@
 <template lang="pug">
-  .ResultsOv
-    el-form.ff-rn.bg-white.pdt2.pdx2(label-width='70px')
-      el-form-item(label='部门:' v-if='userInfo.isLeader')
-        tree-selector.winput(
-          ref='dtptree',
-          :data='myDptList.list',
-          :defProps='myDptList.props',
-          nodeKey='id',
-          clearable,
-          :deflabel='myDptList.list[0].name',
-          @change='onDepartChange'
-        )
-      //- el-form-item(label='部门:' v-if='userInfo.isLeader')
-      //-   el-select.winput(
-      //-     v-model='model.resDepId',
-      //-     placeholder='请选择',
-      //-     @change="changeDep"
-      //-     filterable
-      //-   )
-      //-     el-option(
-      //-       v-for='item in allDepID',
-      //-       :key='item.id',
-      //-       :label='item.name',
-      //-       :value='item.id'
-      //-     )
-      el-form-item.mgl3(label='选择时间:' label-width='80px')
-        CommonDatePicker.w300(
-          :start.sync='model.startTime',
-          :end.sync='model.endTime',
-          all
-        )
-        el-button.mgl3(
-          icon='el-icon-search',
-          type='primary',
-          @click="search"
-        ) 搜索
-    .chart.mgt2.bg-white
-      el-radio-group.mg2(v-model="radio" size="small")
-        el-radio-button(:label="item.value" v-for="item in SFArr" :key="item.id") {{ item.name }}
-      v-ring.mgt2(
-        :data='pieChartData',
-        :settings='settings',
-        :height='settings.height'
+.ResultsOv
+  el-form.ff-rn.bg-white.pdt2.pdx2(label-width='70px')
+    el-form-item(label='部门:', v-if='userInfo.isLeader')
+      tree-selector.winput(
+        ref='dtptree',
+        :data='myDptList.list',
+        :defProps='myDptList.props',
+        nodeKey='id',
+        clearable,
+        :deflabel='myDptList.list[0].name',
+        @change='onDepartChange'
       )
-    .showbox.bg-white.mgt2.pd2
-      //- el-button(
-      //-   @click="goBack"
-      //- ) 返回上级
-      el-table.mgy2(
-        :data='configList',
-        show-summary
-        :summary-method="getSummaries"
+    //- el-form-item(label='部门:' v-if='userInfo.isLeader')
+    //-   el-select.winput(
+    //-     v-model='model.resDepId',
+    //-     placeholder='请选择',
+    //-     @change="changeDep"
+    //-     filterable
+    //-   )
+    //-     el-option(
+    //-       v-for='item in allDepID',
+    //-       :key='item.id',
+    //-       :label='item.name',
+    //-       :value='item.id'
+    //-     )
+    el-form-item.mgl3(label='选择时间:', label-width='80px')
+      CommonDatePicker.w300(
+        :start.sync='model.startTime',
+        :end.sync='model.endTime',
+        all
       )
-        el-table-column(:prop='isleaf ? "realName" : "departmentName"',
-        :label='isleaf ? "姓名" : "公司名称"')
-          template(slot-scope="{ row }")
-            span(@click="checkDetails(row)" :class="isleaf ? '' : 'company'") {{ isleaf ? row.realName : row.departmentName }}
-        el-table-column(prop='inCount', label='在职人数/离职人数' width="80px")
-          template(slot="header" slot-scope="scope")
-            el-tooltip(effect="dark" :content="leaveThatText" placement="top-start")
-              span 在职人数/离职人数
-          template(slot-scope="{ row }")
-            span {{ row.inCount }} / {{ row.outCount }}
-        el-table-column(prop='registerCount', label='注册数' width="70px")
-          template(slot="header" slot-scope="scope")
-            el-tooltip(effect="dark" content="注册数：注册玩家数，独立ip注册：每个公司内ip当天不重复的注册玩家数" placement="top-start")
-              span 注册数
-        el-table-column(prop='registerIPCount', label='独立IP注册数' width="100px")
-          template(slot="header" slot-scope="scope")
-            el-tooltip(effect="dark" content="注册数：注册玩家数，独立ip注册：每个公司内ip当天不重复的注册玩家数" placement="top-start")
-              span 独立IP注册数
-        el-table-column(prop='totalDeviceCount', label='换包数' width="70px")
-          template(slot="header" slot-scope="scope")
-            el-tooltip(effect="dark" content="个人历史设备号不重复且ip当天不重复计算为一个换包数" placement="top-start")
-              span 换包数
-          template(slot-scope="{ row }")
-            span(@click="getPsdn(row)" class="psdn") {{ row.totalDeviceCount }}
-        el-table-column(prop='showSnsRegisterCount', label='新增登记数/转化率' width="80px")
-          template(slot="header" slot-scope="scope")
-            el-tooltip(effect="dark" content="总登记数：玩家社交账号登记总数，转化率=总换包数/总登记数" placement="top-start")
-              span 总登记数/转化率
-        el-table-column(prop='snsRegisterRepartCount', label='重复登记数')
-        el-table-column(prop='snsBlockCount', label='总拉黑数')
-          template(slot="header" slot-scope="scope")
-            el-tooltip(effect="dark" content="玩家社交账号拉黑总数" placement="top-start")
-              span 总拉黑数
-        el-table-column(prop='gameCount', label='产品数')
-          template(slot="header" slot-scope="scope")
-            el-tooltip(effect="dark" content="有推广的产品个数，点击个数的时产品按充值从高到低排序展示" placement="top-start")
-              span 产品数
-        el-table-column(prop='payUserCount', label='充值玩家数')
-          template(slot="header" slot-scope="scope")
-            el-tooltip(effect="dark" content="有充值的玩家数量" placement="top-start")
-              span 充值玩家数
-        el-table-column(prop='totalAllPrice', label='总充值金额' width="100px")
-          template(slot="header" slot-scope="scope")
-            el-tooltip(effect="dark" :content="amounttext" placement="top-start")
-              span 总充值金额
-            i.toLoadMore(:class="isShow ? 'el-icon-minus' : 'el-icon-plus'" @click="toLoadMore")
-        el-table-column(prop='inTotalPrice', label='在职充值金额' width="100px" v-if="isShow")
-        el-table-column(prop='aPostOutTotalPrice', label='离职充值金额' width="100px" v-if="isShow")
-        el-table-column(prop='aPostOutTwoMonthTotalPrice', label='离职超两个月充值金额' v-if="isShow")
-        el-table-column(prop='ltv', label='ltv' width="60px")
-          template(slot="header" slot-scope="scope")
-            el-tooltip(effect="dark" content="LTV值=流水/换包数，换包数是指走链接进来的换包数" placement="top-start")
-              span ltv
-          template(slot-scope='{ row }') {{ row.ltv | toFixed(1) }}
-    el-pagination.margin-spacing(
-      v-if="isleaf"
-      :total='count',
-      layout="total, sizes, prev, pager, next, jumper"
-      @size-change="handleSizeChange"
-      @current-change="handleCurrentChange"
-      :page-sizes="[5, 10, 20]"
-      :page-size.sync='model.PageSize',
-      :current-page.sync='model.Page',
+      el-button.mgl3(icon='el-icon-search', type='primary', @click='search') 搜索
+  .chart.mgt2.bg-white
+    el-radio-group.mg2(v-model='radio', size='small')
+      el-radio-button(
+        :label='item.value',
+        v-for='item in SFArr',
+        :key='item.id'
+      ) {{ item.name }}
+    v-ring.mgt2(
+      :data='pieChartData',
+      :settings='settings',
+      :height='settings.height'
     )
-
-    el-dialog(title="换包数" :visible.sync="dialogTableVisible")
-      el-table(:data="psdnData")
-        el-table-column(prop='account', label='推广员账户')
-        el-table-column(prop='ajob', label='员工')
-        el-table-column(prop='userAccount', label='玩家账户')
-        el-table-column(prop='createDate', label='注册时间' width="150px")
-          template(slot-scope='{ row }') {{ row.createDate | dateFormat }}
-        el-table-column(prop='osType', label='手机系统')
-          template(slot-scope='{ row }')
-            span {{ row.osType === "2" ? "安卓" : "ios" }}
-        el-table-column(prop='deviceNo', label='注册设备号' width="130px")
-        el-table-column(prop='createIp', label='注册IP')
-        el-table-column(prop='isRepeatReg', label='是否重复注册')
-          template(slot-scope='{ row }')
-            span {{ row.isRepeatReg ? '是' : '否'}}
-      el-pagination.margin-spacing(
-        :total='psdnCount',
-        @size-change="handleSizeChange"
-        @current-change="handleCurrentChange"
-        :page-size.sync='model.psdnPageSize',
-        :current-page.sync='model.psdnPage',
+  .showbox.bg-white.mgt2.pd2
+    //- el-button(
+    //-   @click="goBack"
+    //- ) 返回上级
+    el-table.mgy2(
+      :data='configList',
+      show-summary,
+      :summary-method='getSummaries'
+    )
+      el-table-column(
+        :prop='isleaf ? "realName" : "departmentName"',
+        :label='isleaf ? "姓名" : "公司名称"'
       )
+        template(slot-scope='{ row }')
+          span(@click='checkDetails(row)', :class='isleaf ? "" : "company"') {{ isleaf ? row.realName : row.departmentName }}
+      el-table-column(prop='inCount', label='在职人数/离职人数', width='80px')
+        template(slot='header', slot-scope='scope')
+          el-tooltip(
+            effect='dark',
+            :content='leaveThatText',
+            placement='top-start'
+          )
+            span 在职人数/离职人数
+        template(slot-scope='{ row }')
+          span {{ row.inCount }} / {{ row.outCount }}
+      el-table-column(prop='registerCount', label='注册数', width='70px')
+        template(slot='header', slot-scope='scope')
+          el-tooltip(
+            effect='dark',
+            content='注册数：注册玩家数，独立ip注册：每个公司内ip当天不重复的注册玩家数',
+            placement='top-start'
+          )
+            span 注册数
+      el-table-column(prop='registerIPCount', label='独立IP注册数', width='100px')
+        template(slot='header', slot-scope='scope')
+          el-tooltip(
+            effect='dark',
+            content='注册数：注册玩家数，独立ip注册：每个公司内ip当天不重复的注册玩家数',
+            placement='top-start'
+          )
+            span 独立IP注册数
+      el-table-column(prop='totalDeviceCount', label='换包数', width='70px')
+        template(slot='header', slot-scope='scope')
+          el-tooltip(
+            effect='dark',
+            content='个人历史设备号不重复且ip当天不重复计算为一个换包数',
+            placement='top-start'
+          )
+            span 换包数
+        template(slot-scope='{ row }')
+          span.psdn(@click='getPsdn(row)') {{ row.totalDeviceCount }}
+      el-table-column(
+        prop='showSnsRegisterCount',
+        label='新增登记数/转化率',
+        width='80px'
+      )
+        template(slot='header', slot-scope='scope')
+          el-tooltip(
+            effect='dark',
+            content='总登记数：玩家社交账号登记总数，转化率=总换包数/总登记数',
+            placement='top-start'
+          )
+            span 总登记数/转化率
+      el-table-column(prop='snsRegisterRepartCount', label='重复登记数')
+      el-table-column(prop='snsBlockCount', label='总拉黑数')
+        template(slot='header', slot-scope='scope')
+          el-tooltip(
+            effect='dark',
+            content='玩家社交账号拉黑总数',
+            placement='top-start'
+          )
+            span 总拉黑数
+      el-table-column(prop='gameCount', label='产品数')
+        template(slot='header', slot-scope='scope')
+          el-tooltip(
+            effect='dark',
+            content='有推广的产品个数，点击个数的时产品按充值从高到低排序展示',
+            placement='top-start'
+          )
+            span 产品数
+      el-table-column(prop='payUserCount', label='充值玩家数')
+        template(slot='header', slot-scope='scope')
+          el-tooltip(effect='dark', content='有充值的玩家数量', placement='top-start')
+            span 充值玩家数
+      el-table-column(prop='totalAllPrice', label='总充值金额', width='100px')
+        template(slot='header', slot-scope='scope')
+          el-tooltip(
+            effect='dark',
+            :content='amounttext',
+            placement='top-start'
+          )
+            span 总充值金额
+          i.toLoadMore(
+            :class='isShow ? "el-icon-minus" : "el-icon-plus"',
+            @click='toLoadMore'
+          )
+      el-table-column(
+        prop='inTotalPrice',
+        label='在职充值金额',
+        width='100px',
+        v-if='isShow'
+      )
+      el-table-column(
+        prop='aPostOutTotalPrice',
+        label='离职充值金额',
+        width='100px',
+        v-if='isShow'
+      )
+      el-table-column(
+        prop='aPostOutTwoMonthTotalPrice',
+        label='离职超两个月充值金额',
+        v-if='isShow'
+      )
+      el-table-column(prop='ltv', label='ltv', width='60px')
+        template(slot='header', slot-scope='scope')
+          el-tooltip(
+            effect='dark',
+            content='LTV值=流水/换包数，换包数是指走链接进来的换包数',
+            placement='top-start'
+          )
+            span ltv
+        template(slot-scope='{ row }') {{ row.ltv | toFixed(1) }}
+  el-pagination.margin-spacing(
+    v-if='isleaf',
+    :total='count',
+    layout='total, sizes, prev, pager, next, jumper',
+    @size-change='handleSizeChange',
+    @current-change='handleCurrentChange',
+    :page-sizes='[5, 10, 20]',
+    :page-size.sync='model.PageSize',
+    :current-page.sync='model.Page'
+  )
+
+  el-dialog(title='换包数', :visible.sync='dialogTableVisible')
+    el-table(:data='psdnData')
+      el-table-column(prop='account', label='推广员账户')
+      el-table-column(prop='ajob', label='员工')
+      el-table-column(prop='userAccount', label='玩家账户')
+      el-table-column(prop='createDate', label='注册时间', width='150px')
+        template(slot-scope='{ row }') {{ row.createDate | dateFormat }}
+      el-table-column(prop='osType', label='手机系统')
+        template(slot-scope='{ row }')
+          span {{ row.osType === "2" ? "安卓" : "ios" }}
+      el-table-column(prop='deviceNo', label='注册设备号', width='130px')
+      el-table-column(prop='createIp', label='注册IP')
+      el-table-column(prop='isRepeatReg', label='是否重复注册')
+        template(slot-scope='{ row }')
+          span {{ row.isRepeatReg ? "是" : "否" }}
+    el-pagination.margin-spacing(
+      :total='psdnCount',
+      @size-change='handleSizeChange',
+      @current-change='handleCurrentChange',
+      :page-size.sync='model.psdnPageSize',
+      :current-page.sync='model.psdnPage'
+    )
 </template>
 <script>
 import { mapGetters } from 'vuex'
@@ -420,12 +479,15 @@ export default {
 <style lang="stylus" scoped>
 .chart
   height 330px
+
 .company
   cursor pointer
   color #ff7875
+
 .psdn
   cursor pointer
   color #ff7a45
+
 .toLoadMore
   cursor pointer
   margin-left 5px

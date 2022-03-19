@@ -59,12 +59,7 @@
         el-table-column(prop='experiences', label='经验值')
         el-table-column(prop='workingStatus', label='在职状态')
           template(slot-scope='{ row }')
-            .ff-rn(v-if='row.workingStatus === 1')
-              span 在职
-            .ff-rn.danger(v-else-if='row.workingStatus === 2')
-              span 已离职
-            .ff-rn.danger(v-else)
-              span 已离职2个月
+            span(:class='workStatus[row.workingStatus].class') {{ workStatus[row.workingStatus].status }}
         el-table-column(prop='userStatus', label='锁定状态')
           template(slot-scope='{ row }')
             .ff-rn.danger(v-if='!row.lockoutEnabled')
@@ -123,6 +118,24 @@ export default {
   },
   data () {
     return {
+      workStatus: [
+        {
+          status: '未知',
+          class: '',
+        },
+        {
+          status: '在职',
+          class: '',
+        },
+        {
+          status: '离职',
+          class: 'danger',
+        },
+        {
+          status: '离职超3个月',
+          class: 'danger',
+        },
+      ],
       props: {
         children: 'departments',
         label: 'name',
