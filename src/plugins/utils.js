@@ -262,6 +262,24 @@ const utils = {
       model.endTime += ' 23:59:59'
     }
   },
+
+  // 获取当前时间自动填充00:00:00 - 23.59.59
+  getsCurrentTime (str) {
+    // 2022-03-03 00:00:00
+    var now = new Date()
+    var year = now.getFullYear() // 得到年份
+    var month = now.getMonth() + 1 // 得到月份
+    var date = now.getDate() // 得到日期
+    if (month <= 9) month = '0' + month
+    if (date <= 9) date = '0' + date
+    let all = year + '-' + month + '-' + date
+    if (str === 'star') {
+      all = all + ' ' + '00:00:00'
+    } else {
+      all = all + ' ' + '23:59:59'
+    }
+    return all
+  },
 }
 export default utils
 

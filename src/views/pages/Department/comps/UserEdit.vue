@@ -152,30 +152,43 @@ export default {
     }
   },
   watch: {
-    show (newValue, oldValue) {
-      this.isShow = newValue
-      if (this.isShow) {
-        // 获取部门树
-        if (this.userId !== 0) {
-          // 编辑
-          this.$api.getUserInfoById(this.userId).then(data => {
-            this.model = data
-            if (data.workingStatus === 1) {
-              this.model.workingStatus = true
-            } else {
-              this.model.workingStatus = false
-            }
-            this.model.id = this.userId
-            this.model.dptName = this.findDptName(this.model.departmentId, this.treeData)
-          })
-        } else {
-          // 新建
-          this.model.dptName = ''
+    show: {
+      handler (newValue, oldValue) {
+        this.isShow = newValue
+        if (this.isShow) {
+          // 获取部门树
+          if (this.userId !== 0) {
+            // 编辑
+            this.$api.getUserInfoById(this.userId).then((data) => {
+              this.model = data
+              if (data.workingStatus === 1) {
+                this.model.workingStatus = true
+              } else {
+                this.model.workingStatus = false
+              }
+              this.model.id = this.userId
+              this.model.dptName = this.findDptName(
+                this.model.departmentId,
+                this.treeData
+              )
+            })
+          } else {
+            // 新建
+            this.model.dptName = ''
+          }
+          this.getRoles()
         }
-        this.getRoles()
-      }
+      },
+      immediate: true,
     },
-    immediate: true,
+    'model.leavedate': {
+      handler (val) {
+        if (val && val === '0001-01-01T00:00:00') {
+          this.model.leavedate = this.$utils.getsCurrentTime('star')
+        }
+      },
+      deep: true,
+    },
   },
   methods: {
     getRoles () {
