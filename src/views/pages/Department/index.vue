@@ -367,7 +367,7 @@ export default {
     resetPad (user) {
       this.$vgo.open(() => {
         this.$api.resetPassword(user.username).then(res => {
-          this.$vgo.tip('密码已重置为mhyx123', 'success')
+          this.$vgo.tip(res, 'success')
         })
       }, `是否确认重置 { ${user.realName} } 密码`)
     },
