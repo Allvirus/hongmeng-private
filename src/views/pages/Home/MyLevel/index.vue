@@ -33,9 +33,10 @@
           prop='',
           :label='item.configType',
           v-for='(item, index) in commission',
+          :key='item',
           v-if='labelList[item.configType]'
         )
-          template(slot-scop='{row}') {{ item.context }}
+          template(slot-scop='{ row }') {{ item.context }}
 
     h3.mgt2 经验值获取
     el-table.mgy2(:data='levelInfo')
@@ -119,13 +120,19 @@ export default {
 }
 </script>
 <style lang='stylus' scoped>
-.MyLevel
-  >>>.exp-table .cell
-    width 150px !important
-    white-space nowrap
-  .exp-box
-    width 200px
-    height 100px
-  .tips p
-    line-height 25px
+.MyLevel {
+  >>>.exp-table .cell {
+    width: 150px !important;
+    white-space: nowrap;
+  }
+
+  .exp-box {
+    width: 200px;
+    height: 100px;
+  }
+
+  .tips p {
+    line-height: 25px;
+  }
+}
 </style>

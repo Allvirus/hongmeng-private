@@ -375,21 +375,33 @@ export default {
 }
 </script>
 <style lang='stylus' scoped>
-.Depart
-  .org-tree
-    width 20%
-    >>>.el-tree-node__label
-      font-size 14px !important
-  .user-list
-    width 80%
-  .tree_menu
-    position fixed
-    display block
-    background-color #fff
-    transform translateX(15px)
-    box-shadow 0 2px 12px 0 rgba(0, 0, 0, 0.1)
-  ul li
-    padding 8px 15px
-  ul li:hover
-    background-color #ebeef5
+.Depart {
+  .org-tree {
+    width: 20%;
+
+    >>>.el-tree-node__label {
+      font-size: 14px !important;
+    }
+  }
+
+  .user-list {
+    width: 80%;
+  }
+
+  .tree_menu {
+    position: fixed;
+    display: block;
+    background-color: #fff;
+    transform: translateX(15px);
+    box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+  }
+
+  ul li {
+    padding: 8px 15px;
+  }
+
+  ul li:hover {
+    background-color: #ebeef5;
+  }
+}
 </style>
