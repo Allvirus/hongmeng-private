@@ -79,11 +79,11 @@
     el-table-column(prop='userCode', label='玩家代码')
     el-table-column(prop='account', label='推广员账户')
     el-table-column(prop='gameName', label='游戏名称')
-    el-table-column(prop='areaName', label='区服')
+    el-table-column(prop='areaCode', label='区服')
     el-table-column(prop='roleName', label='游戏角色')
-    el-table-column(prop='osType', label='平台' width="70px")
+    el-table-column(prop='osType', label='平台', width='70px')
       template(slot-scope='{ row }') {{ row.osType | formatOSType }}
-    el-table-column(prop='createDate', label='创建时间' width="130px")
+    el-table-column(prop='createDate', label='创建时间', width='130px')
       template(slot-scope='{ row }') {{ row.createDate | dateFormat }}
     el-table-column(prop='ajob', label='A岗')
     el-table-column(prop='bjob', label='B岗')
@@ -132,9 +132,11 @@ export default {
 }
 </script>
 <style lang='stylus' scoped>
-.el-form-item
-  margin-bottom 10px
+.el-form-item {
+  margin-bottom: 10px;
+}
 
->>>.el-table .cell
-  padding 0px 4px !important
+>>>.el-table .cell {
+  padding: 0px 4px !important;
+}
 </style>

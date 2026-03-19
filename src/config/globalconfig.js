@@ -1,26 +1,20 @@
-import router from '@/router'
+import router from "@/router";
 window.$globalconfig = {
-  VERSION: '1.0.0.0',
-  COPYRIGHT: 'Copyright 2016 - 2020 © All Rights Reserved',
-  PANO_LOGIN_API: 'https://editor.vgoyun.com/user/login',
-  API: 'http://lxy.gxzlwl.com/', // 默认请求地址 baseURL
-  '3DVIEW_URL': 'http://3d.vgoyun.com/',
-  USER_URL: 'http://manage.vgoyun.com/',
-  PANO_FILE_API: 'http://lxy.gxzlwl.com/api/common/file', // 文件上传 URL
-  COOKIE_NAME: 'ZhuLangUserAccount',
-  COOKIE_DOMAIN: 'lxy.hmwl369.com',
-}
-$globalconfig.UPLOAD_IMAGE_PREFIX = $globalconfig.CLOUD_FILE_API + 'api/images/upload'
-$globalconfig.UPLOAD_FILE_PREFIX = $globalconfig.CLOUD_FILE_API + 'api/files/upload'
-$globalconfig.FILE_PREFIX = $globalconfig.CLOUD_FILE_API + 'files/'
+  //API: "https://localhost:44358/", // 默认请求地址 baseURL
+  API: "http://47.120.40.127:5000//", // 默认请求地址 baseURL
+  COPYRIGHT: "Copyright 2016 - 2020 © All Rights Reserved",
+  PANO_FILE_API: "http://47.120.40.127:5000/api/common/file", // 文件上传 URL
+  COOKIE_NAME: "ZhuLangUserAccount",
+  COOKIE_DOMAIN: "lxy.hmwl369.com"
+};
 
-export function LOGIN () {
-  if (router.currentRoute.name !== 'Login') {
-    router.push({
-      name: 'Login',
-      query: { redirect_uri: location.href },
-    })
+export function LOGIN() {
+  if (router.currentRoute.name !== "Login") {
+    router
+      .push({
+        name: "Login",
+        query: { redirect_uri: location.href }
+      })
+      .catch(() => {});
   }
 }
-// $globalconfig.COOKIE_DOMAIN = document.domain.split('.').slice(-2).join('.')
-// $globalconfig.COOKIE_NAME = 'ZhuLangUserAccount'

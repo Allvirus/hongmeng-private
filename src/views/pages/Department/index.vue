@@ -182,6 +182,7 @@ export default {
     getDepartTree () {
       this.Tree.departTree.splice(0, this.Tree.departTree.length)
       this.$api.getDepartById(this.userInfo.resDepartmentId).then(res => {
+        console.log(res)
         this.Tree.departTree.push(res)
         this.$nextTick(function () {
           // DOM 更新了
@@ -225,7 +226,7 @@ export default {
       } else {
         node.userCount = 0
       }
-      if (node.departments.length > 0) {
+      if (node.departments && node.departments.length > 0) {
         for (const child of node.departments) {
           this.calcChildDptUserCnt(child, map)
           node.userCount += child.userCount
@@ -341,7 +342,7 @@ export default {
         this.Tree.path.push(node.pathname)
         return true
       } else {
-        if (node.departments.length > 0) {
+        if (node.departments && node.departments.length > 0) {
           for (const child of node.departments) {
             const found = this.getNodePath(child)
             if (found) {
@@ -355,7 +356,7 @@ export default {
     },
     // 清除人数
     clearUserCount (node) {
-      if (node.departments.length > 0) {
+      if (node.departments && node.departments.length > 0) {
         for (const child of node.departments) {
           this.clearUserCount(child)
           node.userCount = 0

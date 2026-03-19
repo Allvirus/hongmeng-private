@@ -87,7 +87,7 @@
 
   el-table.mgy2.bg-white.pd2(:data='listMixin.list')
     el-table-column(prop='userCode', label='玩家代码')
-    el-table-column(prop='areaName', label='区服')
+    //- el-table-column(prop='areaName', label='区服')
     el-table-column(prop='roleName', label='游戏角色')
     el-table-column(prop='totalPrice', label='支付金额(元)')
       template(slot-scope='{ row }') {{ row.totalPrice | toFixed }}
@@ -149,9 +149,11 @@ export default {
 }
 </script>
 <style lang='stylus' scoped>
-.el-form-item
-  margin-bottom 10px
+.el-form-item {
+  margin-bottom: 10px;
+}
 
->>>.el-table .cell
-  padding 0px 4px !important
+>>>.el-table .cell {
+  padding: 0px 4px !important;
+}
 </style>
