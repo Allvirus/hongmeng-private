@@ -55,6 +55,14 @@
           :end.sync='model.endTime',
           all
         )
+      el-form-item(label='平台:', v-if='OS.isPc')
+        el-select.winput(
+          v-model='model.platform',
+          placeholder='请选择',
+          clearable
+        )
+          el-option(label='Ifun', :value='0')
+          el-option(label='木勺', :value='1')
       el-button.mgl3.mgb2(
         :class='OS.isPc ? "" : "mgb2"',
         icon='el-icon-search',
@@ -78,6 +86,8 @@
     el-table-column(prop='roleLevel', label='玩家等级')
     el-table-column(prop='userCode', label='玩家代码')
     el-table-column(prop='account', label='推广员账户')
+    el-table-column(prop='platform', label='平台', width='80px')
+      template(slot-scope='{ row }') {{ row.platform === 0 ? 'Ifun' : '木勺' }}
     el-table-column(prop='gameName', label='游戏名称')
     el-table-column(prop='areaCode', label='区服')
     el-table-column(prop='roleName', label='游戏角色')
@@ -121,6 +131,7 @@ export default {
         AreaName: '',
         userId: '',
         resDepId: '',
+        platform: '',
         page: 1,
         pageSize: 10,
       },

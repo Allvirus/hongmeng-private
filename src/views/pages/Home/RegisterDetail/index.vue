@@ -48,6 +48,10 @@
         :end.sync='model.endTime',
         all
       )
+    el-form-item(label='平台:')
+      el-select.winput(v-model='model.platform', placeholder='请选择', clearable)
+        el-option(label='Ifun', :value='0')
+        el-option(label='木勺', :value='1')
     el-button.mgl3.mgb2(icon='el-icon-search', type='primary', @click='search') 搜索
     el-button.mgl2.mgr2.mgb2(
       icon='el-icon-refresh-right',
@@ -60,15 +64,17 @@
     ) 搜索我的数据
 
   el-table.mgy2.bg-white.pd2(:data='listMixin.list')
-    el-table-column(prop='userAccount', label='玩家账号' width='100')
-    el-table-column(prop='userCode', label='玩家代码' width='100')
+    el-table-column(prop='userAccount', label='玩家账号', width='100')
+    el-table-column(prop='userCode', label='玩家代码', width='100')
     el-table-column(prop='account', label='推广员账户', width='100px')
+    el-table-column(prop='platform', label='平台', width='80px')
+      template(slot-scope='{ row }') {{ row.platform === 0 ? 'Ifun' : '木勺' }}
     el-table-column(prop='deviceNo', label='设备号', width='300px')
     el-table-column(prop='osType', label='平台', width='100px')
       template(slot-scope='{ row }') {{ row.osType | formatOSType }}
     el-table-column(prop='createDate', label='注册时间', width='150px')
       template(slot-scope='{ row }') {{ row.createDate | dateFormat }}
-    el-table-column(prop='createIp', label='注册IP' width='120px')
+    el-table-column(prop='createIp', label='注册IP', width='120px')
     el-table-column(prop='isRepeatReg', label='有效换包')
       template(slot-scope='{ row }') {{ row.isRepeatReg ? '否' : '是' }}
     el-table-column(prop='ajob', label='A岗')
@@ -115,6 +121,7 @@ export default {
         DeviceNo: '',
         userId: '',
         resDepId: '',
+        platform: '',
         page: 1,
         pageSize: 10,
       },
@@ -138,6 +145,7 @@ export default {
 }
 </script>
 <style lang='stylus' scoped>
-.el-form-item
-  margin-bottom 10px
+.el-form-item {
+  margin-bottom: 10px;
+}
 </style>

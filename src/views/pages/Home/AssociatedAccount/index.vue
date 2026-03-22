@@ -25,6 +25,14 @@
             :label='item.realName',
             :value='item.id'
           )
+      el-form-item(label='平台:')
+        el-select.winput(
+          v-model='model.platform',
+          placeholder='请选择',
+          clearable
+        )
+          el-option(label='Ifun', :value='0')
+          el-option(label='木勺', :value='1')
       el-form-item.mgl4(label='平台推广账号:')
         el-input(v-model='model.account', clearable)
         el-button.mgl3(icon='el-icon-search', type='primary', @click='search') 搜索
@@ -34,6 +42,8 @@
     el-table-column(prop='departmentName', label='所属组织')
     el-table-column(prop='userName', label='员工')
     el-table-column(prop='account', label='平台推广账户')
+    el-table-column(prop='platform', label='平台')
+      template(slot-scope='{ row }') {{ row.platform === 0 ? 'Ifun' : '木勺' }}
     el-table-column(prop='creatTime', label='创建时间')
       template(slot-scope='{ row }') {{ row.creatTime | dateFormat }}
     el-table-column(prop='operate', label='操作', width='150')
@@ -77,6 +87,14 @@
               :label='item.realName',
               :value='item.id'
             )
+        el-form-item(label='平台:', required)
+          el-select.winput(
+            v-model='addModel.platform',
+            placeholder='请选择',
+            clearable
+          )
+            el-option(label='Ifun', :value='0')
+            el-option(label='木勺', :value='1')
         el-form-item(label='推广账号:', required)
           el-input(v-model='addModel.account', clearable)
     span.dialog-footer(span, slot='footer')
@@ -98,12 +116,14 @@ export default {
       model: {
         userId: '',
         account: '',
+        platform: '',
         page: 1,
         pageSize: 10,
       },
       addModel: {
         userId: '',
         account: '',
+        platform: '',
       },
     }
   },
@@ -123,6 +143,7 @@ export default {
           this.model = {
             userId: '',
             account: '',
+            platform: '',
             page: 1,
             pageSize: 10,
           }
@@ -135,15 +156,21 @@ export default {
     },
     cancelChange () {
       this.dialogVisible = false
+      this.addModel = {
+        userId: '',
+        account: '',
+        platform: '',
+      }
     },
     confirmAdd () {
-      if (!this.addModel.userId || !this.addModel.account) {
+      if (!this.addModel.userId || !this.addModel.account || this.addModel.platform === '') {
         this.$vgo.tip('请输入完整信息', 'error')
         return false
       }
       this.$api.createAssociatedUser(this.addModel).then(res => {
         this.addModel.userId = ''
         this.addModel.account = ''
+        this.addModel.platform = ''
         this.getListMixin()
         this.dialogVisible = false
       })

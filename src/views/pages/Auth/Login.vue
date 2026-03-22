@@ -6,14 +6,14 @@ el-form(
   ref='form',
   @keyup.enter.native='submit'
 )
-  el-form-item(prop='username' :class="isPc?'mgb5':''")
+  el-form-item(prop='username', :class='isPc ? "mgb5" : ""')
     el-input.w100p(
       v-model='model.username',
       placeholder='请输入用户名',
       size='large',
       prefix-icon='el-icon-user'
     )
-  el-form-item(prop='password' :class="isPc?'mgb5':''")
+  el-form-item(prop='password', :class='isPc ? "mgb5" : ""')
     el-input.w100p(
       v-model='model.password',
       type='password',
@@ -23,7 +23,6 @@ el-form(
     )
   el-form-item
     el-button.w100p.mgt1(@click='submit', type='primary', size='large') 登 录
-
 </template>
 
 <script>
@@ -58,9 +57,8 @@ export default {
           this.$api.userLogin(this.model).then(data => {
             this.$utils.setToken(data.token)
             this.$vgo.tip('登录成功!', 'success')
-            let { redirect_uri } = this.$route.query
+            const { redirect_uri } = this.$route.query
             if (redirect_uri) {
-              redirect_uri += redirect_uri.includes('?') ? '&' : '?' + 'access_token=' + data.token
               location.replace(redirect_uri)
             } else {
               this.$router.replace({ name: 'Home' })
@@ -77,6 +75,7 @@ export default {
 }
 </script>
 <style lang='stylus' scoped>
->>>i.el-icon-user, >>>i.el-icon-lock
-  font-size 20px
+>>>i.el-icon-user, >>>i.el-icon-lock {
+  font-size: 20px;
+}
 </style>

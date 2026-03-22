@@ -1,5 +1,5 @@
-import Layout from '@/views/layout/index.vue'
-const SubPage = () => import('@/views/layout/SubPage')
+import Layout from "@/views/layout/index.vue";
+const SubPage = () => import("@/views/layout/SubPage");
 /**
  * meta: {
  *  title: 侧菜单标题
@@ -11,148 +11,148 @@ const SubPage = () => import('@/views/layout/SubPage')
  */
 export default [
   {
-    path: '/',
+    path: "/",
     component: Layout,
-    meta: { title: '员工管理后台' },
-    redirect: { name: 'Home' },
-    name: 'ZhuLangUser',
+    meta: { title: "员工管理后台" },
+    redirect: { name: "Home" },
+    name: "ZhuLangUser",
     children: [
       {
-        path: 'Home',
-        name: 'Home',
-        meta: { title: '首页' },
-        redirect: { name: 'HomeMyAchievement' },
+        path: "Home",
+        name: "Home",
+        meta: { title: "首页" },
+        redirect: { name: "HomeMyAchievement" },
         component: SubPage,
         children: [
           {
-            path: 'ResultsOverview',
-            name: 'HomeResultsOverview',
+            path: "ResultsOverview",
+            name: "HomeResultsOverview",
             meta: {
-              title: '业绩总览',
-              group: '基础功能',
+              title: "业绩总览",
+              group: "基础功能",
               fnId: 19,
-              icsel: require('@/assets/img/ic_total_kpi_sel.png'),
-              icdef: require('@/assets/img/ic_total_kpi_def.png'),
-              onlyPcMode: false,
+              icsel: require("@/assets/img/ic_total_kpi_sel.png"),
+              icdef: require("@/assets/img/ic_total_kpi_def.png"),
+              onlyPcMode: false
             },
-            component: () => import('@/views/pages/Home/ResultsOverview'),
+            component: () => import("@/views/pages/Home/ResultsOverview")
           },
           {
-            path: 'MyAchievement',
-            name: 'HomeMyAchievement',
+            path: "MyAchievement",
+            name: "HomeMyAchievement",
             meta: {
-              title: '我的业绩',
-              group: '基础功能',
-              fnId: 1,
-              icsel: require('@/assets/img/ic_my_achiv_sel.png'),
-              icdef: require('@/assets/img/ic_my_achiv_def.png'),
-              onlyPcMode: false,
+              title: "我的业绩",
+              group: "基础功能",
+              fnId: 14,
+              icsel: require("@/assets/img/ic_my_achiv_sel.png"),
+              icdef: require("@/assets/img/ic_my_achiv_def.png"),
+              onlyPcMode: false
             },
-            component: () => import('@/views/pages/Home/MyAchievement'),
+            component: () => import("@/views/pages/Home/MyAchievement")
           },
           {
-            path: 'Register',
-            name: 'HomeRegister',
+            path: "Register",
+            name: "HomeRegister",
             meta: {
-              title: '社交账号登记',
-              group: '基础功能',
-              fnId: 8,
-              icsel: require('@/assets/img/ic_register_sel.png'),
-              icdef: require('@/assets/img/ic_register_def.png'),
-              onlyPcMode: true,
-            },
-            component: () => import('@/views/pages/Home/Register'),
-          },
-          {
-            path: 'RegisterDetail',
-            name: 'HomeRegisterDetail',
-            meta: {
-              title: '注册明细',
-              group: '基础功能',
-              fnId: 3,
-              icsel: require('@/assets/img/ic_reg_sel.png'),
-              icdef: require('@/assets/img/ic_reg_def.png'),
-              onlyPcMode: true,
-            },
-            component: () => import('@/views/pages/Home/RegisterDetail'),
-          },
-          {
-            path: 'RolesDetail',
-            name: 'HomeRolesDetail',
-            meta: {
-              title: '角色明细',
-              group: '基础功能',
-              fnId: 4,
-              icsel: require('@/assets/img/ic_role_sel.png'),
-              icdef: require('@/assets/img/ic_role_def.png'),
-              onlyPcMode: false,
-            },
-            component: () => import('@/views/pages/Home/RolesDetail'),
-          },
-          {
-            path: 'OrdersDetail',
-            name: 'HomeOrdersDetail',
-            meta: {
-              title: '订单明细',
-              group: '基础功能',
-              fnId: 5,
-              icsel: require('@/assets/img/ic_order_sel.png'),
-              icdef: require('@/assets/img/ic_order_def.png'),
-              onlyPcMode: false,
-            },
-            component: () => import('@/views/pages/Home/OrdersDetail'),
-          },
-          {
-            path: 'RechargePlayer',
-            name: 'HomeRechargePlayer',
-            meta: {
-              title: '充值排行榜',
-              group: '基础功能',
+              title: "社交账号登记",
+              group: "基础功能",
               fnId: 7,
-              icsel: require('@/assets/img/ic_rech_sel.png'),
-              icdef: require('@/assets/img/ic_rech_def.png'),
-              onlyPcMode: true,
+              icsel: require("@/assets/img/ic_register_sel.png"),
+              icdef: require("@/assets/img/ic_register_def.png"),
+              onlyPcMode: true
             },
-            component: () => import('@/views/pages/Home/RechargePlayer'),
+            component: () => import("@/views/pages/Home/Register")
           },
           {
-            path: 'ExpDetail',
-            name: 'HomeExpDetail',
+            path: "RegisterDetail",
+            name: "HomeRegisterDetail",
             meta: {
-              title: '经验明细',
-              group: '基础功能',
-              fnId: 6,
-              icsel: require('@/assets/img/ic_exp_sel.png'),
-              icdef: require('@/assets/img/ic_exp_def.png'),
-              onlyPcMode: true,
-            },
-            component: () => import('@/views/pages/Home/ExpDetail'),
-          },
-          {
-            path: 'MyLevel',
-            name: 'HomeMyLevel',
-            meta: {
-              title: '我的等级',
-              group: '基础功能',
-              fnId: 2,
-              icsel: require('@/assets/img/ic_level_sel.png'),
-              icdef: require('@/assets/img/ic_level_def.png'),
-              onlyPcMode: false,
-            },
-            component: () => import('@/views/pages/Home/MyLevel'),
-          },
-          {
-            path: 'Update',
-            name: 'HomeUpdate',
-            meta: {
-              title: '升级记录',
-              group: '基础功能',
+              title: "注册明细",
+              group: "基础功能",
               fnId: 12,
-              icsel: require('@/assets/img/ic_update_sel.png'),
-              icdef: require('@/assets/img/ic_update_def.png'),
-              onlyPcMode: true,
+              icsel: require("@/assets/img/ic_reg_sel.png"),
+              icdef: require("@/assets/img/ic_reg_def.png"),
+              onlyPcMode: true
             },
-            component: () => import('@/views/pages/Home/Update'),
+            component: () => import("@/views/pages/Home/RegisterDetail")
+          },
+          {
+            path: "RolesDetail",
+            name: "HomeRolesDetail",
+            meta: {
+              title: "角色明细",
+              group: "基础功能",
+              fnId: 11,
+              icsel: require("@/assets/img/ic_role_sel.png"),
+              icdef: require("@/assets/img/ic_role_def.png"),
+              onlyPcMode: false
+            },
+            component: () => import("@/views/pages/Home/RolesDetail")
+          },
+          {
+            path: "OrdersDetail",
+            name: "HomeOrdersDetail",
+            meta: {
+              title: "订单明细",
+              group: "基础功能",
+              fnId: 10,
+              icsel: require("@/assets/img/ic_order_sel.png"),
+              icdef: require("@/assets/img/ic_order_def.png"),
+              onlyPcMode: false
+            },
+            component: () => import("@/views/pages/Home/OrdersDetail")
+          },
+          {
+            path: "RechargePlayer",
+            name: "HomeRechargePlayer",
+            meta: {
+              title: "充值排行榜",
+              group: "基础功能",
+              fnId: 8,
+              icsel: require("@/assets/img/ic_rech_sel.png"),
+              icdef: require("@/assets/img/ic_rech_def.png"),
+              onlyPcMode: true
+            },
+            component: () => import("@/views/pages/Home/RechargePlayer")
+          },
+          {
+            path: "ExpDetail",
+            name: "HomeExpDetail",
+            meta: {
+              title: "经验明细",
+              group: "基础功能",
+              fnId: 9,
+              icsel: require("@/assets/img/ic_exp_sel.png"),
+              icdef: require("@/assets/img/ic_exp_def.png"),
+              onlyPcMode: true
+            },
+            component: () => import("@/views/pages/Home/ExpDetail")
+          },
+          {
+            path: "MyLevel",
+            name: "HomeMyLevel",
+            meta: {
+              title: "我的等级",
+              group: "基础功能",
+              fnId: 13,
+              icsel: require("@/assets/img/ic_level_sel.png"),
+              icdef: require("@/assets/img/ic_level_def.png"),
+              onlyPcMode: false
+            },
+            component: () => import("@/views/pages/Home/MyLevel")
+          },
+          {
+            path: "Update",
+            name: "HomeUpdate",
+            meta: {
+              title: "升级记录",
+              group: "基础功能",
+              fnId: 3,
+              icsel: require("@/assets/img/ic_update_sel.png"),
+              icdef: require("@/assets/img/ic_update_def.png"),
+              onlyPcMode: true
+            },
+            component: () => import("@/views/pages/Home/Update")
           },
           // {
           //   path: 'BizConfig',
@@ -166,158 +166,152 @@ export default [
           //   component: () => import('@/views/pages/Home/BizConfig'),
           // },
           {
-            path: 'FixedPost',
-            name: 'HomeFixedPost',
+            path: "FixedPost",
+            name: "HomeFixedPost",
             meta: {
-              title: '每日定岗',
-              group: '管理功能',
-              fnId: 9,
-              icsel: require('@/assets/img/ic_setting_sel.png'),
-              icdef: require('@/assets/img/ic_setting_def.png'),
-              onlyPcMode: true,
+              title: "每日定岗",
+              group: "管理功能",
+              fnId: 6,
+              icsel: require("@/assets/img/ic_setting_sel.png"),
+              icdef: require("@/assets/img/ic_setting_def.png"),
+              onlyPcMode: true
             },
-            component: () => import('@/views/pages/Home/FixedPost'),
+            component: () => import("@/views/pages/Home/FixedPost")
           },
           {
-            path: 'SwitchBind',
-            name: 'HomeSwitchBind',
+            path: "SwitchBind",
+            name: "HomeSwitchBind",
             meta: {
-              title: '玩家换绑',
-              group: '管理功能',
-              fnId: 10,
-              icsel: require('@/assets/img/ic_setting_sel.png'),
-              icdef: require('@/assets/img/ic_setting_def.png'),
-              onlyPcMode: true,
+              title: "玩家换绑",
+              group: "管理功能",
+              fnId: 5,
+              icsel: require("@/assets/img/ic_setting_sel.png"),
+              icdef: require("@/assets/img/ic_setting_def.png"),
+              onlyPcMode: true
             },
-            component: () => import('@/views/pages/Home/SwitchBind'),
+            component: () => import("@/views/pages/Home/SwitchBind")
           },
           {
-            path: 'PlayersBind',
-            name: 'HomePlayersBind',
+            path: "PlayersBind",
+            name: "HomePlayersBind",
             meta: {
-              title: '玩家重绑记录',
-              group: '管理功能',
+              title: "玩家重绑记录",
+              group: "管理功能",
               fnId: 18,
-              icsel: require('@/assets/img/ic_player_sel.png'),
-              icdef: require('@/assets/img/ic_player_def.png'),
-              onlyPcMode: true,
+              icsel: require("@/assets/img/ic_player_sel.png"),
+              icdef: require("@/assets/img/ic_player_def.png"),
+              onlyPcMode: true
             },
-            component: () => import('@/views/pages/Home/PlayersBind'),
+            component: () => import("@/views/pages/Home/PlayersBind")
           },
           {
-            path: 'LevelManage',
-            name: 'HomeLevelManage',
+            path: "LevelManage",
+            name: "HomeLevelManage",
             meta: {
-              title: '等级管理',
-              group: '管理功能',
-              fnId: 11,
-              icsel: require('@/assets/img/ic_lev_manage_sel.png'),
-              icdef: require('@/assets/img/ic_lev_manage_def.png'),
-              onlyPcMode: true,
+              title: "等级管理",
+              group: "管理功能",
+              fnId: 4,
+              icsel: require("@/assets/img/ic_lev_manage_sel.png"),
+              icdef: require("@/assets/img/ic_lev_manage_def.png"),
+              onlyPcMode: true
             },
-            component: () => import('@/views/pages/Home/LevelManage'),
+            component: () => import("@/views/pages/Home/LevelManage")
           },
           {
-            path: 'AssociatedAccount',
-            name: 'HomeAssociatedAccount',
+            path: "AssociatedAccount",
+            name: "HomeAssociatedAccount",
             meta: {
-              title: '账号关联',
-              group: '管理功能',
-              fnId: 13,
-              icsel: require('@/assets/img/ic_associat_sel.png'),
-              icdef: require('@/assets/img/ic_associat_def.png'),
-              onlyPcMode: true,
+              title: "账号关联",
+              group: "管理功能",
+              fnId: 2,
+              icsel: require("@/assets/img/ic_associat_sel.png"),
+              icdef: require("@/assets/img/ic_associat_def.png"),
+              onlyPcMode: true
             },
-            component: () => import('@/views/pages/Home/AssociatedAccount'),
+            component: () => import("@/views/pages/Home/AssociatedAccount")
           },
           {
-            path: 'Department',
-            name: 'HomeDepartment',
+            path: "Department",
+            name: "HomeDepartment",
             meta: {
-              title: '部门人员管理',
-              group: '管理功能',
-              fnId: 14,
-              icsel: require('@/assets/img/ic_depart_sel.png'),
-              icdef: require('@/assets/img/ic_depart_def.png'),
-              onlyPcMode: true,
+              title: "部门人员管理",
+              group: "管理功能",
+              fnId: 1,
+              icsel: require("@/assets/img/ic_depart_sel.png"),
+              icdef: require("@/assets/img/ic_depart_def.png"),
+              onlyPcMode: true
             },
-            component: () => import('@/views/pages/Department'),
+            component: () => import("@/views/pages/Department")
           },
           {
-            path: 'TotalKpi',
-            name: 'HomeTotalKpi',
+            path: "TotalKpi",
+            name: "HomeTotalKpi",
             meta: {
-              title: '薪酬统计',
-              group: '管理功能',
+              title: "薪酬统计",
+              group: "管理功能",
               fnId: 15,
-              icsel: require('@/assets/img/ic_total_kpi_sel.png'),
-              icdef: require('@/assets/img/ic_total_kpi_def.png'),
-              onlyPcMode: true,
+              icsel: require("@/assets/img/ic_total_kpi_sel.png"),
+              icdef: require("@/assets/img/ic_total_kpi_def.png"),
+              onlyPcMode: true
             },
-            component: () => import('@/views/pages/Home/TotalKpi'),
+            component: () => import("@/views/pages/Home/TotalKpi")
           },
           {
-            path: 'RoleList',
-            name: 'HomeRoleList',
+            path: "RoleList",
+            name: "HomeRoleList",
             meta: {
-              title: '角色管理',
-              group: '管理功能',
+              title: "角色管理",
+              group: "管理功能",
               fnId: 16,
-              icsel: require('@/assets/img/ic_rolelist_sel.png'),
-              icdef: require('@/assets/img/ic_rolelist_def.png'),
-              onlyPcMode: true,
+              icsel: require("@/assets/img/ic_rolelist_sel.png"),
+              icdef: require("@/assets/img/ic_rolelist_def.png"),
+              onlyPcMode: true
             },
-            component: () => import('@/views/pages/Home/RoleList'),
+            component: () => import("@/views/pages/Home/RoleList")
           },
           {
-            path: 'StaffPositions',
-            name: 'HomeStaffPositions',
+            path: "StaffPositions",
+            name: "HomeStaffPositions",
             meta: {
-              title: '员工岗位数据汇总',
-              group: '管理功能',
+              title: "员工岗位数据汇总",
+              group: "管理功能",
               fnId: 20,
-              icsel: require('@/assets/img/ic_staffPositions_sel.png'),
-              icdef: require('@/assets/img/ic_staffPositions_def.png'),
-              onlyPcMode: true,
+              icsel: require("@/assets/img/ic_staffPositions_sel.png"),
+              icdef: require("@/assets/img/ic_staffPositions_def.png"),
+              onlyPcMode: true
             },
-            component: () => import('@/views/pages/Home/StaffPositions'),
-          },
-        ],
+            component: () => import("@/views/pages/Home/StaffPositions")
+          }
+        ]
       },
       {
-        path: 'Ranking',
-        name: 'Ranking',
-        meta: { title: '排行' },
-        component: () => import('@/views/pages/Ranking/'),
+        path: "Ranking",
+        name: "Ranking",
+        meta: { title: "排行", fnId: 17 },
+        component: () => import("@/views/pages/Ranking/")
       },
       {
-        path: 'MyTarget',
-        name: 'MyTarget',
-        meta: { title: '数据指标' },
-        component: () => import('@/views/pages/MyTarget/'),
+        path: "MyTarget",
+        name: "MyTarget",
+        meta: { title: "数据指标" },
+        component: () => import("@/views/pages/MyTarget/")
       },
       {
-        path: 'GameChannel',
-        name: 'GameChannel',
-        meta: { title: '游戏渠道' },
-        component: () => import('@/views/pages/GameChannel/'),
-      },
-      {
-        path: 'Department',
-        name: 'Department',
-        meta: { title: '部门管理' },
-        component: () => import('@/views/pages/Department/'),
-      },
-    ],
+        path: "GameChannel",
+        name: "GameChannel",
+        meta: { title: "游戏渠道" },
+        component: () => import("@/views/pages/GameChannel/")
+      }
+    ]
   },
   {
-    path: '/Login',
-    name: 'Login',
-    component: () => import('@/views/pages/Auth/'),
+    path: "/Login",
+    name: "Login",
+    component: () => import("@/views/pages/Auth/")
   },
   {
-    path: '/Register',
-    name: 'Register',
-    component: () => import('@/views/pages/Auth/'),
-  },
-]
+    path: "/Register",
+    name: "Register",
+    component: () => import("@/views/pages/Auth/")
+  }
+];

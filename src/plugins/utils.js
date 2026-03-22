@@ -1,7 +1,7 @@
-import vgo from '@/plugins/bus'
-import QRCode from './lib/qrcode.min'
-import { LOGIN } from '../config/globalconfig'
-const { COOKIE_NAME, COOKIE_DOMAIN } = $globalconfig
+import vgo from "@/plugins/bus";
+import QRCode from "./lib/qrcode.min";
+import { LOGIN } from "../config/globalconfig";
+const { COOKIE_NAME, COOKIE_DOMAIN } = $globalconfig;
 const utils = {
   /**
    * 设置cookie
@@ -10,18 +10,25 @@ const utils = {
    * @param {*} [cvalue=null] cookie val Object 自动JSON.stringify
    * @param {*} [opts={}] cookie 选项 exHours 有效小时 domain 域名 path 路径
    */
-  setCookie (cname, cvalue = null, opts = {}) { // 1天
-    const { exHours = 24, domain = '', path = '/' } = opts
-    let expires = ''
+  setCookie(cname, cvalue = null, opts = {}) {
+    // 1天
+    const { exHours = 24, domain = "", path = "/" } = opts;
+    let expires = "";
     if (exHours) {
-      const date = new Date()
-      date.setTime(date.getTime() + (exHours * 60 * 60 * 1000))
-      expires = ';expires=' + date.toGMTString()
+      const date = new Date();
+      date.setTime(date.getTime() + exHours * 60 * 60 * 1000);
+      expires = ";expires=" + date.toGMTString();
     }
-    const pathHandle = ';path=' + path
-    const domainHandle = domain ? ';domain=' + domain : ''
-    cvalue = typeof cvalue === 'object' ? JSON.stringify(cvalue) : cvalue
-    document.cookie = cname + '=' + encodeURIComponent(cvalue) + expires + pathHandle + domainHandle
+    const pathHandle = ";path=" + path;
+    const domainHandle = domain ? ";domain=" + domain : "";
+    cvalue = typeof cvalue === "object" ? JSON.stringify(cvalue) : cvalue;
+    document.cookie =
+      cname +
+      "=" +
+      encodeURIComponent(cvalue) +
+      expires +
+      pathHandle +
+      domainHandle;
   },
 
   /**
@@ -30,12 +37,13 @@ const utils = {
    * @param {String} cname cookie key
    * @returns {String} value Object 需要JSON.parse
    */
-  getCookie (cname) {
-    const name = cname + '='
-    const cArr = document.cookie.split(';')
-    let cookie = ''
-    cArr && cArr.map(item => item.trim().indexOf(name) === 0 && (cookie = item))
-    return cookie && decodeURIComponent(cookie.split(name)[1])
+  getCookie(cname) {
+    const name = cname + "=";
+    const cArr = document.cookie.split(";");
+    let cookie = "";
+    cArr &&
+      cArr.map(item => item.trim().indexOf(name) === 0 && (cookie = item));
+    return cookie && decodeURIComponent(cookie.split(name)[1]);
   },
 
   /**
@@ -43,11 +51,11 @@ const utils = {
    *
    * @returns {String} token or false
    */
-  getToken () {
+  getToken() {
     // COOKIE_NAME = 'ZhuLangUserAccount'
-    const token = this.getCookie(COOKIE_NAME)
-    if (!token) LOGIN()
-    else return token
+    const token = this.getCookie(COOKIE_NAME);
+    if (!token) LOGIN();
+    else return token;
   },
 
   /**
@@ -55,15 +63,23 @@ const utils = {
    *
    * @param {String} token
    */
-  setToken (token) {
-    this.setCookie(COOKIE_NAME, 'Bearer ' + token, { exHours: 99, domain: process.env.NODE_ENV === 'production' ? COOKIE_DOMAIN : '' })
+  setToken(token) {
+    // 仅当当前 hostname 与 COOKIE_DOMAIN 匹配时才设置 domain，
+    // 否则通过 IP 访问时浏览器会静默丢弃带有域名限制的 cookie
+    const isMatchDomain =
+      process.env.NODE_ENV === "production" &&
+      location.hostname.includes(COOKIE_DOMAIN.replace(/^\./, ""));
+    this.setCookie(COOKIE_NAME, "Bearer " + token, {
+      exHours: 99,
+      domain: isMatchDomain ? COOKIE_DOMAIN : ""
+    });
   },
 
   // 退出登录
-  clearCookie () {
-    this.setCookie(COOKIE_NAME, '', {
-      exHours: -1,
-    })
+  clearCookie() {
+    this.setCookie(COOKIE_NAME, "", {
+      exHours: -1
+    });
   },
 
   /**
@@ -71,14 +87,14 @@ const utils = {
    *
    * @param {String} text 文本
    */
-  copyText (text) {
-    const tempInput = document.createElement('input')
-    tempInput.value = text
-    document.body.appendChild(tempInput)
-    tempInput.select() // 选择对象
-    document.execCommand('Copy') // 执行浏览器复制命令
-    document.body.removeChild(tempInput)
-    vgo.tip('复制成功!', 'success')
+  copyText(text) {
+    const tempInput = document.createElement("input");
+    tempInput.value = text;
+    document.body.appendChild(tempInput);
+    tempInput.select(); // 选择对象
+    document.execCommand("Copy"); // 执行浏览器复制命令
+    document.body.removeChild(tempInput);
+    vgo.tip("复制成功!", "success");
   },
 
   /**
@@ -86,35 +102,37 @@ const utils = {
    *
    * @param {String} text 文本
    */
-  verifyPhone (phone) {
-    const reg = /^(0|86|17951)?(13[0-9]|15[012356789]|166|17[3678]|1(8|9)[0-9]|14[57])[0-9]{8}$/
-    return reg.test(phone)
+  verifyPhone(phone) {
+    const reg = /^(0|86|17951)?(13[0-9]|15[012356789]|166|17[3678]|1(8|9)[0-9]|14[57])[0-9]{8}$/;
+    return reg.test(phone);
   },
-  getQrcodeUrl (url = location.href) {
+  getQrcodeUrl(url = location.href) {
     if (!this.QRCode) {
-      this.QRCode = new QRCode(document.createElement('div'), {
+      this.QRCode = new QRCode(document.createElement("div"), {
         text: url,
         width: 200,
         height: 200,
         // colorDark: '#ffffff',
         // colorLight: '#000000',
-        correctLevel: QRCode.CorrectLevel.H,
-      })
+        correctLevel: QRCode.CorrectLevel.H
+      });
     } else {
-      this.QRCode.makeCode(url)
+      this.QRCode.makeCode(url);
     }
-    const canvas = this.QRCode._el.querySelector('canvas')
-    return canvas.toDataURL()
+    const canvas = this.QRCode._el.querySelector("canvas");
+    return canvas.toDataURL();
   },
   /**
    *获取promise状态(用于加载状态)
-  *
-  * @returns {promise, resolve}
-  */
-  getPromise () {
-    let rsv
-    const promise = new Promise(resolve => { rsv = resolve })
-    return { promise, resolve: rsv }
+   *
+   * @returns {promise, resolve}
+   */
+  getPromise() {
+    let rsv;
+    const promise = new Promise(resolve => {
+      rsv = resolve;
+    });
+    return { promise, resolve: rsv };
   },
 
   /**
@@ -123,15 +141,15 @@ const utils = {
    * @param {*} url
    * @returns {key: val}
    */
-  getURLQuery (url = location.href) {
-    const obj = {}
-    const reg = /([^?&=]+)=([^?&=]+)/g
-    let res = reg.exec(url)
+  getURLQuery(url = location.href) {
+    const obj = {};
+    const reg = /([^?&=]+)=([^?&=]+)/g;
+    let res = reg.exec(url);
     while (res) {
-      obj[res[1]] = res[2]
-      res = reg.exec(url)
+      obj[res[1]] = res[2];
+      res = reg.exec(url);
     }
-    return obj
+    return obj;
   },
   /**
    * 获取设备/平台类型
@@ -141,205 +159,225 @@ const utils = {
    * @returns {Boolean} boolean
    */
   _uaList: (() => {
-    const ua = navigator.userAgent.toLowerCase()
+    const ua = navigator.userAgent.toLowerCase();
     return {
-      ie: ua.includes('trident'), // IE内核
+      ie: ua.includes("trident"), // IE内核
       mobile: !!ua.match(/applewebkit.*mobile.*/), // 是否为移动终端
       ios: !!ua.match(/\(i[^;]+;( u;)? cpu.+mac os x/), // ios终端
-      android: ua.includes('android') || ua.includes('linux'), // android终端
-      iphone: ua.includes('iphone'), // 是否为iPhone
-      ipad: ua.includes('ipad'), // 是否iPad
-      wx: ua.includes('micromessenger'), // 是否微信
-      pc: !ua.match(/applewebkit.*mobile.*/) && !ua.includes('ipad'), // 是否iPad
-    }
+      android: ua.includes("android") || ua.includes("linux"), // android终端
+      iphone: ua.includes("iphone"), // 是否为iPhone
+      ipad: ua.includes("ipad"), // 是否iPad
+      wx: ua.includes("micromessenger"), // 是否微信
+      pc: !ua.match(/applewebkit.*mobile.*/) && !ua.includes("ipad") // 是否iPad
+    };
   })(),
-  UAis (device) {
-    return this._uaList[device]
+  UAis(device) {
+    return this._uaList[device];
   },
 
-  toThumb (img) {
+  toThumb(img) {
     return new Promise(resolve => {
       // canvas对图片进行缩放
-      const resizeWidth = 300
-      const resizeHeight = 150
-      const canvas = document.createElement('canvas')
-      const context = canvas.getContext('2d')
-      canvas.width = resizeWidth
-      canvas.height = resizeHeight
-      context.drawImage(img, 0, 0, img.width, img.height, 0, 0, resizeWidth, resizeHeight)
+      const resizeWidth = 300;
+      const resizeHeight = 150;
+      const canvas = document.createElement("canvas");
+      const context = canvas.getContext("2d");
+      canvas.width = resizeWidth;
+      canvas.height = resizeHeight;
+      context.drawImage(
+        img,
+        0,
+        0,
+        img.width,
+        img.height,
+        0,
+        0,
+        resizeWidth,
+        resizeHeight
+      );
       // canvas转url
-      resolve(canvas.toDataURL())
-    })
+      resolve(canvas.toDataURL());
+    });
   },
 
-  loadImg (file) {
+  loadImg(file) {
     return new Promise(resolve => {
-      const url = URL.createObjectURL(file)
-      const img = new Image()
-      img.onload = () => resolve(img)
-      img.src = url
-    })
+      const url = URL.createObjectURL(file);
+      const img = new Image();
+      img.onload = () => resolve(img);
+      img.src = url;
+    });
   },
 
   // 读取jpg 文件信息
-  async getJpgAttribute (JpgFile) {
+  async getJpgAttribute(JpgFile) {
     return new Promise(resolve => {
-      const reader = new FileReader()
+      const reader = new FileReader();
       reader.onload = async e => {
         // jpg 结构 0xd8   .. (缩略图: 0xd8 .. 0xd9).. (缩略图: 0xd8 .. 0xd9)..( 0xc0 分辨率/ 0xc2 分辨率 )  0xd9
-        const arrBuf = new Uint8Array(e.target.result)
-        const thumb = { start: [], end: [] }
-        const dpi = []
-        const finalData = { thumbUrl: '', dpi: { width: 0, height: 0 } }
+        const arrBuf = new Uint8Array(e.target.result);
+        const thumb = { start: [], end: [] };
+        const dpi = [];
+        const finalData = { thumbUrl: "", dpi: { width: 0, height: 0 } };
 
         for (let i = 0; i < arrBuf.length; i++) {
           if (arrBuf[i] === 0xff) {
             // 查找缩略图
             if (arrBuf[i + 1] === 0xd8) {
-              thumb.start.push(i)
+              thumb.start.push(i);
             } else if (arrBuf[i + 1] === 0xd9) {
-              thumb.end.push(i)
+              thumb.end.push(i);
             }
             // 查找分辨率
             if (arrBuf[i + 1] === 0xc0 || arrBuf[i + 1] === 0xc2) {
-              dpi.push(i)
+              dpi.push(i);
             }
           }
         }
-        const img = await this.loadImg(JpgFile)
-        finalData.dpi.width = img.width
-        finalData.dpi.height = img.height
+        const img = await this.loadImg(JpgFile);
+        finalData.dpi.width = img.width;
+        finalData.dpi.height = img.height;
         if (thumb.start.length > 1) {
-          const blob = new Blob([arrBuf.subarray(thumb.start[1], thumb.end[0] + 2)], {
-            type: 'image/jpg',
-          })
-          finalData.thumbUrl = URL.createObjectURL(blob)
-        } else if (JpgFile.size < 1024 * 1024 * 200) { // <200M 转压缩
-          console.log('未找到缩略图')
-          finalData.thumbUrl = await this.toThumb(img)
+          const blob = new Blob(
+            [arrBuf.subarray(thumb.start[1], thumb.end[0] + 2)],
+            {
+              type: "image/jpg"
+            }
+          );
+          finalData.thumbUrl = URL.createObjectURL(blob);
+        } else if (JpgFile.size < 1024 * 1024 * 200) {
+          // <200M 转压缩
+          console.log("未找到缩略图");
+          finalData.thumbUrl = await this.toThumb(img);
         }
-        resolve(finalData)
-      }
-      reader.readAsArrayBuffer(JpgFile)
-    })
+        resolve(finalData);
+      };
+      reader.readAsArrayBuffer(JpgFile);
+    });
   },
   // 请求参数为''的情况无法正常请求，需要删除值为''的字段
-  filterNull (p) {
+  filterNull(p) {
     for (const key in p) {
-      if (p[key] === '' || p[key] === ' ') {
-        delete p[key]
+      if (p[key] === "" || p[key] === " ") {
+        delete p[key];
       }
     }
-    return p
+    return p;
   },
   // 给对象的所有属性填充指定的值
-  setObject (obj, val) {
+  setObject(obj, val) {
     for (const key in obj) {
-      obj[key] = val
+      obj[key] = val;
     }
   },
   // 排序,
-  sort (array, key, isDesc = false) {
+  sort(array, key, isDesc = false) {
     if (array) {
       array.sort((a, b) => {
         if (isDesc) {
-          return (b[key] - a[key])
+          return b[key] - a[key];
         } else {
-          return (a[key] - b[key])
+          return a[key] - b[key];
         }
-      })
+      });
     }
   },
-  autoFillDateTime (model) {
-    if (model.startTime &&
+  autoFillDateTime(model) {
+    if (
+      model.startTime &&
       model.endTime &&
-      model.startTime !== '' &&
-      model.endTime !== '' &&
-      model.startTime.length < '20xx-xx-xx xx:xx:xx'.length &&
-      model.endTime.length < '20xx-xx-xx xx:xx:xx'.length
+      model.startTime !== "" &&
+      model.endTime !== "" &&
+      model.startTime.length < "20xx-xx-xx xx:xx:xx".length &&
+      model.endTime.length < "20xx-xx-xx xx:xx:xx".length
     ) {
-      model.startTime += ' 00:00:00'
-      model.endTime += ' 23:59:59'
+      model.startTime += " 00:00:00";
+      model.endTime += " 23:59:59";
     }
   },
 
   // 获取当前时间自动填充00:00:00 - 23.59.59
-  getsCurrentTime (str) {
+  getsCurrentTime(str) {
     // 2022-03-03 00:00:00
-    var now = new Date()
-    var year = now.getFullYear() // 得到年份
-    var month = now.getMonth() + 1 // 得到月份
-    var date = now.getDate() // 得到日期
-    if (month <= 9) month = '0' + month
-    if (date <= 9) date = '0' + date
-    let all = year + '-' + month + '-' + date
-    if (str === 'star') {
-      all = all + ' ' + '00:00:00'
+    var now = new Date();
+    var year = now.getFullYear(); // 得到年份
+    var month = now.getMonth() + 1; // 得到月份
+    var date = now.getDate(); // 得到日期
+    if (month <= 9) month = "0" + month;
+    if (date <= 9) date = "0" + date;
+    let all = year + "-" + month + "-" + date;
+    if (str === "star") {
+      all = all + " " + "00:00:00";
     } else {
-      all = all + ' ' + '23:59:59'
+      all = all + " " + "23:59:59";
     }
-    return all
-  },
-}
-export default utils
+    return all;
+  }
+};
+export default utils;
 
 // 获取饿了么表单校验规则
 export const EUIRule = (type, name, opts = {}) => {
-  const { trigger = 'blur', minlength } = opts
-  if (type === 'required') {
-    return { required: true, message: `${name}不能为空`, trigger }
-  } else if (type === 'price') {
+  const { trigger = "blur", minlength } = opts;
+  if (type === "required") {
+    return { required: true, message: `${name}不能为空`, trigger };
+  } else if (type === "price") {
     return {
-      validator (rule, val, cb) {
+      validator(rule, val, cb) {
         if (isNaN(val) || +val <= 0) {
-          cb(new Error(`${name}必须是大于0的数字!`))
-        } else cb()
+          cb(new Error(`${name}必须是大于0的数字!`));
+        } else cb();
       },
-      trigger,
-    }
-  } else if (type === 'phone') {
+      trigger
+    };
+  } else if (type === "phone") {
     return {
       validator: (rule, val, cb) => {
         if (val && !utils.verifyPhone(val)) {
-          cb(new Error('请输入正确的手机号!'))
+          cb(new Error("请输入正确的手机号!"));
         } else {
-          cb()
+          cb();
         }
       },
-      trigger,
-    }
-  } else if (type === 'tel') { // 手机或电话
+      trigger
+    };
+  } else if (type === "tel") {
+    // 手机或电话
     return {
       validator: (rule, val, cb) => {
-        if (val && !utils.verifyPhone(val) && !(/^\d{3}-?\d{7,8}|\d{4}-\d{7,8}$/.test(val))) {
-          cb(new Error('请输入正确的联系号码!'))
+        if (
+          val &&
+          !utils.verifyPhone(val) &&
+          !/^\d{3}-?\d{7,8}|\d{4}-\d{7,8}$/.test(val)
+        ) {
+          cb(new Error("请输入正确的联系号码!"));
         } else {
-          cb()
+          cb();
         }
       },
-      trigger,
-    }
-  } else if (type === 'link') {
+      trigger
+    };
+  } else if (type === "link") {
     return {
       validator: (rule, val, cb) => {
         if (val && !/^https?:\/\/.+\..+/.test(val)) {
-          cb(new Error('请输入正确且以http://或https://开头的连接!'))
+          cb(new Error("请输入正确且以http://或https://开头的连接!"));
         } else {
-          cb()
+          cb();
         }
       },
-      trigger,
-    }
-  } else if (type === 'minlength') {
+      trigger
+    };
+  } else if (type === "minlength") {
     return {
       validator: (rule, val, cb) => {
         if (val && val.length < minlength) {
-          cb(new Error(`${name}的长度不能小于${minlength}`))
+          cb(new Error(`${name}的长度不能小于${minlength}`));
         } else {
-          cb()
+          cb();
         }
       },
-      trigger,
-    }
+      trigger
+    };
   }
-}
+};
