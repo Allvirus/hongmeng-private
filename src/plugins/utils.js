@@ -1,6 +1,7 @@
 import vgo from "@/plugins/bus";
 import QRCode from "./lib/qrcode.min";
 import { LOGIN } from "../config/globalconfig";
+import store from "@/store";
 const { COOKIE_NAME, COOKIE_DOMAIN } = $globalconfig;
 const utils = {
   /**
@@ -312,6 +313,56 @@ const utils = {
       all = all + " " + "23:59:59";
     }
     return all;
+  },
+  getPermissionList(permissionSource) {
+    const sourceList = [
+      permissionSource,
+      store.getters.buttonList,
+      store.getters.permissionList,
+      store.state.app &&
+        store.state.app.userInfo &&
+        store.state.app.userInfo.buttonList,
+      store.state.app &&
+        store.state.app.userInfo &&
+        store.state.app.userInfo.permissionList,
+      store.state.app &&
+        store.state.app.userInfo &&
+        store.state.app.userInfo.permissions
+    ];
+
+    for (const source of sourceList) {
+      if (Array.isArray(source)) {
+        return source.filter(Boolean);
+      }
+      if (typeof source === "string" && source.trim()) {
+        return source
+          .split(",")
+          .map(item => item.trim())
+          .filter(Boolean);
+      }
+    }
+
+    return [];
+  },
+  hasPerm(code, permissionSource) {
+    if (!code) return true;
+    const permissionList = this.getPermissionList(permissionSource);
+    if (!permissionList.length) return false;
+    if (permissionList.includes("*") || permissionList.includes("*:*")) {
+      return true;
+    }
+    if (Array.isArray(code)) {
+      return code.some(item => permissionList.includes(item));
+    }
+    return permissionList.includes(code);
+  },
+  hasAnyPerm(codes, permissionSource) {
+    if (!Array.isArray(codes) || !codes.length) return true;
+    return codes.some(code => this.hasPerm(code, permissionSource));
+  },
+  hasAllPerm(codes, permissionSource) {
+    if (!Array.isArray(codes) || !codes.length) return true;
+    return codes.every(code => this.hasPerm(code, permissionSource));
   }
 };
 export default utils;

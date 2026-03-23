@@ -32,17 +32,20 @@
           all
         )
         el-button.mgl3(
+          v-permission='\'bizconf.query\'',
           icon='el-icon-search',
           type='primary',
           @click='searchCfg'
         ) 搜索
         el-button.mgl2(
+          v-permission='\'bizconf.query\'',
           icon='el-icon-refresh-right',
           type='primary',
           @click='reset'
         ) 重置
     .flex-1.jc-end
       el-button(
+        v-permission='\'bizconf.add\'',
         icon='el-icon-plus',
         type='primary',
         @click='showEditDlg(false, null)'
@@ -64,11 +67,13 @@
     el-table-column(prop='operate', label='操作')
       template(slot-scope='{ row }')
         el-button.mgl2(
+          v-permission='\'bizconf.edit\'',
           icon='el-icon-edit-outline',
           type='text',
           @click='showEditDlg(true, row)'
         ) 编辑
         el-button.mgl2.danger(
+          v-permission='\'bizconf.delete\'',
           icon='el-icon-delete',
           type='text',
           @click='deleteCfg(row)'
@@ -140,7 +145,11 @@
           )
     span.dialog-footer(slot='footer')
       el-button.mgl3(type='warning', @click='cancelEdit') 取消
-      el-button.mgl3(type='primary', @click='submmitEdit') 提交
+      el-button.mgl3(
+        v-permission='cfgInfo.isEdit ? \'bizconf.edit\' : \'bizconf.add\'',
+        type='primary',
+        @click='submmitEdit'
+      ) 提交
 </template>
 <script>
 import { mapGetters } from 'vuex'
@@ -306,7 +315,9 @@ export default {
 }
 </script>
 <style lang='stylus' scoped>
-.opt-bar
-  .el-form-item
-    margin-bottom 0px
+.opt-bar {
+  .el-form-item {
+    margin-bottom: 0px;
+  }
+}
 </style>

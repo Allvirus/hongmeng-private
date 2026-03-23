@@ -1,0 +1,593 @@
+{
+  "version": "1.0.0",
+  "generatedAt": "2026-03-23",
+  "description": "按钮级权限点字典（含查询权限），用于后端权限种子数据、角色配置和前端鉴权对齐。",
+  "modules": [
+    {
+      "module": "department",
+      "moduleName": "部门管理",
+      "permissions": [
+        {
+          "code": "department.user.query",
+          "name": "查看部门人员列表",
+          "type": "query",
+          "page": "Department",
+          "action": "query",
+          "api": [
+            {
+              "method": "GET",
+              "path": "api/user/department/{departmentId}"
+            }
+          ]
+        },
+        {
+          "code": "department.user.add",
+          "name": "新增人员",
+          "type": "write",
+          "page": "Department",
+          "action": "add",
+          "api": [
+            {
+              "method": "POST",
+              "path": "api/user/"
+            }
+          ]
+        },
+        {
+          "code": "department.user.edit",
+          "name": "编辑人员",
+          "type": "write",
+          "page": "Department",
+          "action": "edit",
+          "api": [
+            {
+              "method": "PUT",
+              "path": "api/user/{id}"
+            }
+          ]
+        },
+        {
+          "code": "department.user.lock",
+          "name": "锁定人员",
+          "type": "write",
+          "page": "Department",
+          "action": "lock",
+          "api": [
+            {
+              "method": "POST",
+              "path": "api/user/{id}/lock"
+            }
+          ]
+        },
+        {
+          "code": "department.user.unlock",
+          "name": "解锁人员",
+          "type": "write",
+          "page": "Department",
+          "action": "unlock",
+          "api": [
+            {
+              "method": "POST",
+              "path": "api/user/{id}/unlock"
+            }
+          ]
+        },
+        {
+          "code": "department.user.resetPwd",
+          "name": "重置密码",
+          "type": "write",
+          "page": "Department",
+          "action": "resetPwd",
+          "api": [
+            {
+              "method": "POST",
+              "path": "/api/user/reset?userName={userName}"
+            }
+          ]
+        },
+        {
+          "code": "department.dept.add",
+          "name": "新增部门",
+          "type": "write",
+          "page": "Department",
+          "action": "add",
+          "api": [
+            {
+              "method": "POST",
+              "path": "/api/department/"
+            }
+          ]
+        },
+        {
+          "code": "department.dept.edit",
+          "name": "编辑部门",
+          "type": "write",
+          "page": "Department",
+          "action": "edit",
+          "api": [
+            {
+              "method": "PUT",
+              "path": "/api/department/{departmentId}"
+            }
+          ]
+        },
+        {
+          "code": "department.dept.delete",
+          "name": "删除部门",
+          "type": "write",
+          "page": "Department",
+          "action": "delete",
+          "api": [
+            {
+              "method": "DELETE",
+              "path": "/api/department/{id}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "module": "level",
+      "moduleName": "等级管理",
+      "permissions": [
+        {
+          "code": "level.query",
+          "name": "查询等级列表",
+          "type": "query",
+          "page": "LevelManage",
+          "action": "query",
+          "api": [
+            {
+              "method": "GET",
+              "path": "/api/level/"
+            }
+          ]
+        },
+        {
+          "code": "level.add",
+          "name": "新增等级",
+          "type": "write",
+          "page": "LevelManage",
+          "action": "add",
+          "api": [
+            {
+              "method": "POST",
+              "path": "/api/level/"
+            }
+          ]
+        },
+        {
+          "code": "level.edit",
+          "name": "编辑等级",
+          "type": "write",
+          "page": "LevelManage",
+          "action": "edit",
+          "api": [
+            {
+              "method": "PUT",
+              "path": "/api/level/{id}"
+            }
+          ]
+        },
+        {
+          "code": "level.delete",
+          "name": "删除等级",
+          "type": "write",
+          "page": "LevelManage",
+          "action": "delete",
+          "api": [
+            {
+              "method": "DELETE",
+              "path": "/api/level/{id}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "module": "bizconf",
+      "moduleName": "业务配置",
+      "permissions": [
+        {
+          "code": "bizconf.query",
+          "name": "查询业务配置",
+          "type": "query",
+          "page": "FixedPost",
+          "action": "query",
+          "api": [
+            {
+              "method": "GET",
+              "path": "/api/bizconf"
+            }
+          ]
+        },
+        {
+          "code": "bizconf.add",
+          "name": "新增业务配置",
+          "type": "write",
+          "page": "FixedPost",
+          "action": "add",
+          "api": [
+            {
+              "method": "POST",
+              "path": "/api/bizconf/bluk"
+            }
+          ]
+        },
+        {
+          "code": "bizconf.edit",
+          "name": "编辑业务配置",
+          "type": "write",
+          "page": "FixedPost",
+          "action": "edit",
+          "api": [
+            {
+              "method": "PUT",
+              "path": "/api/bizconf/{id}"
+            }
+          ]
+        },
+        {
+          "code": "bizconf.delete",
+          "name": "删除业务配置",
+          "type": "write",
+          "page": "FixedPost",
+          "action": "delete",
+          "api": [
+            {
+              "method": "DELETE",
+              "path": "/api/bizconf/{id}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "module": "role",
+      "moduleName": "角色管理",
+      "permissions": [
+        {
+          "code": "role.query",
+          "name": "查询角色列表",
+          "type": "query",
+          "page": "RoleList",
+          "action": "query",
+          "api": [
+            {
+              "method": "GET",
+              "path": "/api/role"
+            }
+          ]
+        },
+        {
+          "code": "role.add",
+          "name": "新增角色",
+          "type": "write",
+          "page": "RoleList",
+          "action": "add",
+          "api": [
+            {
+              "method": "POST",
+              "path": "/api/role"
+            }
+          ]
+        },
+        {
+          "code": "role.edit",
+          "name": "编辑角色",
+          "type": "write",
+          "page": "RoleList",
+          "action": "edit",
+          "api": [
+            {
+              "method": "PUT",
+              "path": "/api/role/"
+            }
+          ]
+        },
+        {
+          "code": "role.delete",
+          "name": "删除角色",
+          "type": "write",
+          "page": "RoleList",
+          "action": "delete",
+          "api": [
+            {
+              "method": "DELETE",
+              "path": "/api/role/{roleId}"
+            }
+          ]
+        },
+        {
+          "code": "role.permission.view",
+          "name": "查看角色菜单权限明细",
+          "type": "query",
+          "page": "RoleList",
+          "action": "view",
+          "api": [
+            {
+              "method": "GET",
+              "path": "api/role/{roleId}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "module": "experience",
+      "moduleName": "经验明细",
+      "permissions": [
+        {
+          "code": "experience.query",
+          "name": "查询经验明细",
+          "type": "query",
+          "page": "ExpDetail",
+          "action": "query",
+          "api": [
+            {
+              "method": "GET",
+              "path": "/api/experience/"
+            },
+            {
+              "method": "GET",
+              "path": "/api/experience/user"
+            }
+          ]
+        },
+        {
+          "code": "experience.add",
+          "name": "新增经验",
+          "type": "write",
+          "page": "ExpDetail",
+          "action": "add",
+          "api": [
+            {
+              "method": "POST",
+              "path": "/api/experience/"
+            }
+          ]
+        },
+        {
+          "code": "experience.delete",
+          "name": "删除经验",
+          "type": "write",
+          "page": "ExpDetail",
+          "action": "delete",
+          "api": [
+            {
+              "method": "DELETE",
+              "path": "/api/experience/{id}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "module": "userbind",
+      "moduleName": "账号关联",
+      "permissions": [
+        {
+          "code": "userbind.query",
+          "name": "查询账号关联",
+          "type": "query",
+          "page": "AssociatedAccount",
+          "action": "query",
+          "api": [
+            {
+              "method": "GET",
+              "path": "/api/userbind"
+            }
+          ]
+        },
+        {
+          "code": "userbind.add",
+          "name": "新增账号关联",
+          "type": "write",
+          "page": "AssociatedAccount",
+          "action": "add",
+          "api": [
+            {
+              "method": "POST",
+              "path": "/api/userbind"
+            }
+          ]
+        },
+        {
+          "code": "userbind.delete",
+          "name": "删除账号关联",
+          "type": "write",
+          "page": "AssociatedAccount",
+          "action": "delete",
+          "api": [
+            {
+              "method": "DELETE",
+              "path": "/api/userbind/{id}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "module": "playerswitch",
+      "moduleName": "玩家换绑",
+      "permissions": [
+        {
+          "code": "playerswitch.query",
+          "name": "查询换绑记录",
+          "type": "query",
+          "page": "SwitchBind",
+          "action": "query",
+          "api": [
+            {
+              "method": "GET",
+              "path": "/api/playerswitch/"
+            }
+          ]
+        },
+        {
+          "code": "playerswitch.origin.query",
+          "name": "查询原绑定信息",
+          "type": "query",
+          "page": "SwitchBind",
+          "action": "query",
+          "api": [
+            {
+              "method": "GET",
+              "path": "/api/playerswitch/usercode/{userCode}"
+            }
+          ]
+        },
+        {
+          "code": "playerswitch.switch",
+          "name": "执行换绑",
+          "type": "write",
+          "page": "SwitchBind",
+          "action": "switch",
+          "api": [
+            {
+              "method": "POST",
+              "path": "/api/playerswitch/"
+            }
+          ]
+        },
+        {
+          "code": "playerswitch.delete",
+          "name": "删除换绑记录",
+          "type": "write",
+          "page": "SwitchBind",
+          "action": "delete",
+          "api": [
+            {
+              "method": "DELETE",
+              "path": "/api/playerswitch/{id}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "module": "channel",
+      "moduleName": "游戏渠道",
+      "permissions": [
+        {
+          "code": "channel.query",
+          "name": "查询游戏渠道",
+          "type": "query",
+          "page": "GameChannel",
+          "action": "query",
+          "api": [
+            {
+              "method": "GET",
+              "path": "/api/channel/"
+            }
+          ]
+        },
+        {
+          "code": "channel.add",
+          "name": "新增渠道",
+          "type": "write",
+          "page": "GameChannel",
+          "action": "add",
+          "api": [
+            {
+              "method": "POST",
+              "path": "/api/channel/"
+            }
+          ]
+        },
+        {
+          "code": "channel.edit",
+          "name": "编辑渠道",
+          "type": "write",
+          "page": "GameChannel",
+          "action": "edit",
+          "api": [
+            {
+              "method": "PUT",
+              "path": "/api/channel/{id}"
+            }
+          ]
+        },
+        {
+          "code": "channel.delete",
+          "name": "删除渠道",
+          "type": "write",
+          "page": "GameChannel",
+          "action": "delete",
+          "api": [
+            {
+              "method": "DELETE",
+              "path": "/api/channel/{id}"
+            }
+          ]
+        },
+        {
+          "code": "channel.download",
+          "name": "下载 apk",
+          "type": "write",
+          "page": "GameChannel",
+          "action": "download",
+          "api": []
+        },
+        {
+          "code": "channel.upload",
+          "name": "上传 apk",
+          "type": "write",
+          "page": "GameChannel",
+          "action": "upload",
+          "api": [
+            {
+              "method": "POST",
+              "path": "api/common/file/apk"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "module": "salary",
+      "moduleName": "工资记录",
+      "permissions": [
+        {
+          "code": "salary.query",
+          "name": "查询工资记录",
+          "type": "query",
+          "page": "TotalKpi",
+          "action": "query",
+          "api": [
+            {
+              "method": "GET",
+              "path": "/api/salary"
+            }
+          ]
+        },
+        {
+          "code": "salary.add",
+          "name": "新增月工资记录",
+          "type": "write",
+          "page": "TotalKpi",
+          "action": "add",
+          "api": [
+            {
+              "method": "POST",
+              "path": "/api/salary?month={month}"
+            }
+          ]
+        },
+        {
+          "code": "salary.export",
+          "name": "导出工资",
+          "type": "write",
+          "page": "TotalKpi",
+          "action": "export",
+          "api": [
+            {
+              "method": "GET",
+              "path": "/api/salary/excel"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

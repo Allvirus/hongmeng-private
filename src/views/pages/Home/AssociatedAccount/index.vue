@@ -35,8 +35,17 @@
           el-option(label='木勺', :value='1')
       el-form-item.mgl4(label='平台推广账号:')
         el-input(v-model='model.account', clearable)
-        el-button.mgl3(icon='el-icon-search', type='primary', @click='search') 搜索
-        el-button.mgl3(type='primary', @click='dialogVisible = true') 新增
+        el-button.mgl3(
+          v-permission='\'userbind.query\'',
+          icon='el-icon-search',
+          type='primary',
+          @click='search'
+        ) 搜索
+        el-button.mgl3(
+          v-permission='\'userbind.add\'',
+          type='primary',
+          @click='dialogVisible = true'
+        ) 新增
 
   el-table.mgy2.bg-white.pd2(:data='listMixin.list')
     el-table-column(prop='departmentName', label='所属组织')
@@ -49,6 +58,7 @@
     el-table-column(prop='operate', label='操作', width='150')
       template(slot-scope='{ row }')
         el-button.danger(
+          v-permission='\'userbind.delete\'',
           icon='el-icon-delete',
           type='text',
           @click='deleteLevel(row)'
@@ -99,7 +109,11 @@
           el-input(v-model='addModel.account', clearable)
     span.dialog-footer(span, slot='footer')
       el-button(@click='cancelChange') 取消
-      el-button(type='primary', @click='confirmAdd') 确定
+      el-button(
+        v-permission='\'userbind.add\'',
+        type='primary',
+        @click='confirmAdd'
+      ) 确定
 </template>
 <script>
 import { mapGetters } from 'vuex'

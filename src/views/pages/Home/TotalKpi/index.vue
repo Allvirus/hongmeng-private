@@ -49,17 +49,23 @@
           value-format='yyyyMM'
         )
       el-button.mgl3.mgb3(
+        v-permission='\'salary.query\'',
         :class='OS.isPc ? "" : "mgb2"',
         icon='el-icon-search',
         type='primary',
         @click='getSalaryList'
       ) 搜索
       el-button.mgl2.mgb3(
+        v-permission='\'salary.add\'',
         :class='OS.isPc ? "" : "mgb2"',
         type='success',
         @click='dialogVisible = true'
       ) 新增
-      el-button.mgb3(type='warning', @click='exportWages') 导出工资
+      el-button.mgb3(
+        v-permission='\'salary.export\'',
+        type='warning',
+        @click='exportWages'
+      ) 导出工资
 
   el-table.mgy2.bg-white.pd2(:data='salaryList')
     el-table-column(label='月份')
@@ -98,7 +104,7 @@
     el-table-column(prop='cPostSalary', label='后勤岗流水', v-if='isShowSalary')
     el-table-column(prop='levelName', label='等级')
     el-table-column(prop='commission', label='提成点')
-      template(slot-scope='{ row }') {{ row.commission + "%" }}
+      template(slot-scope='{ row }') {{ row.commission + '%' }}
     el-table-column(prop='percentAmount', label='提成金额')
     el-table-column(prop='basicSalary', label='底薪')
     el-table-column(label='创建时间', width='190')
@@ -123,7 +129,11 @@
       )
     span.dialog-footer(span, slot='footer')
       el-button(@click='cancelChange') 取消
-      el-button(type='primary', @click='confirmChange') 确定
+      el-button(
+        v-permission='\'salary.add\'',
+        type='primary',
+        @click='confirmChange'
+      ) 确定
 </template>
 <script>
 import { mapGetters } from 'vuex'
@@ -265,10 +275,11 @@ export default {
 }
 </script>
 <style lang='stylus' scoped>
-.toLoadMore
-  cursor pointer
-  margin-left 5px
-  display inline-block
-  border 1px solid #000
-  color #000
+.toLoadMore {
+  cursor: pointer;
+  margin-left: 5px;
+  display: inline-block;
+  border: 1px solid #000;
+  color: #000;
+}
 </style>

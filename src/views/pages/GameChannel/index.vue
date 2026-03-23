@@ -22,6 +22,7 @@
       p 同类游戏列表
       .ff-rn.ai-center
         el-button.btn.btn-primary.el-icon-plus(
+          v-permission='\'channel.add\'',
           type='primary',
           @click='showEditDlg(null)'
         ) 添加
@@ -32,6 +33,7 @@
           @clear='getListMixin'
         )
           el-button(
+            v-permission='\'channel.query\'',
             slot='append',
             icon='el-icon-search',
             @click='getListMixin'
@@ -46,7 +48,7 @@
       el-table-column(prop='gameType', label='游戏类型')
       el-table-column(prop='equipmentType', label='设备类型')
         template(slot-scope='{ row }')
-          span {{ row.equipmentType === 1 ? "安卓" : "苹果" }}
+          span {{ row.equipmentType === 1 ? '安卓' : '苹果' }}
       el-table-column(prop='juntoChatLevel', label='帮聊等级')
       el-table-column(prop='privateChatLevel', label='私聊等级')
       el-table-column(prop='worldChatLevel', label='世界等级')
@@ -55,10 +57,10 @@
         template(slot-scope='{ row }') {{ row.ceateJuntoCost | toFixed }}
       el-table-column(prop='isInviteJunto', label='是否可邀帮')
         template(slot-scope='{ row }')
-          span {{ row.isInviteJunto ? "是" : "否" }}
+          span {{ row.isInviteJunto ? '是' : '否' }}
       el-table-column(prop='isPostInviteJunto', label='是否可职位邀帮')
         template(slot-scope='{ row }')
-          span {{ row.isPostInviteJunto ? "是" : "否" }}
+          span {{ row.isPostInviteJunto ? '是' : '否' }}
       el-table-column(prop='joinPeople', label='上传时间', width='150')
         template(slot-scope='{ row }')
           span {{ row.uploadTime | dateFormat }}
@@ -69,16 +71,19 @@
         template(slot-scope='{ row }')
           .ff-rn.jc-start
             el-button.mgl3(
+              v-permission='\'channel.download\'',
               icon='el-icon-download',
               type='text',
               @click='downLoad(row)'
             ) 下载
             el-button.mgl3(
+              v-permission='\'channel.edit\'',
               icon='el-icon-edit-outline',
               type='text',
               @click='showEditDlg(row)'
             ) 编辑
             el-button.mgl3.danger(
+              v-permission='\'channel.delete\'',
               icon='el-icon-delete',
               type='text',
               @click='deleteGame(row)'
@@ -159,6 +164,7 @@
           )
             template(slot='append')
               el-upload(
+                v-permission='\'channel.upload\'',
                 displayType='button',
                 :isPicture='false',
                 :onChange='onApkChanged'
@@ -214,7 +220,11 @@
           el-checkbox(v-model='gameInfo.isPostInviteJunto') 是否可职位邀帮
     span.dialog-footer(slot='footer')
       el-button.mgl3(type='warning', @click='gameInfo.isShow = false') 取消
-      el-button.mgl3(type='primary', @click='submmit') 提交
+      el-button.mgl3(
+        v-permission='gameInfo.isEdit ? \'channel.edit\' : \'channel.add\'',
+        type='primary',
+        @click='submmit'
+      ) 提交
 </template>
 <script>
 import { mapGetters } from 'vuex'

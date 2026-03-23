@@ -199,6 +199,7 @@ export default {
     http("put", `api/user/${model.id}`, {
       data: {
         realName: model.realName,
+        userName: model.userName,
         phoneNumber: model.phoneNumber,
         // account: model.account,
         departmentId: model.departmentId,
@@ -1239,7 +1240,8 @@ export default {
     http("post", "/api/role", {
       data: {
         name: module.name,
-        menusList: module.menusList
+        menusList: module.menusList,
+        permissionList: module.permissionList
       }
     }),
 
@@ -1248,7 +1250,8 @@ export default {
     http("put", "/api/role/", {
       data: {
         id: module.id,
-        menusList: module.menusList
+        menusList: module.menusList,
+        permissionList: module.permissionList
       }
     }),
 

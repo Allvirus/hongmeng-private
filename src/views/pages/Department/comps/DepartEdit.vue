@@ -16,7 +16,12 @@
             show-word-limit
           )
         el-form-item(label='负责人:')
-          el-select(v-model='departInfo.userId', placeholder='请选择', filterable clearable)
+          el-select(
+            v-model='departInfo.userId',
+            placeholder='请选择',
+            filterable,
+            clearable
+          )
             el-option(
               v-for='item in userList',
               :key='item.id',
@@ -43,7 +48,11 @@
           )
     span.dialog-footer(slot='footer')
       el-button.mgl3(type='warning', @click='cancel') 取消
-      el-button.mgl3(type='primary', @click='submmit') 提交
+      el-button.mgl3(
+        v-permission='isEdit ? \'department.dept.edit\' : \'department.dept.add\'',
+        type='primary',
+        @click='submmit'
+      ) 提交
 </template>
 <script>
 import { mapGetters } from 'vuex'

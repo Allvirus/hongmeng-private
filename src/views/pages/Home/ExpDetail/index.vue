@@ -43,16 +43,19 @@
           all
         )
       el-button.mgl3.mgb2(
+        v-permission='\'experience.query\'',
         icon='el-icon-search',
         type='primary',
         @click='search'
       ) 搜索
       el-button.mgl2.mgb2(
+        v-permission='\'experience.query\'',
         icon='el-icon-refresh-right',
         type='primary',
         @click='reset'
       ) 重置
       el-button.mgb2.mgr2(
+        v-permission='\'experience.add\'',
         icon='el-icon-plus',
         type='warning',
         @click='newExpDlg = true',
@@ -65,7 +68,7 @@
     el-table-column(prop='origin', label='经验来源')
     el-table-column(prop='expChange', label='经验值')
       template(slot-scope='{ row }')
-        span.danger {{ Number(row.expChange) > 0 ? "+" : "" }}
+        span.danger {{ Number(row.expChange) > 0 ? '+' : '' }}
         span.danger {{ row.expChange }}
     el-table-column(prop='createTime', label='创建时间')
       template(slot-scope='{ row }') {{ row.createTime | dateFormat }}
@@ -112,7 +115,11 @@
           el-input(v-model='newExpInfo.remark', placeholder='请输入备注', clearable)
     span.dialog-footer(slot='footer')
       el-button.mgl3(type='warning', @click='cancel') 取消
-      el-button.mgl3(type='primary', @click='submmit') 提交
+      el-button.mgl3(
+        v-permission='\'experience.add\'',
+        type='primary',
+        @click='submmit'
+      ) 提交
 </template>
 <script>
 import { mapGetters } from 'vuex'
@@ -179,6 +186,7 @@ export default {
 }
 </script>
 <style lang='stylus' scoped>
-.el-form-item
-  margin-bottom 10px
+.el-form-item {
+  margin-bottom: 10px;
+}
 </style>

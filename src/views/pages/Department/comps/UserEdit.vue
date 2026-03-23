@@ -16,6 +16,14 @@
             show-word-limit,
             clearable
           )
+        el-form-item(label='用户名:', required, v-if='this.userId !== 0')
+          el-input(
+            v-model='model.userName',
+            placeholder='请输入用户名',
+            :maxlength='50',
+            show-word-limit,
+            clearable
+          )
         el-form-item(label='入职日期:', required)
           CommonDatePicker(
             type='date',
@@ -96,7 +104,11 @@
         //-   el-input(v-model='model.manageDepartmentId', placeholder='请输入账户' type='tel')
     span.dialog-footer(slot='footer')
       el-button.mgl3(type='warning', @click='cancel') 取消
-      el-button.mgl3(type='primary', @click='submmit') 提交
+      el-button.mgl3(
+        v-permission='userId !== 0 ? \'department.user.edit\' : \'department.user.add\'',
+        type='primary',
+        @click='submmit'
+      ) 提交
 </template>
 <script>
 export default {
@@ -125,6 +137,7 @@ export default {
     return {
       model: {
         realName: '',
+        userName: '',
         phoneNumber: '',
         // account: '',
         departmentId: '',
@@ -270,6 +283,7 @@ export default {
 }
 </script>
 <style lang='stylus' scoped>
->>>.el-dialog__body
-  padding 20px !important
+>>>.el-dialog__body {
+  padding: 20px !important;
+}
 </style>

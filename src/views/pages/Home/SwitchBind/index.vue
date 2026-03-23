@@ -9,13 +9,19 @@
           clearable
         )
       el-form-item(label-width='20px')
-        el-button(type='warning', @click='swBindDlg = true') 玩家换绑
+        el-button(
+          v-permission='\'playerswitch.switch\'',
+          type='warning',
+          @click='swBindDlg = true'
+        ) 玩家换绑
         el-button.mgl3(
+          v-permission='\'playerswitch.query\'',
           icon='el-icon-search',
           type='primary',
           @click='getListMixin'
         ) 搜索
         el-button.mgl2(
+          v-permission='\'playerswitch.query\'',
           icon='el-icon-refresh-right',
           type='primary',
           @click='resetPageMixin'
@@ -30,9 +36,9 @@
     el-table-column(prop='aJobAfter', label='A岗(换绑后)')
     el-table-column(prop='bJobAfter', label='B岗(换绑后)')
     el-table-column(prop='cJobAfter', label='C岗(换绑后)')
-    el-table-column(prop='switchTime', label='创建时间' width="150px")
+    el-table-column(prop='switchTime', label='创建时间', width='150px')
       template(slot-scope='{ row }') {{ row.switchTime | dateFormat }}
-    el-table-column(prop='targetTime', label='换绑时间' width="160px")
+    el-table-column(prop='targetTime', label='换绑时间', width='160px')
       template(slot-scope='{ row }') {{ row.targetTime | dateFormat }}
   el-pagination.margin-spacing(
     :total='listMixin.count',
@@ -101,10 +107,20 @@
             :value='item.id'
           )
       el-form-item(label='换绑时间', required)
-        el-date-picker(type="datetime" placeholder="选择日期时间" :end-placeholde="swBindParams.targetTime"  v-model="swBindParams.targetTime" :picker-options="pickerOptions")
+        el-date-picker(
+          type='datetime',
+          placeholder='选择日期时间',
+          :end-placeholde='swBindParams.targetTime',
+          v-model='swBindParams.targetTime',
+          :picker-options='pickerOptions'
+        )
     span.dialog-footer(slot='footer')
       el-button.mgl3(type='warning', @click='cancelBind') 取消
-      el-button.mgl3(type='primary', @click='commitSwBind') 提交
+      el-button.mgl3(
+        v-permission='\'playerswitch.switch\'',
+        type='primary',
+        @click='commitSwBind'
+      ) 提交
 </template>
 
 <script>
@@ -197,9 +213,13 @@ export default {
 }
 </script>
 <style lang='stylus'>
-.el-picker-panel__body
-  .el-date-picker__editor-wrap
-      width 140px !important
-      .el-input--small
-        width 140px !important
+.el-picker-panel__body {
+  .el-date-picker__editor-wrap {
+    width: 140px !important;
+
+    .el-input--small {
+      width: 140px !important;
+    }
+  }
+}
 </style>

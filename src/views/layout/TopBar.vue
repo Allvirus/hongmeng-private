@@ -126,14 +126,14 @@ export default {
         oldpswd: [EUIRule('required', '旧密码'), { min: 6, max: 18, message: '长度在 6 到 18 个字符', trigger: 'blur' }],
         password: [EUIRule('required', '密码'), { min: 6, max: 18, message: '长度在 6 到 18 个字符', trigger: 'blur' }],
         passwordre: [EUIRule('required', '密码'), { min: 6, max: 18, message: '长度在 6 到 18 个字符', trigger: 'blur' },
-          {
-            validator: (rule, val, cb) => {
-              this.model.password && this.model.password !== this.model.passwordre
-                ? cb(new Error('两次输入密码不一致!'))
-                : cb()
-            },
-            trigger: 'blur',
-          }],
+        {
+          validator: (rule, val, cb) => {
+            this.model.password && this.model.password !== this.model.passwordre
+              ? cb(new Error('两次输入密码不一致!'))
+              : cb()
+          },
+          trigger: 'blur',
+        }],
       },
       dialogVisible: false,
       activeTab: 'HomeMyAchievement',
@@ -245,59 +245,95 @@ export default {
 }
 </script>
 <style lang="stylus">
-@import '~@/assets/style/var'
+@import '~@/assets/style/var';
 
-.top-bar
-  .banner
-    height 120px
-    background-image url('../../assets/img/topbar-bg.jpg')
-    .avatar
-      width 60px
-      height 60px
-      border-radius 50%
-    .user-info
-      #ctxMenu
-        position fixed
-        display block
-        z-index 3
-        background-color #fff
-        transform translateX(15px)
-        box-shadow 0 2px 12px 0 rgba(0, 0, 0, 0.1)
-      ul li
-        padding 8px 15px
-      ul li:hover
-        background-color #ebeef5
-  .swiper
-    width 50%
-    height 100%
-    top 0%
-    left 50%
-    transform translateX(-30%)
-  .menu-list
-    height 50px
-    padding 0 70px
-    .el-tabs__item
-      font-size 18px
+.top-bar {
+  .banner {
+    height: 120px;
+    background-image: url('../../assets/img/topbar-bg.jpg');
 
-.mobile-mode
-  .banner
-    height 90px
-    background-image url('../../assets/img/mobile_top_bg.jpg')
-    background-size cover
-  .menu-list
-    padding 0 10px
-  .avatar
-    width 40px !important
-    height 40px !important
-  .logo
-    width 100px
-    height 26px
+    .avatar {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+    }
 
-.notice
-  display flex
-  align-items center
-  justify-content space-between
+    .user-info {
+      #ctxMenu {
+        position: fixed;
+        display: block;
+        z-index: 3;
+        background-color: #fff;
+        transform: translateX(15px);
+        box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+      }
 
-.isShow
-  display none
+      ul li {
+        padding: 8px 15px;
+      }
+
+      ul li:hover {
+        background-color: #ebeef5;
+      }
+    }
+
+    .logo {
+      width: 120px;
+      height: 120px;
+      object-fit: contain;
+      transform: translateX(-20px);
+    }
+  }
+
+  .swiper {
+    width: 50%;
+    height: 100%;
+    top: 0%;
+    left: 50%;
+    transform: translateX(-30%);
+  }
+
+  .menu-list {
+    height: 50px;
+    padding: 0 70px;
+
+    .el-tabs__item {
+      font-size: 18px;
+    }
+  }
+}
+
+.mobile-mode {
+  .banner {
+    height: 90px;
+    background-image: url('../../assets/img/mobile_top_bg.jpg');
+    background-size: cover;
+  }
+
+  .menu-list {
+    padding: 0 10px;
+  }
+
+  .avatar {
+    width: 40px !important;
+    height: 40px !important;
+  }
+
+  .logo {
+    width: 100px;
+    height: 26px;
+    object-fit: contain;
+    transform: translateX(-10px);
+  }
+}
+
+.notice {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.isShow {
+  display: none;
+}
 </style>

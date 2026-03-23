@@ -111,7 +111,7 @@
       template(slot-scope='{ row }') {{ row.osType | formatOSType }}
     el-table-column(prop='payDate', label='支付时间', width='150px')
       template(slot-scope='{ row }') {{ row.payDate | dateFormat }}
-    el-table-column(prop='gameOrderID', label='订单号', width='160px')
+    el-table-column(prop='gameOrderID', label='订单号', width='200px')
   el-pagination(
     :total='listMixin.count',
     :page-size.sync='model.pageSize',

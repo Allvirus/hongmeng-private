@@ -18,8 +18,14 @@
       :style='{ ...Tree.rightMenu }'
     )
       ul.border-radius
-        li.hand(@click='showDptEditDlg(true)') 编辑
-        li.hand(@click='showDelDepart') 删除
+        li.hand(
+          v-permission='\'department.dept.edit\'',
+          @click='showDptEditDlg(true)'
+        ) 编辑
+        li.hand(
+          v-permission='\'department.dept.delete\'',
+          @click='showDelDepart'
+        ) 删除
 
     .user-list.mgl2.pd2
       .ff-rn.fs-m.bg-white.pd2.opt-bar
@@ -33,11 +39,13 @@
             @change='onSwitcherChange'
           )
           el-button(
+            v-permission='\'department.user.add\'',
             icon='el-icon-plus',
             type='primary',
             @click='showMbEditDlg(null, false)'
           ) 新增人员
           el-button(
+            v-permission='\'department.dept.add\'',
             icon='el-icon-plus',
             type='primary',
             @click='showDptEditDlg(false)'
@@ -76,23 +84,30 @@
             )
           template(slot-scope='{ row }')
             el-button(
+              v-permission='\'department.user.edit\'',
               icon='el-icon-edit-outline',
               type='text',
               @click='showMbEditDlg(row, true)'
             ) 编辑
             el-button(
+              v-permission='\'department.user.lock\'',
               icon='el-icon-lock',
               type='text',
               v-if='row.lockoutEnabled',
               @click='lockUser(row)'
             ) 锁定
             el-button(
+              v-permission='\'department.user.unlock\'',
               icon='el-icon-unlock',
               type='text',
               v-else,
               @click='unlockUser(row)'
             ) 解锁
-            el-button(type='text', @click='resetPad(row)') 重置密码
+            el-button(
+              v-permission='\'department.user.resetPwd\'',
+              type='text',
+              @click='resetPad(row)'
+            ) 重置密码
 
     user-edit(
       :treeData='Tree.departTree',

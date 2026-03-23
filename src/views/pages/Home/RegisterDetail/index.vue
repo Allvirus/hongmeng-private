@@ -69,7 +69,7 @@
     el-table-column(prop='account', label='推广员账户', width='100px')
     el-table-column(prop='platform', label='平台', width='80px')
       template(slot-scope='{ row }') {{ row.platform === 0 ? 'Ifun' : '木勺' }}
-    el-table-column(prop='deviceNo', label='设备号', width='300px')
+    el-table-column(prop='deviceNo', label='设备号', width='200px')
     el-table-column(prop='osType', label='平台', width='100px')
       template(slot-scope='{ row }') {{ row.osType | formatOSType }}
     el-table-column(prop='createDate', label='注册时间', width='150px')
