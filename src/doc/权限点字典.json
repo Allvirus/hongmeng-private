@@ -404,6 +404,19 @@
               "path": "/api/userbind/{id}"
             }
           ]
+        },
+        {
+          "code": "userbind.transfer",
+          "name": "批量转换账号关联数据",
+          "type": "write",
+          "page": "AssociatedAccount",
+          "action": "transfer",
+          "api": [
+            {
+              "method": "POST",
+              "path": "/api/userbind/transfer"
+            }
+          ]
         }
       ]
     },

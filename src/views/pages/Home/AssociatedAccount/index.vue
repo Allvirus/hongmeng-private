@@ -55,8 +55,14 @@
       template(slot-scope='{ row }') {{ row.platform === 0 ? 'Ifun' : '木勺' }}
     el-table-column(prop='creatTime', label='创建时间')
       template(slot-scope='{ row }') {{ row.creatTime | dateFormat }}
-    el-table-column(prop='operate', label='操作', width='150')
+    el-table-column(prop='operate', label='操作', width='220')
       template(slot-scope='{ row }')
+        el-button(
+          v-permission='\'userbind.transfer\'',
+          icon='el-icon-refresh',
+          type='text',
+          @click='doTransfer(row)'
+        ) 批量转换
         el-button.danger(
           v-permission='\'userbind.delete\'',
           icon='el-icon-delete',
@@ -176,6 +182,19 @@ export default {
         platform: '',
       }
     },
+    doTransfer (row) {
+      this.$vgo.open(() => {
+        this.$api.transferAssociatedUser({
+          account: row.account,
+          platform: row.platform,
+          targetUserId: row.userId,
+        }).then(res => {
+          const { totalUpdated = 0, updatedInfoCount = 0, updatedOrderCount = 0, updatedRoleCount = 0 } = res.data || res
+          this.$vgo.tip(`转换成功，共更新${totalUpdated}条；注册${updatedInfoCount}，订单${updatedOrderCount}，角色${updatedRoleCount}`, 'success')
+          this.getListMixin()
+        })
+      })
+    },
     confirmAdd () {
       if (!this.addModel.userId || !this.addModel.account || this.addModel.platform === '') {
         this.$vgo.tip('请输入完整信息', 'error')
@@ -189,6 +208,7 @@ export default {
         this.dialogVisible = false
       })
     },
+
   },
 }
 </script>

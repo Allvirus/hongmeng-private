@@ -104,12 +104,13 @@
 
 页面： [src/views/pages/Home/AssociatedAccount/index.vue](src/views/pages/Home/AssociatedAccount/index.vue)
 
-| 按钮 | 页面方法             | API 方法                  | HTTP   | 接口路径           | 备注           | 建议权限 code   |
-| ---- | -------------------- | ------------------------- | ------ | ------------------ | -------------- | --------------- |
-| 搜索 | search               | getAccountAssociatData    | GET    | /api/userbind      | 列表查询走混入 | userbind.query  |
-| 新增 | dialogVisible = true | 无                        | -      | -                  | 仅打开弹窗     | userbind.add    |
-| 删除 | deleteLevel          | byIDDeleteAccountAssociat | DELETE | /api/userbind/{id} | 行内按钮       | userbind.delete |
-| 确定 | confirmAdd           | createAssociatedUser      | POST   | /api/userbind      | 弹窗提交       | userbind.add    |
+| 按钮     | 页面方法                             | API 方法                  | HTTP   | 接口路径               | 备注                               | 建议权限 code     |
+| -------- | ------------------------------------ | ------------------------- | ------ | ---------------------- | ---------------------------------- | ----------------- |
+| 搜索     | search                               | getAccountAssociatData    | GET    | /api/userbind          | 列表查询走混入                     | userbind.query    |
+| 新增     | dialogVisible = true                 | 无                        | -      | -                      | 仅打开弹窗                         | userbind.add      |
+| 批量转换 | openTransferDialog / confirmTransfer | transferAssociatedUser    | POST   | /api/userbind/transfer | 批量转换注册/角色/订单中的关联用户 | userbind.transfer |
+| 删除     | deleteLevel                          | byIDDeleteAccountAssociat | DELETE | /api/userbind/{id}     | 行内按钮                           | userbind.delete   |
+| 确定     | confirmAdd                           | createAssociatedUser      | POST   | /api/userbind          | 弹窗提交                           | userbind.add      |
 
 ## 玩家换绑
 
@@ -173,7 +174,7 @@
 - 业务配置：新增配置、编辑配置、删除配置
 - 角色管理：添加角色、编辑角色、删除角色
 - 经验明细：新增经验
-- 账号关联：新增、删除
+- 账号关联：新增、批量转换、删除
 - 玩家换绑：玩家换绑
 - 游戏渠道：添加、编辑、删除、上传 apk
 - 工资记录：新增、导出工资
@@ -254,11 +255,12 @@
 
 ### 账号关联
 
-| 按钮/能力 | 建议 code       |
-| --------- | --------------- |
-| 搜索查询  | userbind.query  |
-| 新增关联  | userbind.add    |
-| 删除关联  | userbind.delete |
+| 按钮/能力 | 建议 code         |
+| --------- | ----------------- |
+| 搜索查询  | userbind.query    |
+| 新增关联  | userbind.add      |
+| 批量转换  | userbind.transfer |
+| 删除关联  | userbind.delete   |
 
 ### 玩家换绑
 

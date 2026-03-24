@@ -1196,6 +1196,16 @@ export default {
       }
     }),
 
+  // 72.1 批量转换账号关联数据
+  transferAssociatedUser: module =>
+    http("post", "/api/userbind/transfer", {
+      data: {
+        account: module.account,
+        platform: module.platform,
+        targetUserId: module.targetUserId
+      }
+    }),
+
   // 73. 修改公告
   modifyNotice: noticeString =>
     http("post", `/api/Notice?noticeString=${noticeString}`),
