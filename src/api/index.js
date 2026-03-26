@@ -169,7 +169,7 @@ export default {
         remark: model.remark,
         jobNumber: model.jobNumber,
         workingStatus: model.workingStatus,
-        manageDepartmentId: model.manageDepartmentId,
+        manageDepartmentIds: model.manageDepartmentIds,
         password: model.password,
         confirmPassword: model.confirmPassword
       }
@@ -209,7 +209,7 @@ export default {
         remark: model.remark,
         workingStatus: model.workingStatus,
         jobNumber: model.jobNumber,
-        manageDepartmentId: model.manageDepartmentId,
+        manageDepartmentIds: model.manageDepartmentIds,
         photo: model.photo,
         leavedate: model.leavedate,
         password: model.password,
@@ -257,7 +257,7 @@ export default {
     http("post", "/api/department/", {
       data: {
         name: model.name,
-        userId: model.userId,
+        managerUserIds: model.managerUserIds,
         superiorDepartmentId: model.superiorDepartmentId,
         isAjobDepartment: model.isAjobDepartment
       }
@@ -267,7 +267,7 @@ export default {
     http("put", `/api/department/${model.departmentId}`, {
       data: {
         name: model.name,
-        userId: model.userId,
+        managerUserIds: model.managerUserIds,
         isAjobDepartment: model.isAjobDepartment,
         superiorDepartmentId: model.superiorDepartmentId
       }

@@ -155,7 +155,9 @@ export default {
         this.model.departmentId = ''
       } else {
         // 管理者
-        this.model.departmentId = this.userInfo.resDepartmentId
+        this.model.departmentId = Array.isArray(this.userInfo.resDepartmentIds)
+          ? (this.userInfo.resDepartmentIds[0] || '')
+          : this.userInfo.resDepartmentId
       }
       if (this.model.departmentId !== '') {
         if (!this.dptNameList[this.model.departmentId]) {
@@ -248,23 +250,35 @@ export default {
 }
 </script>
 <style lang='stylus' scoped>
-.MyGames
-  height 650px
-  .item
-    .name
-      width 65px
-      p, span
-        overflow hidden
-        text-overflow ellipsis
-        white-space nowrap
-    .game-icon
-      width 50px
-      height 50px
-      border-radius 17px
-    button
-      width 60px
-      height 24px
-      padding 2px 6px !important
-  .pagination
-    height 50px
+.MyGames {
+  height: 650px;
+
+  .item {
+    .name {
+      width: 65px;
+
+      p, span {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+    }
+
+    .game-icon {
+      width: 50px;
+      height: 50px;
+      border-radius: 17px;
+    }
+
+    button {
+      width: 60px;
+      height: 24px;
+      padding: 2px 6px !important;
+    }
+  }
+
+  .pagination {
+    height: 50px;
+  }
+}
 </style>

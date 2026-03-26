@@ -17,9 +17,11 @@
           )
         el-form-item(label='负责人:')
           el-select(
-            v-model='departInfo.userId',
+            v-model='departInfo.managerUserIds',
             placeholder='请选择',
             filterable,
+            multiple,
+            collapse-tags,
             clearable
           )
             el-option(
@@ -75,7 +77,7 @@ export default {
       departList: [],
       departInfo: {
         name: '',
-        userId: '',
+        managerUserIds: [],
         superiorDepartmentId: '',
         isAjobDepartment: true,
       },
@@ -96,48 +98,71 @@ export default {
     data (newValue, oldValue) {
       this.isEdit = newValue !== null
       if (newValue !== null) {
-        this.departInfo = newValue
+        this.departInfo = {
+          ...newValue,
+          managerUserIds: Array.isArray(newValue.managerUserIds)
+            ? [...newValue.managerUserIds]
+            : (newValue.userId ? [newValue.userId] : []),
+        }
         if (this.departInfo.name) {
           const regexp = /(\([^)]*\))/
           if (regexp.test(this.departInfo.name)) {
             this.departInfo.name = this.departInfo.name.replace(regexp, '')
           }
         }
-        if (this.departInfo.userId === 0) {
-          this.departInfo.userId = ''
-        }
+      } else {
+        this.resetDepartInfo()
       }
     },
     immediate: true,
   },
   methods: {
+    getManagedDepartmentIds () {
+      if (Array.isArray(this.userInfo.resDepartmentIds) && this.userInfo.resDepartmentIds.length) {
+        return this.userInfo.resDepartmentIds.filter(id => id !== 0)
+      }
+      if (this.userInfo.resDepartmentId && this.userInfo.resDepartmentId !== 0) {
+        return [this.userInfo.resDepartmentId]
+      }
+      return []
+    },
+    resetDepartInfo () {
+      this.departInfo = {
+        name: '',
+        managerUserIds: [],
+        superiorDepartmentId: '',
+        isAjobDepartment: true,
+      }
+    },
     getSelectorList () {
+      this.departList = []
       this.$api.getAllUser().then(res => {
         this.userList = res
       })
 
-      this.$api.getDepartById(this.userInfo.resDepartmentId).then(res => {
-        // 将父级的部门添加
-        this.departList.push({
-          id: res.id,
-          name: res.name,
-        })
-        // 将子部门递归处理
-        this.processDptData(res)
+      const departmentIds = this.getManagedDepartmentIds()
+      if (!departmentIds.length) {
+        return
+      }
+      Promise.all(departmentIds.map(departmentId => this.$api.getDepartById(departmentId))).then(resList => {
+        for (const res of resList) {
+          this.departList.push({
+            id: res.id,
+            name: res.name,
+          })
+          this.processDptData(res)
+        }
       })
     },
     cancel () {
-      for (const key in this.departInfo) {
-        this.departInfo[key] = ''
-      }
-      this.departInfo.isAjobDepartment = true
+      this.resetDepartInfo()
       this.departList = []
       this.$emit('cancel')
     },
     submmit () {
       const params = {
         name: this.departInfo.name,
-        userId: this.departInfo.userId,
+        managerUserIds: this.departInfo.managerUserIds,
         superiorDepartmentId: this.departInfo.superiorDepartmentId,
         isAjobDepartment: this.departInfo.isAjobDepartment,
       }
@@ -145,13 +170,10 @@ export default {
         params.departmentId = this.departInfo.id
       }
       for (const key in params) {
-        if (key !== 'userId' && params[key] === '') {
+        if (key !== 'managerUserIds' && params[key] === '') {
           this.$vgo.tip('请完善表单数据!', 'warning')
           return
         }
-      }
-      if (params.userId === '') {
-        params.userId = 0
       }
       if (this.isEdit) {
         this.$api.updateDepart(params).then(data => {

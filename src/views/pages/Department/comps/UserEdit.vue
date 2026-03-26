@@ -40,6 +40,21 @@
             :deflabel='model.dptName',
             @change='onDepartChange'
           )
+        el-form-item(label='分管部门:')
+          el-select(
+            v-model='model.manageDepartmentIds',
+            placeholder='请选择分管部门',
+            multiple,
+            filterable,
+            collapse-tags,
+            clearable
+          )
+            el-option(
+              v-for='item in departOptions',
+              :key='item.id',
+              :label='item.name',
+              :value='item.id'
+            )
         el-form-item(label='岗位:', required)
           el-select(v-model='model.job', placeholder='请选择', filterable)
             el-option(
@@ -142,11 +157,11 @@ export default {
         // account: '',
         departmentId: '',
         job: '',
-        userRoles: '',
+        userRoles: [],
         hiredate: '',
         remark: '',
         jobNumber: '',
-        // manageDepartmentId: '',
+        manageDepartmentIds: [],
         dptName: '',
         workingStatus: true,
         photo: '',
@@ -164,6 +179,24 @@ export default {
       },
     }
   },
+  computed: {
+    departOptions () {
+      const options = []
+      const walk = (departments = []) => {
+        departments.forEach(item => {
+          options.push({
+            id: item.id,
+            name: item.pathname || this.normalizeDepartName(item.name),
+          })
+          if (item.departments && item.departments.length) {
+            walk(item.departments)
+          }
+        })
+      }
+      walk(this.treeData)
+      return options
+    },
+  },
   watch: {
     show: {
       handler (newValue, oldValue) {
@@ -174,6 +207,10 @@ export default {
             // 编辑
             this.$api.getUserInfoById(this.userId).then((data) => {
               this.model = data
+              this.model.userRoles = Array.isArray(data.userRoles) ? data.userRoles : []
+              this.model.manageDepartmentIds = Array.isArray(data.manageDepartmentIds)
+                ? data.manageDepartmentIds
+                : (data.manageDepartmentId ? [data.manageDepartmentId] : [])
               if (data.workingStatus === 1) {
                 this.model.workingStatus = true
               } else {
@@ -188,6 +225,7 @@ export default {
           } else {
             // 新建
             this.model.dptName = ''
+            this.model.manageDepartmentIds = []
           }
           this.getRoles()
         }
@@ -209,6 +247,9 @@ export default {
         this.roles = data
       })
     },
+    normalizeDepartName (name = '') {
+      return name.replace(/\([^)]*\)$/g, '')
+    },
     findDptName (id, data) {
       for (const key in data) {
         if (data[key].departments.length > 0) {
@@ -218,7 +259,7 @@ export default {
           }
         }
         if (id === data[key].id) {
-          return data[key].name
+          return data[key].pathname || this.normalizeDepartName(data[key].name)
         }
       }
       return ''
@@ -228,15 +269,13 @@ export default {
     },
     cancel () {
       for (const key in this.model) {
-        this.model[key] = ''
+        this.model[key] = Array.isArray(this.model[key]) ? [] : ''
       }
       this.model.workingStatus = true
       this.$refs.treesel.reset()
       this.$emit('cancel')
     },
     submmit () {
-      this.model.manageDepartmentId = 0
-
       if (!this.checkParams()) {
         return
       }

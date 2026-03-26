@@ -187,6 +187,19 @@ export default {
     this.getDptNameList()
   },
   methods: {
+    getManagedDepartmentIds () {
+      if (Array.isArray(this.userInfo.resDepartmentIds) && this.userInfo.resDepartmentIds.length) {
+        return this.userInfo.resDepartmentIds.filter(id => id !== 0)
+      }
+      if (this.userInfo.resDepartmentId && this.userInfo.resDepartmentId !== 0) {
+        return [this.userInfo.resDepartmentId]
+      }
+      return []
+    },
+    getDefaultDepartmentId () {
+      const departmentIds = this.getManagedDepartmentIds()
+      return departmentIds[0] || ''
+    },
     getDptNameList () {
       this.$api.getAllDeparts().then(data => {
         for (const item of data) {
@@ -196,16 +209,22 @@ export default {
     },
     getDepartTree () {
       this.Tree.departTree.splice(0, this.Tree.departTree.length)
-      this.$api.getDepartById(this.userInfo.resDepartmentId).then(res => {
-        console.log(res)
-        this.Tree.departTree.push(res)
+      const departmentIds = this.getManagedDepartmentIds()
+      if (!departmentIds.length) {
+        return
+      }
+      Promise.all(departmentIds.map(departmentId => this.$api.getDepartById(departmentId))).then(res => {
+        this.Tree.departTree.push(...res)
         this.$nextTick(function () {
           // DOM 更新了
-          this.setCurrSelecNode(this.Tree.curDptId === '' ? this.userInfo.resDepartmentId : this.Tree.curDptId)
+          this.setCurrSelecNode(this.Tree.curDptId === '' ? this.getDefaultDepartmentId() : this.Tree.curDptId)
         })
       })
     },
     setCurrSelecNode (departMentId) {
+      if (!departMentId) {
+        return
+      }
       this.Tree.curDptId = departMentId
       this.$refs.tree.setCurrentKey(departMentId)
       this.$api.getDepartMembers(departMentId, !this.User.isIncludeNoJob).then(data => {
@@ -233,7 +252,9 @@ export default {
       }
       // 遍历部门树，给部门名称增加人数字符串
       // 如果有子部门，那么这个部门人数是本节点人数+所有子节点人数
-      this.calcChildDptUserCnt(this.Tree.departTree[0], dptMemberCntMap)
+      for (const root of this.Tree.departTree) {
+        this.calcChildDptUserCnt(root, dptMemberCntMap)
+      }
     },
     calcChildDptUserCnt (node, map) {
       if (map.get(node.id)) {
@@ -304,7 +325,7 @@ export default {
       this.$vgo.open(() => {
         this.$api.delDepart(this.Tree.curTreeNode.id).then(data => {
           this.$vgo.tip('已删除!', 'success')
-          this.Tree.curDptId = this.userInfo.resDepartmentId
+          this.Tree.curDptId = this.getDefaultDepartmentId()
           this.getDepartTree()
         })
       }, tipMsg)
@@ -338,7 +359,11 @@ export default {
     },
     isLeader (row) {
       for (const key in this.Dpt.dptNameList) {
-        if (this.Dpt.dptNameList[key].userName === row.realName) {
+        const department = this.Dpt.dptNameList[key]
+        if (Array.isArray(department.managerUserIds) && department.managerUserIds.includes(row.id)) {
+          return true
+        }
+        if (!department.managerUserIds && department.userId === row.id) {
           return true
         }
       }
@@ -346,7 +371,11 @@ export default {
     },
     updatePath () {
       this.Tree.path.splice(0, this.Tree.path.length)
-      this.getNodePath(this.Tree.departTree[0])
+      for (const root of this.Tree.departTree) {
+        if (this.getNodePath(root)) {
+          break
+        }
+      }
       this.Tree.path.reverse()
     },
     onSwitcherChange () {
