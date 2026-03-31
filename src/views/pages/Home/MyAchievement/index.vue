@@ -54,6 +54,16 @@
             :data='areaList',
             placeholder='请输入区服'
           )
+        el-form-item(
+          v-if='selTimeRange === "时间区间"',
+          label='时间范围:',
+          :label-width='OS.isPc ? "90px" : "75px"'
+        )
+          CommonDatePicker.w300(
+            :start.sync='model.startTime',
+            :end.sync='model.endTime',
+            all
+          )
         el-form-item.search-btn.mgb1(:class='OS.isPc ? "" : "jc-center full"')
           el-button(icon='el-icon-search', type='primary', @click='search') 搜索
           el-button.mgr2(
@@ -110,6 +120,32 @@
 
 <script>
 import { mapGetters } from 'vuex'
+
+const padDateNum = num => (num < 10 ? '0' + num : '' + num)
+
+const getTodayDateRange = () => {
+  const now = new Date()
+  const dateText = [
+    now.getFullYear(),
+    padDateNum(now.getMonth() + 1),
+    padDateNum(now.getDate()),
+  ].join('-')
+  return {
+    startTime: dateText + ' 00:00:00',
+    endTime: dateText + ' 23:59:59',
+  }
+}
+
+const createAchievementQueryModel = () => ({
+  gameName: '',
+  areaName: '',
+  dtpId: '',
+  UserId: '',
+  ...getTodayDateRange(),
+  page: 1,
+  pageSize: 10,
+})
+
 export default {
   name: 'MyAchievement',
   components: {
@@ -119,15 +155,8 @@ export default {
   },
   data () {
     return {
-      model: {
-        gameName: '',
-        areaName: '',
-        dtpId: '',
-        UserId: '',
-        page: 1,
-        pageSize: 10,
-      },
-      timeRange: ['今日', '昨日', '本周', '本月', '上月', '全年', '去年'],
+      model: createAchievementQueryModel(),
+      timeRange: ['今日', '昨日', '本周', '本月', '上月', '全年', '去年', '时间区间'],
       selTimeRange: '今日',
       dataSet: {
 
@@ -181,6 +210,7 @@ export default {
       },
       dataList: [],
       userList: [],
+      defaultUserList: [],
       searchMyData: false,
     }
   },
@@ -195,6 +225,7 @@ export default {
       this.model.dtpId = this.myDptList.list[0].id
       this.$api.getDepartMembers(this.model.dtpId).then(data => {
         this.userList = data
+        this.defaultUserList = [...data]
       })
     }
     this.search()
@@ -289,10 +320,46 @@ export default {
         case '全年':
           ret = index + '月'
           break
+        case '时间区间':
+          ret = item.timeKey ? item.timeKey.substr(0, 10) : index
+          break
         default:
           return index
       }
       return ret
+    },
+    formatDate (date) {
+      return [
+        date.getFullYear(),
+        padDateNum(date.getMonth() + 1),
+        padDateNum(date.getDate()),
+      ].join('-')
+    },
+    getRangeDates () {
+      this.$utils.autoFillDateTime(this.model)
+      return {
+        startDate: new Date(this.model.startTime.replace(/-/g, '/')),
+        endDate: new Date(this.model.endTime.replace(/-/g, '/')),
+      }
+    },
+    getRangeFullList (data) {
+      const { startDate, endDate } = this.getRangeDates()
+      const dateMap = {}
+      for (const item of data) {
+        dateMap[item.timeKey.substr(0, 10)] = item
+      }
+      const fullList = []
+      const oneDay = 24 * 60 * 60 * 1000
+      for (let time = startDate.getTime(); time <= endDate.getTime(); time += oneDay) {
+        const current = new Date(time)
+        const dateText = this.formatDate(current)
+        const source = dateMap[dateText]
+        const item = source ? { ...source } : this.genDataTmpl('dayKey', current.getDate())
+        item.timeKey = item.timeKey || (dateText + 'T00:00:00')
+        item.index = dateText
+        fullList.push(item)
+      }
+      return fullList
     },
     sum () {
       for (const key in this.panelList) {
@@ -310,15 +377,13 @@ export default {
       this.onRadioChange(this.selTimeRange)
     },
     reset () {
-      this.model.gameName = ''
-      this.model.areaName = ''
-      this.model.UserId = ''
+      this.model = createAchievementQueryModel()
       this.searchMyData = false
-      this.userList.splice(0, this.userList.length)
       if (this.userInfo.isLeader) {
         this.model.dtpId = this.myDptList.list[0].id
+        this.model.UserId = ''
+        this.userList = [...this.defaultUserList]
         this.$refs.dtptree.reset(this.myDptList.list[0].name)
-        this.onDepartChange({ id: this.model.dtpId })
       }
       this.onRadioChange(this.selTimeRange)
     },
@@ -337,7 +402,7 @@ export default {
         areaName: this.model.areaName,
         dtpId: this.model.dtpId,
       }
-      if (this.UserId !== '') {
+      if (this.model.UserId !== '') {
         params.UserId = Number(this.model.UserId)
       }
 
@@ -414,6 +479,17 @@ export default {
             this.handleData(data, 'monthKey', 12)
           })
           break
+        case '时间区间':
+          method = (this.searchMyData || !this.userInfo.isLeader) ? 'getAchiByRange' : 'getDptAchiByRange'
+          this.$utils.autoFillDateTime(this.model)
+          this.$api[method]({
+            ...params,
+            startTime: this.model.startTime,
+            endTime: this.model.endTime,
+          }).then(data => {
+            this.handleRangeData(data)
+          })
+          break
         default:
           break
       }
@@ -438,6 +514,22 @@ export default {
       this.sum()
       this.panelList.registerCount.value = res.registerCount
     },
+    handleRangeData (res) {
+      const data = [...res.data]
+      data.sort((a, b) => new Date(a.timeKey) - new Date(b.timeKey))
+
+      const fullList = this.getRangeFullList(data)
+      this.fillVChartData(fullList)
+
+      this.dataList = data
+      for (const item of this.dataList) {
+        item.index = item.timeKey.substr(0, 10)
+        item.xText = this.formatXaxis(item)
+      }
+
+      this.sum()
+      this.panelList.registerCount.value = res.registerCount
+    },
     onDepartChange (dptInfo) {
       this.model.dtpId = dptInfo.id
       this.model.UserId = ''
@@ -450,31 +542,50 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
-$spc = 44px
+$spc = 44px;
 
-.MyAchievement
-  .condition
-    .btn-group
-      border-bottom 1px solid #0487FF
-  >>>.el-radio-button:first-child .el-radio-button__inner, >>>.el-radio-button:last-child .el-radio-button__inner
-    border none !important
-    border-radius 0px
-  >>>.el-radio-button__inner
-    border none !important
+.MyAchievement {
+  .condition {
+    .btn-group {
+      border-bottom: 1px solid #0487FF;
+    }
+  }
 
-.pc-mode
-  .opt-bar
-    .el-form-item
-      margin-bottom 0px
-    >>>.search-btn .el-form-item__content
-      margin-left 10px !important
+  >>>.el-radio-button:first-child .el-radio-button__inner, >>>.el-radio-button:last-child .el-radio-button__inner {
+    border: none !important;
+    border-radius: 0px;
+  }
 
-.mobile-mode
-  .opt-bar
-    .el-form-item
-      margin-bottom 10px
-    >>>.search-btn .el-form-item__content
-      margin-left 10px !important
-  .dataOverview
-    font-size 11px !important
+  >>>.el-radio-button__inner {
+    border: none !important;
+  }
+}
+
+.pc-mode {
+  .opt-bar {
+    .el-form-item {
+      margin-bottom: 0px;
+    }
+
+    >>>.search-btn .el-form-item__content {
+      margin-left: 10px !important;
+    }
+  }
+}
+
+.mobile-mode {
+  .opt-bar {
+    .el-form-item {
+      margin-bottom: 10px;
+    }
+
+    >>>.search-btn .el-form-item__content {
+      margin-left: 10px !important;
+    }
+  }
+
+  .dataOverview {
+    font-size: 11px !important;
+  }
+}
 </style>

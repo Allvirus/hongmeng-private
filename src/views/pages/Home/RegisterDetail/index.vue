@@ -1,6 +1,12 @@
 <template lang='pug'>
 .MyRegister
   el-form.ff-rw.bg-white.pdx2.pdt2.ai-center(label-width='100px')
+    el-form-item(label='IfunId:')
+      el-input.winput(
+        v-model='model.IfunId',
+        placeholder='请输入IfunId',
+        clearable
+      )
     el-form-item(label='部门:', v-if='userInfo.isLeader')
       tree-selector.winput(
         ref='dtptree',
@@ -24,12 +30,6 @@
           :label='item.realName',
           :value='item.id'
         )
-    el-form-item(label='玩家账号:')
-      el-input.winput(
-        v-model='model.UserAccount',
-        placeholder='请输入玩家账号',
-        clearable
-      )
     el-form-item(label='设备号:')
       el-input.winput(
         v-model='model.DeviceNo',
@@ -49,9 +49,9 @@
         all
       )
     el-form-item(label='平台:')
-      el-select.winput(v-model='model.platform', placeholder='请选择', clearable)
-        el-option(label='Ifun', :value='0')
-        el-option(label='木勺', :value='1')
+      el-radio-group(v-model='model.platform')
+        el-radio(label='0') Ifun
+        el-radio(label='1') 木勺
     el-button.mgl3.mgb2(icon='el-icon-search', type='primary', @click='search') 搜索
     el-button.mgl2.mgr2.mgb2(
       icon='el-icon-refresh-right',
@@ -64,8 +64,8 @@
     ) 搜索我的数据
 
   el-table.mgy2.bg-white.pd2(:data='listMixin.list')
-    el-table-column(prop='userAccount', label='玩家账号', width='100')
-    el-table-column(prop='userCode', label='玩家代码', width='100')
+    el-table-column(prop='ifunAccountId', label='ID', width='100')
+    el-table-column(prop='userCode', label='账号ID', width='100')
     el-table-column(prop='account', label='推广员账户', width='100px')
     el-table-column(prop='platform', label='平台', width='80px')
       template(slot-scope='{ row }') {{ row.platform === 0 ? 'Ifun' : '木勺' }}
@@ -115,13 +115,13 @@ export default {
       model: {
         startTime: '',
         endTime: '',
-        UserAccount: '',
+        IfunId: '',
         Account: '',
         CreateIp: '',
         DeviceNo: '',
         userId: '',
         resDepId: '',
-        platform: '',
+        platform: '0',
         page: 1,
         pageSize: 10,
       },

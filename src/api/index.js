@@ -393,6 +393,7 @@ export default {
           startTime: model.startTime,
           endTime: model.endTime,
           UserAccount: model.UserAccount,
+          IfunId: model.IfunId,
           Account: model.Account,
           CreateIp: model.CreateIp,
           DeviceNo: model.DeviceNo,
@@ -413,6 +414,7 @@ export default {
           startTime: model.startTime,
           endTime: model.endTime,
           UserAccount: model.UserAccount,
+          IfunId: model.IfunId,
           Account: model.Account,
           CreateIp: model.CreateIp,
           DeviceNo: model.DeviceNo,
@@ -435,6 +437,7 @@ export default {
           startTime: model.startTime,
           endTime: model.endTime,
           UserAccount: model.UserAccount,
+          IfunId: model.IfunId,
           GameOrderID: model.GameOrderID,
           Account: model.Account,
           UserCode: model.UserCode,
@@ -478,6 +481,7 @@ export default {
           startTime: model.startTime,
           endTime: model.endTime,
           UserAccount: model.UserAccount,
+          IfunId: model.IfunId,
           GameOrderID: model.GameOrderID,
           Account: model.Account,
           GameName: model.GameName,
@@ -505,6 +509,7 @@ export default {
           startTime: model.startTime,
           endTime: model.endTime,
           UserAccount: model.UserAccount,
+          IfunId: model.IfunId,
           Account: model.Account,
           UserCode: model.UserCode,
           GameName: model.GameName,
@@ -527,6 +532,7 @@ export default {
           startTime: model.startTime,
           endTime: model.endTime,
           UserAccount: model.UserAccount,
+          IfunId: model.IfunId,
           Account: model.Account,
           UserCode: model.UserCode,
           GameName: model.GameName,
@@ -665,17 +671,17 @@ export default {
   getAchiLastMonth: model =>
     http("get", "/api/achievement/lastmonth", {
       params: {
-        GameName: model.GameName, // | string | 否 | 游戏名称 |
-        AreaName: model.AreaName // | string | 否 | 区服名称 |
+        gameName: model.gameName, // | string | 否 | 游戏名称 |
+        areaName: model.areaName // | string | 否 | 区服名称 |
       }
     }),
   // 27.5 获取部门管理我的业务的上月数据
   getDptAchiLastMonth: model =>
     http("get", "/api/achievement/lastmonth/manage", {
       params: {
-        GameName: model.GameName, // | string | 否 | 游戏名称 |
-        AreaName: model.AreaName, // | string | 否 | 区服名称 |
-        ResDepId: model.ResDepId, // | int | 否 | 查询部门ID |
+        gameName: model.gameName, // | string | 否 | 游戏名称 |
+        areaName: model.areaName, // | string | 否 | 区服名称 |
+        ResDepId: model.dtpId, // | int | 否 | 查询部门ID |
         UserId: model.UserId // | int | 否 | 查询用户ID |
       }
     }),
@@ -726,18 +732,44 @@ export default {
   getAchiLastYear: model =>
     http("get", "/api/achievement/lastyear", {
       params: {
-        GameName: model.GameName, // | string | 否 | 游戏名称 |
-        AreaName: model.AreaName // | string | 否 | 区服名称 |
+        gameName: model.gameName, // | string | 否 | 游戏名称 |
+        areaName: model.areaName // | string | 否 | 区服名称 |
       }
     }),
   // 27.9 获取部门管理我的业务的去年数据
   getDptAchiLastYear: model =>
     http("get", "/api/achievement/lastyear/manage", {
       params: {
-        GameName: model.GameName, // | string | 否 | 游戏名称 |
-        AreaName: model.AreaName, // | string | 否 | 区服名称 |
+        gameName: model.gameName, // | string | 否 | 游戏名称 |
+        areaName: model.areaName, // | string | 否 | 区服名称 |
         ResDepId: model.dtpId, // | int | 否 | 查询部门ID |
         UserId: model.UserId // | int | 否 | 查询用户ID |
+      }
+    }),
+
+  // 27.10 获取我的业务的时间区间数据
+  getAchiByRange: model =>
+    http("get", "/api/achievement/range", {
+      loading: true,
+      params: {
+        startTime: model.startTime,
+        endTime: model.endTime,
+        gameName: model.gameName,
+        areaName: model.areaName
+      }
+    }),
+
+  // 27.11 获取部门管理我的业务的时间区间数据
+  getDptAchiByRange: model =>
+    http("get", "/api/achievement/range/manage", {
+      loading: true,
+      params: {
+        startTime: model.startTime,
+        endTime: model.endTime,
+        gameName: model.gameName,
+        areaName: model.areaName,
+        resDepId: model.dtpId,
+        userId: model.UserId
       }
     }),
 
@@ -893,33 +925,79 @@ export default {
   getBindChangeList: model =>
     http("get", "/api/playerswitch/", {
       loading: true,
-      params: {
-        UserCode: model.UserCode,
-        Page: model.Page,
-        PageSize: model.PageSize
-      }
+      params: (() => {
+        const p = {
+          Platform: model.Platform,
+          Page: model.Page,
+          PageSize: model.PageSize
+        };
+        if (+model.Platform === 0) p.IfunId = model.IfunId;
+        else p.UserCode = model.UserCode;
+        utils.filterNull(p);
+        return p;
+      })()
     }),
   // 45 根据Id玩家换绑记录接口
   getBCRecById: id => http("get", `/api/playerswitch/${id}`),
   // 46.按玩家账号模糊查询相关abc岗人员Id信息
-  getOriginBind: usercode =>
-    http("get", `/api/playerswitch/usercode/${usercode}`),
+  getOriginBind: (usercode, platform) =>
+    http("get", `/api/playerswitch/usercode/${usercode}`, {
+      params: {
+        platform
+      }
+    }),
+  getOriginBindByAccount: (userAccount, platform) =>
+    http("get", `/api/playerswitch/useraccount/${userAccount}`, {
+      params: {
+        platform
+      }
+    }),
   // 47.创建玩家换绑记录接口
   switchBind: model =>
     http("post", "/api/playerswitch/", {
-      data: {
-        userCode: model.userCode,
-        aJobId: model.aJobId,
-        aJob: model.aJob,
-        bJobId: model.bJobId,
-        bJob: model.bJob,
-        cJobId: model.cJobId,
-        cJob: model.cJob,
-        aJobIdAfter: model.aJobIdAfter,
-        bJobIdAfter: model.bJobIdAfter,
-        cJobIdAfter: model.cJobIdAfter,
-        targetTime: new Date(+new Date(model.targetTime) + 8 * 3600 * 1000)
-      }
+      data: (() => {
+        const data = {
+          platform: +model.platform,
+          userAccount: model.userAccount,
+          aJobId: model.aJobId,
+          aJob: model.aJob,
+          bJobId: model.bJobId,
+          bJob: model.bJob,
+          cJobId: model.cJobId,
+          cJob: model.cJob,
+          aJobIdAfter: model.aJobIdAfter,
+          bJobIdAfter: model.bJobIdAfter,
+          cJobIdAfter: model.cJobIdAfter,
+          targetTime: new Date(+new Date(model.targetTime) + 8 * 3600 * 1000)
+        };
+        if (+model.platform === 0) data.ifunId = model.ifunId;
+        else data.userCode = model.userCode;
+        utils.filterNull(data);
+        return data;
+      })()
+    }),
+  switchBindNew: model =>
+    http("post", "/api/playerswitch/new", {
+      data: (() => {
+        const data = {
+          platform: +model.platform,
+          userAccount: model.userAccount,
+          aJobId: model.aJobId,
+          aJob: model.aJob,
+          bJobId: model.bJobId,
+          bJob: model.bJob,
+          cJobId: model.cJobId,
+          cJob: model.cJob,
+          aJobIdAfter: model.aJobIdAfter,
+          bJobIdAfter: model.bJobIdAfter,
+          cJobIdAfter: model.cJobIdAfter,
+          targetTime: new Date(+new Date(model.targetTime) + 8 * 3600 * 1000)
+        };
+        if (+model.platform === 0) data.ifunId = model.ifunId;
+        else data.userCode = model.userCode;
+        utils.filterNull(data);
+        return data;
+      })()
     }),
   // 48.删除玩家换绑记录接口
   delBindRec: id => http("delete", `/api/playerswitch/${id}`),
