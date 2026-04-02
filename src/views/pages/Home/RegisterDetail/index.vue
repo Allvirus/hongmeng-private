@@ -86,6 +86,7 @@
 
   el-pagination.margin-spacing(
     :total='listMixin.count',
+    :page-sizes='[10, 20, 30, 50]',
     :page-size.sync='model.pageSize',
     :current-page.sync='model.page',
     @current-change='getListMixin'

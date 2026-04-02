@@ -111,6 +111,7 @@
     el-table-column(prop='gameOrderID', label='订单号', width='200px')
   el-pagination(
     :total='listMixin.count',
+    :page-sizes='[10, 20, 30, 50]',
     :page-size.sync='model.pageSize',
     :current-page.sync='model.page',
     @current-change='getListMixin',

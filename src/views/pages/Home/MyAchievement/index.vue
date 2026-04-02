@@ -111,7 +111,7 @@
   el-table.mgy2.bg-white.pd2(:data='dataList')
     el-table-column(prop='xText', label='时间')
     el-table-column(prop='userRoleCount', label='创角数')
-    el-table-column(prop='userCount', label='创角用户')
+    el-table-column(prop='userCount', label='换包')
     el-table-column(prop='rechargeUserCount', label='充值人数')
     el-table-column(prop='rechargeCount', label='充值订单')
     el-table-column(prop='sum', label='充值总额(元)')
@@ -166,7 +166,7 @@ export default {
         rows: [],
       },
       newRoleData: {
-        columns: ['日期', '创角数', '创角用户', '充值人数', '充值订单数'],
+        columns: ['日期', '创角数', '换包', '充值人数', '充值订单数'],
         rows: [],
       },
       panelList: {
@@ -183,7 +183,7 @@ export default {
           rate: 0,
         },
         newUsers: {
-          title: '创角用户',
+          title: '换包',
           value: 0,
           increase: false,
           rate: 0,
@@ -270,7 +270,7 @@ export default {
     genDataTmpl (key, val) {
       const tmpl = {
         timeKey: '', // 时间段
-        userCount: 0, // 创角用户
+        userCount: 0, // 换包
         userRoleCount: 0, // 创角数
         rechargeCount: 0, // 充值订单数
         rechargeUserCount: 0, // 充值用户数量
@@ -286,7 +286,7 @@ export default {
         const roleItem = {
           日期: this.formatXaxis(row),
           创角数: row.userRoleCount,
-          创角用户: row.userCount,
+          换包: row.userCount,
           充值人数: row.rechargeUserCount,
           充值订单数: row.rechargeCount,
         }
@@ -510,7 +510,7 @@ export default {
         item.xText = this.formatXaxis(item)
       }
 
-      // 计算创角数...
+      // 计算汇总数据...
       this.sum()
       this.panelList.registerCount.value = res.registerCount
     },

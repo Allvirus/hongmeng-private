@@ -1,12 +1,13 @@
 <template lang="pug">
 ele-pagination(
-  :layout="base ? 'prev, pager, next' : 'total, sizes, prev, pager, next, jumper'"
-  background
-  :page-sizes="getPagesizes"
-  @size-change='() => $listeners["current-change"](1)'
-  v-if="$attrs.total"
-  v-bind="$attrs"
-  v-on="$listeners")
+  :layout='base ? "prev, pager, next" : "total, sizes, prev, pager, next, jumper"',
+  background,
+  :page-sizes='getPagesizes',
+  @size-change='handleSizeChange',
+  v-if='$attrs.total',
+  v-bind='paginationAttrs',
+  v-on='$listeners'
+)
 
 //- 分页组件标准使用
 //- BGWrap()
@@ -15,7 +16,6 @@ ele-pagination(
 //-     :page-size.sync='model.pageSize'
 //-     :current-page.sync='model.page'
 //-     @current-change="getTodoList")
-
 </template>
 <script>
 import { Pagination } from 'element-ui'
@@ -36,11 +36,41 @@ export default {
     }
   },
   computed: {
+    paginationAttrs () {
+      const attrs = { ...this.$attrs }
+      delete attrs['page-sizes']
+      return attrs
+    },
     getPagesizes () {
-      if (this.isProduction) {
-        return Array.from(new Set([10, 20, 30, 50, this.$attrs['page-size']])).sort((a, b) => a < b)
-      } else {
-        return Array.from(new Set([2, 10, 20, this.$attrs['page-size']])).sort((a, b) => a < b)
+      const customPageSizes = this.normalizePageSizes(this.$attrs['page-sizes'])
+      const defaultPageSizes = this.isProduction ? [10, 20, 30, 50] : [2, 10, 20]
+      const currentPageSize = Number(this.$attrs['page-size'])
+      const pageSizes = customPageSizes.length ? customPageSizes : defaultPageSizes
+
+      return Array.from(new Set([...pageSizes, currentPageSize].filter(item => item > 0)))
+        .sort((a, b) => a - b)
+    },
+  },
+  methods: {
+    normalizePageSizes (pageSizes) {
+      if (Array.isArray(pageSizes)) {
+        return pageSizes.map(item => Number(item)).filter(item => item > 0)
+      }
+
+      if (typeof pageSizes === 'string') {
+        return pageSizes
+          .split(',')
+          .map(item => Number(item.trim()))
+          .filter(item => item > 0)
+      }
+
+      return []
+    },
+    handleSizeChange () {
+      const onCurrentChange = this.$listeners['current-change']
+
+      if (typeof onCurrentChange === 'function') {
+        onCurrentChange(1)
       }
     },
   },
@@ -48,8 +78,9 @@ export default {
 
 </script>
 <style lang="stylus">
-@import '~@/assets/style/var'
+@import '~@/assets/style/var';
 
-.el-pagination.is-background .el-pager li:not(.disabled).active
-  background-color $theme
+.el-pagination.is-background .el-pager li:not(.disabled).active {
+  background-color: $theme;
+}
 </style>

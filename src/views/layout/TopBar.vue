@@ -281,7 +281,7 @@ export default {
       width: 120px;
       height: 120px;
       object-fit: contain;
-      transform: translateX(-20px);
+      transform: translateX(-100px);
     }
   }
 
