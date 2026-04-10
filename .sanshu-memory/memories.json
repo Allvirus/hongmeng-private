@@ -1,0 +1,28 @@
+{
+  "version": "2.0",
+  "project_path": "H:\\hongmeng",
+  "entries": [
+    {
+      "id": "a4a48f9e-a32a-41f5-b40d-115666a0bb49",
+      "content": "默认静默执行：不生成总结性 Markdown 文档，不生成测试脚本，不编译，不运行；需要最新框架或库用法时优先使用 context7 查询官方文档。",
+      "content_normalized": "默认静默执行不生成总结性 markdown 文档不生成测试脚本不编译不运行需要最新框架或库用法时优先使用 context7 查询官方文档",
+      "category": "Preference",
+      "created_at": "2026-04-09T06:41:40.272739800Z",
+      "updated_at": "2026-04-09T06:41:40.272739800Z"
+    },
+    {
+      "id": "115edebe-1019-4613-a3db-3b17b2ab8da7",
+      "content": "Ranking 页面已切换到 /api/rank/query，页面统一按 items 列表渲染，不再依赖旧版多岗位排行返回结构。",
+      "content_normalized": "ranking 页面已切换到 /api/rank/query页面统一按 items 列表渲染不再依赖旧版多岗位排行返回结构",
+      "category": "Context",
+      "created_at": "2026-04-09T07:08:17.647285700Z",
+      "updated_at": "2026-04-09T07:08:17.647285700Z"
+    }
+  ],
+  "last_dedup_at": "2026-04-09T06:40:34.311676900Z",
+  "config": {
+    "similarity_threshold": 0.7,
+    "dedup_on_startup": true,
+    "enable_dedup": true
+  }
+}

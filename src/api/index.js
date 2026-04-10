@@ -859,6 +859,25 @@ export default {
       }
     }),
 
+  // 36.5 统一排行查询接口
+  getRankQuery: model =>
+    http("get", "/api/rank/query", {
+      loading: model.loading !== undefined ? model.loading : true,
+      params: (() => {
+        const p = {
+          scope: model.scope,
+          metric: model.metric,
+          job: model.job,
+          startDate: model.startDate,
+          endDate: model.endDate,
+          areaName: model.areaName,
+          topN: model.topN
+        };
+        utils.filterNull(p);
+        return p;
+      })()
+    }),
+
   // 37.获取前10大于100订单接口
   getTop10: () => http("get", "api/player/top10"),
 

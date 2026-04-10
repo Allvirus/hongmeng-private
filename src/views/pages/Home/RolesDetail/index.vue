@@ -78,15 +78,14 @@
       ) 搜索我的数据
 
   el-table.mgy2.bg-white.pd2(:data='listMixin.list')
+    el-table-column(prop='platform', label='平台', width='80px')
+      template(slot-scope='{ row }') {{ row.platform === 0 ? 'Ifun' : '木勺' }}
     el-table-column(prop='ifunId', label='ID')
     el-table-column(prop='userCode', label='账号ID')
     el-table-column(prop='roleCode', label='角色代码')
     el-table-column(label='角色等级/城堡等级', width='120px')
       template(slot-scope='{ row }') {{ formatLevel(row) }}
-    el-table-column(prop='country', label='国家')
     el-table-column(prop='account', label='推广员账户')
-    el-table-column(prop='platform', label='平台', width='80px')
-      template(slot-scope='{ row }') {{ row.platform === 0 ? 'Ifun' : '木勺' }}
     el-table-column(prop='gameName', label='游戏名称')
     el-table-column(prop='areaCode', label='区服')
     el-table-column(prop='roleName', label='游戏角色')
@@ -98,6 +97,7 @@
       template(slot-scope='{ row }') {{ row.osType | formatOSType }}
     el-table-column(prop='createDate', label='创建时间', width='130px')
       template(slot-scope='{ row }') {{ row.createDate | dateFormat }}
+    el-table-column(prop='country', label='国家')
     el-table-column(prop='ajob', label='A岗')
     el-table-column(prop='bjob', label='B岗')
     el-table-column(prop='cjob', label='C岗')

@@ -108,7 +108,7 @@
         h3.mg2 充值总额
         v-line.charts.flex-1.mgt2(:data='rechData')
 
-  el-table.mgy2.bg-white.pd2(:data='dataList')
+  el-table.mgy2.bg-white.pd2(:data='reversedDataList')
     el-table-column(prop='xText', label='时间')
     el-table-column(prop='userRoleCount', label='创角数')
     el-table-column(prop='userCount', label='换包')
@@ -218,6 +218,9 @@ export default {
     ...mapGetters(['areaList', 'gameList', 'myDptList', 'userInfo', 'OS']),
     halfLayout () {
       return this.OS.isPc
+    },
+    reversedDataList () {
+      return [...this.dataList].reverse()
     },
   },
   created () {
