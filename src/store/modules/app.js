@@ -19,6 +19,7 @@ export default {
   state: {
     regions: [],
     userInfo: {},
+    levelNameMap: {},
     projectTagList: [],
     myDptList: {
       list: [],
@@ -36,6 +37,7 @@ export default {
   getters: {
     regions: state => state.regions,
     userInfo: state => state.userInfo,
+    levelNameMap: state => state.levelNameMap,
     projectTagList: state => state.projectTagList,
     myDptList: state => state.myDptList,
     OS: state => state.OS
@@ -52,6 +54,12 @@ export default {
     getUserInfo({ commit, state }) {
       return api.getUserInfo().then(data => {
         commit("userInfo", data);
+      });
+    },
+    getLevelNameMap({ commit }) {
+      return api.getAllLevel().then(data => {
+        commit("levelNameMap", data);
+        return data;
       });
     },
     // 标签列表
@@ -105,6 +113,18 @@ export default {
     projectTagList(state, data) {
       state.projectTagList = data;
     },
+    levelNameMap(state, data) {
+      const map = {};
+      (data || []).forEach(item => {
+        const level = item.level !== undefined ? item.level : item.Level;
+        const levelName =
+          item.levelName !== undefined ? item.levelName : item.LevelName;
+        if (level !== undefined && level !== null) {
+          map[level] = levelName;
+        }
+      });
+      state.levelNameMap = map;
+    },
     myDptList(state, data) {
       const list = state.myDptList.list;
       list.splice(0, list.length);
@@ -118,6 +138,7 @@ export default {
     clearStore(state) {
       state.regions = [];
       state.userInfo = {};
+      state.levelNameMap = {};
       state.projectTagList = [];
       state.myDptList = {
         list: [],

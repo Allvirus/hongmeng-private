@@ -345,6 +345,7 @@ export default {
     http("post", "/api/level/", {
       data: {
         level: model.level,
+        levelName: model.levelName,
         experience: model.experience,
         basicSalary: model.basicSalary,
         commission: model.commission,
@@ -366,22 +367,23 @@ export default {
 
   // 18.根据ID和实体更新等级
   updateLevById: model =>
-    http("put", `/api/level/${model.id}`, {
+    http("put", `/api/level/${model.id || model.Id}`, {
       data: {
-        level: model.level,
-        experience: model.experience,
-        basicSalary: model.basicSalary,
-        commission: model.commission,
-        ajobAndroidExp: model.ajobAndroidExp,
-        ajobIOSExp: model.ajobIOSExp,
-        bjobAndroidExp: model.bjobAndroidExp,
-        bjobIOSExp: model.bjobIOSExp,
-        ajobRechargeExp: model.ajobRechargeExp,
-        bjobRechargeExp: model.bjobRechargeExp,
-        cjobRechargeExp: model.cjobRechargeExp,
-        ajobRechargeExpAfter: model.ajobRechargeExpAfter,
-        bjobRechargeExpAfter: model.bjobRechargeExpAfter,
-        cjobRechargeExpAfter: model.cjobRechargeExpAfter
+        level: model.level !== undefined ? model.level : model.Level,
+        levelName: model.levelName !== undefined ? model.levelName : model.LevelName,
+        experience: model.experience !== undefined ? model.experience : model.Experience,
+        basicSalary: model.basicSalary !== undefined ? model.basicSalary : model.BasicSalary,
+        commission: model.commission !== undefined ? model.commission : model.Commission,
+        ajobAndroidExp: model.ajobAndroidExp !== undefined ? model.ajobAndroidExp : model.AjobAndroidExp,
+        ajobIOSExp: model.ajobIOSExp !== undefined ? model.ajobIOSExp : model.AjobIOSExp,
+        bjobAndroidExp: model.bjobAndroidExp !== undefined ? model.bjobAndroidExp : model.BjobAndroidExp,
+        bjobIOSExp: model.bjobIOSExp !== undefined ? model.bjobIOSExp : model.BjobIOSExp,
+        ajobRechargeExp: model.ajobRechargeExp !== undefined ? model.ajobRechargeExp : model.AjobRechargeExp,
+        bjobRechargeExp: model.bjobRechargeExp !== undefined ? model.bjobRechargeExp : model.BjobRechargeExp,
+        cjobRechargeExp: model.cjobRechargeExp !== undefined ? model.cjobRechargeExp : model.CjobRechargeExp,
+        ajobRechargeExpAfter: model.ajobRechargeExpAfter !== undefined ? model.ajobRechargeExpAfter : model.AjobRechargeExpAfter,
+        bjobRechargeExpAfter: model.bjobRechargeExpAfter !== undefined ? model.bjobRechargeExpAfter : model.BjobRechargeExpAfter,
+        cjobRechargeExpAfter: model.cjobRechargeExpAfter !== undefined ? model.cjobRechargeExpAfter : model.CjobRechargeExpAfter
       }
     }),
   // 19.获取游戏注册分页信息
