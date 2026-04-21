@@ -174,8 +174,10 @@ export default {
     },
     getNotice () {
       this.$api.getTop10().then(data => {
-        for (let i = 0; i < data.length; i++) {
-          const item = data[i]
+        const shuffledList = this.shuffleNoticeList(data || [])
+        this.noticeList = []
+        for (let i = 0; i < shuffledList.length; i++) {
+          const item = shuffledList[i]
           item.id = i
           this.noticeList.push(item)
         }
@@ -188,6 +190,16 @@ export default {
           this.dptNotices = data
         }
       })
+    },
+    shuffleNoticeList (list) {
+      const result = Array.isArray(list) ? [...list] : []
+      for (let i = result.length - 1; i > 0; i--) {
+        const randomIndex = Math.floor(Math.random() * (i + 1))
+        const temp = result[i]
+        result[i] = result[randomIndex]
+        result[randomIndex] = temp
+      }
+      return result
     },
     onUploaded (fileUrl) {
       this.$api.updateAvatar(fileUrl).then(data => {

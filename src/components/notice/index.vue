@@ -1,21 +1,29 @@
 <template lang='pug'>
 .ScrollNotice.ff-rn
   .icon.flex-center
-    img.w20.h20(:src='require("@/assets/img/ic_notice.png")', fit='contain' v-if="data.length > 0")
+    img.w20.h20(
+      :src='require("@/assets/img/ic_notice.png")',
+      fit='contain',
+      v-if='data.length > 0'
+    )
   .flex-center
-    transition-group.ff-cn.mgl3( name="slide" tag="p" mode="out-in")
+    transition-group.ff-cn.mgl3(name='slide', tag='p', mode='out-in')
       span.hand(
-      v-for="item in msgShowList"
-      v-bind:key="item.id"
-      class="slide-item"
-      @click='onNoticeClick(item)'
+        v-for='item in msgShowList',
+        :key='item.id',
+        class='slide-item',
+        @click='onNoticeClick(item)'
       )
-        span 恭喜{{item.department}}在{{item.time | dateFormat}}玩家单笔消费
-        span.danger {{ item.totalPrice }}
-        span 元
+        template(v-if='item.message')
+          span {{ item.message }}
+        template(v-else)
+          span 恭喜{{ item.department }}在{{ item.time | dateFormat }}玩家单笔消费
+          span.danger {{ item.totalPrice }}
+          span 元
 </template>
 <script>
 import { MessageBox } from 'element-ui'
+
 export default {
   name: 'ScrollNotice',
   props: {
@@ -42,24 +50,21 @@ export default {
     }
   },
   watch: {
-    data (newValue, oldValue) {
-      const lines = (this.data.length > this.rows) ? this.rows : this.data.length
-      for (let i = 0; i < lines; i++) {
-        this.msgShowList.push(this.data[i])
-        this.lastIdx = i
-      }
-      this.startMove()
+    data: {
+      immediate: true,
+      handler () {
+        const lines = this.data.length > this.rows ? this.rows : this.data.length
+        this.msgShowList = []
+        this.lastIdx = 0
+        for (let i = 0; i < lines; i++) {
+          this.msgShowList.push(this.data[i])
+          this.lastIdx = i
+        }
+        this.startMove()
+      },
     },
-    immediate: true,
   },
-  created: function () {
-    const lines = (this.data.length > this.rows) ? this.rows : this.data.length
-    for (let i = 0; i < lines; i++) {
-      this.msgShowList.push(this.data[i])
-      this.lastIdx = i
-    }
-  },
-  beforeDestroy: function () {
+  beforeDestroy () {
     clearInterval(this.timerId)
   },
   methods: {
@@ -74,15 +79,13 @@ export default {
           } else {
             this.lastIdx++
           }
-          // 删除第一个
           this.msgShowList.splice(0, 1)
-          // 从尾部增加
           this.msgShowList.splice(this.msgShowList.length, 0, this.data[this.lastIdx])
         }, this.duration)
       }
     },
     onNoticeClick (item) {
-      const msg = `恭喜${item.department}${item.userName}单笔消费${item.totalPrice}元`
+      const msg = item.message || `恭喜${item.department}${item.userName}单笔消费${item.totalPrice}元`
       MessageBox.confirm(msg, '公告', {
         confirmButtonText: '确定',
         type: 'info',
