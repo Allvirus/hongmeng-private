@@ -672,6 +672,7 @@ export default {
   // 27.4 获取我的业务的上月数据
   getAchiLastMonth: model =>
     http("get", "/api/achievement/lastmonth", {
+      loading: true,
       params: {
         gameName: model.gameName, // | string | 否 | 游戏名称 |
         areaName: model.areaName // | string | 否 | 区服名称 |
@@ -680,6 +681,7 @@ export default {
   // 27.5 获取部门管理我的业务的上月数据
   getDptAchiLastMonth: model =>
     http("get", "/api/achievement/lastmonth/manage", {
+      loading: true,
       params: {
         gameName: model.gameName, // | string | 否 | 游戏名称 |
         areaName: model.areaName, // | string | 否 | 区服名称 |
@@ -733,6 +735,7 @@ export default {
   // 27.8 获取我的业务的去年数据
   getAchiLastYear: model =>
     http("get", "/api/achievement/lastyear", {
+      loading: true,
       params: {
         gameName: model.gameName, // | string | 否 | 游戏名称 |
         areaName: model.areaName // | string | 否 | 区服名称 |
@@ -741,6 +744,7 @@ export default {
   // 27.9 获取部门管理我的业务的去年数据
   getDptAchiLastYear: model =>
     http("get", "/api/achievement/lastyear/manage", {
+      loading: true,
       params: {
         gameName: model.gameName, // | string | 否 | 游戏名称 |
         areaName: model.areaName, // | string | 否 | 区服名称 |
@@ -776,6 +780,30 @@ export default {
     }),
 
   // 28.获取我的游戏接口
+  getAchiCreateRoleDetail: model =>
+    http("get", "/api/achievement/create-role-detail", {
+      loading: true,
+      params: {
+        startTime: model.startTime,
+        endTime: model.endTime,
+        gameName: model.gameName,
+        areaName: model.areaName
+      }
+    }),
+
+  getDptAchiCreateRoleDetail: model =>
+    http("get", "/api/achievement/create-role-detail/manage", {
+      loading: true,
+      params: {
+        startTime: model.startTime,
+        endTime: model.endTime,
+        gameName: model.gameName,
+        areaName: model.areaName,
+        resDepId: model.dtpId,
+        ...(model.UserId !== '' && model.UserId !== undefined && model.UserId !== null ? { userId: model.UserId } : {})
+      }
+    }),
+
   getMyGames: () => http("get", "/api/mygame/"),
 
   // 28.1.根据部门id获取游戏接口

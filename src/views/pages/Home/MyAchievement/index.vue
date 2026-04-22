@@ -102,13 +102,18 @@
         h3.mg2 推广数据
         v-histogram.charts.flex-1.mgt2(
           :settings='newRoleData.option',
-          :data='newRoleData'
+          :data='newRoleData',
+          :events='chartEvents'
         )
       .ff-cn.flex-1.bg-white.border-radius(:class='halfLayout ? "" : "mgt2"')
         h3.mg2 充值总额
         v-line.charts.flex-1.mgt2(:data='rechData')
 
-  el-table.mgy2.bg-white.pd2(:data='reversedDataList')
+  el-table.mgy2.bg-white.pd2(
+    :data='reversedDataList',
+    :cell-class-name='getCellClassName',
+    @cell-click='onTableCellClick'
+  )
     el-table-column(prop='xText', label='时间')
     el-table-column(prop='userRoleCount', label='创角数')
     el-table-column(prop='userCount', label='换包')
@@ -116,6 +121,24 @@
     el-table-column(prop='rechargeCount', label='充值订单')
     el-table-column(prop='sum', label='充值总额(元)')
       template(slot-scope='{ row }') {{ row.sum | toFixed }}
+
+  el-dialog(:title='detailDialog.title', :visible.sync='detailDialog.visible', width='1280px')
+    .mgb2
+      span.mgr3 当前时间: {{ detailDialog.timeText || '--' }}
+      span.mgr3 创角数: {{ detailDialog.userRoleCount }}
+      span.mgr3 换包数: {{ detailDialog.userCount }}
+    .detail-table-wrap
+      .detail-loading-mask(v-if='detailLoading') 加载中...
+      el-table(:data='detailRows', max-height='420')
+        el-table-column(type='index', label='序号', width='70')
+        el-table-column(prop='accountId', label='账号ID', min-width='180')
+        el-table-column(prop='roleCode', label='角色ID(角色代码)', min-width='160')
+        el-table-column(prop='deviceNo', label='设备ID', min-width='240')
+        el-table-column(prop='createIp', label='IP', min-width='140')
+        el-table-column(prop='accountCreateDate', label='账号注册时间', width='180')
+          template(slot-scope='{ row }') {{ row.accountCreateDate | dateFormat }}
+        el-table-column(prop='rebindResult', label='换包', min-width='140')
+    .pd4.tc(v-if='!detailLoading && !detailRows.length') 暂无明细数据
 </template>
 
 <script>
@@ -212,12 +235,26 @@ export default {
       userList: [],
       defaultUserList: [],
       searchMyData: false,
+      detailDialog: {
+        visible: false,
+        title: '创角明细',
+        timeText: '',
+        userRoleCount: 0,
+        userCount: 0,
+      },
+      detailRows: [],
+      detailLoading: false,
     }
   },
   computed: {
     ...mapGetters(['areaList', 'gameList', 'myDptList', 'userInfo', 'OS']),
     halfLayout () {
       return this.OS.isPc
+    },
+    chartEvents () {
+      return {
+        click: this.onChartClick,
+      }
     },
     reversedDataList () {
       return [...this.dataList].reverse()
@@ -338,6 +375,56 @@ export default {
         padDateNum(date.getDate()),
       ].join('-')
     },
+    formatDateTime (date) {
+      return [
+        this.formatDate(date),
+        [padDateNum(date.getHours()), padDateNum(date.getMinutes()), padDateNum(date.getSeconds())].join(':'),
+      ].join(' ')
+    },
+    parseDateValue (value) {
+      if (!value) {
+        return null
+      }
+
+      if (value instanceof Date) {
+        return Number.isNaN(value.getTime()) ? null : new Date(value.getTime())
+      }
+
+      if (typeof value !== 'string') {
+        return null
+      }
+
+      const text = value.trim()
+      if (!text) {
+        return null
+      }
+
+      const directDate = new Date(text)
+      if (!Number.isNaN(directDate.getTime())) {
+        return directDate
+      }
+
+      const normalized = text.replace('T', ' ').replace(/\.\d+$/, '')
+      const match = normalized.match(/^(\d{4})-(\d{1,2})-(\d{1,2})(?:\s+(\d{1,2}):(\d{1,2})(?::(\d{1,2}))?)?$/)
+      if (!match) {
+        return null
+      }
+
+      const [, year, month, day, hour = '0', minute = '0', second = '0'] = match
+      const parsedDate = new Date(
+        Number(year),
+        Number(month) - 1,
+        Number(day),
+        Number(hour),
+        Number(minute),
+        Number(second)
+      )
+
+      return Number.isNaN(parsedDate.getTime()) ? null : parsedDate
+    },
+    isSelectedRange (...indexes) {
+      return indexes.some(index => this.selTimeRange === this.timeRange[index])
+    },
     getRangeDates () {
       this.$utils.autoFillDateTime(this.model)
       return {
@@ -376,6 +463,126 @@ export default {
         this.panelList.rechgTotal.value += item.sum
       }
     },
+    resolveDetailRange (row) {
+      const dateFromTimeKey = row ? this.parseDateValue(row.timeKey) : null
+      let start = null
+      let end = null
+
+      if (this.isSelectedRange(0, 1)) {
+        if (!dateFromTimeKey) {
+          return null
+        }
+        start = new Date(dateFromTimeKey)
+        start.setMinutes(0, 0, 0)
+        end = new Date(start.getTime() + 60 * 60 * 1000 - 1000)
+      } else if (this.isSelectedRange(5, 6)) {
+        if (!row || !row.monthKey) {
+          return null
+        }
+        const year = this.isSelectedRange(5) ? new Date().getFullYear() : new Date().getFullYear() - 1
+        start = new Date(year, row.monthKey - 1, 1, 0, 0, 0)
+        end = new Date(year, row.monthKey, 0, 23, 59, 59)
+      } else {
+        if (dateFromTimeKey) {
+          start = new Date(dateFromTimeKey)
+          start.setHours(0, 0, 0, 0)
+          end = new Date(start)
+          end.setHours(23, 59, 59, 0)
+        } else if (this.isSelectedRange(3) && row && row.dayKey) {
+          const now = new Date()
+          start = new Date(now.getFullYear(), now.getMonth(), row.dayKey, 0, 0, 0)
+          end = new Date(now.getFullYear(), now.getMonth(), row.dayKey, 23, 59, 59)
+        } else if (this.isSelectedRange(4) && row && row.dayKey) {
+          const now = new Date()
+          start = new Date(now.getFullYear(), now.getMonth() - 1, row.dayKey, 0, 0, 0)
+          end = new Date(now.getFullYear(), now.getMonth() - 1, row.dayKey, 23, 59, 59)
+        } else if (this.isSelectedRange(7)) {
+          const rangeDate = this.parseDateValue(row && (row.index || row.xText))
+          if (!rangeDate) {
+            return null
+          }
+          start = new Date(rangeDate)
+          start.setHours(0, 0, 0, 0)
+          end = new Date(start)
+          end.setHours(23, 59, 59, 0)
+        } else {
+          return null
+        }
+      }
+
+      return {
+        startTime: this.formatDateTime(start),
+        endTime: this.formatDateTime(end),
+      }
+    },
+    openCreateUserDialog (row) {
+      if (!row || !row.userRoleCount) {
+        return
+      }
+
+      this.detailDialog = {
+        visible: true,
+        title: '创角明细',
+        timeText: row.xText || this.formatXaxis(row),
+        userRoleCount: row.userRoleCount || 0,
+        userCount: row.userCount || 0,
+      }
+      this.detailRows = []
+      this.detailLoading = true
+
+      const method = (this.searchMyData || !this.userInfo.isLeader) ? 'getAchiCreateRoleDetail' : 'getDptAchiCreateRoleDetail'
+      const detailRange = this.resolveDetailRange(row)
+      if (!detailRange) {
+        this.detailDialog.visible = false
+        this.detailLoading = false
+        this.$vgo.tip('时间范围解析失败', 'warning')
+        return
+      }
+
+      const { startTime, endTime } = detailRange
+      const params = {
+        gameName: this.model.gameName,
+        areaName: this.model.areaName,
+        dtpId: this.model.dtpId,
+        startTime,
+        endTime,
+      }
+
+      if (this.model.UserId !== '') {
+        params.UserId = Number(this.model.UserId)
+      }
+
+      this.$api[method](params).then(data => {
+        this.detailRows = Array.isArray(data) ? data : []
+      }).finally(() => {
+        this.detailLoading = false
+      })
+    },
+    onChartClick (params) {
+      const createRoleSeriesName = this.newRoleData.columns[1]
+      if (params.seriesName !== createRoleSeriesName) {
+        return
+      }
+
+      const row = this.dataList.find(item => item.xText === params.name)
+      if (!row || !row.userRoleCount) {
+        return
+      }
+
+      this.openCreateUserDialog(row)
+    },
+    getCellClassName ({ row, column }) {
+      if (column.property === 'userRoleCount' && row.userRoleCount > 0) {
+        return 'achievement-link-cell'
+      }
+      return ''
+    },
+    onTableCellClick (row, column) {
+      if (!column || column.property !== 'userRoleCount' || !row.userRoleCount) {
+        return
+      }
+      this.openCreateUserDialog(row)
+    },
     search () {
       this.onRadioChange(this.selTimeRange)
     },
@@ -400,6 +607,9 @@ export default {
       this.newRoleData.rows.splice(0, this.newRoleData.rows.length)
       this.rechData.rows.splice(0, this.rechData.rows.length)
       this.dataList.splice(0, this.dataList.length)
+      this.detailDialog.visible = false
+      this.detailRows = []
+      this.detailLoading = false
       const params = {
         gameName: this.model.gameName,
         areaName: this.model.areaName,
@@ -552,6 +762,28 @@ $spc = 44px;
     .btn-group {
       border-bottom: 1px solid #0487FF;
     }
+  }
+
+  .detail-table-wrap {
+    position: relative;
+  }
+
+  .detail-loading-mask {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    z-index: 2;
+    padding: 6px 12px;
+    border-radius: 4px;
+    background: rgba(255, 255, 255, 0.92);
+    color: #606266;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  }
+
+  >>>.achievement-link-cell .cell {
+    color: #409EFF;
+    cursor: pointer;
+    text-decoration: underline;
   }
 
   >>>.el-radio-button:first-child .el-radio-button__inner, >>>.el-radio-button:last-child .el-radio-button__inner {

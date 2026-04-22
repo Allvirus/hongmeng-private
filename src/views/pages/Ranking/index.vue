@@ -12,10 +12,14 @@
           .layer-tag 第二层
           el-tabs.rank-metric(v-model='model.metric', @tab-click='getRank')
             el-tab-pane(label='充值', name='recharge')
+            el-tab-pane(label='新增', name='newRecharge')
             el-tab-pane(label='换包', name='device')
         .toolbar-item.quick-tabs
           .btn-group
-            el-radio-group(v-model='activeQuickRange', @change='handleQuickRangeChange')
+            el-radio-group(
+              v-model='activeQuickRange',
+              @change='handleQuickRangeChange'
+            )
               el-radio-button(
                 v-for='item in quickRanges',
                 :key='item.value',
@@ -37,7 +41,11 @@
           @change='handleDateChange'
         )
       el-form-item(label='返回条数:')
-        el-select.winput(v-model='model.topN', placeholder='请选择返回条数', @change='getRank')
+        el-select.winput(
+          v-model='model.topN',
+          placeholder='请选择返回条数',
+          @change='getRank'
+        )
           el-option(
             v-for='item in topNOptions',
             :key='item',
@@ -51,7 +59,7 @@
           :mainTitle='item.title',
           :subTitle='subTitle',
           :theme='item.theme',
-          :toFixed='model.metric === "recharge"',
+          :toFixed='isAmountMetric',
           rankingKey='value'
         )
 </template>
@@ -167,7 +175,7 @@ const createDefaultModel = () => {
   const { startDate, endDate } = getQuickRange('today')
   return {
     scope: 'person',
-    metric: 'device',
+    metric: 'recharge',
     job: 'all',
     startDate,
     endDate,
@@ -196,14 +204,21 @@ export default {
   },
   computed: {
     ...mapGetters(['OS', 'areaList']),
+    isAmountMetric () {
+      return this.model.metric === 'recharge' || this.model.metric === 'newRecharge'
+    },
     subTitle () {
-      return this.model.metric === 'recharge' ? '充值金额(元)' : '换包数'
+      if (this.model.metric === 'recharge') return '充值金额(元)'
+      if (this.model.metric === 'newRecharge') return '新增充值金额(元)'
+      return '换包数'
     },
     scopeLabel () {
       return this.model.scope === 'department' ? '部门' : '个人'
     },
     metricLabel () {
-      return this.model.metric === 'recharge' ? '充值' : '换包'
+      if (this.model.metric === 'recharge') return '充值'
+      if (this.model.metric === 'newRecharge') return '新增充值'
+      return '换包'
     },
     rankCards () {
       return jobs.map(job => {
@@ -272,80 +287,136 @@ export default {
 }
 </script>
 <style lang='stylus' scoped>
-.Ranking
-  .condition
-    .bg-white
-      border-radius 12px
-      box-shadow 0 8px 24px rgba(4, 135, 255, 0.08)
-  .tab-toolbar
-    display flex
-    gap 16px
-    align-items center
-  .tab-toolbar-pc
-    flex-wrap nowrap
-  .tab-toolbar-mobile
-    flex-wrap wrap
-  .toolbar-item
-    min-width 0
-  .layer-block
-    display flex
-    align-items center
-    gap 10px
-    padding 6px 12px
-    border-radius 12px
-  .scope-tabs, .metric-tabs
-    width 188px
-    flex-shrink 0
-  .layer-one
-    background linear-gradient(135deg, rgba(243, 152, 0, 0.16), rgba(243, 152, 0, 0.04))
-    border 1px solid rgba(243, 152, 0, 0.28)
-  .layer-two
-    background linear-gradient(135deg, rgba(0, 160, 233, 0.16), rgba(0, 160, 233, 0.04))
-    border 1px solid rgba(0, 160, 233, 0.28)
-  .layer-tag
-    flex-shrink 0
-    padding 4px 8px
-    border-radius 999px
-    font-size 12px
-    font-weight 600
-    line-height 1
-  .layer-one .layer-tag
-    color #B96D00
-    background rgba(255, 255, 255, 0.78)
-  .layer-two .layer-tag
-    color #006EA1
-    background rgba(255, 255, 255, 0.78)
-  .quick-tabs
-    flex 1
-  .rank-metric
-    margin-top 0
-  .btn-group
-    border-bottom none
-    padding-top 0
-  .rank
-    display grid
-    grid-template-columns repeat(auto-fit, minmax(320px, 1fr))
-    gap 16px
-    align-items start
-  .rank-card
-    min-width 0
-  >>>.el-form
-    gap 8px 12px
-  >>>.el-tabs__header
-    margin 0
-  >>>.el-tabs__content
-    display none
-  >>>.el-tabs__nav-wrap::after
-    background-color transparent
-  >>>.el-tabs__item
-    height 40px
-    line-height 40px
-  .quick-tabs >>>.el-radio-group
-    display flex
-    flex-wrap wrap
-  >>>.el-radio-button:first-child .el-radio-button__inner, >>>.el-radio-button:last-child .el-radio-button__inner
-    border none !important
-    border-radius 0px
-  >>>.el-radio-button__inner
-    border none !important
+.Ranking {
+  .condition {
+    .bg-white {
+      border-radius: 12px;
+      box-shadow: 0 8px 24px rgba(4, 135, 255, 0.08);
+    }
+  }
+
+  .tab-toolbar {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+  }
+
+  .tab-toolbar-pc {
+    flex-wrap: nowrap;
+  }
+
+  .tab-toolbar-mobile {
+    flex-wrap: wrap;
+  }
+
+  .toolbar-item {
+    min-width: 0;
+  }
+
+  .layer-block {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 6px 12px;
+    border-radius: 12px;
+  }
+
+  .scope-tabs {
+    width: 188px;
+    flex-shrink: 0;
+  }
+
+  .metric-tabs {
+    width: 256px;
+    flex-shrink: 0;
+  }
+
+  .layer-one {
+    background: linear-gradient(135deg, rgba(243, 152, 0, 0.16), rgba(243, 152, 0, 0.04));
+    border: 1px solid rgba(243, 152, 0, 0.28);
+  }
+
+  .layer-two {
+    background: linear-gradient(135deg, rgba(0, 160, 233, 0.16), rgba(0, 160, 233, 0.04));
+    border: 1px solid rgba(0, 160, 233, 0.28);
+  }
+
+  .layer-tag {
+    flex-shrink: 0;
+    padding: 4px 8px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 1;
+  }
+
+  .layer-one .layer-tag {
+    color: #B96D00;
+    background: rgba(255, 255, 255, 0.78);
+  }
+
+  .layer-two .layer-tag {
+    color: #006EA1;
+    background: rgba(255, 255, 255, 0.78);
+  }
+
+  .quick-tabs {
+    flex: 1;
+  }
+
+  .rank-metric {
+    margin-top: 0;
+  }
+
+  .btn-group {
+    border-bottom: none;
+    padding-top: 0;
+  }
+
+  .rank {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 16px;
+    align-items: start;
+  }
+
+  .rank-card {
+    min-width: 0;
+  }
+
+  >>>.el-form {
+    gap: 8px 12px;
+  }
+
+  >>>.el-tabs__header {
+    margin: 0;
+  }
+
+  >>>.el-tabs__content {
+    display: none;
+  }
+
+  >>>.el-tabs__nav-wrap::after {
+    background-color: transparent;
+  }
+
+  >>>.el-tabs__item {
+    height: 40px;
+    line-height: 40px;
+  }
+
+  .quick-tabs >>>.el-radio-group {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  >>>.el-radio-button:first-child .el-radio-button__inner, >>>.el-radio-button:last-child .el-radio-button__inner {
+    border: none !important;
+    border-radius: 0px;
+  }
+
+  >>>.el-radio-button__inner {
+    border: none !important;
+  }
+}
 </style>

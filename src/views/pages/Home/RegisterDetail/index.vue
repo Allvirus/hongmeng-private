@@ -7,6 +7,12 @@
         placeholder='请输入IfunId',
         clearable
       )
+    el-form-item(label='账号ID:')
+      el-input.winput(
+        v-model='model.UserAccount',
+        placeholder='请输入账号ID',
+        clearable
+      )
     el-form-item(label='部门:', v-if='userInfo.isLeader')
       tree-selector.winput(
         ref='dtptree',
@@ -117,6 +123,7 @@ export default {
         startTime: '',
         endTime: '',
         IfunId: '',
+        UserAccount: '',
         Account: '',
         CreateIp: '',
         DeviceNo: '',
