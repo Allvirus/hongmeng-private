@@ -112,6 +112,8 @@
   el-table.mgy2.bg-white.pd2(
     :data='reversedDataList',
     :cell-class-name='getCellClassName',
+    :show-summary='shouldShowHourlySummary',
+    :summary-method='getSummaryRow',
     @cell-click='onTableCellClick'
   )
     el-table-column(prop='xText', label='时间')
@@ -250,6 +252,9 @@ export default {
     ...mapGetters(['areaList', 'gameList', 'myDptList', 'userInfo', 'OS']),
     halfLayout () {
       return this.OS.isPc
+    },
+    shouldShowHourlySummary () {
+      return this.isSelectedRange(0, 1)
     },
     chartEvents () {
       return {
@@ -577,6 +582,21 @@ export default {
       }
       return ''
     },
+    getSummaryRow ({ columns }) {
+      if (!this.shouldShowHourlySummary) {
+        return []
+      }
+
+      return columns.map((column, index) => {
+        if (index === 0) {
+          return '当日去重汇总'
+        }
+        if (column.property === 'userCount') {
+          return this.panelList.newUsers.value
+        }
+        return ''
+      })
+    },
     onTableCellClick (row, column) {
       if (!column || column.property !== 'userRoleCount' || !row.userRoleCount) {
         return
@@ -658,6 +678,7 @@ export default {
             const obj = {
               data: postData,
               registerCount: data.registerCount,
+              totalUserCount: data.data.totalUserCount,
             }
             this.handleData(obj, 'hourKey', 24)
           })
@@ -725,6 +746,9 @@ export default {
 
       // 计算汇总数据...
       this.sum()
+      if (typeof res.totalUserCount === 'number') {
+        this.panelList.newUsers.value = res.totalUserCount
+      }
       this.panelList.registerCount.value = res.registerCount
     },
     handleRangeData (res) {
