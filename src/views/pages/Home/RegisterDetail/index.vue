@@ -9,7 +9,7 @@
       )
     el-form-item(label='账号ID:')
       el-input.winput(
-        v-model='model.UserAccount',
+        v-model='model.UserCode',
         placeholder='请输入账号ID',
         clearable
       )
@@ -124,6 +124,7 @@ export default {
         endTime: '',
         IfunId: '',
         UserAccount: '',
+        UserCode: '',
         Account: '',
         CreateIp: '',
         DeviceNo: '',

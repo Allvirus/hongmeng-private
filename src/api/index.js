@@ -1,6 +1,10 @@
 import { http, uploadApi } from "./http";
 import utils from "@/plugins/utils";
 const {
+  buildRechargeParams,
+  buildDptRechargeParams
+} = require("./playerRechargeParams");
+const {
   // CLOUD_APP_API,
   API
   // CLOUD_FILE_API,
@@ -333,6 +337,7 @@ export default {
 
   // 14.5.查询我的等级和下一等级信息
   getMyLevel: () => http("get", "/api/level/my"),
+  getMyLevelDetail: () => http("get", "/api/level/my/detail"),
 
   // 14.6.查询我的等级配置信息
   getMyLevInfo: () => http("get", "/api/level/config"),
@@ -370,20 +375,52 @@ export default {
     http("put", `/api/level/${model.id || model.Id}`, {
       data: {
         level: model.level !== undefined ? model.level : model.Level,
-        levelName: model.levelName !== undefined ? model.levelName : model.LevelName,
-        experience: model.experience !== undefined ? model.experience : model.Experience,
-        basicSalary: model.basicSalary !== undefined ? model.basicSalary : model.BasicSalary,
-        commission: model.commission !== undefined ? model.commission : model.Commission,
-        ajobAndroidExp: model.ajobAndroidExp !== undefined ? model.ajobAndroidExp : model.AjobAndroidExp,
-        ajobIOSExp: model.ajobIOSExp !== undefined ? model.ajobIOSExp : model.AjobIOSExp,
-        bjobAndroidExp: model.bjobAndroidExp !== undefined ? model.bjobAndroidExp : model.BjobAndroidExp,
-        bjobIOSExp: model.bjobIOSExp !== undefined ? model.bjobIOSExp : model.BjobIOSExp,
-        ajobRechargeExp: model.ajobRechargeExp !== undefined ? model.ajobRechargeExp : model.AjobRechargeExp,
-        bjobRechargeExp: model.bjobRechargeExp !== undefined ? model.bjobRechargeExp : model.BjobRechargeExp,
-        cjobRechargeExp: model.cjobRechargeExp !== undefined ? model.cjobRechargeExp : model.CjobRechargeExp,
-        ajobRechargeExpAfter: model.ajobRechargeExpAfter !== undefined ? model.ajobRechargeExpAfter : model.AjobRechargeExpAfter,
-        bjobRechargeExpAfter: model.bjobRechargeExpAfter !== undefined ? model.bjobRechargeExpAfter : model.BjobRechargeExpAfter,
-        cjobRechargeExpAfter: model.cjobRechargeExpAfter !== undefined ? model.cjobRechargeExpAfter : model.CjobRechargeExpAfter
+        levelName:
+          model.levelName !== undefined ? model.levelName : model.LevelName,
+        experience:
+          model.experience !== undefined ? model.experience : model.Experience,
+        basicSalary:
+          model.basicSalary !== undefined
+            ? model.basicSalary
+            : model.BasicSalary,
+        commission:
+          model.commission !== undefined ? model.commission : model.Commission,
+        ajobAndroidExp:
+          model.ajobAndroidExp !== undefined
+            ? model.ajobAndroidExp
+            : model.AjobAndroidExp,
+        ajobIOSExp:
+          model.ajobIOSExp !== undefined ? model.ajobIOSExp : model.AjobIOSExp,
+        bjobAndroidExp:
+          model.bjobAndroidExp !== undefined
+            ? model.bjobAndroidExp
+            : model.BjobAndroidExp,
+        bjobIOSExp:
+          model.bjobIOSExp !== undefined ? model.bjobIOSExp : model.BjobIOSExp,
+        ajobRechargeExp:
+          model.ajobRechargeExp !== undefined
+            ? model.ajobRechargeExp
+            : model.AjobRechargeExp,
+        bjobRechargeExp:
+          model.bjobRechargeExp !== undefined
+            ? model.bjobRechargeExp
+            : model.BjobRechargeExp,
+        cjobRechargeExp:
+          model.cjobRechargeExp !== undefined
+            ? model.cjobRechargeExp
+            : model.CjobRechargeExp,
+        ajobRechargeExpAfter:
+          model.ajobRechargeExpAfter !== undefined
+            ? model.ajobRechargeExpAfter
+            : model.AjobRechargeExpAfter,
+        bjobRechargeExpAfter:
+          model.bjobRechargeExpAfter !== undefined
+            ? model.bjobRechargeExpAfter
+            : model.BjobRechargeExpAfter,
+        cjobRechargeExpAfter:
+          model.cjobRechargeExpAfter !== undefined
+            ? model.cjobRechargeExpAfter
+            : model.CjobRechargeExpAfter
       }
     }),
   // 19.获取游戏注册分页信息
@@ -397,6 +434,7 @@ export default {
           UserAccount: model.UserAccount,
           IfunId: model.IfunId,
           Account: model.Account,
+          UserCode: model.UserCode,
           CreateIp: model.CreateIp,
           DeviceNo: model.DeviceNo,
           Platform: model.platform,
@@ -418,6 +456,7 @@ export default {
           UserAccount: model.UserAccount,
           IfunId: model.IfunId,
           Account: model.Account,
+          UserCode: model.UserCode,
           CreateIp: model.CreateIp,
           DeviceNo: model.DeviceNo,
           userId: model.userId,
@@ -486,6 +525,7 @@ export default {
           IfunId: model.IfunId,
           GameOrderID: model.GameOrderID,
           Account: model.Account,
+          UserCode: model.UserCode,
           GameName: model.GameName,
           RoleName: model.RoleName,
           AreaName: model.AreaName,
@@ -555,19 +595,7 @@ export default {
     http("get", "/api/player/recharge", {
       loading: true,
       params: (() => {
-        const p = {
-          UserAccount: model.UserAccount,
-          startTime: model.startTime,
-          endTime: model.endTime,
-          Account: model.Account,
-          GameName: model.GameName,
-          RoleName: model.RoleName,
-          AreaName: model.AreaName,
-          AreaCode: model.AreaCode,
-          TotalPrice: model.TotalPrice,
-          page: model.page,
-          pageSize: model.pageSize
-        };
+        const p = buildRechargeParams(model);
         utils.filterNull(p);
         return p;
       })()
@@ -577,21 +605,7 @@ export default {
     http("get", "api/player/recharge/manage", {
       loading: true,
       params: (() => {
-        const p = {
-          UserAccount: model.UserAccount,
-          startTime: model.startTime,
-          endTime: model.endTime,
-          Account: model.Account,
-          GameName: model.GameName,
-          RoleName: model.RoleName,
-          AreaName: model.AreaName,
-          AreaCode: model.AreaCode,
-          TotalPrice: model.TotalPrice,
-          userId: model.userId,
-          resDepId: model.resDepId,
-          page: model.page,
-          pageSize: model.pageSize
-        };
+        const p = buildDptRechargeParams(model);
         utils.filterNull(p);
         return p;
       })()
@@ -800,7 +814,11 @@ export default {
         gameName: model.gameName,
         areaName: model.areaName,
         resDepId: model.dtpId,
-        ...(model.UserId !== '' && model.UserId !== undefined && model.UserId !== null ? { userId: model.UserId } : {})
+        ...(model.UserId !== "" &&
+        model.UserId !== undefined &&
+        model.UserId !== null
+          ? { userId: model.UserId }
+          : {})
       }
     }),
 

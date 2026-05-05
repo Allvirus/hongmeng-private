@@ -24,6 +24,7 @@ export default {
   },
   created () {
     this.$store.dispatch('getUserInfo')
+    this.$store.dispatch('getLevelNameMap')
     this.$store.dispatch('getAreaList')
     this.$store.dispatch('getGameList')
     this.$store.dispatch('checkOS')

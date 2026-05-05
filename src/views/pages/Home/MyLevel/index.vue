@@ -4,9 +4,9 @@
   .mgt2
     .bg-white.pd2
       .ff-rn.ai-center
-        p.fs-b 累计经验值 {{ userInfo.experiences }}
+        p.fs-b 累计经验值 {{ displayCurrentExperience }}
       .ff-rn.mgt2.ai-center(:class='OS.isPc ? "" : "jc-center"')
-        p {{ levelInfo[0].levelName }}
+        p {{ displayCurrentLevelName }}
         .pr
           el-progress.mgx2(
             :class='OS.isPc ? "w300" : "w200"',
@@ -15,8 +15,8 @@
             :stroke-width='OS.isPc ? 20 : 15',
             :percentage='expPercent'
           )
-          p.flex-center.pac(:style='{ color: "#000000" }') {{ userInfo.experiences }}/{{ levelInfo[1].experience }}
-        p {{ levelInfo[1].levelName }}
+          p.flex-center.pac(:style='{ color: "#000000" }') {{ displayCurrentExperience }}/{{ displayNextLevelNeedExperience }}
+        p {{ displayNextLevelName }}
   .tables
     .tab(:class='OS.isPc ? "ff-rn" : "ff-cn"')
       .flex-1.pd1
@@ -45,12 +45,12 @@
       el-table-column(prop='ajobIOSExp', label='A岗iOS换包经验')
       el-table-column(prop='bjobAndroidExp', label='B岗Android换包经验')
       el-table-column(prop='bjobIOSExp', label='B岗iOS换包经验')
-      el-table-column(prop='ajobRechargeExp', label='A岗充值比经验(新服)')
-      el-table-column(prop='ajobRechargeExpAfter', label='A岗充值比经验(后续)')
-      el-table-column(prop='bjobRechargeExp', label='B岗充值比经验(新服)')
-      el-table-column(prop='bjobRechargeExpAfter', label='B岗充值比经验(后续)')
-      el-table-column(prop='cjobRechargeExp', label='C岗充值比经验(新服)')
-      el-table-column(prop='cjobRechargeExpAfter', label='C岗充值比经验(后续)')
+      el-table-column(prop='ajobRechargeExp', label='A岗充值比例经验(新服)')
+      el-table-column(prop='ajobRechargeExpAfter', label='A岗充值比例经验(后续)')
+      el-table-column(prop='bjobRechargeExp', label='B岗充值比例经验(新服)')
+      el-table-column(prop='bjobRechargeExpAfter', label='B岗充值比例经验(后续)')
+      el-table-column(prop='cjobRechargeExp', label='C岗充值比例经验(新服)')
+      el-table-column(prop='cjobRechargeExpAfter', label='C岗充值比例经验(后续)')
 
   .tips
     h3.mgt3 {{ ruleText.configType }}
@@ -58,6 +58,7 @@
 </template>
 <script>
 import { mapGetters } from 'vuex'
+
 export default {
   name: 'MyLevel',
   data () {
@@ -66,12 +67,19 @@ export default {
       levelInfo: [
         {
           levelName: '',
+          experience: 0,
         },
         {
           levelName: '',
-          experience: '',
+          experience: 0,
         },
       ],
+      levelProgress: {
+        currentLevelName: '',
+        currentExperience: 0,
+        nextLevelName: '',
+        nextLevelNeedExperience: 0,
+      },
       expPercent: 0,
       ruleText: {},
       labelList: {
@@ -90,6 +98,18 @@ export default {
   },
   computed: {
     ...mapGetters(['userInfo', 'OS']),
+    displayCurrentExperience () {
+      return this.levelProgress.currentExperience || this.userInfo.experiences || 0
+    },
+    displayCurrentLevelName () {
+      return this.levelProgress.currentLevelName || (this.levelInfo[0] && this.levelInfo[0].levelName) || ''
+    },
+    displayNextLevelName () {
+      return this.levelProgress.nextLevelName || (this.levelInfo[1] && this.levelInfo[1].levelName) || ''
+    },
+    displayNextLevelNeedExperience () {
+      return this.levelProgress.nextLevelNeedExperience || (this.levelInfo[1] && this.levelInfo[1].experience) || 0
+    },
   },
   created: function () {
     this.getMyLevel()
@@ -97,7 +117,16 @@ export default {
   methods: {
     getMyLevel () {
       this.$api.getMyLevel().then(res => {
-        this.levelInfo = res
+        this.levelInfo = Array.isArray(res) ? res : this.levelInfo
+        this.syncLevelProgressFromLegacy()
+        this.calcPercent()
+      })
+
+      this.$api.getMyLevelDetail().then(res => {
+        this.levelProgress = this.normalizeLevelProgress(res)
+        this.calcPercent()
+      }).catch(() => {
+        this.syncLevelProgressFromLegacy()
         this.calcPercent()
       })
 
@@ -110,11 +139,34 @@ export default {
         this.commission = data
       })
     },
+    normalizeLevelProgress (data = {}) {
+      return {
+        currentLevelName: data.currentLevelName || '',
+        currentExperience: data.currentExperience || this.userInfo.experiences || 0,
+        nextLevelName: data.nextLevelName || '',
+        nextLevelNeedExperience: data.nextLevelNeedExperience || 0,
+      }
+    },
+    syncLevelProgressFromLegacy () {
+      this.levelProgress = {
+        currentLevelName: (this.levelInfo[0] && this.levelInfo[0].levelName) || '',
+        currentExperience: this.userInfo.experiences || 0,
+        nextLevelName: (this.levelInfo[1] && this.levelInfo[1].levelName) || '',
+        nextLevelNeedExperience: (this.levelInfo[1] && this.levelInfo[1].experience) || 0,
+      }
+    },
     calcPercent () {
-      const curExp = this.userInfo.experiences
-      const curLevMaxExp = this.levelInfo[0].experience
-      const nexLevMaxExp = this.levelInfo[1].experience
-      this.expPercent = ((curExp - curLevMaxExp) / (nexLevMaxExp - curLevMaxExp)) * 100
+      const curExp = Number(this.displayCurrentExperience || 0)
+      const curLevMaxExp = Number((this.levelInfo[0] && this.levelInfo[0].experience) || 0)
+      const nexLevMaxExp = Number(this.displayNextLevelNeedExperience || 0)
+
+      if (!nexLevMaxExp || nexLevMaxExp <= curLevMaxExp) {
+        this.expPercent = 0
+        return
+      }
+
+      const percent = ((curExp - curLevMaxExp) / (nexLevMaxExp - curLevMaxExp)) * 100
+      this.expPercent = Math.max(0, Math.min(100, percent))
     },
   },
 }

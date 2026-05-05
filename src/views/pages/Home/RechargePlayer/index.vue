@@ -25,10 +25,16 @@
             :label='item.realName',
             :value='item.id'
           )
-      el-form-item(label='玩家账号:')
+      el-form-item(label='IfunId:')
         el-input.winput(
-          v-model='model.UserAccount',
-          placeholder='请输入玩家账号',
+          v-model='model.IfunId',
+          placeholder='请输入IfunId',
+          clearable
+        )
+      el-form-item(label='账号ID:')
+        el-input.winput(
+          v-model='model.UserCode',
+          placeholder='请输入账号ID',
           clearable
         )
       el-form-item(label='游戏名称:')
@@ -57,6 +63,10 @@
           :end.sync='model.endTime',
           all
         )
+      el-form-item(label='平台:')
+        el-radio-group(v-model='model.platform')
+          el-radio(label='0') Ifun
+          el-radio(label='1') 木勺
       el-button.mgl3.mgb2(
         icon='el-icon-search',
         type='primary',
@@ -73,11 +83,14 @@
       ) 搜索我的数据
 
   el-table.mgy2.bg-white.pd2(:data='listMixin.list')
-    el-table-column(prop='userAccount', label='玩家账号')
+    el-table-column(prop='ifunId', label='ID')
+    el-table-column(prop='userCode', label='账号ID')
+    el-table-column(prop='platform', label='平台')
+      template(slot-scope='{ row }') {{ row.platform === 0 ? 'Ifun' : '木勺' }}
     el-table-column(prop='gameName', label='游戏名称')
     el-table-column(prop='areaName', label='区服')
     el-table-column(prop='roleName', label='游戏角色')
-    el-table-column(prop='osType', label='平台')
+    el-table-column(prop='osType', label='设备平台')
       template(slot-scope='{ row }') {{ row.osType | formatOSType }}
     el-table-column(prop='rechargeCount', label='充值订单数')
     el-table-column(prop='totalMoney', label='充值总额(元)')
@@ -105,6 +118,8 @@ export default {
       dtpApi: 'getDptRechInfo',
       myApi: 'getRechInfo',
       model: {
+        IfunId: '',
+        UserCode: '',
         UserAccount: '',
         startTime: this.GetDateStr(0, 'start'),
         endTime: this.GetDateStr(0, 'end'),
@@ -116,6 +131,7 @@ export default {
         TotalPrice: '',
         userId: '',
         resDepId: '',
+        platform: '0',
         page: 1,
         pageSize: 10,
       },
