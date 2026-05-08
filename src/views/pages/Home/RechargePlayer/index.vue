@@ -85,6 +85,7 @@
   el-table.mgy2.bg-white.pd2(:data='listMixin.list')
     el-table-column(prop='ifunId', label='ID')
     el-table-column(prop='userCode', label='账号ID')
+    el-table-column(prop='roleCode', label='角色代码')
     el-table-column(prop='platform', label='平台')
       template(slot-scope='{ row }') {{ row.platform === 0 ? 'Ifun' : '木勺' }}
     el-table-column(prop='gameName', label='游戏名称')
@@ -95,6 +96,10 @@
     el-table-column(prop='rechargeCount', label='充值订单数')
     el-table-column(prop='totalMoney', label='充值总额(元)')
       template(slot-scope='{ row }') {{ row.totalMoney | toFixed }}
+    el-table-column(prop='daysNoLogin', label='未登录天数')
+      template(slot-scope='{ row }')
+        span(v-if='row.daysNoLogin !== null && row.daysNoLogin !== undefined') {{ row.daysNoLogin }}天
+        span(v-else) -
     el-table-column(prop='ajob', label='A岗')
     el-table-column(prop='bjob', label='B岗')
     el-table-column(prop='cjob', label='C岗')
@@ -157,6 +162,7 @@ export default {
 }
 </script>
 <style lang='stylus' scoped>
-.el-form-item
-  margin-bottom 10px
+.el-form-item {
+  margin-bottom: 10px;
+}
 </style>

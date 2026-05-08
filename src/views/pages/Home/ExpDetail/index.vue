@@ -70,9 +70,13 @@
       template(slot-scope='{ row }')
         span.danger {{ Number(row.expChange) > 0 ? '+' : '' }}
         span.danger {{ row.expChange }}
+    el-table-column(prop='expAfter', label='变动后经验')
+      template(slot-scope='{ row }')
+        span(v-if='row.expAfter !== null && row.expAfter !== undefined') {{ row.expAfter }}
+        span(v-else) -
     el-table-column(prop='createTime', label='创建时间')
       template(slot-scope='{ row }') {{ row.createTime | dateFormat }}
-    el-table-column(prop='effectiveDate', label='有效期')
+    el-table-column(prop='effectiveDate', label='启用时间')
       template(slot-scope='{ row }') {{ row.effectiveDate | dateFormat }}
     el-table-column(prop='remark', label='备注', width='450px')
       template(slot-scope='{ row }')
