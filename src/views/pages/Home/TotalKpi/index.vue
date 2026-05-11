@@ -100,13 +100,45 @@
           @click='isShowSalary = !isShowSalary'
         )
     el-table-column(prop='aPostSalary', label='客流岗流水', v-if='isShowSalary')
+    el-table-column(
+      prop='aPostInAppSalary',
+      label='客流岗内购(×0.6)',
+      v-if='isShowSalary'
+    )
+    el-table-column(
+      prop='aPostNonInAppSalary',
+      label='客流岗非内购',
+      v-if='isShowSalary'
+    )
     el-table-column(prop='bPostSalary', label='引导岗流水', v-if='isShowSalary')
+    el-table-column(
+      prop='bPostInAppSalary',
+      label='引导岗内购(×0.6)',
+      v-if='isShowSalary'
+    )
+    el-table-column(
+      prop='bPostNonInAppSalary',
+      label='引导岗非内购',
+      v-if='isShowSalary'
+    )
     el-table-column(prop='cPostSalary', label='GS岗流水', v-if='isShowSalary')
+    el-table-column(
+      prop='cPostInAppSalary',
+      label='GS岗内购(×0.6)',
+      v-if='isShowSalary'
+    )
+    el-table-column(
+      prop='cPostNonInAppSalary',
+      label='GS岗非内购',
+      v-if='isShowSalary'
+    )
     el-table-column(prop='levelName', label='等级')
     el-table-column(prop='commission', label='提成点')
       template(slot-scope='{ row }') {{ row.commission + '%' }}
     el-table-column(prop='percentAmount', label='提成金额')
     el-table-column(prop='basicSalary', label='底薪')
+    el-table-column(prop='deviceCount', label='换包数量')
+    el-table-column(prop='newPlayerSalary', label='新增业绩')
     el-table-column(label='创建时间', width='190')
       template(slot-scope='{ row }') {{ row.createDate | dateFormat }}
   el-pagination.margin-spacing(

@@ -88,6 +88,10 @@
     el-table-column(prop='roleCode', label='角色代码')
     el-table-column(prop='platform', label='平台')
       template(slot-scope='{ row }') {{ row.platform === 0 ? 'Ifun' : '木勺' }}
+    el-table-column(prop='daysNoLogin', label='未登录天数')
+      template(slot-scope='{ row }')
+        span(v-if='row.daysNoLogin !== null && row.daysNoLogin !== undefined') {{ row.daysNoLogin }}天
+        span(v-else) -
     el-table-column(prop='gameName', label='游戏名称')
     el-table-column(prop='areaName', label='区服')
     el-table-column(prop='roleName', label='游戏角色')
@@ -96,10 +100,7 @@
     el-table-column(prop='rechargeCount', label='充值订单数')
     el-table-column(prop='totalMoney', label='充值总额(元)')
       template(slot-scope='{ row }') {{ row.totalMoney | toFixed }}
-    el-table-column(prop='daysNoLogin', label='未登录天数')
-      template(slot-scope='{ row }')
-        span(v-if='row.daysNoLogin !== null && row.daysNoLogin !== undefined') {{ row.daysNoLogin }}天
-        span(v-else) -
+
     el-table-column(prop='ajob', label='A岗')
     el-table-column(prop='bjob', label='B岗')
     el-table-column(prop='cjob', label='C岗')
