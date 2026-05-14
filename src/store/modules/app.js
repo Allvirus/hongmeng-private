@@ -109,6 +109,7 @@ export default {
       data.resDepartmentId = resDepartmentIds[0] || 0;
       state.userInfo = data;
       state.userInfo.isLeader = resDepartmentIds.length > 0;
+      state.userInfo.isAdmin = !!data.isAdmin;
     },
     projectTagList(state, data) {
       state.projectTagList = data;

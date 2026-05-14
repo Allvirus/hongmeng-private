@@ -79,6 +79,7 @@
         el-radio-group(v-model='model.platform')
           el-radio(label='0') Ifun
           el-radio(label='1') 木勺
+
       el-button.mgl3.h30(
         icon='el-icon-search',
         type='primary',
@@ -94,7 +95,7 @@
         v-model='searchMyData',
         v-if='userInfo.isLeader'
       ) 搜索我的数据
-
+      el-checkbox.mgt1(v-model='model.isInApp') 仅查看内购订单
   el-table.mgy2.bg-white.pd2(:data='listMixin.list')
     el-table-column(prop='ifunId', label='ID')
     el-table-column(prop='userCode', label='账号ID')
@@ -154,6 +155,7 @@ export default {
         resDepId: '',
         OSType: '',
         platform: '0',
+        isInApp: false,
         page: 1,
         pageSize: 10,
       },

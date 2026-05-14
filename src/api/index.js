@@ -490,6 +490,7 @@ export default {
           TotalPrice: model.TotalPrice,
           OSType: model.OSType,
           Platform: model.platform,
+          IsInApp: model.isInApp || undefined,
           Page: model.page,
           PageSize: model.pageSize
         };
@@ -535,6 +536,7 @@ export default {
           TotalPrice: model.TotalPrice,
           OSType: model.OSType,
           Platform: model.platform,
+          IsInApp: model.isInApp || undefined,
           Page: model.page,
           PageSize: model.pageSize
         };

@@ -2,7 +2,7 @@
 .TotalKpi
   .ff-rn.fs-m.ai-center.bg-white.pdx2.pdt2
     el-form.ff-rw.ai-center(label-width='60px')
-      el-form-item(label='部门:')
+      el-form-item(label='部门:', v-if='userInfo.isAdmin')
         tree-selector.winput(
           ref='dtptree',
           :data='myDptList.list',
@@ -11,7 +11,7 @@
           :deflabel='myDptList.list[0].name',
           @change='onDepartChange'
         )
-      el-form-item(label='员工:')
+      el-form-item(label='员工:', v-if='userInfo.isAdmin')
         el-select.winput(
           v-model='model.userId',
           placeholder='请选择',
@@ -235,10 +235,15 @@ export default {
   },
   created () {
     this.$store.dispatch('getMyDptList', 1)
+    if (!this.userInfo.isAdmin) {
+      this.model.userId = this.userInfo.id
+    }
     this.getSalaryList()
   },
   mounted () {
-    this.onDepartChange({ id: 1 })
+    if (this.userInfo.isAdmin) {
+      this.onDepartChange({ id: 1 })
+    }
   },
   methods: {
     getSalaryList () {
