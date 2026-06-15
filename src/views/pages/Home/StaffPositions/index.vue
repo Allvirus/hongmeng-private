@@ -47,6 +47,7 @@
         template(slot-scope='{ row }')
           span {{ jobArr[row.job] }}
       el-table-column(prop='postMonthPrice', label='新增流水')
+      el-table-column(prop='thisMonthNewPrice', label='本月新增')
       //- el-table-column(prop='startTime', label='共享换包数')
       el-table-column(prop='postSubsequentAmount', label='后续流水')
       el-table-column(prop='postDeviceCount', label='换包数')
@@ -65,6 +66,7 @@
       p.mgt1(v-for='item in totalList')
         span {{ jobArr[item.job] }}岗 (
         span 新增流水： {{ item.postMonthPrice }} ，
+        span 本月新增： {{ item.thisMonthNewPrice }} ，
         span 后续流水：{{ item.postSubsequentAmount }}，
         span 换包数： {{ item.postDeviceCount }} )
 </template>

@@ -138,7 +138,7 @@
     el-table-column(prop='percentAmount', label='提成金额')
     el-table-column(prop='basicSalary', label='底薪')
     el-table-column(prop='deviceCount', label='换包数量')
-    el-table-column(prop='newPlayerSalary', label='新增业绩')
+    el-table-column(prop='thisMonthNewPrice', label='本月新增')
     el-table-column(label='创建时间', width='190')
       template(slot-scope='{ row }') {{ row.createDate | dateFormat }}
   el-pagination.margin-spacing(
@@ -268,6 +268,21 @@ export default {
           this.createWage.Month = ''
         } else {
           this.$vgo.tip('添加失败', 'error')
+        }
+      })
+    },
+    recalcCurrentMonth () {
+      if (!this.model.Month) {
+        this.$vgo.tip('请输入日期', 'error')
+        return false
+      }
+
+      this.$api.recalcSalary({ Month: this.model.Month }).then(res => {
+        if (res.code === 200) {
+          this.$vgo.tip('补算成功', 'success')
+          this.getSalaryList()
+        } else {
+          this.$vgo.tip('补算失败', 'error')
         }
       })
     },

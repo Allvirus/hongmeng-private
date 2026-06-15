@@ -69,7 +69,12 @@
       v-if='userInfo.isLeader'
     ) 搜索我的数据
 
-  el-table.mgy2.bg-white.pd2(:data='listMixin.list')
+  el-table.mgy2.bg-white.pd2(
+    ref='registerTable',
+    :data='listMixin.list',
+    show-summary,
+    :summary-method='getRegisterSummaries'
+  )
     el-table-column(prop='ifunAccountId', label='ID', width='100')
     el-table-column(prop='userCode', label='账号ID', width='100')
     el-table-column(prop='account', label='推广员账户', width='100px')
@@ -142,6 +147,32 @@ export default {
     ...mapGetters(['myDptList', 'userInfo']),
   },
   methods: {
+    getRegisterSummaries ({ columns }) {
+      this.mergeRegisterSummaryRows()
+      return columns.map((column, index) => {
+        if (index === 0) return `注册总数：${this.listMixin.count}`
+        return ''
+      })
+    },
+    mergeRegisterSummaryRows () {
+      this.$nextTick(() => {
+        const tableEl = this.$refs.registerTable && this.$refs.registerTable.$el
+        const footerRows = tableEl ? tableEl.querySelectorAll('.el-table__footer-wrapper tbody tr, .el-table__fixed-footer-wrapper tbody tr') : []
+        footerRows.forEach(row => {
+          const cells = row.querySelectorAll('td')
+          cells.forEach((cell, index) => {
+            if (index === 0) {
+              cell.colSpan = cells.length
+              cell.style.display = ''
+              cell.classList.add('register-summary-cell')
+            } else {
+              cell.colSpan = 1
+              cell.style.display = 'none'
+            }
+          })
+        })
+      })
+    },
     showRoleDetail (row) {
       this.showRoleDlg = true
       this.selUser = row.userAccount
@@ -156,5 +187,11 @@ export default {
 <style lang='stylus' scoped>
 .el-form-item {
   margin-bottom: 10px;
+}
+
+.MyRegister /deep/ .register-summary-cell .cell {
+  overflow: visible;
+  text-align: center;
+  white-space: nowrap;
 }
 </style>

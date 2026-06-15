@@ -127,6 +127,8 @@
         template(slot='header', slot-scope='scope')
           el-tooltip(effect='dark', content='有充值的玩家数量', placement='top-start')
             span 充值玩家数
+      el-table-column(prop='postMonthPrice', label='新增流水', width='100px')
+      el-table-column(prop='thisMonthNewPrice', label='本月新增', width='100px')
       el-table-column(prop='totalAllPrice', label='总充值金额', width='100px')
         template(slot='header', slot-scope='scope')
           el-tooltip(
@@ -248,6 +250,11 @@ export default {
           name: '充值金额',
           id: 0,
           value: 'totalAllPrice',
+        },
+        {
+          name: '本月新增',
+          id: 3,
+          value: 'thisMonthNewPrice',
         },
         {
           name: '总登记数',

@@ -1386,10 +1386,18 @@ export default {
       loading: true
     }),
 
-  // 77 .获取所有角色
+  // 77. 补算某月工资记录
+  recalcSalary: module => {
+    const month = String(module.Month || module.month || '').replace('-', '');
+    return http("post", `/api/salary/recalc?month=${month}`, {
+      loading: true
+    });
+  },
+
+  // 78. 获取所有角色
   getRoleController: () => http("get", "/api/role"),
 
-  // 78. 获取所有菜单
+  // 79. 获取所有菜单
   getRoleMenu: () => http("get", "/api/role/menu"),
 
   // 79. 创建角色

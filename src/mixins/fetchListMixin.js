@@ -17,7 +17,7 @@
 export default {
   data () {
     return {
-      listMixin: { list: [], count: 0, totalJoinPeople: 0, totalReceivedPeople: 0 },
+      listMixin: { list: [], count: 0, statistics: {}, totalJoinPeople: 0, totalReceivedPeople: 0 },
     }
   },
   async created () {
@@ -44,6 +44,7 @@ export default {
       return this.$api[this.listApiForMixin || this.customExeListApiForMixin](this.model, loading).then(data => {
         this.listMixin.list = data.list
         this.listMixin.count = data.count
+        this.listMixin.statistics = data.statistics || data.Statistics || {}
         if (data.totalJoinPeople !== undefined && data.totalReceivedPeople !== undefined) {
           this.listMixin.totalJoinPeople = data.totalJoinPeople
           this.listMixin.totalReceivedPeople = data.totalReceivedPeople

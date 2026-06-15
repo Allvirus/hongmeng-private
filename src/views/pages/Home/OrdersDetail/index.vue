@@ -96,7 +96,12 @@
         v-if='userInfo.isLeader'
       ) 搜索我的数据
       el-checkbox.mgt1(v-model='model.isInApp') 仅查看内购订单
-  el-table.mgy2.bg-white.pd2(:data='listMixin.list')
+  el-table.mgy2.bg-white.pd2(
+    ref='ordersTable',
+    :data='listMixin.list',
+    :show-summary='hasOrderStatistics',
+    :summary-method='getOrderSummaries'
+  )
     el-table-column(prop='ifunId', label='ID')
     el-table-column(prop='userCode', label='账号ID')
     el-table-column(prop='roleCode', label='角色ID')
@@ -163,6 +168,70 @@ export default {
   },
   computed: {
     ...mapGetters(['areaList', 'gameList', 'myDptList', 'userInfo', 'OS']),
+    orderStatistics () {
+      const statistics = this.listMixin.statistics || {}
+      return {
+        rechargeCount: statistics.rechargeCount || statistics.RechargeCount || 0,
+        totalPriceAll: statistics.totalPriceAll || statistics.TotalPriceAll || 0,
+      }
+    },
+    hasOrderStatistics () {
+      const statistics = this.listMixin.statistics || {}
+      return Object.keys(statistics).length > 0
+    },
+  },
+  watch: {
+    'listMixin.list' () {
+      this.$nextTick(this.mergeOrderSummaryCells)
+    },
+    'listMixin.statistics': {
+      handler () {
+        this.$nextTick(this.mergeOrderSummaryCells)
+      },
+      deep: true,
+    },
+  },
+  methods: {
+    getOrderSummaries ({ columns }) {
+      return columns.map((column, index) => {
+        if (index === 0) return '合计'
+        if (column.property === 'userCode') return `充值总数：${this.formatInteger(this.orderStatistics.rechargeCount)}`
+        if (column.property === 'totalPrice') return `充值总额：${this.formatMoney(this.orderStatistics.totalPriceAll)}`
+        return ''
+      })
+    },
+    mergeOrderSummaryCells () {
+      const table = this.$refs.ordersTable && this.$refs.ordersTable.$el
+      const cells = table && table.querySelectorAll('.el-table__footer-wrapper tbody tr td')
+      if (!cells || !cells.length) return
+
+      cells.forEach(cell => {
+        cell.removeAttribute('colspan')
+        cell.style.display = ''
+        cell.classList.remove('order-summary-cell')
+      })
+
+      this.mergeSummaryCell(cells, 1, 4)
+      this.mergeSummaryCell(cells, 5, 4)
+    },
+    mergeSummaryCell (cells, startIndex, span) {
+      const cell = cells[startIndex]
+      if (!cell) return
+
+      cell.setAttribute('colspan', span)
+      cell.classList.add('order-summary-cell')
+      for (let index = startIndex + 1; index < startIndex + span && index < cells.length; index += 1) {
+        cells[index].style.display = 'none'
+      }
+    },
+    formatInteger (value) {
+      const number = Number(value)
+      return Number.isFinite(number) ? String(Math.trunc(number)) : '0'
+    },
+    formatMoney (value) {
+      const number = Number(value)
+      return Number.isFinite(number) ? number.toFixed(2) : '0.00'
+    },
   },
 }
 </script>
@@ -173,5 +242,10 @@ export default {
 
 >>>.el-table .cell {
   padding: 0px 4px !important;
+}
+
+>>>.order-summary-cell .cell {
+  text-align: left;
+  font-weight: 600;
 }
 </style>
