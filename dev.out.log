@@ -1,0 +1,837 @@
+
+> zhulang-user@0.1.0 serve
+> cross-env NODE_ENV=development NODE_OPTIONS=--openssl-legacy-provider vue-cli-service serve
+
+ INFO  Starting development server...
+ DONE  Compiled successfully in 22898ms10:14:27
+
+
+  App running at:
+  - Local:   http://localhost:9131 
+  - Network: unavailable
+
+  Note that the development build is not optimized.
+  To create a production build, run npm run build.
+
+ WAIT  Compiling...14:16:44
+
+ DONE  Compiled successfully in 13165ms14:16:57
+
+
+  App running at:
+  - Local:   http://localhost:9131 
+  - Network: unavailable
+
+ WAIT  Compiling...14:17:14
+
+ WARNING  Compiled with 1 warnings14:17:15
+
+ warning  in ./src/views/pages/Department/index.vue?vue&type=template&id=1436857a&scoped=true&lang=pug&
+
+Module Warning (from ./node_modules/vue-loader/lib/loaders/templateLoader.js):
+(Emitted value instead of an instance of Error) <el-breadcrumb-item v-for="item in Tree.path">: component lists rendered with v-for should have explicit keys. See https://vuejs.org/guide/list.html#key for more info.
+
+ @ ./src/views/pages/Department/index.vue?vue&type=template&id=1436857a&scoped=true&lang=pug& 1:0-506 1:0-506
+ @ ./src/views/pages/Department/index.vue
+ @ ./src/router/routes.js
+ @ ./src/router/index.js
+ @ ./src/main.js
+ @ multi (webpack)-dev-server/client?http://localhost:9131&sockPath=/sockjs-node (webpack)/hot/dev-server.js ./src/main.js
+
+
+  App running at:
+  - Local:   http://localhost:9131 
+  - Network: unavailable
+
+ WAIT  Compiling...14:17:34
+
+ WARNING  Compiled with 1 warnings14:17:34
+
+ warning  in ./src/views/pages/Department/index.vue?vue&type=template&id=1436857a&scoped=true&lang=pug&
+
+Module Warning (from ./node_modules/vue-loader/lib/loaders/templateLoader.js):
+(Emitted value instead of an instance of Error) <el-breadcrumb-item v-for="item in Tree.path">: component lists rendered with v-for should have explicit keys. See https://vuejs.org/guide/list.html#key for more info.
+
+ @ ./src/views/pages/Department/index.vue?vue&type=template&id=1436857a&scoped=true&lang=pug& 1:0-506 1:0-506
+ @ ./src/views/pages/Department/index.vue
+ @ ./src/router/routes.js
+ @ ./src/router/index.js
+ @ ./src/main.js
+ @ multi (webpack)-dev-server/client?http://localhost:9131&sockPath=/sockjs-node (webpack)/hot/dev-server.js ./src/main.js
+
+
+  App running at:
+  - Local:   http://localhost:9131 
+  - Network: unavailable
+
+ WAIT  Compiling...14:17:41
+
+ WARNING  Compiled with 1 warnings14:17:42
+
+ warning  in ./src/views/pages/Department/index.vue?vue&type=template&id=1436857a&scoped=true&lang=pug&
+
+Module Warning (from ./node_modules/vue-loader/lib/loaders/templateLoader.js):
+(Emitted value instead of an instance of Error) <el-breadcrumb-item v-for="item in Tree.path">: component lists rendered with v-for should have explicit keys. See https://vuejs.org/guide/list.html#key for more info.
+
+ @ ./src/views/pages/Department/index.vue?vue&type=template&id=1436857a&scoped=true&lang=pug& 1:0-506 1:0-506
+ @ ./src/views/pages/Department/index.vue
+ @ ./src/router/routes.js
+ @ ./src/router/index.js
+ @ ./src/main.js
+ @ multi (webpack)-dev-server/client?http://localhost:9131&sockPath=/sockjs-node (webpack)/hot/dev-server.js ./src/main.js
+
+
+  App running at:
+  - Local:   http://localhost:9131 
+  - Network: unavailable
+
+ WAIT  Compiling...14:17:45
+
+ WARNING  Compiled with 1 warnings14:17:46
+
+ warning  in ./src/views/pages/Department/index.vue?vue&type=template&id=1436857a&scoped=true&lang=pug&
+
+Module Warning (from ./node_modules/vue-loader/lib/loaders/templateLoader.js):
+(Emitted value instead of an instance of Error) <el-breadcrumb-item v-for="item in Tree.path">: component lists rendered with v-for should have explicit keys. See https://vuejs.org/guide/list.html#key for more info.
+
+ @ ./src/views/pages/Department/index.vue?vue&type=template&id=1436857a&scoped=true&lang=pug& 1:0-506 1:0-506
+ @ ./src/views/pages/Department/index.vue
+ @ ./src/router/routes.js
+ @ ./src/router/index.js
+ @ ./src/main.js
+ @ multi (webpack)-dev-server/client?http://localhost:9131&sockPath=/sockjs-node (webpack)/hot/dev-server.js ./src/main.js
+
+
+  App running at:
+  - Local:   http://localhost:9131 
+  - Network: unavailable
+
+ WAIT  Compiling...14:18:23
+
+ WARNING  Compiled with 1 warnings14:18:23
+
+ warning  in ./src/views/pages/Department/index.vue?vue&type=template&id=1436857a&scoped=true&lang=pug&
+
+Module Warning (from ./node_modules/vue-loader/lib/loaders/templateLoader.js):
+(Emitted value instead of an instance of Error) <el-breadcrumb-item v-for="item in Tree.path">: component lists rendered with v-for should have explicit keys. See https://vuejs.org/guide/list.html#key for more info.
+
+ @ ./src/views/pages/Department/index.vue?vue&type=template&id=1436857a&scoped=true&lang=pug& 1:0-506 1:0-506
+ @ ./src/views/pages/Department/index.vue
+ @ ./src/router/routes.js
+ @ ./src/router/index.js
+ @ ./src/main.js
+ @ multi (webpack)-dev-server/client?http://localhost:9131&sockPath=/sockjs-node (webpack)/hot/dev-server.js ./src/main.js
+
+
+  App running at:
+  - Local:   http://localhost:9131 
+  - Network: unavailable
+
+ WAIT  Compiling...14:21:55
+
+ WARNING  Compiled with 1 warnings14:21:55
+
+ warning  in ./src/views/pages/Department/index.vue?vue&type=template&id=1436857a&scoped=true&lang=pug&
+
+Module Warning (from ./node_modules/vue-loader/lib/loaders/templateLoader.js):
+(Emitted value instead of an instance of Error) <el-breadcrumb-item v-for="item in Tree.path">: component lists rendered with v-for should have explicit keys. See https://vuejs.org/guide/list.html#key for more info.
+
+ @ ./src/views/pages/Department/index.vue?vue&type=template&id=1436857a&scoped=true&lang=pug& 1:0-506 1:0-506
+ @ ./src/views/pages/Department/index.vue
+ @ ./src/router/routes.js
+ @ ./src/router/index.js
+ @ ./src/main.js
+ @ multi (webpack)-dev-server/client?http://localhost:9131&sockPath=/sockjs-node (webpack)/hot/dev-server.js ./src/main.js
+
+
+  App running at:
+  - Local:   http://localhost:9131 
+  - Network: unavailable
+
+ WAIT  Compiling...14:36:06
+
+ WARNING  Compiled with 1 warnings14:36:06
+
+ warning  in ./src/views/pages/Department/index.vue?vue&type=template&id=1436857a&scoped=true&lang=pug&
+
+Module Warning (from ./node_modules/vue-loader/lib/loaders/templateLoader.js):
+(Emitted value instead of an instance of Error) <el-breadcrumb-item v-for="item in Tree.path">: component lists rendered with v-for should have explicit keys. See https://vuejs.org/guide/list.html#key for more info.
+
+ @ ./src/views/pages/Department/index.vue?vue&type=template&id=1436857a&scoped=true&lang=pug& 1:0-506 1:0-506
+ @ ./src/views/pages/Department/index.vue
+ @ ./src/router/routes.js
+ @ ./src/router/index.js
+ @ ./src/main.js
+ @ multi (webpack)-dev-server/client?http://localhost:9131&sockPath=/sockjs-node (webpack)/hot/dev-server.js ./src/main.js
+
+
+  App running at:
+  - Local:   http://localhost:9131 
+  - Network: unavailable
+
+ WAIT  Compiling...14:36:13
+
+ WARNING  Compiled with 1 warnings14:36:13
+
+ warning  in ./src/views/pages/Department/index.vue?vue&type=template&id=1436857a&scoped=true&lang=pug&
+
+Module Warning (from ./node_modules/vue-loader/lib/loaders/templateLoader.js):
+(Emitted value instead of an instance of Error) <el-breadcrumb-item v-for="item in Tree.path">: component lists rendered with v-for should have explicit keys. See https://vuejs.org/guide/list.html#key for more info.
+
+ @ ./src/views/pages/Department/index.vue?vue&type=template&id=1436857a&scoped=true&lang=pug& 1:0-506 1:0-506
+ @ ./src/views/pages/Department/index.vue
+ @ ./src/router/routes.js
+ @ ./src/router/index.js
+ @ ./src/main.js
+ @ multi (webpack)-dev-server/client?http://localhost:9131&sockPath=/sockjs-node (webpack)/hot/dev-server.js ./src/main.js
+
+
+  App running at:
+  - Local:   http://localhost:9131 
+  - Network: unavailable
+
+ WAIT  Compiling...15:33:50
+
+ WARNING  Compiled with 1 warnings15:33:51
+
+ warning  in ./src/views/pages/Department/index.vue?vue&type=template&id=1436857a&scoped=true&lang=pug&
+
+Module Warning (from ./node_modules/vue-loader/lib/loaders/templateLoader.js):
+(Emitted value instead of an instance of Error) <el-breadcrumb-item v-for="item in Tree.path">: component lists rendered with v-for should have explicit keys. See https://vuejs.org/guide/list.html#key for more info.
+
+ @ ./src/views/pages/Department/index.vue?vue&type=template&id=1436857a&scoped=true&lang=pug& 1:0-506 1:0-506
+ @ ./src/views/pages/Department/index.vue
+ @ ./src/router/routes.js
+ @ ./src/router/index.js
+ @ ./src/main.js
+ @ multi (webpack)-dev-server/client?http://localhost:9131&sockPath=/sockjs-node (webpack)/hot/dev-server.js ./src/main.js
+
+
+  App running at:
+  - Local:   http://localhost:9131 
+  - Network: unavailable
+
+ WAIT  Compiling...15:34:17
+
+ WARNING  Compiled with 1 warnings15:34:18
+
+ warning  in ./src/views/pages/Department/index.vue?vue&type=template&id=1436857a&scoped=true&lang=pug&
+
+Module Warning (from ./node_modules/vue-loader/lib/loaders/templateLoader.js):
+(Emitted value instead of an instance of Error) <el-breadcrumb-item v-for="item in Tree.path">: component lists rendered with v-for should have explicit keys. See https://vuejs.org/guide/list.html#key for more info.
+
+ @ ./src/views/pages/Department/index.vue?vue&type=template&id=1436857a&scoped=true&lang=pug& 1:0-506 1:0-506
+ @ ./src/views/pages/Department/index.vue
+ @ ./src/router/routes.js
+ @ ./src/router/index.js
+ @ ./src/main.js
+ @ multi (webpack)-dev-server/client?http://localhost:9131&sockPath=/sockjs-node (webpack)/hot/dev-server.js ./src/main.js
+
+
+  App running at:
+  - Local:   http://localhost:9131 
+  - Network: unavailable
+
+ WAIT  Compiling...15:34:25
+
+ WARNING  Compiled with 1 warnings15:34:26
+
+ warning  in ./src/views/pages/Department/index.vue?vue&type=template&id=1436857a&scoped=true&lang=pug&
+
+Module Warning (from ./node_modules/vue-loader/lib/loaders/templateLoader.js):
+(Emitted value instead of an instance of Error) <el-breadcrumb-item v-for="item in Tree.path">: component lists rendered with v-for should have explicit keys. See https://vuejs.org/guide/list.html#key for more info.
+
+ @ ./src/views/pages/Department/index.vue?vue&type=template&id=1436857a&scoped=true&lang=pug& 1:0-506 1:0-506
+ @ ./src/views/pages/Department/index.vue
+ @ ./src/router/routes.js
+ @ ./src/router/index.js
+ @ ./src/main.js
+ @ multi (webpack)-dev-server/client?http://localhost:9131&sockPath=/sockjs-node (webpack)/hot/dev-server.js ./src/main.js
+
+
+  App running at:
+  - Local:   http://localhost:9131 
+  - Network: unavailable
+
+ WAIT  Compiling...10:03:36
+
+ WARNING  Compiled with 1 warnings10:03:38
+
+ warning  in ./src/views/pages/Department/index.vue?vue&type=template&id=1436857a&scoped=true&lang=pug&
+
+Module Warning (from ./node_modules/vue-loader/lib/loaders/templateLoader.js):
+(Emitted value instead of an instance of Error) <el-breadcrumb-item v-for="item in Tree.path">: component lists rendered with v-for should have explicit keys. See https://vuejs.org/guide/list.html#key for more info.
+
+ @ ./src/views/pages/Department/index.vue?vue&type=template&id=1436857a&scoped=true&lang=pug& 1:0-506 1:0-506
+ @ ./src/views/pages/Department/index.vue
+ @ ./src/router/routes.js
+ @ ./src/router/index.js
+ @ ./src/main.js
+ @ multi (webpack)-dev-server/client?http://localhost:9131&sockPath=/sockjs-node (webpack)/hot/dev-server.js ./src/main.js
+
+
+  App running at:
+  - Local:   http://localhost:9131 
+  - Network: unavailable
+
+ WAIT  Compiling...10:03:49
+
+ WARNING  Compiled with 1 warnings10:03:50
+
+ warning  in ./src/views/pages/Department/index.vue?vue&type=template&id=1436857a&scoped=true&lang=pug&
+
+Module Warning (from ./node_modules/vue-loader/lib/loaders/templateLoader.js):
+(Emitted value instead of an instance of Error) <el-breadcrumb-item v-for="item in Tree.path">: component lists rendered with v-for should have explicit keys. See https://vuejs.org/guide/list.html#key for more info.
+
+ @ ./src/views/pages/Department/index.vue?vue&type=template&id=1436857a&scoped=true&lang=pug& 1:0-506 1:0-506
+ @ ./src/views/pages/Department/index.vue
+ @ ./src/router/routes.js
+ @ ./src/router/index.js
+ @ ./src/main.js
+ @ multi (webpack)-dev-server/client?http://localhost:9131&sockPath=/sockjs-node (webpack)/hot/dev-server.js ./src/main.js
+
+
+  App running at:
+  - Local:   http://localhost:9131 
+  - Network: unavailable
+
+ WAIT  Compiling...10:04:08
+
+ WARNING  Compiled with 1 warnings10:04:08
+
+ warning  in ./src/views/pages/Department/index.vue?vue&type=template&id=1436857a&scoped=true&lang=pug&
+
+Module Warning (from ./node_modules/vue-loader/lib/loaders/templateLoader.js):
+(Emitted value instead of an instance of Error) <el-breadcrumb-item v-for="item in Tree.path">: component lists rendered with v-for should have explicit keys. See https://vuejs.org/guide/list.html#key for more info.
+
+ @ ./src/views/pages/Department/index.vue?vue&type=template&id=1436857a&scoped=true&lang=pug& 1:0-506 1:0-506
+ @ ./src/views/pages/Department/index.vue
+ @ ./src/router/routes.js
+ @ ./src/router/index.js
+ @ ./src/main.js
+ @ multi (webpack)-dev-server/client?http://localhost:9131&sockPath=/sockjs-node (webpack)/hot/dev-server.js ./src/main.js
+
+
+  App running at:
+  - Local:   http://localhost:9131 
+  - Network: unavailable
+
+ WAIT  Compiling...10:04:23
+
+ WARNING  Compiled with 1 warnings10:04:24
+
+ warning  in ./src/views/pages/Department/index.vue?vue&type=template&id=1436857a&scoped=true&lang=pug&
+
+Module Warning (from ./node_modules/vue-loader/lib/loaders/templateLoader.js):
+(Emitted value instead of an instance of Error) <el-breadcrumb-item v-for="item in Tree.path">: component lists rendered with v-for should have explicit keys. See https://vuejs.org/guide/list.html#key for more info.
+
+ @ ./src/views/pages/Department/index.vue?vue&type=template&id=1436857a&scoped=true&lang=pug& 1:0-506 1:0-506
+ @ ./src/views/pages/Department/index.vue
+ @ ./src/router/routes.js
+ @ ./src/router/index.js
+ @ ./src/main.js
+ @ multi (webpack)-dev-server/client?http://localhost:9131&sockPath=/sockjs-node (webpack)/hot/dev-server.js ./src/main.js
+
+
+  App running at:
+  - Local:   http://localhost:9131 
+  - Network: unavailable
+
+ WAIT  Compiling...10:04:54
+
+ ERROR  Failed to compile with 1 errors10:04:55
+
+ error  in ./src/views/pages/Home/FixedPost/index.vue?vue&type=script&lang=js&
+
+Syntax Error: SyntaxError: H:\hongmeng\src\views\pages\Home\FixedPost\index.vue: Unexpected token (315:9)
+
+  313 |           this.cancelEdit()
+  314 |           this.getCfgList()
+> 315 |         })
+      |          ^
+  316 |       } else {
+  317 |         // 新增
+  318 |         this.$api.batchToCreateBusiness(params).then(res => {
+
+
+ @ ./src/views/pages/Home/FixedPost/index.vue?vue&type=script&lang=js& 1:0-310 1:326-329 1:331-638 1:331-638
+ @ ./src/views/pages/Home/FixedPost/index.vue
+ @ ./src/router/routes.js
+ @ ./src/router/index.js
+ @ ./src/main.js
+ @ multi (webpack)-dev-server/client?http://localhost:9131&sockPath=/sockjs-node (webpack)/hot/dev-server.js ./src/main.js
+
+ WAIT  Compiling...10:06:16
+
+ WARNING  Compiled with 1 warnings10:06:17
+
+ warning  in ./src/views/pages/Department/index.vue?vue&type=template&id=1436857a&scoped=true&lang=pug&
+
+Module Warning (from ./node_modules/vue-loader/lib/loaders/templateLoader.js):
+(Emitted value instead of an instance of Error) <el-breadcrumb-item v-for="item in Tree.path">: component lists rendered with v-for should have explicit keys. See https://vuejs.org/guide/list.html#key for more info.
+
+ @ ./src/views/pages/Department/index.vue?vue&type=template&id=1436857a&scoped=true&lang=pug& 1:0-506 1:0-506
+ @ ./src/views/pages/Department/index.vue
+ @ ./src/router/routes.js
+ @ ./src/router/index.js
+ @ ./src/main.js
+ @ multi (webpack)-dev-server/client?http://localhost:9131&sockPath=/sockjs-node (webpack)/hot/dev-server.js ./src/main.js
+
+
+  App running at:
+  - Local:   http://localhost:9131 
+  - Network: unavailable
+
+ WAIT  Compiling...10:07:11
+
+ WARNING  Compiled with 1 warnings10:07:11
+
+ warning  in ./src/views/pages/Department/index.vue?vue&type=template&id=1436857a&scoped=true&lang=pug&
+
+Module Warning (from ./node_modules/vue-loader/lib/loaders/templateLoader.js):
+(Emitted value instead of an instance of Error) <el-breadcrumb-item v-for="item in Tree.path">: component lists rendered with v-for should have explicit keys. See https://vuejs.org/guide/list.html#key for more info.
+
+ @ ./src/views/pages/Department/index.vue?vue&type=template&id=1436857a&scoped=true&lang=pug& 1:0-506 1:0-506
+ @ ./src/views/pages/Department/index.vue
+ @ ./src/router/routes.js
+ @ ./src/router/index.js
+ @ ./src/main.js
+ @ multi (webpack)-dev-server/client?http://localhost:9131&sockPath=/sockjs-node (webpack)/hot/dev-server.js ./src/main.js
+
+
+  App running at:
+  - Local:   http://localhost:9131 
+  - Network: unavailable
+
+ WAIT  Compiling...10:10:18
+
+ WARNING  Compiled with 1 warnings10:10:19
+
+ warning  in ./src/views/pages/Department/index.vue?vue&type=template&id=1436857a&scoped=true&lang=pug&
+
+Module Warning (from ./node_modules/vue-loader/lib/loaders/templateLoader.js):
+(Emitted value instead of an instance of Error) <el-breadcrumb-item v-for="item in Tree.path">: component lists rendered with v-for should have explicit keys. See https://vuejs.org/guide/list.html#key for more info.
+
+ @ ./src/views/pages/Department/index.vue?vue&type=template&id=1436857a&scoped=true&lang=pug& 1:0-506 1:0-506
+ @ ./src/views/pages/Department/index.vue
+ @ ./src/router/routes.js
+ @ ./src/router/index.js
+ @ ./src/main.js
+ @ multi (webpack)-dev-server/client?http://localhost:9131&sockPath=/sockjs-node (webpack)/hot/dev-server.js ./src/main.js
+
+
+  App running at:
+  - Local:   http://localhost:9131 
+  - Network: unavailable
+
+ WAIT  Compiling...10:15:01
+
+ WARNING  Compiled with 1 warnings10:15:02
+
+ warning  in ./src/views/pages/Department/index.vue?vue&type=template&id=1436857a&scoped=true&lang=pug&
+
+Module Warning (from ./node_modules/vue-loader/lib/loaders/templateLoader.js):
+(Emitted value instead of an instance of Error) <el-breadcrumb-item v-for="item in Tree.path">: component lists rendered with v-for should have explicit keys. See https://vuejs.org/guide/list.html#key for more info.
+
+ @ ./src/views/pages/Department/index.vue?vue&type=template&id=1436857a&scoped=true&lang=pug& 1:0-506 1:0-506
+ @ ./src/views/pages/Department/index.vue
+ @ ./src/router/routes.js
+ @ ./src/router/index.js
+ @ ./src/main.js
+ @ multi (webpack)-dev-server/client?http://localhost:9131&sockPath=/sockjs-node (webpack)/hot/dev-server.js ./src/main.js
+
+
+  App running at:
+  - Local:   http://localhost:9131 
+  - Network: unavailable
+
+ WAIT  Compiling...11:17:35
+
+ WARNING  Compiled with 1 warnings11:17:36
+
+ warning  in ./src/views/pages/Department/index.vue?vue&type=template&id=1436857a&scoped=true&lang=pug&
+
+Module Warning (from ./node_modules/vue-loader/lib/loaders/templateLoader.js):
+(Emitted value instead of an instance of Error) <el-breadcrumb-item v-for="item in Tree.path">: component lists rendered with v-for should have explicit keys. See https://vuejs.org/guide/list.html#key for more info.
+
+ @ ./src/views/pages/Department/index.vue?vue&type=template&id=1436857a&scoped=true&lang=pug& 1:0-506 1:0-506
+ @ ./src/views/pages/Department/index.vue
+ @ ./src/router/routes.js
+ @ ./src/router/index.js
+ @ ./src/main.js
+ @ multi (webpack)-dev-server/client?http://localhost:9131&sockPath=/sockjs-node (webpack)/hot/dev-server.js ./src/main.js
+
+
+  App running at:
+  - Local:   http://localhost:9131 
+  - Network: unavailable
+
+ WAIT  Compiling...11:17:49
+
+ WARNING  Compiled with 1 warnings11:17:49
+
+ warning  in ./src/views/pages/Department/index.vue?vue&type=template&id=1436857a&scoped=true&lang=pug&
+
+Module Warning (from ./node_modules/vue-loader/lib/loaders/templateLoader.js):
+(Emitted value instead of an instance of Error) <el-breadcrumb-item v-for="item in Tree.path">: component lists rendered with v-for should have explicit keys. See https://vuejs.org/guide/list.html#key for more info.
+
+ @ ./src/views/pages/Department/index.vue?vue&type=template&id=1436857a&scoped=true&lang=pug& 1:0-506 1:0-506
+ @ ./src/views/pages/Department/index.vue
+ @ ./src/router/routes.js
+ @ ./src/router/index.js
+ @ ./src/main.js
+ @ multi (webpack)-dev-server/client?http://localhost:9131&sockPath=/sockjs-node (webpack)/hot/dev-server.js ./src/main.js
+
+
+  App running at:
+  - Local:   http://localhost:9131 
+  - Network: unavailable
+
+ WAIT  Compiling...11:34:52
+
+ ERROR  Failed to compile with 1 errors11:34:52
+
+ error  in ./src/views/pages/Home/FixedPost/index.vue?vue&type=script&lang=js&
+
+Syntax Error: SyntaxError: H:\hongmeng\src\views\pages\Home\FixedPost\index.vue: Unterminated string constant (303:14)
+
+  301 |       let msg = ''
+  302 |       if (row.aUserId === '') {
+> 303 |         msg = '璇烽€夋嫨A宀?
+      |               ^
+  304 |       } else if (row.bUserId === '') {
+  305 |         msg = '璇烽€夋嫨B宀?
+  306 |       } else if (row.cUserId === '') {
+
+
+ @ ./src/views/pages/Home/FixedPost/index.vue?vue&type=script&lang=js& 1:0-310 1:326-329 1:331-638 1:331-638
+ @ ./src/views/pages/Home/FixedPost/index.vue
+ @ ./src/router/routes.js
+ @ ./src/router/index.js
+ @ ./src/main.js
+ @ multi (webpack)-dev-server/client?http://localhost:9131&sockPath=/sockjs-node (webpack)/hot/dev-server.js ./src/main.js
+
+ WAIT  Compiling...11:35:27
+
+ ERROR  Failed to compile with 1 errors11:35:27
+
+ error  in ./src/views/pages/Home/FixedPost/index.vue?vue&type=script&lang=js&
+
+Syntax Error: SyntaxError: H:\hongmeng\src\views\pages\Home\FixedPost\index.vue: Unterminated string constant (303:14)
+
+  301 |       let msg = ''
+  302 |       if (row.aUserId === '') {
+> 303 |         msg = '鐠囩兘鈧瀚ˋ瀹€?
+      |               ^
+  304 |       } else if (row.bUserId === '') {
+  305 |         msg = '鐠囩兘鈧瀚˙瀹€?
+  306 |       } else if (row.cUserId === '') {
+
+
+ @ ./src/views/pages/Home/FixedPost/index.vue?vue&type=script&lang=js& 1:0-310 1:326-329 1:331-638 1:331-638
+ @ ./src/views/pages/Home/FixedPost/index.vue
+ @ ./src/router/routes.js
+ @ ./src/router/index.js
+ @ ./src/main.js
+ @ multi (webpack)-dev-server/client?http://localhost:9131&sockPath=/sockjs-node (webpack)/hot/dev-server.js ./src/main.js
+
+ WAIT  Compiling...11:39:18
+
+ ERROR  Failed to compile with 1 errors11:39:19
+
+ error  in ./src/views/pages/Home/FixedPost/index.vue?vue&type=script&lang=js&
+
+Syntax Error: SyntaxError: H:\hongmeng\src\views\pages\Home\FixedPost\index.vue: Unexpected token (328:15)
+
+  326 |         const backfillTargets = [this.buildBackfillTarget(params)]
+  327 |         await this.$api.modifiedBusinessById(params)
+> 328 |           this..tip('Updated successfully', 'success')
+      |                ^
+  329 |           this.cancelEdit()
+  330 |           this.getCfgList()
+  331 |         await this.maybePromptBackfill(backfillTargets, false)
+
+
+ @ ./src/views/pages/Home/FixedPost/index.vue?vue&type=script&lang=js& 1:0-310 1:326-329 1:331-638 1:331-638
+ @ ./src/views/pages/Home/FixedPost/index.vue
+ @ ./src/router/routes.js
+ @ ./src/router/index.js
+ @ ./src/main.js
+ @ multi (webpack)-dev-server/client?http://localhost:9131&sockPath=/sockjs-node (webpack)/hot/dev-server.js ./src/main.js
+
+ WAIT  Compiling...11:39:38
+
+ ERROR  Failed to compile with 1 errors11:39:38
+
+ error  in ./src/views/pages/Home/FixedPost/index.vue?vue&type=script&lang=js&
+
+Syntax Error: SyntaxError: H:\hongmeng\src\views\pages\Home\FixedPost\index.vue: Unexpected token (328:15)
+
+  326 |         const backfillTargets = [this.buildBackfillTarget(params)]
+  327 |         await this.$api.modifiedBusinessById(params)
+> 328 |           this..tip('Updated successfully', 'success')
+      |                ^
+  329 |           this.cancelEdit()
+  330 |           this.getCfgList()
+  331 |         await this.maybePromptBackfill(backfillTargets, false)
+
+
+ @ ./src/views/pages/Home/FixedPost/index.vue?vue&type=script&lang=js& 1:0-310 1:326-329 1:331-638 1:331-638
+ @ ./src/views/pages/Home/FixedPost/index.vue
+ @ ./src/router/routes.js
+ @ ./src/router/index.js
+ @ ./src/main.js
+ @ multi (webpack)-dev-server/client?http://localhost:9131&sockPath=/sockjs-node (webpack)/hot/dev-server.js ./src/main.js
+
+ WAIT  Compiling...11:40:32
+
+ WARNING  Compiled with 1 warnings11:40:32
+
+ warning  in ./src/views/pages/Department/index.vue?vue&type=template&id=1436857a&scoped=true&lang=pug&
+
+Module Warning (from ./node_modules/vue-loader/lib/loaders/templateLoader.js):
+(Emitted value instead of an instance of Error) <el-breadcrumb-item v-for="item in Tree.path">: component lists rendered with v-for should have explicit keys. See https://vuejs.org/guide/list.html#key for more info.
+
+ @ ./src/views/pages/Department/index.vue?vue&type=template&id=1436857a&scoped=true&lang=pug& 1:0-506 1:0-506
+ @ ./src/views/pages/Department/index.vue
+ @ ./src/router/routes.js
+ @ ./src/router/index.js
+ @ ./src/main.js
+ @ multi (webpack)-dev-server/client?http://localhost:9131&sockPath=/sockjs-node (webpack)/hot/dev-server.js ./src/main.js
+
+
+  App running at:
+  - Local:   http://localhost:9131 
+  - Network: unavailable
+
+ WAIT  Compiling...14:08:46
+
+ WARNING  Compiled with 1 warnings14:08:47
+
+ warning  in ./src/views/pages/Department/index.vue?vue&type=template&id=1436857a&scoped=true&lang=pug&
+
+Module Warning (from ./node_modules/vue-loader/lib/loaders/templateLoader.js):
+(Emitted value instead of an instance of Error) <el-breadcrumb-item v-for="item in Tree.path">: component lists rendered with v-for should have explicit keys. See https://vuejs.org/guide/list.html#key for more info.
+
+ @ ./src/views/pages/Department/index.vue?vue&type=template&id=1436857a&scoped=true&lang=pug& 1:0-506 1:0-506
+ @ ./src/views/pages/Department/index.vue
+ @ ./src/router/routes.js
+ @ ./src/router/index.js
+ @ ./src/main.js
+ @ multi (webpack)-dev-server/client?http://localhost:9131&sockPath=/sockjs-node (webpack)/hot/dev-server.js ./src/main.js
+
+
+  App running at:
+  - Local:   http://localhost:9131 
+  - Network: unavailable
+
+ WAIT  Compiling...14:09:24
+
+ WARNING  Compiled with 1 warnings14:09:24
+
+ warning  in ./src/views/pages/Department/index.vue?vue&type=template&id=1436857a&scoped=true&lang=pug&
+
+Module Warning (from ./node_modules/vue-loader/lib/loaders/templateLoader.js):
+(Emitted value instead of an instance of Error) <el-breadcrumb-item v-for="item in Tree.path">: component lists rendered with v-for should have explicit keys. See https://vuejs.org/guide/list.html#key for more info.
+
+ @ ./src/views/pages/Department/index.vue?vue&type=template&id=1436857a&scoped=true&lang=pug& 1:0-506 1:0-506
+ @ ./src/views/pages/Department/index.vue
+ @ ./src/router/routes.js
+ @ ./src/router/index.js
+ @ ./src/main.js
+ @ multi (webpack)-dev-server/client?http://localhost:9131&sockPath=/sockjs-node (webpack)/hot/dev-server.js ./src/main.js
+
+
+  App running at:
+  - Local:   http://localhost:9131 
+  - Network: unavailable
+
+ WAIT  Compiling...14:11:22
+
+ WARNING  Compiled with 1 warnings14:11:23
+
+ warning  in ./src/views/pages/Department/index.vue?vue&type=template&id=1436857a&scoped=true&lang=pug&
+
+Module Warning (from ./node_modules/vue-loader/lib/loaders/templateLoader.js):
+(Emitted value instead of an instance of Error) <el-breadcrumb-item v-for="item in Tree.path">: component lists rendered with v-for should have explicit keys. See https://vuejs.org/guide/list.html#key for more info.
+
+ @ ./src/views/pages/Department/index.vue?vue&type=template&id=1436857a&scoped=true&lang=pug& 1:0-506 1:0-506
+ @ ./src/views/pages/Department/index.vue
+ @ ./src/router/routes.js
+ @ ./src/router/index.js
+ @ ./src/main.js
+ @ multi (webpack)-dev-server/client?http://localhost:9131&sockPath=/sockjs-node (webpack)/hot/dev-server.js ./src/main.js
+
+
+  App running at:
+  - Local:   http://localhost:9131 
+  - Network: unavailable
+
+ WAIT  Compiling...14:22:50
+
+ WARNING  Compiled with 1 warnings14:22:51
+
+ warning  in ./src/views/pages/Department/index.vue?vue&type=template&id=1436857a&scoped=true&lang=pug&
+
+Module Warning (from ./node_modules/vue-loader/lib/loaders/templateLoader.js):
+(Emitted value instead of an instance of Error) <el-breadcrumb-item v-for="item in Tree.path">: component lists rendered with v-for should have explicit keys. See https://vuejs.org/guide/list.html#key for more info.
+
+ @ ./src/views/pages/Department/index.vue?vue&type=template&id=1436857a&scoped=true&lang=pug& 1:0-506 1:0-506
+ @ ./src/views/pages/Department/index.vue
+ @ ./src/router/routes.js
+ @ ./src/router/index.js
+ @ ./src/main.js
+ @ multi (webpack)-dev-server/client?http://localhost:9131&sockPath=/sockjs-node (webpack)/hot/dev-server.js ./src/main.js
+
+
+  App running at:
+  - Local:   http://localhost:9131 
+  - Network: unavailable
+
+ WAIT  Compiling...14:23:04
+
+ WARNING  Compiled with 1 warnings14:23:05
+
+ warning  in ./src/views/pages/Department/index.vue?vue&type=template&id=1436857a&scoped=true&lang=pug&
+
+Module Warning (from ./node_modules/vue-loader/lib/loaders/templateLoader.js):
+(Emitted value instead of an instance of Error) <el-breadcrumb-item v-for="item in Tree.path">: component lists rendered with v-for should have explicit keys. See https://vuejs.org/guide/list.html#key for more info.
+
+ @ ./src/views/pages/Department/index.vue?vue&type=template&id=1436857a&scoped=true&lang=pug& 1:0-506 1:0-506
+ @ ./src/views/pages/Department/index.vue
+ @ ./src/router/routes.js
+ @ ./src/router/index.js
+ @ ./src/main.js
+ @ multi (webpack)-dev-server/client?http://localhost:9131&sockPath=/sockjs-node (webpack)/hot/dev-server.js ./src/main.js
+
+
+  App running at:
+  - Local:   http://localhost:9131 
+  - Network: unavailable
+
+ WAIT  Compiling...14:30:50
+
+ WARNING  Compiled with 1 warnings14:30:51
+
+ warning  in ./src/views/pages/Department/index.vue?vue&type=template&id=1436857a&scoped=true&lang=pug&
+
+Module Warning (from ./node_modules/vue-loader/lib/loaders/templateLoader.js):
+(Emitted value instead of an instance of Error) <el-breadcrumb-item v-for="item in Tree.path">: component lists rendered with v-for should have explicit keys. See https://vuejs.org/guide/list.html#key for more info.
+
+ @ ./src/views/pages/Department/index.vue?vue&type=template&id=1436857a&scoped=true&lang=pug& 1:0-506 1:0-506
+ @ ./src/views/pages/Department/index.vue
+ @ ./src/router/routes.js
+ @ ./src/router/index.js
+ @ ./src/main.js
+ @ multi (webpack)-dev-server/client?http://localhost:9131&sockPath=/sockjs-node (webpack)/hot/dev-server.js ./src/main.js
+
+
+  App running at:
+  - Local:   http://localhost:9131 
+  - Network: unavailable
+
+ WAIT  Compiling...14:42:54
+
+ WARNING  Compiled with 1 warnings14:42:55
+
+ warning  in ./src/views/pages/Department/index.vue?vue&type=template&id=1436857a&scoped=true&lang=pug&
+
+Module Warning (from ./node_modules/vue-loader/lib/loaders/templateLoader.js):
+(Emitted value instead of an instance of Error) <el-breadcrumb-item v-for="item in Tree.path">: component lists rendered with v-for should have explicit keys. See https://vuejs.org/guide/list.html#key for more info.
+
+ @ ./src/views/pages/Department/index.vue?vue&type=template&id=1436857a&scoped=true&lang=pug& 1:0-506 1:0-506
+ @ ./src/views/pages/Department/index.vue
+ @ ./src/router/routes.js
+ @ ./src/router/index.js
+ @ ./src/main.js
+ @ multi (webpack)-dev-server/client?http://localhost:9131&sockPath=/sockjs-node (webpack)/hot/dev-server.js ./src/main.js
+
+
+  App running at:
+  - Local:   http://localhost:9131 
+  - Network: unavailable
+
+ WAIT  Compiling...14:43:03
+
+ WARNING  Compiled with 1 warnings14:43:04
+
+ warning  in ./src/views/pages/Department/index.vue?vue&type=template&id=1436857a&scoped=true&lang=pug&
+
+Module Warning (from ./node_modules/vue-loader/lib/loaders/templateLoader.js):
+(Emitted value instead of an instance of Error) <el-breadcrumb-item v-for="item in Tree.path">: component lists rendered with v-for should have explicit keys. See https://vuejs.org/guide/list.html#key for more info.
+
+ @ ./src/views/pages/Department/index.vue?vue&type=template&id=1436857a&scoped=true&lang=pug& 1:0-506 1:0-506
+ @ ./src/views/pages/Department/index.vue
+ @ ./src/router/routes.js
+ @ ./src/router/index.js
+ @ ./src/main.js
+ @ multi (webpack)-dev-server/client?http://localhost:9131&sockPath=/sockjs-node (webpack)/hot/dev-server.js ./src/main.js
+
+
+  App running at:
+  - Local:   http://localhost:9131 
+  - Network: unavailable
+
+ WAIT  Compiling...14:48:25
+
+ WARNING  Compiled with 1 warnings14:48:26
+
+ warning  in ./src/views/pages/Department/index.vue?vue&type=template&id=1436857a&scoped=true&lang=pug&
+
+Module Warning (from ./node_modules/vue-loader/lib/loaders/templateLoader.js):
+(Emitted value instead of an instance of Error) <el-breadcrumb-item v-for="item in Tree.path">: component lists rendered with v-for should have explicit keys. See https://vuejs.org/guide/list.html#key for more info.
+
+ @ ./src/views/pages/Department/index.vue?vue&type=template&id=1436857a&scoped=true&lang=pug& 1:0-506 1:0-506
+ @ ./src/views/pages/Department/index.vue
+ @ ./src/router/routes.js
+ @ ./src/router/index.js
+ @ ./src/main.js
+ @ multi (webpack)-dev-server/client?http://localhost:9131&sockPath=/sockjs-node (webpack)/hot/dev-server.js ./src/main.js
+
+
+  App running at:
+  - Local:   http://localhost:9131 
+  - Network: unavailable
+
+ WAIT  Compiling...14:48:35
+
+ WARNING  Compiled with 1 warnings14:48:35
+
+ warning  in ./src/views/pages/Department/index.vue?vue&type=template&id=1436857a&scoped=true&lang=pug&
+
+Module Warning (from ./node_modules/vue-loader/lib/loaders/templateLoader.js):
+(Emitted value instead of an instance of Error) <el-breadcrumb-item v-for="item in Tree.path">: component lists rendered with v-for should have explicit keys. See https://vuejs.org/guide/list.html#key for more info.
+
+ @ ./src/views/pages/Department/index.vue?vue&type=template&id=1436857a&scoped=true&lang=pug& 1:0-506 1:0-506
+ @ ./src/views/pages/Department/index.vue
+ @ ./src/router/routes.js
+ @ ./src/router/index.js
+ @ ./src/main.js
+ @ multi (webpack)-dev-server/client?http://localhost:9131&sockPath=/sockjs-node (webpack)/hot/dev-server.js ./src/main.js
+
+
+  App running at:
+  - Local:   http://localhost:9131 
+  - Network: unavailable
+
+ WAIT  Compiling...14:49:32
+
+ WARNING  Compiled with 1 warnings14:49:33
+
+ warning  in ./src/views/pages/Department/index.vue?vue&type=template&id=1436857a&scoped=true&lang=pug&
+
+Module Warning (from ./node_modules/vue-loader/lib/loaders/templateLoader.js):
+(Emitted value instead of an instance of Error) <el-breadcrumb-item v-for="item in Tree.path">: component lists rendered with v-for should have explicit keys. See https://vuejs.org/guide/list.html#key for more info.
+
+ @ ./src/views/pages/Department/index.vue?vue&type=template&id=1436857a&scoped=true&lang=pug& 1:0-506 1:0-506
+ @ ./src/views/pages/Department/index.vue
+ @ ./src/router/routes.js
+ @ ./src/router/index.js
+ @ ./src/main.js
+ @ multi (webpack)-dev-server/client?http://localhost:9131&sockPath=/sockjs-node (webpack)/hot/dev-server.js ./src/main.js
+
+
+  App running at:
+  - Local:   http://localhost:9131 
+  - Network: unavailable
+

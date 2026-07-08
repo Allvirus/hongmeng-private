@@ -15,6 +15,48 @@ function getManagedDepartmentIds(userInfo = {}) {
   return [];
 }
 
+function isAdminUser(userInfo = {}) {
+  const isAdmin =
+    userInfo.isAdmin !== undefined ? userInfo.isAdmin : userInfo.IsAdmin;
+  return (
+    isAdmin === true ||
+    isAdmin === 1 ||
+    isAdmin === "1" ||
+    isAdmin === "true"
+  );
+}
+
+function buildDepartmentTree(departments = []) {
+  if (
+    departments.some(
+      item => Array.isArray(item.departments) && item.departments.length > 0
+    )
+  ) {
+    return departments;
+  }
+
+  const nodes = departments.map(item => ({
+    ...item,
+    departments: []
+  }));
+  const byId = new Map(nodes.map(item => [item.id, item]));
+  const roots = [];
+
+  nodes.forEach(item => {
+    const parentId =
+      item.superiorDepartmentId !== undefined
+        ? item.superiorDepartmentId
+        : item.SuperiorDepartmentId;
+    if (parentId && byId.has(parentId)) {
+      byId.get(parentId).departments.push(item);
+    } else {
+      roots.push(item);
+    }
+  });
+
+  return roots;
+}
+
 export default {
   state: {
     regions: [],
@@ -77,6 +119,13 @@ export default {
           commit("myDptList", data);
         });
       } else {
+        if (isAdminUser(state.userInfo)) {
+          return api.getAllDeparts().then(data => {
+            const treeData = buildDepartmentTree(data || []);
+            commit("myDptList", treeData);
+            return treeData;
+          });
+        }
         const departmentIds = getManagedDepartmentIds(state.userInfo);
         if (!departmentIds.length) {
           commit("myDptList", []);
@@ -109,7 +158,7 @@ export default {
       data.resDepartmentId = resDepartmentIds[0] || 0;
       state.userInfo = data;
       state.userInfo.isLeader = resDepartmentIds.length > 0;
-      state.userInfo.isAdmin = !!data.isAdmin;
+      state.userInfo.isAdmin = isAdminUser(data);
     },
     projectTagList(state, data) {
       state.projectTagList = data;

@@ -267,7 +267,6 @@ export default {
           value: 'totalDeviceCount',
         },
       ],
-      allDepID: [],
       isleaf: false,
       superiorDepId: null,
       dialogTableVisible: false,
@@ -286,10 +285,11 @@ export default {
     },
   },
   created () {
-    this.$api.getAllDeparts().then(res => {
-      this.allDepID = res
-      this.search()
-    })
+    if (!this.userInfo.isLeader) {
+      this.model.userId = this.userInfo.id || this.userInfo.Id || ''
+      this.isleaf = true
+    }
+    this.search()
   },
   methods: {
     getPsdn (row) {
@@ -306,8 +306,13 @@ export default {
       }
     },
     search () {
-      this.getSuperiorID()
       this.$utils.autoFillDateTime(this.model)
+      if (!this.userInfo.isLeader) {
+        this.getStatisticsEmployee()
+        this.isleaf = true
+        return
+      }
+      this.getSuperiorID()
       if (this.superiorDepId !== null && this.superiorDepId >= 3) {
         this.getStatisticsEmployee()
         this.isleaf = true
@@ -396,11 +401,28 @@ export default {
     // 根据当前部门id获取上级部门id
     getSuperiorID () {
       const depID = this.model.resDepId
-      for (const item of this.allDepID) {
-        if (item.id === depID) {
-          this.superiorDepId = item.superiorDepartmentId
+      this.superiorDepId = null
+      if (!depID) {
+        return
+      }
+      const department = this.findDepartmentInfo(depID, this.myDptList.list)
+      if (department) {
+        this.superiorDepId = department.superiorDepartmentId
+      }
+    },
+    findDepartmentInfo (departmentId, departments = []) {
+      for (const department of departments) {
+        if (department.id === departmentId) {
+          return department
+        }
+        if (department.departments && department.departments.length > 0) {
+          const childDepartment = this.findDepartmentInfo(departmentId, department.departments)
+          if (childDepartment) {
+            return childDepartment
+          }
         }
       }
+      return null
     },
     toLoadMore () {
       this.isShow = !this.isShow

@@ -1273,8 +1273,9 @@ export default {
       params: (() => {
         const p = {
           UserId: model.userId,
-          startTime: model.startTime,
-          endTime: model.endTime,
+          StartTime: model.startTime,
+          BindStartTime: model.bindStartTime,
+          BindEndTime: model.bindEndTime,
           Page: model.page,
           PageSize: model.pageSize
         };
@@ -1487,6 +1488,7 @@ export default {
           StartTime: module.startTime,
           EndTime: module.endTime,
           DepaetmentId: module.resDepId,
+          UserId: module.userId,
           Page: module.Page,
           PageSize: module.PageSize
         };

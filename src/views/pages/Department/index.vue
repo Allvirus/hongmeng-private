@@ -184,9 +184,33 @@ export default {
   },
   created: function () {
     this.getDepartTree()
-    this.getDptNameList()
   },
   methods: {
+    buildDepartmentTree (departments = []) {
+      if (departments.some(item => Array.isArray(item.departments) && item.departments.length > 0)) {
+        return departments
+      }
+
+      const nodes = departments.map(item => ({
+        ...item,
+        departments: [],
+      }))
+      const byId = new Map(nodes.map(item => [item.id, item]))
+      const roots = []
+
+      nodes.forEach(item => {
+        const parentId = item.superiorDepartmentId !== undefined
+          ? item.superiorDepartmentId
+          : item.SuperiorDepartmentId
+        if (parentId && byId.has(parentId)) {
+          byId.get(parentId).departments.push(item)
+        } else {
+          roots.push(item)
+        }
+      })
+
+      return roots
+    },
     getManagedDepartmentIds () {
       if (Array.isArray(this.userInfo.resDepartmentIds) && this.userInfo.resDepartmentIds.length) {
         return this.userInfo.resDepartmentIds.filter(id => id !== 0)
@@ -200,24 +224,40 @@ export default {
       const departmentIds = this.getManagedDepartmentIds()
       return departmentIds[0] || ''
     },
-    getDptNameList () {
-      this.$api.getAllDeparts().then(data => {
-        for (const item of data) {
+    getDptNameList (departments = this.Tree.departTree) {
+      this.Dpt.dptNameList = []
+      const walk = (list = []) => {
+        for (const item of list) {
           this.Dpt.dptNameList[item.id] = item
+          if (item.departments && item.departments.length > 0) {
+            walk(item.departments)
+          }
         }
-      })
+      }
+      walk(departments)
     },
     getDepartTree () {
       this.Tree.departTree.splice(0, this.Tree.departTree.length)
+      this.getDptNameList([])
       const departmentIds = this.getManagedDepartmentIds()
-      if (!departmentIds.length) {
-        return
-      }
-      Promise.all(departmentIds.map(departmentId => this.$api.getDepartById(departmentId))).then(res => {
-        this.Tree.departTree.push(...res)
+      const loadDepartments = this.userInfo.isAdmin
+        ? this.$api.getAllDeparts()
+        : (!departmentIds.length
+          ? Promise.resolve([])
+          : Promise.all(departmentIds.map(departmentId => this.$api.getDepartById(departmentId))))
+      loadDepartments.then(res => {
+        const departments = Array.isArray(res) ? res : (res ? [res] : [])
+        const treeDepartments = this.userInfo.isAdmin
+          ? this.buildDepartmentTree(departments)
+          : departments
+        this.Tree.departTree.push(...treeDepartments)
+        this.getDptNameList(this.Tree.departTree)
         this.$nextTick(function () {
           // DOM 更新了
-          this.setCurrSelecNode(this.Tree.curDptId === '' ? this.getDefaultDepartmentId() : this.Tree.curDptId)
+          const defaultDepartmentId = this.Tree.curDptId === ''
+            ? (this.getDefaultDepartmentId() || (this.Tree.departTree[0] && this.Tree.departTree[0].id))
+            : this.Tree.curDptId
+          this.setCurrSelecNode(defaultDepartmentId)
         })
       })
     },
@@ -230,7 +270,9 @@ export default {
       this.$api.getDepartMembers(departMentId, !this.User.isIncludeNoJob).then(data => {
         // 增加部门字段
         for (const item of data) {
-          item.dptName = this.Dpt.dptNameList[item.departmentId].name
+          item.dptName = this.Dpt.dptNameList[item.departmentId]
+            ? this.Dpt.dptNameList[item.departmentId].name
+            : ''
         }
         this.User.userList = data
 
@@ -282,7 +324,9 @@ export default {
       this.$api.getDepartMembers(data.id, !this.User.isIncludeNoJob).then(data => {
         // 增加部门字段
         for (const item of data) {
-          item.dptName = this.Dpt.dptNameList[item.departmentId].name
+          item.dptName = this.Dpt.dptNameList[item.departmentId]
+            ? this.Dpt.dptNameList[item.departmentId].name
+            : ''
         }
         this.User.userList = data
       })
