@@ -14,6 +14,18 @@
           placeholder='请输入账号ID',
           clearable
         )
+      el-form-item(:label='"\u89d2\u8272ID:"')
+        el-input.winput(
+          v-model='model.RoleCode',
+          :placeholder='"\u8bf7\u8f93\u5165\u89d2\u8272ID"',
+          clearable
+        )
+      el-form-item(label='游戏角色:')
+        el-input.winput(
+          v-model='model.RoleName',
+          placeholder='请输入游戏角色',
+          clearable
+        )
       el-form-item(label='部门:', v-if='userInfo.isLeader')
         tree-selector.winput(
           ref='dtptree',
@@ -42,18 +54,6 @@
           v-model='model.GameName',
           :data='gameList',
           placeholder='请输入游戏名称'
-        )
-      el-form-item(label='游戏角色:')
-        el-input.winput(
-          v-model='model.RoleName',
-          placeholder='请输入游戏角色',
-          clearable
-        )
-      el-form-item(label='区服:')
-        auto-complete(
-          v-model='model.AreaName',
-          :data='areaList',
-          placeholder='请输入区服'
         )
       el-form-item(label='创建时间:', v-if='OS.isPc')
         CommonDatePicker.w300(
@@ -134,6 +134,7 @@ export default {
         startTime: '',
         endTime: '',
         IfunId: '',
+        RoleCode: '',
         Account: '',
         UserAccount: '',
         UserCode: '',

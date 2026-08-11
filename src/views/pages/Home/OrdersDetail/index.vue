@@ -14,6 +14,18 @@
           placeholder='请输入账号ID',
           clearable
         )
+      el-form-item(:label='"\u89d2\u8272ID:"')
+        el-input.winput(
+          v-model='model.RoleCode',
+          :placeholder='"\u8bf7\u8f93\u5165\u89d2\u8272ID"',
+          clearable
+        )
+      el-form-item(label='游戏角色:')
+        el-input.winput(
+          v-model='model.RoleName',
+          placeholder='请输入游戏角色',
+          clearable
+        )
       el-form-item(label='部门:', v-if='userInfo.isLeader')
         tree-selector.winput(
           ref='dtptree',
@@ -42,12 +54,6 @@
           v-model='model.GameName',
           :data='gameList',
           placeholder='请输入游戏名称',
-          clearable
-        )
-      el-form-item(label='游戏角色:')
-        el-input.winput(
-          v-model='model.RoleName',
-          placeholder='请输入游戏角色',
           clearable
         )
       el-form-item(label='订单号:')
@@ -120,7 +126,9 @@
       template(slot-scope='{ row }') {{ row.osType | formatOSType }}
     el-table-column(prop='payDate', label='支付时间', width='150px')
       template(slot-scope='{ row }') {{ row.payDate | dateFormat }}
-    el-table-column(prop='gameOrderID', label='订单号', width='200px')
+    el-table-column(prop='gameOrderID', label='订单号', min-width='260px')
+      template(slot-scope='{ row }')
+        span.order-number {{ row.gameOrderID }}
   el-pagination(
     :total='listMixin.count',
     :page-sizes='[10, 20, 30, 50]',
@@ -148,6 +156,7 @@ export default {
         startTime: '',
         endTime: '',
         IfunId: '',
+        RoleCode: '',
         UserAccount: '',
         UserCode: '',
         GameOrderID: '',
@@ -247,5 +256,10 @@ export default {
 >>>.order-summary-cell .cell {
   text-align: left;
   font-weight: 600;
+}
+
+.order-number {
+  white-space: normal;
+  word-break: break-all;
 }
 </style>
