@@ -253,6 +253,32 @@ export default {
   // 5.获取所有部门
   getAllDeparts: () => http("get", "/api/department"),
 
+  // 5.1 获取员工转岗可选项
+  getEmployeeTransferOptions: () => http("get", "/api/employee-transfers/options"),
+
+  // 5.2 获取员工转岗记录
+  getEmployeeTransfers: module =>
+    http("get", "/api/employee-transfers", {
+      params: {
+        userId: module.userId,
+        page: module.page,
+        pageSize: module.pageSize
+      }
+    }),
+
+  // 5.3 执行员工转岗
+  transferEmployee: module =>
+    http("post", "/api/employee-transfers/users/" + module.userId, {
+      loading: true,
+      data: {
+        toDepartmentId: module.toDepartmentId,
+        toJob: module.toJob,
+        effectiveTime: module.effectiveTime,
+        ifunGsAccount: module.ifunGsAccount,
+        reconcileGsOrders: module.reconcileGsOrders
+      }
+    }),
+
   // 6.根据部门ID获取单个部门树形结构
   getDepartById: id => http("get", `/api/department/${id}`),
 
@@ -1354,6 +1380,42 @@ export default {
       }
     }),
 
+  // 72.2 获取 iFun GS 订单归属异常
+  getIfunGsOwnershipIssues: module =>
+    http("get", "/api/ifun-gs-ownership/issues", {
+      params: {
+        status: module.status,
+        page: module.page,
+        pageSize: module.pageSize
+      }
+    }),
+
+  // 72.3 执行 iFun GS 订单归属审计
+  auditIfunGsOwnership: () =>
+    http("post", "/api/ifun-gs-ownership/audit", {
+      loading: true
+    }),
+
+  // 72.4 绑定 GS 账号并回补历史订单归属
+  bindAndReconcileIfunGs: module =>
+    http("post", "/api/ifun-gs-ownership/bind-and-reconcile", {
+      loading: true,
+      data: {
+        userId: module.userId,
+        gsEmail: module.gsEmail,
+        effectiveTime: module.effectiveTime
+      }
+    }),
+
+  // 72.5 回补已绑定 GS 账号的订单归属
+  reconcileIfunGsIssue: module =>
+    http("post", "/api/ifun-gs-ownership/issues/" + module.id + "/reconcile", {
+      loading: true,
+      params: {
+        effectiveTime: module.effectiveTime
+      }
+    }),
+
   // 73. 修改公告
   modifyNotice: noticeString =>
     http("post", `/api/Notice?noticeString=${noticeString}`),
@@ -1394,6 +1456,14 @@ export default {
       loading: true
     });
   },
+
+  // 77.1 获取工资待重算提醒
+  getSalaryRecalculationReminders: () =>
+    http("get", "/api/salary/recalculation-reminders", {
+      params: {
+        status: "Pending"
+      }
+    }),
 
   // 78. 获取所有角色
   getRoleController: () => http("get", "/api/role"),

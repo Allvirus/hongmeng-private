@@ -74,7 +74,7 @@
               span 已锁定
             .ff-rn(v-else)
               span 正常
-        el-table-column(prop='operate', label='操作', width='200')
+        el-table-column(prop='operate', label='操作', width='270')
           template(slot='header', slot-scope='scope')
             el-input(
               v-model='search',
@@ -104,6 +104,13 @@
               @click='unlockUser(row)'
             ) 解锁
             el-button(
+              v-permission='\'department.user.edit\'',
+              icon='el-icon-sort',
+              type='text',
+              v-if='row.workingStatus === 1',
+              @click='showTransferDlg(row)'
+            ) 转岗
+            el-button(
               v-permission='\'department.user.resetPwd\'',
               type='text',
               @click='resetPad(row)'
@@ -122,6 +129,12 @@
       @cancel='Dpt.newDepartDlg = false',
       @success='newDptSuccess'
     )
+    user-transfer(
+      :show='Transfer.show',
+      :user='Transfer.user',
+      @cancel='cancelTransfer',
+      @success='transferSuccess'
+    )
 </template>
 <script>
 import { mapGetters } from 'vuex'
@@ -130,6 +143,7 @@ export default {
   components: {
     UserEdit: () => import('@/views/pages/Department/comps/UserEdit'),
     DepartEdit: () => import('@/views/pages/Department/comps/DepartEdit'),
+    UserTransfer: () => import('@/views/pages/Department/comps/UserTransfer'),
   },
   data () {
     return {
@@ -174,6 +188,10 @@ export default {
         curTreeNode: null, // 当前选择显示的部门人员
         curDptId: '',
         path: [],
+      },
+      Transfer: {
+        show: false,
+        user: null,
       },
       search: '',
       hasCalCount: false,
@@ -342,6 +360,18 @@ export default {
     showMbEditDlg (row, isEdit) {
       this.User.userId = isEdit ? row.id : 0
       this.User.newUserDlg = true
+    },
+    showTransferDlg (row) {
+      this.Transfer.user = { ...row }
+      this.Transfer.show = true
+    },
+    cancelTransfer () {
+      this.Transfer.show = false
+      this.Transfer.user = null
+    },
+    transferSuccess () {
+      this.cancelTransfer()
+      this.getDepartTree()
     },
     // 编辑部门
     showDptEditDlg (isEdit) {

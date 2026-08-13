@@ -66,6 +66,10 @@
         type='warning',
         @click='exportWages'
       ) 导出工资
+      salary-recalculation-reminders.mgl2.mgb3(
+        v-if='userInfo.isAdmin',
+        @resolved='getSalaryList'
+      )
 
   el-table.mgy2.bg-white.pd2(:data='salaryList')
     el-table-column(label='月份')
@@ -174,6 +178,9 @@ import axios from 'axios'
 import utils from '@/plugins/utils'
 export default {
   name: 'TotalKpi',
+  components: {
+    SalaryRecalculationReminders: () => import('./comps/SalaryRecalculationReminders'),
+  },
   mixins: [dptListMixin],
   data () {
     return {

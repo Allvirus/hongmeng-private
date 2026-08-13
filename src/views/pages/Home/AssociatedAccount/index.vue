@@ -46,6 +46,7 @@
           type='primary',
           @click='dialogVisible = true'
         ) 新增
+        gs-ownership-issues.mgl3(v-if='userInfo.isAdmin')
 
   el-table.mgy2.bg-white.pd2(:data='listMixin.list')
     el-table-column(prop='departmentName', label='所属组织')
@@ -127,6 +128,9 @@ import fetchListMixin from '@/mixins/fetchListMixin'
 import dptListMixin from '@/mixins/dptListMixin'
 export default {
   name: 'Update',
+  components: {
+    GsOwnershipIssues: () => import('./comps/GsOwnershipIssues'),
+  },
   mixins: [fetchListMixin, dptListMixin],
   data () {
     return {
