@@ -335,6 +335,19 @@
           ]
         },
         {
+          "code": "experience.query.managed",
+          "name": "\u67e5\u770b\u5206\u7ba1\u8303\u56f4\u7ecf\u9a8c\u660e\u7ec6",
+          "type": "scope",
+          "page": "ExpDetail",
+          "action": "queryManaged",
+          "api": [
+            {
+              "method": "GET",
+              "path": "/api/experience/"
+            }
+          ]
+        },
+        {
           "code": "experience.add",
           "name": "新增经验",
           "type": "write",

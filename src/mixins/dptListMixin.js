@@ -5,9 +5,16 @@ export default {
       searchMyData: false,
     }
   },
+  computed: {
+    canQueryDepartmentData () {
+      return this.managedQueryPermission
+        ? this.$utils.hasPerm(this.managedQueryPermission)
+        : Boolean(this.userInfo && this.userInfo.isLeader)
+    },
+  },
   async created () {
     // 获取默认部门人员列表
-    if (this.userInfo && this.myDptList && this.userInfo.isLeader) {
+    if (this.userInfo && this.myDptList && this.myDptList.list.length && this.canQueryDepartmentData) {
       this.onDepartChange({ id: this.myDptList.list[0].id })
     } else {
       this.listApiForMixin = this.myApi
@@ -21,8 +28,8 @@ export default {
       this.listApiForMixin = this.myApi
       this.searchMyData = false
       this.model = JSON.parse(JSON.stringify(this.modelCopyMixin))
-      this.model.resDepId = this.myDptList.list[0].id
-      if (this.userInfo && this.userInfo.isLeader) {
+      if (this.canQueryDepartmentData && this.myDptList.list.length) {
+        this.model.resDepId = this.myDptList.list[0].id
         this.listApiForMixin = this.dtpApi
         this.userList.splice(0, this.userList.length)
         if (this.$refs.dtptree) {
@@ -37,7 +44,7 @@ export default {
     },
     // 搜索列表
     search (cb = null) {
-      this.listApiForMixin = (!this.searchMyData && this.userInfo.isLeader)
+      this.listApiForMixin = (!this.searchMyData && this.canQueryDepartmentData)
         ? this.dtpApi : this.myApi
       if (this.isMyTarget) {
         // if (!this.userInfo.menu.wechatAuthority) {

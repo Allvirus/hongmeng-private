@@ -2,7 +2,7 @@
 .MyExp
   .ff-rn.fs-m.ai-center.bg-white.pdx2.pdt2
     el-form.ff-rw(label-width='100px')
-      el-form-item(label='部门:')
+      el-form-item(label='部门:', v-if='canQueryDepartmentData')
         tree-selector.winput(
           ref='dtptree',
           :data='myDptList.list',
@@ -11,7 +11,7 @@
           :deflabel='myDptList.list[0].name',
           @change='onDepartChange'
         )
-      el-form-item(label='员工:', v-if='userInfo.isLeader')
+      el-form-item(label='员工:', v-if='canQueryDepartmentData')
         el-select.winput(
           v-model='model.UserId',
           placeholder='请选择',
@@ -61,7 +61,7 @@
         @click='openNewExpDlg',
         v-if='userInfo.isLeader'
       ) 新增经验
-      el-checkbox.flex-center(v-model='searchMyData', v-if='userInfo.isLeader') 搜索我的数据
+      el-checkbox.flex-center(v-model='searchMyData', v-if='canQueryDepartmentData', @change='search') 搜索我的数据
 
   el-table.mgy2.bg-white.pd2(:data='listMixin.list')
     el-table-column(prop='userRealName', label='用户名称')
@@ -142,6 +142,7 @@ export default {
   mixins: [dptListMixin, fetchListMixin],
   data () {
     return {
+      managedQueryPermission: 'experience.query.managed',
       listApiForMixin: 'getDptExpList',
       dtpApi: 'getDptExpList',
       myApi: 'getMyExp',
