@@ -6,7 +6,10 @@
     .sub-title.pa.fs-s
       span {{ subTitle }}
   .content.bg-white.pa.full.overflow-auto.pr
-    .ff-rn.ai-center.pd1.pr(v-for='(item, index) in data', :key='index')
+    .rank-row.ff-rn.ai-center.pd1.pr(
+      v-for='(item, index) in data',
+      :key='getItemKey(item, index)'
+    )
       img.badge(
         v-if='isTopThree(item, index)',
         :src='require(`@/assets/img/ic_rank${getRankNumber(item, index)}.png`)',
@@ -99,6 +102,12 @@ export default {
   created: function () {
   },
   methods: {
+    getItemKey (item, index) {
+      if (!item) return index
+      const identifier = item.id || item.userId || item.departmentId || item.account || item.name
+      const rank = this.getRankNumber(item, index)
+      return identifier ? String(identifier) + '-' + rank : String(rank) + '-' + index
+    },
     // 兼容统一接口 rank 字段和旧接口 ranking 字段。
     getRankNumber (item, index) {
       if (item && Number(item.rank) > 0) return Number(item.rank)
@@ -139,6 +148,11 @@ $width = 300px;
   background-color: #eeeeee;
   border-radius: 16px;
   overflow: hidden;
+
+  .rank-row {
+    content-visibility: auto;
+    contain-intrinsic-size: 46px;
+  }
 
   .avatar {
     width: 35px;

@@ -31,7 +31,10 @@
       .ff-rn.fs-m.bg-white.pd2.opt-bar
         .flex-1.ai-center.mgl1
           el-breadcrumb(separator-class='el-icon-arrow-right')
-            el-breadcrumb-item(v-for='(item, index) in Tree.path') {{ item }}
+            el-breadcrumb-item(
+              v-for='(item, index) in Tree.path',
+              :key='item + "-" + index'
+            ) {{ item }}
         .flex-1.jc-end.ai-center
           span.mgr2.omit 是否包含离职人员?
           el-switch.mgr2(
@@ -52,7 +55,7 @@
           ) 新增部门
 
       el-table.mgt2(
-        :data='User.userList.filter((data) => !search || data.realName.toLowerCase().includes(search.toLowerCase()))',
+        :data='filteredUserList',
         max-height='600'
       )
         el-table-column(prop='realName', label='姓名')
@@ -199,6 +202,13 @@ export default {
   },
   computed: {
     ...mapGetters(['userInfo']),
+    filteredUserList () {
+      const search = this.search.trim().toLowerCase()
+      if (!search) return this.User.userList
+      return this.User.userList.filter(item => {
+        return String(item.realName || '').toLowerCase().includes(search)
+      })
+    },
   },
   created: function () {
     this.getDepartTree()
@@ -285,7 +295,10 @@ export default {
       }
       this.Tree.curDptId = departMentId
       this.$refs.tree.setCurrentKey(departMentId)
+      const requestId = (this.$_departmentRequestId || 0) + 1
+      this.$_departmentRequestId = requestId
       this.$api.getDepartMembers(departMentId, !this.User.isIncludeNoJob).then(data => {
+        if (requestId !== this.$_departmentRequestId) return
         // 增加部门字段
         for (const item of data) {
           item.dptName = this.Dpt.dptNameList[item.departmentId]
@@ -339,7 +352,10 @@ export default {
     handleNodeClick (data) {
       this.Tree.curTreeNode = data
       this.Tree.curDptId = data.id
+      const requestId = (this.$_departmentRequestId || 0) + 1
+      this.$_departmentRequestId = requestId
       this.$api.getDepartMembers(data.id, !this.User.isIncludeNoJob).then(data => {
+        if (requestId !== this.$_departmentRequestId) return
         // 增加部门字段
         for (const item of data) {
           item.dptName = this.Dpt.dptNameList[item.departmentId]

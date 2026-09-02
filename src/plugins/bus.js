@@ -1,27 +1,8 @@
 import Vue from 'vue'
-import router from '@/router'
-import store from '@/store'
 import { Message, MessageBox, Loading, Notification } from 'element-ui'
 let loadCount = 0
 export default new Vue({
-  data () {
-    this.instanceObj = {}
-    return {
-    }
-  },
   methods: {
-    getInstance (path) {
-      if (this.instanceObj[path]) return this.instanceObj[path]
-      const el = document.createElement('div')
-      document.body.querySelector('#app').appendChild(el)
-      const ComponentConstructor = Vue.extend(require(`@/components/${path}`).default)
-      this.instanceObj[path] = new ComponentConstructor({
-        router,
-        store,
-      }).$mount(el)
-      this.instanceObj[path].$vnode = this.instanceObj[path]._vnode
-      return this.instanceObj[path]
-    },
     tip (msg = '操作成功！', type = 'info', time = 2000, ctrl = true) {
       Message({
         message: msg,

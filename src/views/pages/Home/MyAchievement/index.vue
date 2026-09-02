@@ -95,6 +95,7 @@
   //- 图表
   .mgt2
     .chart(
+      v-if='chartReady',
       :class='halfLayout ? "ff-rn" : "ff-cn"',
       :key='halfLayout ? "half" : "full"'
     )
@@ -108,6 +109,10 @@
       .ff-cn.flex-1.bg-white.border-radius(:class='halfLayout ? "" : "mgt2"')
         h3.mg2 充值总额
         v-line.charts.flex-1.mgt2(:data='rechData')
+    .chart.chart-placeholder(
+      v-else,
+      :style='{ height: halfLayout ? "450px" : "900px" }'
+    )
 
   el-table.mgy2.bg-white.pd2(
     :data='reversedDataList',
@@ -246,6 +251,7 @@ export default {
       },
       detailRows: [],
       detailLoading: false,
+      chartReady: false,
     }
   },
   computed: {
@@ -325,6 +331,8 @@ export default {
       return tmpl
     },
     fillVChartData (data) {
+      const roleRows = []
+      const rechargeRows = []
       for (const key in data) {
         const row = data[key]
         // 柱状图
@@ -335,15 +343,17 @@ export default {
           充值人数: row.rechargeUserCount,
           充值订单数: row.rechargeCount,
         }
-        this.newRoleData.rows.push(roleItem)
+        roleRows.push(roleItem)
 
         // 折线图
         const rechItem = {
           日期: this.formatXaxis(row),
           '充值总额(元)': row.sum,
         }
-        this.rechData.rows.push(rechItem)
+        rechargeRows.push(rechItem)
       }
+      this.newRoleData.rows = roleRows
+      this.rechData.rows = rechargeRows
     },
     formatXaxis (item) {
       const index = item.index
@@ -456,17 +466,33 @@ export default {
       }
       return fullList
     },
-    sum () {
-      for (const key in this.panelList) {
-        this.panelList[key].value = 0
+    sum (res = {}) {
+      const totals = {
+        registerCount: 0,
+        newRoles: 0,
+        newUsers: 0,
+        rechgUsers: 0,
+        rechgOrders: 0,
+        rechgTotal: 0,
       }
       for (const item of this.dataList) {
-        this.panelList.newRoles.value += item.userRoleCount
-        this.panelList.newUsers.value += item.userCount
-        this.panelList.rechgUsers.value += item.rechargeUserCount
-        this.panelList.rechgOrders.value += item.rechargeCount
-        this.panelList.rechgTotal.value += item.sum
+        totals.newRoles += item.userRoleCount
+        totals.newUsers += item.userCount
+        totals.rechgUsers += item.rechargeUserCount
+        totals.rechgOrders += item.rechargeCount
+        totals.rechgTotal += item.sum
       }
+      if (typeof res.totalUserCount === 'number') {
+        totals.newUsers = res.totalUserCount
+      }
+      if (typeof res.registerCount === 'number') {
+        totals.registerCount = res.registerCount
+      }
+      this.panelList = Object.keys(this.panelList).reduce((result, key) => {
+        result[key] = { ...this.panelList[key], value: totals[key] }
+        return result
+      }, {})
+      this.chartReady = true
     },
     resolveDetailRange (row) {
       const dateFromTimeKey = row ? this.parseDateValue(row.timeKey) : null
@@ -623,10 +649,10 @@ export default {
         return
       }
 
-      // 清除原来的数据
-      this.newRoleData.rows.splice(0, this.newRoleData.rows.length)
-      this.rechData.rows.splice(0, this.rechData.rows.length)
-      this.dataList.splice(0, this.dataList.length)
+      const requestId = (this.$_achievementRequestId || 0) + 1
+      this.$_achievementRequestId = requestId
+
+      this.chartReady = false
       this.detailDialog.visible = false
       this.detailRows = []
       this.detailLoading = false
@@ -680,37 +706,37 @@ export default {
               registerCount: data.registerCount,
               totalUserCount: data.data.totalUserCount,
             }
-            this.handleData(obj, 'hourKey', 24)
+            this.handleData(obj, 'hourKey', 24, requestId)
           })
           break
         case '本周':
           method = (this.searchMyData || !this.userInfo.isLeader) ? 'getAchiByWeek' : 'getDptAchiByWeek'
           this.$api[method](params).then(data => {
-            this.handleData(data, 'dayKey', 7)
+            this.handleData(data, 'dayKey', 7, requestId)
           })
           break
         case '上月':
           method = (this.searchMyData || !this.userInfo.isLeader) ? 'getAchiLastMonth' : 'getDptAchiLastMonth'
           this.$api[method](params).then(data => {
-            this.handleData(data, 'dayKey', 30)
+            this.handleData(data, 'dayKey', 30, requestId)
           })
           break
         case '本月':
           method = (this.searchMyData || !this.userInfo.isLeader) ? 'getAchiByMonth' : 'getDptAchiByMonth'
           this.$api[method](params).then(data => {
-            this.handleData(data, 'dayKey', 30)
+            this.handleData(data, 'dayKey', 30, requestId)
           })
           break
         case '全年':
           method = (this.searchMyData || !this.userInfo.isLeader) ? 'getAchiByYear' : 'getDptAchiByYear'
           this.$api[method](params).then(data => {
-            this.handleData(data, 'monthKey', 12)
+            this.handleData(data, 'monthKey', 12, requestId)
           })
           break
         case '去年':
           method = (this.searchMyData || !this.userInfo.isLeader) ? 'getAchiLastYear' : 'getDptAchiLastYear'
           this.$api[method](params).then(data => {
-            this.handleData(data, 'monthKey', 12)
+            this.handleData(data, 'monthKey', 12, requestId)
           })
           break
         case '时间区间':
@@ -721,14 +747,15 @@ export default {
             startTime: this.model.startTime,
             endTime: this.model.endTime,
           }).then(data => {
-            this.handleRangeData(data)
+            this.handleRangeData(data, requestId)
           })
           break
         default:
           break
       }
     },
-    handleData (res, key, range) {
+    handleData (res, key, range, requestId) {
+      if (requestId !== this.$_achievementRequestId) return
       const data = res.data
       // 排序
       this.$utils.sort(data, key, false)
@@ -739,33 +766,29 @@ export default {
       this.fillVChartData(fullList)
 
       // 表格数据
-      this.dataList = data
-      for (const item of this.dataList) {
-        item.xText = this.formatXaxis(item)
-      }
+      this.dataList = data.map(item => ({
+        ...item,
+        xText: this.formatXaxis(item),
+      }))
 
       // 计算汇总数据...
-      this.sum()
-      if (typeof res.totalUserCount === 'number') {
-        this.panelList.newUsers.value = res.totalUserCount
-      }
-      this.panelList.registerCount.value = res.registerCount
+      this.sum(res)
     },
-    handleRangeData (res) {
+    handleRangeData (res, requestId) {
+      if (requestId !== this.$_achievementRequestId) return
       const data = [...res.data]
       data.sort((a, b) => new Date(a.timeKey) - new Date(b.timeKey))
 
       const fullList = this.getRangeFullList(data)
       this.fillVChartData(fullList)
 
-      this.dataList = data
-      for (const item of this.dataList) {
-        item.index = item.timeKey.substr(0, 10)
-        item.xText = this.formatXaxis(item)
-      }
+      this.dataList = data.map(item => ({
+        ...item,
+        index: item.timeKey.substr(0, 10),
+        xText: this.formatXaxis({ ...item, index: item.timeKey.substr(0, 10) }),
+      }))
 
-      this.sum()
-      this.panelList.registerCount.value = res.registerCount
+      this.sum(res)
     },
     onDepartChange (dptInfo) {
       this.model.dtpId = dptInfo.id

@@ -39,10 +39,12 @@
         :key='item.id'
       ) {{ item.name }}
     v-ring.mgt2(
+      v-if='chartReady',
       :data='pieChartData',
       :settings='settings',
       :height='settings.height'
     )
+    .chart-placeholder(v-else)
   .showbox.bg-white.mgt2.pd2
     //- el-button(
     //-   @click="goBack"
@@ -271,6 +273,7 @@ export default {
       superiorDepId: null,
       dialogTableVisible: false,
       isShow: false,
+      chartReady: false,
     }
   },
   computed: {
@@ -335,19 +338,20 @@ export default {
     },
     // 查询总数据
     getStatisticsData () {
-      this.$api.getStatisticsData(this.model).then(res => {
-        this.configList = res.list
-        this.count = res.count
-
-        this.setPieData()
-      })
+      return this.loadStatistics('getStatisticsData')
     },
     // 查询某个部门下的员工数据
     getStatisticsEmployee () {
-      this.$api.getStatisticsEmployee(this.model).then(res => {
+      return this.loadStatistics('getStatisticsEmployee')
+    },
+    loadStatistics (method) {
+      const requestId = (this.$_statisticsRequestId || 0) + 1
+      this.$_statisticsRequestId = requestId
+      this.chartReady = false
+      return this.$api[method](this.model).then(res => {
+        if (requestId !== this.$_statisticsRequestId) return
         this.configList = res.list
         this.count = res.count
-
         this.setPieData()
       })
     },
@@ -366,7 +370,7 @@ export default {
       })
     },
     setPieData () {
-      this.pieChartData.rows = []
+      const rows = []
       // 处理饼图数据
       for (const item of this.configList) {
         for (const key in item) {
@@ -380,10 +384,12 @@ export default {
             if (item[key] !== 0) {
               obj.value = item[key]
             }
-            this.pieChartData.rows.push(obj)
+            rows.push(obj)
           }
         }
       }
+      this.pieChartData = { ...this.pieChartData, rows }
+      this.chartReady = true
     },
     checkDetails (row) {
       if (row.userId) return false

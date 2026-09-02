@@ -4,6 +4,8 @@
   "private": true,
   "scripts": {
     "build": "cross-env NODE_ENV=production NODE_OPTIONS=--openssl-legacy-provider vue-cli-service build",
+    "build:report": "cross-env NODE_ENV=production NODE_OPTIONS=--openssl-legacy-provider vue-cli-service build --report",
+    "perf:budget": "node scripts/checkBundleBudget.js",
     "serve": "cross-env NODE_ENV=development NODE_OPTIONS=--openssl-legacy-provider vue-cli-service serve",
     "build-test": "cross-env NODE_ENV=production NODE_OPTIONS=--openssl-legacy-provider vue-cli-service build",
     "serve-test": "cross-env NODE_ENV=development NODE_OPTIONS=--openssl-legacy-provider vue-cli-service serve",

@@ -40,15 +40,22 @@ export default {
     // 获取列表
     getListMixin (page, opts = {}) {
       const { loading = true } = opts
+      const requestId = (this.$_listRequestId || 0) + 1
+      this.$_listRequestId = requestId
       page && (this.model.page = page)
       return this.$api[this.listApiForMixin || this.customExeListApiForMixin](this.model, loading).then(data => {
-        this.listMixin.list = data.list
-        this.listMixin.count = data.count
-        this.listMixin.statistics = data.statistics || data.Statistics || {}
-        if (data.totalJoinPeople !== undefined && data.totalReceivedPeople !== undefined) {
-          this.listMixin.totalJoinPeople = data.totalJoinPeople
-          this.listMixin.totalReceivedPeople = data.totalReceivedPeople
+        if (requestId !== this.$_listRequestId) return
+        const nextListMixin = {
+          ...this.listMixin,
+          list: data.list,
+          count: data.count,
+          statistics: data.statistics || data.Statistics || {},
         }
+        if (data.totalJoinPeople !== undefined && data.totalReceivedPeople !== undefined) {
+          nextListMixin.totalJoinPeople = data.totalJoinPeople
+          nextListMixin.totalReceivedPeople = data.totalReceivedPeople
+        }
+        this.listMixin = nextListMixin
         if (data.list.length <= 0 && this.model.page > 1) this.getListMixin(this.model.page - 1)
       })
     },

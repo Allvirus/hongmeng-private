@@ -3,8 +3,6 @@ import App from "./App.vue";
 import router from "./router/";
 import store from "./store/";
 import "./config/globalconfig";
-// animate动画
-import "animate.css";
 // ElementUI组件
 import "./components/ElementUI";
 

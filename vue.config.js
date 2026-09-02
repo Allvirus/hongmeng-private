@@ -27,7 +27,23 @@ module.exports = {
     }
   },
   productionSourceMap: false,
+  chainWebpack: config => {
+    config.plugins.delete("prefetch");
+  },
   configureWebpack: {
+    optimization: {
+      splitChunks: {
+        cacheGroups: {
+          imageTools: {
+            name: "image-tools",
+            test: /[\\/]node_modules[\\/]vue-cropper[\\/]/,
+            chunks: "async",
+            priority: 30,
+            enforce: true
+          }
+        }
+      }
+    },
     plugins: [
       new webpack.ProvidePlugin({
         "window.Quill": "quill/dist/quill.js",

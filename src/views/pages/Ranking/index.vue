@@ -275,11 +275,14 @@ export default {
       return rankGroups
     },
     getRank () {
+      const requestId = (this.$_rankRequestId || 0) + 1
+      this.$_rankRequestId = requestId
       // 后端已支持 job=all，页面直接消费 groups 渲染三岗榜单。
       this.$api.getRankQuery({
         ...this.model,
         loading: true,
       }).then(data => {
+        if (requestId !== this.$_rankRequestId) return
         this.rankGroups = this.normalizeRankGroups(data)
       })
     },
