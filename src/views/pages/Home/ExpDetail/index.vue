@@ -117,14 +117,6 @@
           )
         el-form-item(label='备注:')
           el-input(v-model='newExpInfo.remark', placeholder='请输入备注', clearable)
-        el-form-item(label='启用时间:', required)
-          el-date-picker(
-            v-model='newExpInfo.effectiveDate',
-            type='date',
-            value-format='yyyy-MM-dd',
-            placeholder='请选择启用时间',
-            clearable
-          )
     span.dialog-footer(slot='footer')
       el-button.mgl3(type='warning', @click='cancel') 取消
       el-button.mgl3(
@@ -159,7 +151,6 @@ export default {
       newExpInfo: {
         userId: '',
         expChange: '',
-        effectiveDate: '',
         remark: '',
       },
       newExpDlg: false,
@@ -185,15 +176,6 @@ export default {
     },
     openNewExpDlg () {
       this.newExpDlg = true
-      this.newExpInfo.effectiveDate = this.getCurrentDate()
-    },
-    getCurrentDate () {
-      const date = new Date()
-      const pad = val => String(val).padStart(2, '0')
-      return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}`
-    },
-    formatEffectiveDate (date) {
-      return `${date} 00:00:00`
     },
     submmit () {
       for (const key in this.newExpInfo) {
@@ -202,10 +184,7 @@ export default {
           return
         }
       }
-      const payload = {
-        ...this.newExpInfo,
-        effectiveDate: this.formatEffectiveDate(this.newExpInfo.effectiveDate),
-      }
+      const payload = { ...this.newExpInfo }
       this.$api.createExp(payload).then(data => {
         this.$vgo.tip('操作成功!', 'success')
         this.search()
